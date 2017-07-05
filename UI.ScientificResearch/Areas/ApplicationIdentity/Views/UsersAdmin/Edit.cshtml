@@ -1,0 +1,141 @@
+﻿@model UI.ScientificResearch.Areas.ApplicationIdentity.Models.EditUserViewModel
+
+@{
+    ViewBag.Title = "编辑用户资料";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#SaveBtn").click(function () {
+            var selectvalue = $("#selectedSections").find('option:selected').text();
+            if (selectvalue == "") {
+                alert("请选择用户所在的科室！");
+                return false;
+            }
+            if ($("input:checkbox[name='selectedGroups']:checked").length == 0) {
+                alert("请至少选择一个权限组！");
+                return false;
+            }
+        });
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal widget-body">
+        <h4>@ViewBag.Title</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UserName)
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WorkId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>      
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Qualification, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Qualification, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Qualification)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Degree, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Degree, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Degree)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Special, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Special, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Special)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TechnicalTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TechnicalTitle, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TechnicalTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duty, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Duty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Duty)
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            @Html.Label("此用户从属于以下科室", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                @Html.ListBox("selectedSections", Model.SectionList, new { @class = "control-label" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("此用户从属于以下权限组", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in Model.GroupsList)
+                {
+                    <div>
+                        <input type="checkbox" name="selectedGroups" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                      
+                        @Html.ActionLink(item.Text, "Details", "GroupsAdmin", new { id = item.Value }, new { title = "查看组详情及所有权限", @class = "control-label", target = "_blank" })
+                       
+                    </div>
+                }
+            </div>
+        </div>
+    
+        @*<div class="form-group">
+            @Html.Label("Roles", new { @class = "control-label col-md-2" })
+            <span class=" col-md-10">
+                @foreach (var item in Model.RolesList)
+                {
+                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                    @Html.Label(item.Value, new { @class = "control-label" })
+                }
+            </span>
+        </div>*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="保存" class="btn btn-default" id="SaveBtn" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回用户列表", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

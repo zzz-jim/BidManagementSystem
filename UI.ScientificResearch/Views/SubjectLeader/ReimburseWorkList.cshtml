@@ -1,0 +1,355 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.FundsRecordViewModel>
+
+    @{
+        Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>
+            ReimburseWorkList
+            经费记录列表
+        </title>
+        <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.common.min.css" />
+        <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.default.min.css" />
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
+        <script type="text/javascript">
+        $(function () {
+            var weatherHidenCreatBtn = "@ViewBag.WeatherHidenCreadBtn";
+            if (weatherHidenCreatBtn == "Yes") {
+                $("#NewReimburse").hide();
+                $("#NewTravelExpenses").hide();
+            }
+            else {
+
+            }
+        });
+        </script>
+    </head>
+    <body>
+
+        <!-- Project Step Wizard -->
+        @Html.Partial("_SubjectLeaderWizardPartial")
+
+        <br />
+        <input type="button" id="NewReimburse" value="新建经费记录" />
+        <input type="button" id="NewTravelExpenses" value="新建差旅费" />
+        @*@Html.ActionLink("新建经费记录", "ReimburseProcess", new { id = ViewBag.Id })
+        @Html.ActionLink("新建差旅费", "TravelExpenses", new { id = ViewBag.Id })*@
+
+        <div id="NewReimburseArea">
+
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                var onClose = function () {
+                    location.reload();//刷新包含SubmitApplication的页面
+                }
+                $("#NewReimburse").click(function () {
+                    var id=@ViewBag.Id
+                    $("#NewReimburseArea").kendoWindow({
+                        position: {
+                            top: 50, // or "100px"
+                            left: "21%"
+                        },
+                        modal: true,
+                        draggable: true,
+                        resizable: false,
+                        title: "新建经费记录",
+                        visible: false,
+                        actions: [
+                                "Pin",
+                                "Close",
+                        ],
+                        close: onClose
+                        //  resizable: false,
+
+                    });
+                    $("#NewReimburseArea").append(' <iframe id="NewReimburseframe" width="600" height="300" style="border:0px" src="/SubjectLeader/ReimburseProcess?id=' + id + '">新建差旅费</iframe>');
+                    $("#NewReimburseArea").data("kendoWindow").center().open();
+                });
+            })
+
+        </script>
+
+        <div id="NewTravelExpensesArea">
+
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                var onClose = function () {
+                    location.reload();//刷新包含SubmitApplication的页面
+                }
+                $("#NewTravelExpenses").click(function () {
+                    var id=@ViewBag.Id
+                    $("#NewTravelExpensesArea").kendoWindow({
+                        position: {
+                            top: 50, // or "100px"
+                            left: "9%"
+                        },
+                        modal: true,
+                        draggable: true,
+                        resizable: false,
+                        title: "新建差旅费",
+                        visible: false,
+                        actions: [
+                                "Pin",
+                                "Close",
+                        ],
+                        close: onClose
+                        //  resizable: false,
+
+                    });
+                    $("#NewTravelExpensesArea").append(' <iframe id="NewTravelExpensesframe" width="900" height="300" style="border:0px" src="/SubjectLeader/TravelExpenses?id=' + id + '">新建差旅费</iframe>');
+                    $("#NewTravelExpensesArea").data("kendoWindow").center().open();
+                });
+            })
+
+        </script>
+
+
+        <div id="reimbursewindow">
+
+        </div>
+        <script type="text/javascript">
+
+            //function OpenRemburseWindow(id) {
+            //    $("#reimbursewindow").kendoWindow({
+            //        position: {
+            //            top: 150, // or "100px"
+            //            left: "15%"
+            //        },
+            //        width:400,
+            //        height:500,
+            //        draggable: true,
+            //        //title: "申请书",
+            //        visible: false,
+            //        actions: [
+            //                "Pin",
+            //                "Close",
+            //                "Minimize",
+            //                "Maximize"
+            //        ],
+            //        //  resizable: false,
+            //        content: "/SubjectLeader/ReimburseAgree?id=" + id + "",
+            //    });
+
+            //    $("#reimbursewindow").data("kendoWindow").center().open();
+            //}
+
+
+            function OpenRemburseWindow(id) {
+                $("#reimbursewindow").kendoWindow({
+                    position: {
+                        top: 80, // or "100px"
+                        left: "21%"
+                    },
+                    title: "经费记录",
+                    draggable: true,
+                    modal: true,
+                    iframe: true,
+                    visible: false,
+                    actions: [
+                        "Pin",
+                        "Close"
+                    ],
+                    close: function(e) {
+                        location.reload();//刷新当前页面
+                    }
+                });
+
+                $.ajax({
+                    url: "/SubjectLeader/ReturnReimburseStateValue?id=" + id,
+                    type:"post",
+                    success:function(data){
+                        if (data != null) {
+                            // $("#MaxWindow").html(data);
+
+                            var k = data;
+                            //判断返回的状态来控制弹出框第一个打开的页面
+                            //经费已上报和未上报
+                            if(data=="RejectAndTemporary")
+                            {
+                                $("#reimbursewindow").append(' <iframe id="reburse" width="600" height="300" style="border:0px" src="/SubjectLeader/ReimburseAgree?id=' + id + '">经费记录审批</iframe>');
+                            }
+                            else if (data=="OnlyTemporary")//申请书已提交和待审批中
+                            {
+                                var nextaction="save";
+                                $("#reimbursewindow").append(' <iframe id="reburse" width="600" height="300" style="border:0px" src="/SubjectLeader/ReimburseProcess?id=' + id + '&nextaction=' + nextaction + '">经费记录审批</iframe>');
+                            }
+                            else if (data == "TravelTemporary") {
+                                $("#reimbursewindow").append(' <iframe id="reburse" width="900" height="300" style="border:0px" src="/SubjectLeader/TravelExpensesRejected?id=' + id + '">经费记录审批</iframe>');
+                            }
+                        }
+                        else {
+                            alert("发生异常！");
+                        }
+                    }
+                });
+                $("#reimbursewindow").data("kendoWindow").center().open();
+            }
+        </script>
+        <input type="hidden" id="Freeze" value="@ViewBag.Id" />
+        <table class="table">
+            <tr>
+
+                <th></th>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                </th>
+                <th>
+                  
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CountOfBill)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeStr)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.JieDianName)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr onclick="OpenRemburseWindow(@item.FundsRecordID)">
+                    <td>
+                        @Html.HiddenFor(modelItem => item.ApplicationId)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.WorkflowId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountOfBill)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Unit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.IsIncome)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.IsPrint)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.LastPrintTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeStr)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.FuJianList)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.ShenPiYiJian)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.JieDianID)
+                    </td>
+                    @if (@item.IsTemporary == true)
+                    {
+                        <td>
+                            填写报销单
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JieDianName)
+                        </td>
+                    }
+                    <td>
+                        @Html.HiddenFor(modelItem => item.OKUserList)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.ShenPiUserList)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.StateNow)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.LateTime)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.CreatedTime)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.UpdatedBy)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.UpdatedTime)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </body>
+</html>

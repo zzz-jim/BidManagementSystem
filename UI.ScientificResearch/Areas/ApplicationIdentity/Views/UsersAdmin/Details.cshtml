@@ -1,0 +1,62 @@
+﻿@model PF.DomainModel.Identity.ApplicationUser
+
+@{
+    ViewBag.Title = "用户详情";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<div>
+    <h4>用户</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           用户名：
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+</div>
+<h4>用户属于分组:</h4>
+@if (ViewBag.GroupNames.Count == 0)
+{
+    <hr />
+    <p>No Groups found for this user.</p>
+}
+
+<table class="table">
+    @foreach (var item in ViewBag.GroupNames)
+    {
+        <tr>
+            <td>
+                @item
+            </td>
+        </tr>
+    }
+</table>
+@*<h4>List of roles for this user</h4>
+@if (ViewBag.RoleNames.Count == 0)
+{
+    <hr />
+    <p>No roles found for this user.</p>
+}
+
+<table class="table">
+
+    @foreach (var item in ViewBag.RoleNames)
+    {
+        <tr>
+            <td>
+                @item
+            </td>
+        </tr>
+    }
+</table>*@
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("返回用户列表", "Index")
+</p>
+
+
+

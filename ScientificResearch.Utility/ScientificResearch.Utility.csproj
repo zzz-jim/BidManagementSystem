@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1B14F79-496F-457E-AD20-E858A74006CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScientificResearch.Utility</RootNamespace>
+    <AssemblyName>ScientificResearch.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\NPOI\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NPOI\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants\ApplicationFormKeysConst.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="Educate\GraduateStudentTypeOfWorkflowId.cs" />
+    <Compile Include="Educate\GraduateStudentTypeOfFormId.cs" />
+    <Compile Include="Educate\OutLearningTypeOfWorkflowId.cs" />
+    <Compile Include="Educate\OutLearningTypeOfFormId.cs" />
+    <Compile Include="Educate\ContinuingEducationTypeOfFormId.cs" />
+    <Compile Include="Educate\ContinuingEducationTypeOfWorkflowId.cs" />
+    <Compile Include="Enums\ApplicationFormKeys.cs" />
+    <Compile Include="DataTableExtension.cs" />
+    <Compile Include="Enums\ApplicationSortField.cs" />
+    <Compile Include="Enums\ApplicationApprovalWorkflowNode.cs" />
+    <Compile Include="Enums\ContinuingRecordSortField.cs" />
+    <Compile Include="Enums\ModuleNameOfScienceResearch.cs" />
+    <Compile Include="Enums\PaperPublishTypeOfWorkflowId.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Enums\ResearchAwardApplicationStatus.cs" />
+    <Compile Include="Enums\ResearchAwardTypeOfFormId.cs" />
+    <Compile Include="Enums\ResearchAwardTypeOfWorkflowId.cs" />
+    <Compile Include="Enums\PaperPublishTypeOfFormId.cs" />
+    <Compile Include="Enums\ScienceConferenceApplicationStatus.cs" />
+    <Compile Include="Enums\ScienceConferenceWorkflowNode.cs" />
+    <Compile Include="Enums\SubjectLeaderApplicationStatus.cs" />
+    <Compile Include="Enums\GoodSubjectApplicationStatus.cs" />
+    <Compile Include="Enums\ApplicationStatus.cs" />
+    <Compile Include="Enums\ApplicationType.cs" />
+    <Compile Include="Enums\GoodSubjectTypeOfFormId.cs" />
+    <Compile Include="Enums\ScienceConferenceTypeOfFormId.cs" />
+    <Compile Include="Enums\ScienceConferenceTypeOfWorkflowId.cs" />
+    <Compile Include="Enums\SubjectLeaderTypeOfWorkflowId.cs" />
+    <Compile Include="Enums\GoodSubjectTypeOfWorkflowId.cs" />
+    <Compile Include="Enums\SubjectLeaderTypeOfFormId.cs" />
+    <Compile Include="Enums\UploadFilePageType.cs" />
+    <Compile Include="Enums\UserRoles.cs" />
+    <Compile Include="Enums\ApproveMode.cs" />
+    <Compile Include="Enums\ScienceResearchTypeOfFormId.cs" />
+    <Compile Include="Enums\TypeOfProjectLevel.cs" />
+    <Compile Include="Enums\TypeOfWorkflowId.cs" />
+    <Compile Include="Enums\TypeOfWorkToDoForm.cs" />
+    <Compile Include="Helper\CommonHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helper\EnumToStringHelper.cs" />
+    <Compile Include="Helper\ExcelHelper.cs" />
+    <Compile Include="Helper\FormContentReplaceHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplaceBadCharOfFileName.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

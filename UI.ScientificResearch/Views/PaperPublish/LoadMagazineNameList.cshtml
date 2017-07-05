@@ -1,0 +1,9 @@
+﻿@{Layout = null;}
+@model IEnumerable<ScientificResearch.DomainModel.PaperMagazine>
+
+@{
+    foreach (var item in Model)
+    {
+        <option value="@item.Name">@item.Name</option>
+    }
+}

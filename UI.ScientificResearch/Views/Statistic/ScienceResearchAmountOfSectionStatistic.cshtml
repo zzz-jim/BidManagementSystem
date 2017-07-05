@@ -1,0 +1,141 @@
+﻿@model IEnumerable<IGrouping<String,ScientificResearch.DataTransferModel.ScienceResearchAmountOfSectionStatisticTransferObject>>
+
+ <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+ <script src="~/Scripts/Custom/Print.js"></script>
+ <script type="text/javascript">
+     $(function () {
+         $("#PrintBtn").click(function () {
+             var printDivId = "printScienceResearchAmountOfSectionStatistic";
+             areaPrintFun(printDivId);
+         });
+     });
+ </script>
+
+@using (Html.BeginForm())
+{
+    <div id="searcharea">
+    开始时间：<input type="text" id="startTime" name="startTime" />
+    结束时间：<input type="text" id="endTime" name="endTime" />
+        <input type="submit" id="search" name="search" style="width: 55px; height: 28px" value="查询" />
+        <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />   
+</div>
+    <br/>
+    <div id="printScienceResearchAmountOfSectionStatistic">
+        <table class="table">
+            <tr>
+                <th>
+                    科室
+                </th>
+                <th>
+                    类别
+                </th>
+                <th>
+                    类型
+                </th>
+                <th>
+                    数量
+                </th>
+            </tr>
+
+            @foreach (var firstGroupedItem in Model)
+    {
+       // var count = firstGroupedItem.Count();
+        bool firstLevel = false;
+        var secondGroupItems = firstGroupedItem.GroupBy(x => x.ProjectType);
+
+        foreach (var secondGroupedItem in secondGroupItems)
+        {
+            bool secondLeval = false;
+            var thirdGroupItems = secondGroupedItem.GroupBy(x => x.FormId);
+            foreach (var thirdGroupedItem in thirdGroupItems)
+            {
+                bool thirdLevel = false;
+                bool dataCount = false;
+                foreach (var item in thirdGroupedItem)
+                {
+            <tr>
+                @if (firstLevel == false)
+                    {
+                <td rowspan="@firstGroupedItem.Count()">
+                    @firstGroupedItem.Key
+                </td>
+                        firstLevel = true;
+                    }
+                @if (secondLeval == false)
+                    {
+                <td rowspan="@secondGroupedItem.Count()">
+                    @secondGroupedItem.Key
+                </td>
+                        secondLeval = true;
+                    }
+                @if (thirdLevel == false)
+                    {
+                <td rowspan="@thirdGroupedItem.Count()">
+                    @thirdGroupedItem.Key
+                </td>
+                <td rowspan="@thirdGroupedItem.Count()">
+                    @thirdGroupedItem.Count()
+                </td>
+                        thirdLevel = true;
+
+
+                   }
+            </tr>
+                }
+            }
+        }
+    }
+
+        </table>
+    </div>
+}
+                      <script>
+                          $(document).ready(function () {
+                              function startChange() {
+                                  var startDate = start.value(),
+                                  endDate = end.value();
+
+                                  if (startDate) {
+                                      startDate = new Date(startDate);
+                                      startDate.setDate(startDate.getDate());
+                                      end.min(startDate);
+                                  } else if (endDate) {
+                                      start.max(new Date(endDate));
+                                  } else {
+                                      endDate = new Date();
+                                      start.max(endDate);
+                                      end.min(endDate);
+                                  }
+                              }
+
+                              function endChange() {
+                                  var endDate = end.value(),
+                                  startDate = start.value();
+
+                                  if (endDate) {
+                                      endDate = new Date(endDate);
+                                      endDate.setDate(endDate.getDate());
+                                      start.max(endDate);
+                                  } else if (startDate) {
+                                      end.min(new Date(startDate));
+                                  } else {
+                                      endDate = new Date();
+                                      start.max(endDate);
+                                      end.min(endDate);
+                                  }
+                              }
+
+                              var start = $("#startTime").kendoDatePicker({
+                                  change: startChange
+                              }).data("kendoDatePicker");
+
+                              var end = $("#endTime").kendoDatePicker({
+                                  change: endChange
+                              }).data("kendoDatePicker");
+                              $("#startTime").attr("readonly", true);
+                              $("#endTime").attr("readonly", true);
+                              start.max(end.value());
+                              end.min(start.value());
+                          });
+                      </script>
+

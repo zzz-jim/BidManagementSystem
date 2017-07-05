@@ -1,0 +1,28 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<script src="~/Scripts/Custom/Print.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#PrintBtn").click(function () {
+            var printDivId = "printPaper";
+            areaPrintFun(printDivId);
+        });
+    });
+</script>
+<div class="form-horizontal widget-body">
+    <!-- Project Step Wizard -->
+    @Html.Partial("_PaperPublishWizardPartial")
+    <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+
+    @Html.HiddenFor(model => model.ApplicationId)
+    <div>
+        <div id="printPaper">
+            @Html.Raw(Model.FormContent)
+        </div>
+    </div>
+    <div style="text-align:center;"><input type="button" id="PrintBtn" value="打印" class="btn btn-blue"/></div>
+</div> 

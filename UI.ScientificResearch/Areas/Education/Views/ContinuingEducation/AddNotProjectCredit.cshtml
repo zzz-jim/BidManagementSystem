@@ -1,0 +1,94 @@
+﻿@model ScientificResearch.ViewModel.ContinuingEducationRecordViewModel
+
+@{
+    ViewBag.Title = "AddNotProjectCredit";
+    Layout = "~/Areas/Education/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<div id="treeviewWindowForSingleUser" style="width: 300px; height: 400px;">
+    @Html.Partial("_SelectSingleUserPartial")
+</div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table table-striped table-bordered table-hover">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.UserName)
+            </td>
+            <td>
+                <input type="text" id="UserName" name="UserName" readonly="readonly" />
+                <input type="button" id="selectForSingleUser" onclick="TselectSingleUser(UserName)" value="点击选择用户" />
+                <input type="text" id="UserId" name="UserId" hidden="hidden"/>
+                </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Credit)
+            </td>
+            <td>
+                <input type="text" id="Credit" name="Credit" value="@Model.Credit" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+                @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.CreditLevel)
+            </td>
+            <td>
+                <select id="CreditLevel" name="CreditLevel">
+                    <option value="一类学分">一类学分</option>
+                    <option value="二类学分">二类学分</option>
+                    <option value="三类学分">三类学分</option>
+                    <option value="四类学分">四类学分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.CreditType)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.CreditType)
+                @Html.ValidationMessageFor(model => model.CreditType, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.IsGranted)</td>
+                <td>
+                    <select id="IsGranted" name="IsGranted">
+                        <option value="false">未授予学分</option>
+                        <option value="true">已授予学分</option>
+                    </select>
+                </td>
+        </tr>
+
+    @Html.HiddenFor(model => model.NworkToDoId)
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(model => model.Department)
+    @Html.HiddenFor(model => model.AccountCredit)
+    @Html.HiddenFor(model => model.IsProjectCredit)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.CreatedTime)
+    @Html.HiddenFor(model => model.UpdatedBy)
+    @Html.HiddenFor(model => model.UpdatedTime)
+    @Html.HiddenFor(model => model.UserDegree)
+    @Html.HiddenFor(model => model.UserDuty)  
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="保存" class="btn btn-default" />
+            </td>
+        </tr>
+       
+    </table>
+}
+

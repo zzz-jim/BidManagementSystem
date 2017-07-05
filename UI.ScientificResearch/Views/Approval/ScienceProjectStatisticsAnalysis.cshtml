@@ -1,0 +1,141 @@
+﻿
+@model IEnumerable<ScientificResearch.ViewModel.ScienceProjectStatisticsViewModel>
+
+@{
+    //Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    Layout = null;
+}
+   <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+   <script src="~/Scripts/Custom/Print.js"></script>
+                      <script type="text/javascript">
+                          $(function () {
+                              $("#PrintBtn1").click(function () {
+                                  var printDivId = "printScienceProjectStatisticsAnalysis";
+                                  areaPrintFun(printDivId);
+                              });
+                          });
+                      </script>
+    @using (Html.BeginForm("ScienceProjectStatisticsAnalysis", "Approval", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    { 
+        <div>
+            <input type="submit" name="OutScienceProjectStatistics" style="width: 55px; height: 28px" value="导出" />
+            <input type="button" value="打印" style="width: 55px; height: 28px" id="PrintBtn1" />
+        </div>
+        <br/>
+    <div id="printScienceProjectStatisticsAnalysis">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstablishType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectManager)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReleaseFunds)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CounterpartFunds)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalFunds)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Payment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Balance)
+                </th>
+            </tr>
+            @*@foreach (var firstGroupedItem in Model)
+                {
+                    var count = firstGroupedItem.Count();
+                    bool firstLevel = false;
+                    var groupItems = firstGroupedItem.GroupBy(x => x.Name);
+
+                    foreach (var secondGroupedItem in groupItems)
+                    {
+                        bool secondLevel = false;
+                        foreach (var item in secondGroupedItem)
+                            {
+                                <tr>
+                                    @if (firstLevel == false)
+                                    {
+                                        <td rowspan="@firstGroupedItem.Count()">@firstGroupedItem.Key</td>
+                                        firstLevel = true;
+                                    }
+                                    @if (secondLevel == false)
+                                    {
+                                        <td rowspan="@secondGroupedItem.Count()">@secondGroupedItem.Key</td>
+                                        secondLevel = true;
+                                    }
+                                    <td>@item.EstablishType</td>
+                                    <td>@item.Time</td>
+                                    <td>@item.Type</td>
+                                    <td>@item.Name</td>
+                                </tr>
+                        }
+                    }
+                }*@
+            @{int number = 0;}
+            @foreach (var item in Model)
+    {
+        number++;
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstablishType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectManager)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseFunds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CounterpartFunds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalFunds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Balance)
+        </td>
+    </tr>
+    }
+
+        </table>
+    </div>
+    }

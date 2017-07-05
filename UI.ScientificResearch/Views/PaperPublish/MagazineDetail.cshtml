@@ -1,0 +1,11 @@
+﻿@model ScientificResearch.DomainModel.PaperMagazine
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<table class="table">
+    <tr><td>期刊名称</td><td>@Html.DisplayFor(model => model.Name)</td></tr>
+    <tr><td>期刊级别</td><td>@Html.DisplayFor(model => model.Level)</td></tr>
+    <tr><td>期刊类型</td><td>@Html.DisplayFor(model => model.Type)</td></tr>
+    @*<tr><td colspan="2">保存成功</td></tr>*@
+</table>

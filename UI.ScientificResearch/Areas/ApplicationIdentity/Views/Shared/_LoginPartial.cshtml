@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+<li>
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", new { area = "ApplicationIdentity" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                <div class="avatar" title="View your public profile">
+                    <img src="~/Content/assets/img/avatars/adam-jansen.jpg">
+                </div>
+                <section>
+                    <h2><span class="profile"><span>你好，@User.Identity.GetUserName()</span></span></h2>
+                </section>
+            </a>
+    <!--Login Area Dropdown-->
+            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                <li class="username"><a>@Html.ActionLink("你好，" + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "ApplicationIdentity" }, htmlAttributes: new { title = "Manage" })</a></li>
+                @*<li class="email"><a>David.Stevenson@live.com</a></li>*@
+                <!--Avatar Area-->
+                <li>
+                    <div class="avatar-area">
+                        <img src="~/Content/assets/img/avatars/adam-jansen.jpg" class="avatar">
+                        @*<span class="caption">Change Photo</span>*@
+                    </div>
+                </li>
+                <!--Avatar Area-->
+                @*<li class="edit">
+                        <a href="profile.html" class="pull-left">Profile</a>
+                        <a href="#" class="pull-right">Setting</a>
+                    </li>*@
+                <!--Theme Selector Area-->
+                <li class="theme-area">
+                    <ul class="colorpicker" id="skin-changer">
+                        <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/Content/assets/css/skins/blue.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/Content/assets/css/skins/azure.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/Content/assets/css/skins/teal.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/Content/assets/css/skins/green.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/Content/assets/css/skins/orange.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/Content/assets/css/skins/pink.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/Content/assets/css/skins/darkred.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/Content/assets/css/skins/purple.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/Content/assets/css/skins/darkblue.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/Content/assets/css/skins/gray.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/Content/assets/css/skins/black.min.css"></a></li>
+                        <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/Content/assets/css/skins/deepblue.min.css"></a></li>
+                    </ul>
+                </li>
+                <!--/Theme Selector Area-->
+                <li class="dropdown-footer">
+                    <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+                </li>
+            </ul>
+    <!--/Login Area Dropdown-->
+            @* <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("你好，" + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "ApplicationIdentity" }, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
+                        </ul>*@
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("注册", "Register", "Account", routeValues: new { area = "ApplicationIdentity" }, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("登录", "Login", "Account", routeValues: new { area = "ApplicationIdentity" }, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }
+</li>

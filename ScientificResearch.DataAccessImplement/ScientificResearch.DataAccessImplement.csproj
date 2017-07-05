@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E50F1D79-1EEC-4B3A-A8C1-DB58D1D69B8E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScientificResearch.DataAccessImplement</RootNamespace>
+    <AssemblyName>ScientificResearch.DataAccessImplement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContinuingEducationRecordRepository.cs" />
+    <Compile Include="FundsThresholdRepository.cs" />
+    <Compile Include="ProjectBonusCreditRepository.cs" />
+    <Compile Include="FundsManageProgramStatisticsRepository.cs" />
+    <Compile Include="ScienceResearchAmountOfApplicationStatisticRepository.cs" />
+    <Compile Include="ScienceResearchAmountOfFundStatisticRepository.cs" />
+    <Compile Include="ScienceResearchAmountOfSectionStatisticRepository.cs" />
+    <Compile Include="ScienceResearchOfCapitalStatisticRepository.cs" />
+    <Compile Include="StatisticRepository.cs" />
+    <Compile Include="ERPBuMenRepository.cs" />
+    <Compile Include="ERPNFormRepository.cs" />
+    <Compile Include="ERPNWorkFlowNodeRepository.cs" />
+    <Compile Include="ERPNWorkFlowRepository.cs" />
+    <Compile Include="ERPNWorkToDoRepository.cs" />
+    <Compile Include="ERPRiZhiRepository.cs" />
+    <Compile Include="TravelFundsDetailRepository.cs" />
+    <Compile Include="FundsRecordRepository.cs" />
+    <Compile Include="ProjectRecordRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PF.DomainModel\PF.DomainModel.csproj">
+      <Project>{c65e9a74-6004-41bc-b527-65ef183bc7f6}</Project>
+      <Name>PF.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.DataTransferModel\ScientificResearch.DataTransferModel.csproj">
+      <Project>{8119c621-a2c1-4c23-9f4e-2ff097698128}</Project>
+      <Name>ScientificResearch.DataTransferModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.DomainModel\ScientificResearch.DomainModel.csproj">
+      <Project>{0528edad-54f8-43dd-b6cb-d3d29e3544e9}</Project>
+      <Name>ScientificResearch.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.IDataAccess\ScientificResearch.IDataAccess.csproj">
+      <Project>{2c66f0a6-3ec3-4f19-a5fb-2b55809e706d}</Project>
+      <Name>ScientificResearch.IDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.Utility\ScientificResearch.Utility.csproj">
+      <Project>{d1b14f79-496f-457e-ad20-e858a74006cc}</Project>
+      <Name>ScientificResearch.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

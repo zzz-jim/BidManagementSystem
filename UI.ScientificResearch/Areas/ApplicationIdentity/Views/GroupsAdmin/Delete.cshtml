@@ -1,0 +1,37 @@
+﻿@model PF.DomainModel.Identity.ApplicationGroup
+
+@{
+    ViewBag.Title = "删除权限组";
+}
+
+<h2>Delete</h2>
+
+<h3>你确定要删除这个权限组?</h3>
+<div>
+    <h4>权限组</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回权限组列表", "Index")
+        </div>
+    }
+</div>

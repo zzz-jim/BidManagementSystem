@@ -1,0 +1,124 @@
+﻿
+@*选择用户的treeview*@
+<div id="treeviewForSingleUserTwo"></div>
+<input type="button" value="确定" id="ConfirmSingleUserTwo" />
+<script>
+    var txtId;
+    //打开treeviewwindow
+    $("#treeviewWindowForSingleUserTwo").kendoWindow({
+        visible: false
+    });
+
+    function TselectSingleUserTwo(Id) {
+        txtId = Id;
+        var dialogForSingerUser = $("#treeviewWindowForSingleUserTwo").data("kendoWindow");
+        dialogForSingerUser.open();
+    };
+
+    $(function () {
+        $("#ConfirmSingleUserTwo").click(function () {
+            var dialogForSingerUser = $("#treeviewWindowForSingleUserTwo").data("kendoWindow");
+
+            dialogForSingerUser.close();
+        });
+    });
+
+    $("#treeviewWindowForSingleUserTwo").kendoWindow({
+        position: {
+            top: 120, // or "100px"
+            left: "40%"
+        },
+        draggable: true,
+        title: "用户列表",
+        visible: false,
+        actions: [
+                "Pin",
+                "Close",
+                "Minimize",
+                "Maximize",
+        ],
+    });
+
+
+
+    $(document).ready(function () {
+        // function that gathers IDs of checked nodes
+        function checkedNodeIds(nodes, checkedNodes) {
+            for (var i = 0; i < nodes.length; i++) {
+                //获取被选中但没有子节点的节点
+                if (nodes[i].checked && nodes[i].hasChildren == false) {
+                    checkedNodes.push(nodes[i].Name);
+                }
+                else {
+
+                }
+                if (nodes[i].hasChildren) {
+                    checkedNodeIds(nodes[i].children.view(), checkedNodes);
+                }
+                else {
+
+                }
+            }
+        }
+
+        // show checked node IDs on datasource change
+        function onCheck() {
+            var checkedNodes = [],
+                treeView = $("#treeviewForSingleUserTwo").data("kendoTreeView"),
+                message;
+
+            checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+
+            if (checkedNodes.length > 1) {
+                alert("只能选择一个人");
+                return;
+            } else if (checkedNodes.length > 0) {
+                message = "" + checkedNodes.join(",");
+
+            } else {
+                message = "没有选中任何人";
+            }
+            $("#" + txtId.id).val(message);
+        }
+
+        function onSelect(e) {
+            kendoConsole.log("Selecting: " + this.text(e.node));
+        }
+
+        function onChange(e) {
+            kendoConsole.log("Selection changed");
+        }
+
+        var inline = new kendo.data.HierarchicalDataSource({
+            type: "jsonp",
+            transport: {
+                read: "/Approval/SelectUserData"
+            },
+            schema: {
+
+                model: {
+                    id: "Id",
+                    departmentId: "DepartmentId",
+                    //children: "TravelFundsList",
+                    hasChildren: "HasChildren",
+                }
+            }
+        });
+
+        $("#treeviewForSingleUserTwo").kendoTreeView({
+            loadOnDemand: false,
+            checkboxes: {
+                checkChildren: false
+            },
+            dataSource: inline,
+            check: onCheck,
+
+            dataTextField: ["Name", "Name"],
+
+        });
+
+        var treeview = $("#treeviewForSingleUserTwo").data("kendoTreeView");
+        treeview.expand(".k-item");
+    });
+</script>
+

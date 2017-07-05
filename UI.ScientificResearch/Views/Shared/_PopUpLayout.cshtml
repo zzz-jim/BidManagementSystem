@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Head -->
+<head>
+    <title>招投标综合管理软件-政府采购管理子系统-学术及技术带头人</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="tabs and accordions" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+
+    <!--Beyond styles-->
+    <link href="~/Content/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/animate.min.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/new-cover.css" rel="stylesheet" />
+    <!--Page Related styles-->
+    <link href="~/Content/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Scripts/assets/js/skins.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.default.min.css" />
+    <link href="~/Content/Kendo/2014.2.716/kendo.rtl.min.css" rel="stylesheet">
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
+    <script src="~/Scripts/Kendo/2014.2.716/cultures/kendo.culture.zh-CN.min.js"></script>
+    <script src="~/Scripts/Kendo/2014.2.716/otherkendo.all.min.js"></script>
+    <script src="~/Scripts/layer/layer.min.js"></script>
+   
+    @*<script src="~/Content/shared/js/console.js"></script>*@
+    @RenderSection("HeadContent", required: false)
+</head>
+<!-- /Head -->
+<!-- Body -->
+<body>
+
+    @RenderBody()
+    <!--Basic Scripts-->
+    <script src="~/Scripts/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Scripts/assets/js/beyond.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        kendo.culture("zh-CN");
+    });
+    </script>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+<!--  /Body -->
+</html>

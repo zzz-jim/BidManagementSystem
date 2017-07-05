@@ -1,0 +1,225 @@
+﻿<script src="~/Scripts/Custom/Print.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#PrintBtn").click(function () {
+            $.ajax({
+                url: "/Statistic/PrintScienceResearchOfCapitalStatisticList",
+                type:"post",
+                success:function(data){
+                    if (data != null) {
+                        printAllData(data);
+                    }
+                    else {
+                        alert("打印失败！");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<br />
+    @using (Html.BeginForm("ScienceResearchOfCapitalStatistic", "Statistic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="fundssearchdata">
+    开始时间:
+    <input id="startTime" value="" type="text" style="width: 150px " />&nbsp;
+    结束时间:
+    <input id="endTime" value="" type="text" style="width: 150px " />&nbsp;
+
+    项目名称：<input id="projectName" type="text" style="width: 150px " />&nbsp;
+    模块：<select id="moduleName" name="moduleName" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
+        <option selected value="全部">所有模块</option>
+        <option value="ScienceResearch">政府采购</option>
+        <option value="GoodSubject">政府采购</option>
+        <option value="SubjectLeader">学术及技术带头人</option>
+        <option value="ResearchAward">科技成果奖</option>
+    </select>
+    <input type="button" value="查询" onclick="ScienceResearchOfCapitalStatisticList()" style="width: 55px; height: 28px" />
+            <input type="submit" style="width: 65px; height: 28px" value="导出全部" name="OutScienceResearchOfCapitalStatisticList" />
+            <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />
+</div>
+<br />
+
+    <div id="bigfundsgrid" class="k-content">
+        <div id="fundsGrid">
+
+        </div>
+        <script>
+        $(function () {
+            ScienceResearchOfCapitalStatisticList();
+        });
+
+        function ScienceResearchOfCapitalStatisticList() {
+            var searchitem2 = $("#startTime").val();
+            var searchitem3 = $("#endTime").val();
+            var searchitem4 = $("#projectName").val();
+            var searchitem5 = $("#moduleName").val();
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        type: "post",
+                        url: "/Statistic/ScienceResearchOfCapitalStatisticList?startTime=" +
+                            encodeURI(searchitem2) + "&endTime=" + encodeURI(searchitem3) + "&projectName=" +
+                            encodeURI(searchitem4) + "&moduleName=" + encodeURI(searchitem5) + "",
+                        dataType: "json",
+                        contentType: "application/json",
+                    },
+
+                    
+                    parameterMap: function (options, operation) {
+                        if (operation == "read") {
+                            var parameter = {
+                                pageIndex: options.page,
+                                pageSize: options.pageSize
+                            };
+                            return kendo.stringify(parameter);
+                        }
+
+                    },
+                },
+                batch: true,
+                pageSize: 10,
+                schema: {
+                    //model: {
+                    //    删除时必须有
+                    //    id: "ID"
+                    //},
+                    data: function (d) {
+                        for (var i = 0; i < d.data.length; i++) {
+                            //将json时间转换
+                            var birthdayMilliseconds = eval('new ' + d.data[i].AllocationOfTime.replace('/', '', 'g').replace('/', '', 'g'));
+                            var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                            d.data[i].AllocationOfTime = birthday;
+                        }
+                        return d.data;
+
+                    },
+                    total: function (d) {
+                        return d.total;
+                    }
+                },
+                serverPaging: true,
+            });
+
+            $("#fundsGrid").kendoGrid({
+                dataSource: dataSource,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5,
+                    messages: {
+                        display: "显示{0}-{1}条，共{2}条",
+                        empty: "没有数据",
+                        page: "页",
+                        of: "/ {0}",
+                        itemsPerPage: "条/页",
+                        first: "第一页",
+                        previous: "前一页",
+                        next: "下一页",
+                        last: "最后一页",
+                        refresh: "刷新"
+                    }
+                },
+                columns: [
+                    //{
+                    //    field: "ID",
+                    //    title: "序号",
+                    //    width: "110px",
+                    //    hidden: true,
+                    //},
+                    {
+                        field: "Modeule",
+                        title: "模块",
+                        width: "110px"
+                    },
+                    {
+                        field: "ProjectName",
+                        title: "项目名称",
+                        width: "110px"
+                    },
+                    {
+                        field: "PrincipalMan",
+                        title: "负责人",
+                        width: "110px"
+                    },
+                    {
+                        field: "AllocationOfTime",
+                        title: "拨款时间",
+                        width: "110px"
+                    },
+                    {
+
+                        field: "AppropriationMoney",
+                        title: "拨款金额",
+                        width: "110px",
+
+
+                    },
+                    {
+                        field: "ReimbursementAmount",
+                        title: "报销金额",
+                        width: "110px"
+                    },
+
+                ],
+                editable: {
+                    //mode: "inline",
+                    mode: "popup"
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            function startChange() {
+                var startDate = start.value(),
+                endDate = end.value();
+
+                if (startDate) {
+                    startDate = new Date(startDate);
+                    startDate.setDate(startDate.getDate());
+                    end.min(startDate);
+                } else if (endDate) {
+                    start.max(new Date(endDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            function endChange() {
+                var endDate = end.value(),
+                startDate = start.value();
+
+                if (endDate) {
+                    endDate = new Date(endDate);
+                    endDate.setDate(endDate.getDate());
+                    start.max(endDate);
+                } else if (startDate) {
+                    end.min(new Date(startDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            var start = $("#startTime").kendoDatePicker({
+                change: startChange
+            }).data("kendoDatePicker");
+
+            var end = $("#endTime").kendoDatePicker({
+                change: endChange
+            }).data("kendoDatePicker");
+            $("#startTime").attr("readonly", true);
+            $("#endTime").attr("readonly", true);
+            start.max(end.value());
+            end.min(start.value());
+        });
+
+
+        </script>
+    </div>
+}
+

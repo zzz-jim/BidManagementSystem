@@ -1,0 +1,16 @@
+﻿@model ScientificResearch.DomainModel.PaperBonusCredit
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<table class="table">
+    <tr><td>期刊级别</td><td>@Html.DisplayFor(model => model.Level)</td></tr>
+    <tr><td>期刊类型</td><td>@Html.DisplayFor(model => model.Type)</td></tr>
+    <tr><td>第一作者学分</td><td>@Html.DisplayFor(model => model.Author1)</td></tr>
+    <tr><td>第二作者学分</td><td>@Html.DisplayFor(model => model.Author2)</td></tr>
+    <tr><td>第三作者学分</td><td>@Html.DisplayFor(model => model.Author3)</td></tr>
+    <tr><td>第四作者学分</td><td>@Html.DisplayFor(model => model.Author4)</td></tr>
+    <tr><td>第五作者学分</td><td>@Html.DisplayFor(model => model.Author5)</td></tr>
+    <tr><td>第六作者学分</td><td>@Html.DisplayFor(model => model.Author6)</td></tr>
+@*<tr><td colspan="2">保存成功</td></tr>*@
+</table>

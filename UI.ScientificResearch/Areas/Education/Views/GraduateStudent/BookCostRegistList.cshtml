@@ -1,0 +1,171 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+
+@{
+    Layout = "~/Areas/Education/Views/Shared/_PopUpLayout.cshtml";
+}
+
+@Html.Partial("_GraduateStudentWizardPartial")
+<input type="hidden" id="Freeze" value="@ViewBag.Id" />
+
+<input type="button" id="AddBook" value="添加书本费登记" />
+
+<div id="AddBookArea">
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        var onClose = function () {
+            location.reload();//刷新包含SubmitApplication的页面
+        }
+        $("#AddBook").click(function () {
+            var id =@ViewBag.Id
+            $("#AddBookArea").kendoWindow({
+                position: {
+                    top: "10%", // or "100px"
+                    left: "23%"
+                },
+                width: "50%",
+                height: "50%",
+                modal: true,
+                draggable: true,
+                resizable: false,
+                title: "书本费使用添加",
+                visible: false,
+                actions: [
+                        "Pin",
+                        "Close",
+                ],
+                close: onClose
+                //  resizable: false,
+
+            });
+            $("#AddBookArea").append(' <iframe id="NewProcessRecordsframe" width="100%" height="160%" scrolling="no" style="border:0px" src="/Education/GraduateStudent/AddBookCostRegist?id=' + id + '">书本费使用登记</iframe>');
+            $("#AddBookArea").data("kendoWindow").center().open();
+        });
+    })
+</script>
+
+
+<div id="processwindowin">
+
+</div>
+
+<script type="text/javascript">
+
+    function OpenAddBookWindow(id) {
+
+        $("#processwindowin").append(' <iframe id="reburse" width="100%" height="200%" scrolling="no" style="border:0px" src="/Education/GraduateStudent/AddBookCostRegist?id=' + id + '">书本费使用登记</iframe>');
+        var MaxDialog = $("#processwindowin").data("kendoWindow");
+        MaxDialog.open();
+
+    };
+
+
+    $(document).ready(function () {
+        var window = $("#processwindowin");
+        if (!window.data("kendoWindow")) {
+            window.kendoWindow({
+                position: {
+                    top: "5%", // or "100px"
+                    left: "5%"
+                },
+                width: "91%",
+                height: "80%",
+                modal: true,
+                draggable: true,
+                resizable: false,
+                title: "书本费使用登记",
+                visible: false,
+                actions: [
+                    "Pin",
+                    "Close"
+                ],
+                close: function (e) {
+                    location.reload();//刷新页面
+                }
+            });
+        }
+
+    });
+</script>
+
+
+<table class="table">
+    <tr>
+        <th>书名</th>
+        <th>发布时间</th>
+        <th>创建时间</th>
+        <th>登记人</th>
+        <th>费用</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr onclick="OpenAddBookWindow(@item.NWorkToDoID)">
+        <td>@item.FormValues.Split('#')[1]</td>
+        <td>@item.FormValues.Split('#')[1]</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>@item.FormValues.Split('#')[3]</td>
+        
+            @Html.HiddenFor(modelItem => item.NWorkToDoID)
+        
+            @Html.HiddenFor(modelItem => item.WorkName)
+        
+            @Html.HiddenFor(modelItem => item.WenHao)
+       
+            @Html.HiddenFor(modelItem => item.FormID)
+       
+            @Html.HiddenFor(modelItem => item.WorkFlowID)
+      
+            @Html.HiddenFor(modelItem => item.FormContent)
+       
+            @Html.HiddenFor(modelItem => item.FuJianList)
+     
+            @Html.HiddenFor(modelItem => item.ShenPiYiJian)
+      
+            @Html.HiddenFor(modelItem => item.JieDianID)
+       
+            @Html.HiddenFor(modelItem => item.JieDianName)
+      
+            @Html.HiddenFor(modelItem => item.ShenPiUserList)
+       
+            @Html.HiddenFor(modelItem => item.OKUserList)
+       
+            @Html.HiddenFor(modelItem => item.StateNow)
+      
+            @Html.HiddenFor(modelItem => item.LateTime)
+       
+            @Html.HiddenFor(modelItem => item.BeiYong1)
+        
+            @Html.HiddenFor(modelItem => item.BeiYong2)
+       
+            @Html.HiddenFor(modelItem => item.ApplicationStatus)
+       
+            @Html.HiddenFor(modelItem => item.ApplicationId)
+      
+            @Html.HiddenFor(modelItem => item.FormKeys)
+      
+            @Html.HiddenFor(modelItem => item.FormValues)
+      
+            @Html.HiddenFor(modelItem => item.IsRejected)
+       
+            @Html.HiddenFor(modelItem => item.IsLocked)
+      
+            @Html.HiddenFor(modelItem => item.IsTemporary)
+      
+            @Html.HiddenFor(modelItem => item.IsDeleted)
+     
+            @Html.HiddenFor(modelItem => item.ProjectStatus)
+       
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ProjectEstablishTime)
+        </td>*@
+     
+    </tr>
+}
+
+</table>

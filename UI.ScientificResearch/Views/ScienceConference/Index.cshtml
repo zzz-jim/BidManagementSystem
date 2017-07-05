@@ -1,0 +1,50 @@
+﻿<div class="page-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    流程简述
+
+                </div>
+                <div class="chartFlow">
+                    <img src="~/Images/confFlowChart.gif" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    详细说明
+
+                </div>
+                <div class="chartText">
+                    该模块实现所有学术会议申请书电子化，按照会议标准科教科在线上审核通过后与OA系统挂接报送给相关领导审批、院办公室盖章，学术会议申请通过审批后，进行开展学术会议，等待学术会议结束后，负责人在线上填报费用报销信息，科教科在线上审核通过后与OA系统挂接报送给相关领导批准后方可报销，财务科报销费用返回科教科，科教科及各领导可以在线上按科室、不同级别学术分类进行检索和统计。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    待办事项
+                    <span class="getMore"><a href="/ScienceConference/WorkContainer">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkToDoList", "ScienceConference")
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    当前正在进行的事项
+                    <span class="getMore getmoreNew"><a href="/ScienceConference/ProcessingProjectList">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkDoingList", "ScienceConference")
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>

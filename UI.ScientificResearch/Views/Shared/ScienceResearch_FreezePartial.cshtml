@@ -1,0 +1,109 @@
+﻿<script type="text/javascript">
+    $(function () {
+        var random1 = Math.floor(Math.random() * 1000 + 1);
+        var random2 = Math.floor(Math.random() * 1000 + 1);
+        var random3 = Math.floor(Math.random() * 1000 + 1);
+        var id = $("#Freeze").val();
+        $.ajax({
+            url: "/Approval/RetrunFreezeFlag?id=" + id + "&pagestate=FirstLoad" + "&k=" + random1,
+            type: "get",
+
+            success: function (returndata1) {
+                if (returndata1 == "areadyFreezed") {
+                    $("#freezearea").append("<input type='button' value='启用此项目' id='btnFreezed' class='btn btn-blue' />");
+                    $("input[name='Approval']").attr("disabled", true);
+                    $("input[name='Reject']").attr("disabled", true);
+                    $("input[name='Save']").attr("disabled", true);
+                    $("input[name='Reported']").attr("disabled", true);
+                    $("input[name='UpdateData']").attr("disabled", true);
+                    $("#btnUploadFile").attr("disabled", true);
+                }
+                else if (returndata1 == "notFreezed") {
+                    $("#freezearea").append("<input type='button' value='冻结此项目' id='btnFreezing' class='btn btn-blue' />");
+                    $("#btnFreezing").show();
+                    $("input[name='Approval']").attr("disabled", false);
+                    $("input[name='Reject']").attr("disabled", false);
+                    $("input[name='Save']").attr("disabled", false);
+                    $("input[name='Reported']").attr("disabled", false);
+                    $("input[name='UpdateData']").attr("disabled", false);
+                    $("#btnUploadFile").attr("disabled", false);
+                }
+                else {
+                    alert("wrong!");
+                }
+
+            }
+        });
+        $("#btnFreezed").click(function () {
+            $.ajax({
+                url: "/Approval/RetrunFreezeFlag?id=" + id + "&pagestate=Freezed" + "&k=" + random2,
+                type: "get",
+
+                success: function (returndata2) {
+                    if (returndata2 == "areadyFreezed") {
+                      
+                        $("#freezearea").append("<input type='button' value='启用此项目' id='btnFreezed' class='btn btn-blue' />");
+                        $("input[name='Approval']").attr("disabled", true);
+                        $("input[name='Reject']").attr("disabled", true);
+                        $("input[name='Save']").attr("disabled", true);
+                        $("input[name='Reported']").attr("disabled", true);
+                        $("input[name='UpdateData']").attr("disabled", true);
+                        $("#btnUploadFile").attr("disabled", true);
+                    }
+                    else if (returndata2 == "notFreezed") {
+                
+                        $("#freezearea").append("<input type='button' value='冻结此项目' id='btnFreezing' class='btn btn-blue' />");
+                        $("input[name='Approval']").attr("disabled", false);
+                        $("input[name='Reject']").attr("disabled", false);
+                        $("input[name='Save']").attr("disabled", false);
+                        $("input[name='Reported']").attr("disabled", false);
+                        $("input[name='UpdateData']").attr("disabled", false);
+                        $("#btnUploadFile").attr("disabled", false);
+                    }
+                    else {
+                        alert("wrong!");
+                    }
+                }
+            });
+        });
+        $("#btnFreezing").click(function () {
+            $.ajax({
+                url: "/Approval/RetrunFreezeFlag?id=" + id + "&pagestate=Freezing" + "&k=" + random3,
+                type: "get",
+
+                success: function (returndata3) {
+                    if (returndata3 == "areadyFreezed") {
+                       
+                        $("#freezearea").append("<input type='button' value='启用此项目' id='btnFreezed' class='btn btn-blue' />");
+                        $("input[name='Approval']").attr("disabled", true);
+                        $("input[name='Reject']").attr("disabled", true);
+                        $("input[name='Save']").attr("disabled", true);
+                        $("input[name='Reported']").attr("disabled", true);
+                        $("input[name='UpdateData']").attr("disabled", true);
+                        $("#btnUploadFile").attr("disabled", true);
+                    }
+                    else if (returndata3 == "notFreezed") {
+                       
+                        $("#freezearea").append("<input type='button' value='冻结此项目' id='btnFreezing' class='btn btn-blue' />");
+                        $("input[name='Approval']").attr("disabled", false);
+                        $("input[name='Reject']").attr("disabled", false);
+                        $("input[name='Save']").attr("disabled", false);
+                        $("input[name='Reported']").attr("disabled", false);
+                        $("input[name='UpdateData']").attr("disabled", false);
+                        $("#btnUploadFile").attr("disabled", false);
+
+                    }
+                    else {
+                        alert("wrong!");
+                    }
+                }
+            });
+        });
+
+    });
+
+</script>
+
+
+<div id="freezearea">
+</div>

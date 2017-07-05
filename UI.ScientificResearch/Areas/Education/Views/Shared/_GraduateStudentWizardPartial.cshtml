@@ -1,0 +1,195 @@
+﻿@using ScientificResearch.Utility.Enums;
+
+<!--Page Related Scripts-->
+@*<script src="../../../../Scripts/assets/js/fuelux/wizard/wizard-custom.js"></script>*@
+<script src="~/Scripts/assets/js/fuelux/wizard/wizard-custom.js"></script>
+<div class="widget-body">
+    <div id="simplewizardinwidget" class="wizard" data-target="#simplewizardinwidget-steps">
+        <ul class="steps">
+            <li id="step1" class="ProjectStepComplete"><span class="step">1</span>研究生申请书<span class="chevron"></span></li>
+            <li id="step2" class="ProjectStepComplete"><span class="step">2</span>费用登记<span class="chevron"></span></li>
+            <li id="step3" class="ProjectStepComplete"><span class="step">3</span>书本费使用登记<span class="chevron"></span></li>
+            <li id="step4" class="ProjectStepComplete"><span class="step">4</span>结业证书<span class="chevron"></span></li>
+            <li id="step5" class="ProjectStepComplete"><span class="step">5</span>奖励登记<span class="chevron"></span></li>
+            <li id="step6" class="ProjectStepComplete"><span class="step">6</span>经费报销<span class="chevron"></span></li>
+            @*<li id="freezearea">
+                <input type="button" id="btnFreez" class="btn btn-blue" />
+            </li>*@
+        </ul>
+    </div>
+
+    <div class="step-content" id="simplewizardinwidget-steps">
+        <div class="step-pane active" id="simplewizardinwidgetstep1">
+            <div>
+                @Html.ActionLink("研究生申请书", "ApplicationAgree", new { id = ViewBag.Id }, new { id = "ApplicationAgree" })
+                @Html.ActionLink("费用登记", "CostRegist", new { id = ViewBag.Id }, new { id = "CostRegist" })
+                @Html.ActionLink("书本费使用登记", "BookCostRegistList", new { id = ViewBag.Id }, new { id = "BookCostRegistList" })
+                @Html.ActionLink("结业证书", "GraduationCertificate", new { id = ViewBag.Id }, new { id = "GraduationCertificate" })
+                @Html.ActionLink("奖励登记", "RewardSituation", new { id = ViewBag.Id }, new { id = "RewardSituation" })
+                @Html.ActionLink("经费报销", "ReimburseWorkList", new { id = ViewBag.Id }, new { id = "ReimburseWorkList" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ApplicationProjectStatusWorkflowNodeId = 0;
+    var currentProjectApplicationStatus = "";
+    $(function () {
+        $.ajax({
+            url: "/Education/GraduateStudent/ReturnStateValue?id=" + $("#Freeze").val(),
+            type: "post",
+            success: function (data) {
+
+                currentProjectApplicationStatus = data;
+                //alert("status:" + currentProjectApplicationStatus);
+
+                switch (currentProjectApplicationStatus) {
+                    case "ApplicationRejected":
+                    case "AplicationWriting":
+                    case "ApplicationApproving":
+                        $("#CostRegist").hide();
+                        $("#BookCostRegistList").hide();
+                        $("#GraduationCertificate").hide();
+                        $("#ReimburseWorkList").hide();
+                        $("#RewardSituation").hide();
+                        ApplicationProjectStatusWorkflowNodeId = 1;
+                        break;
+                    case "ApplicationApproved":
+                    case "CostRegistNot":
+                    case "CostRegistSave":
+                        $("#BookCostRegistList").hide();
+                        $("#GraduationCertificate").hide();
+                        $("#ReimburseWorkList").hide();
+                        $("#RewardSituation").hide();
+                        ApplicationProjectStatusWorkflowNodeId = 2;
+                        break;
+                    case "CostRegistSubmit":
+                    case "BookCostRegistNot":
+                        $("#GraduationCertificate").hide();
+                        $("#ReimburseWorkList").hide();
+                        $("#RewardSituation").hide();
+                        ApplicationProjectStatusWorkflowNodeId = 3;
+                        break;
+
+                    case "GraduationCertificateSubmit":
+                    case "BookCostRegistSubmit":
+                    case "GraduationCertificateNot":
+                    case "GraduationCertificateSave":
+                    case "GraduationCertificateAgree":
+                    case "GraduationCertificateReject":
+                        $("#ReimburseWorkList").hide();
+                        $("#RewardSituation").hide();
+                        ApplicationProjectStatusWorkflowNodeId = 4;
+                        //$(step5).removeClass("ProjectStepComplete").addClass("active");
+                        //$("#GiveCredit").hide();
+                        break;
+                    case "RewardSituationNot":
+                  
+                        //$(step5).removeClass("ProjectStepComplete").addClass("active");
+                        ApplicationProjectStatusWorkflowNodeId = 5;
+                        //ApplicationProjectStatusWorkflowNodeId = 6;
+                        break;
+                    case "RewardSituationSubmit":
+                        ApplicationProjectStatusWorkflowNodeId = 6;
+                        // TODO: jim will discuss with xiao bo...
+                    default:
+                        // Error page 404....
+                        break;
+                }
+
+                var idPre = "#step";
+
+                for (var i = 0; i < ApplicationProjectStatusWorkflowNodeId; i++) {
+                    var id = idPre + i;
+                    $(id).removeClass("ProjectStepComplete").addClass("complete");
+                }
+
+                $(idPre + ApplicationProjectStatusWorkflowNodeId).removeClass("ProjectStepComplete").addClass("active");
+            }
+        });
+    })
+</script>
+
+
+
+
+@*<script type="text/javascript">
+    $(function () {
+        var random1 = Math.floor(Math.random() * 1000 + 1);
+        var random2 = Math.floor(Math.random() * 1000 + 1);
+        var customApplicationId = $("#Freeze").val();
+
+        $.ajax({
+            url: "/Education/GraduateStudent/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=FirstLoad" + "&k=" + random1,
+            type: "get",
+
+            success: function (returndata1) {
+                if (returndata1 == "areadyFreezed") {
+                    $("#btnFreez").val("启用此项目");
+                    $("input[name='Approval']").attr("disabled", true);
+                    $("input[name='Reject']").attr("disabled", true);
+                    $("input[name='Save']").attr("disabled", true);
+                    $("input[name='Reported']").attr("disabled", true);
+                    $("input[name='UpdateData']").attr("disabled", true);
+                    $("#btnUploadFile").attr("disabled", true);
+                }
+                else if (returndata1 == "notFreezed") {
+                    $("#btnFreez").val("冻结此项目");
+                    $("input[name='Approval']").attr("disabled", false);
+                    $("input[name='Reject']").attr("disabled", false);
+                    $("input[name='Save']").attr("disabled", false);
+                    $("input[name='Reported']").attr("disabled", false);
+                    $("input[name='UpdateData']").attr("disabled", false);
+                    $("#btnUploadFile").attr("disabled", false);
+                }
+                else {
+                    alert("wrong!");
+                }
+            }
+        });
+
+        $("#btnFreez").click(function () {
+            var btnFreezValue = $("#btnFreez").val();
+            var freezeState;
+            if (btnFreezValue == "启用此项目") {
+                //启用
+                freezeState = "Freezed";
+            }
+            else if (btnFreezValue == "冻结此项目") {
+                //冻结
+                freezeState = "Freezing";
+            }
+            $.ajax({
+                url: "/Education/GraduateStudent/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=" + freezeState + "&k=" + random2,
+                type: "get",
+                success: function (returndata3) {
+                    if (returndata3 == "areadyFreezed") {
+                        $("#btnFreez").val("启用此项目");
+                        $("input[name='Approval']").attr("disabled", true);
+                        $("input[name='Reject']").attr("disabled", true);
+                        $("input[name='Save']").attr("disabled", true);
+                        $("input[name='Reported']").attr("disabled", true);
+                        $("input[name='UpdateData']").attr("disabled", true);
+                        $("#btnUploadFile").attr("disabled", true);
+                        alert("操作成功，关于此项目的任何操作都不能继续进行！");
+                    }
+                    else if (returndata3 == "notFreezed") {
+                        $("#btnFreez").val("冻结此项目");
+                        $("input[name='Approval']").attr("disabled", false);
+                        $("input[name='Reject']").attr("disabled", false);
+                        $("input[name='Save']").attr("disabled", false);
+                        $("input[name='Reported']").attr("disabled", false);
+                        $("input[name='UpdateData']").attr("disabled", false);
+                        $("#btnUploadFile").attr("disabled", false);
+                        alert("操作成功，项目可继续进行");
+                    }
+                    else {
+                        alert("wrong!");
+                    }
+                }
+            });
+        });
+
+    });
+</script>*@

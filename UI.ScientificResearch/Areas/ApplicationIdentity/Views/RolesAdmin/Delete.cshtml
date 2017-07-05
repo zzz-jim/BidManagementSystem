@@ -1,0 +1,32 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "删除角色";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<h3>您确定要删除这个角色? </h3>
+<p>删除这个角色将会删除所有相关的用户. 不会删除其他用户.</p>
+<div>
+    <h4>Role.</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            角色名称：
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回角色列表", "Index")
+        </div>
+    }
+</div>

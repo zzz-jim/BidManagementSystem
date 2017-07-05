@@ -1,0 +1,118 @@
+﻿@model ScientificResearch.ViewModel.ProjectRecordViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+
+<div>
+    <!-- Project Step Wizard -->
+    @Html.Partial("_ScienceResearchWizardPartial")
+    <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+
+    <table class="table">
+
+        @Html.HiddenFor(model => model.ApplicationId)
+
+        @Html.HiddenFor(model => model.WorkflowId)
+
+        @Html.HiddenFor(model => model.StartTime)
+
+        @Html.HiddenFor(model => model.CreatedBy)
+
+        @Html.HiddenFor(model => model.UpdatedBy)
+
+        @Html.HiddenFor(model => model.UpdatedTime)
+
+        <tr>
+            <td>@Html.LabelFor(model => model.Application.BeiYong1)</td>
+            <td>
+                <input readonly="readonly" id="Application.BeiYong1" name="Application.BeiYong1" value="@Model.Application.BeiYong1" type="text" class="customTextBox" />
+            </td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.Application.WenHao)</td>
+            <td>
+                <input readonly="readonly" id="Application.WenHao" name="Application.WenHao" value="@Model.Application.WenHao" type="text" class="customTextBox" />
+            </td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tr>
+            @Html.Raw(Model.Application.FormContent)
+            @Html.HiddenFor(model => model.Application.FormContent)
+            @Html.ValidationMessageFor(model => model.Application.FormContent)
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.SuperiorFunds)：</td>
+            <td>
+                @Html.DisplayFor(model => model.SuperiorFunds)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tr>
+            <td>上级拨款时间：</td>
+            <td>
+                @Html.DisplayFor(model => model.SuperiorFundTime)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.HospitalFunds)：</td>
+            <td>
+                @Html.DisplayFor(model => model.HospitalFunds)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tr>
+            <td> 院内拨款时间：</td>
+            <td>
+                @Html.DisplayFor(model => model.FundsTime)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Total)：</td>
+            <td>
+                @Html.DisplayFor(model => model.Total)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.EndTime)：</td>
+            <td>
+                @Html.DisplayFor(model => model.EndTime)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.CreatedTime)：</td>
+            <td>
+                @Html.DisplayFor(model => model.CreatedTime)
+            </td>
+            <td colspan="4"></td>
+        </tr>
+    </table>
+</div>
+<script>
+    $("#selectForSingleUser").hide();
+    $("#select").hide();
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#Drop1364262284").attr("disabled", "disabled");
+        $("#Drop968600384").attr("disabled", "disabled");
+    });
+
+    $(function () {
+        $("#TextArea683159807").attr("readonly", true);
+    });
+</script>

@@ -1,0 +1,130 @@
+﻿@model UI.ScientificResearch.Areas.ApplicationIdentity.Models.LoginViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<!--Head-->
+<head>
+    <meta charset="utf-8" />
+    <title>Login Page</title>
+
+    <meta name="description" content="login page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="~/Content/assets/img/favicon.png" type="image/x-icon">
+    <script src="~/Areas/ApplicationIdentity/Scripts/jquery-1.10.2.min.js"></script>
+    <!--Basic Styles-->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+
+    <!--Beyond styles-->
+    <link href="~/Content/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/animate.min.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Scripts/assets/js/skins.min.js"></script>
+    <style>
+        body:before {
+            background: url(../../../../Images/8.jpg) no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var loginSuccess = "@ViewBag.LoginSuccess";
+            if (loginSuccess = "False" && loginSuccess!="")
+            {
+                alert("无效的登录！");
+            }
+        });
+    </script>
+</head>
+<!--Head Ends-->
+<!--Body-->
+
+<body>
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+    <div class="login-container animated fadeInDown">
+        <div class="loginbox bg-blue">
+            <div class="loginbox-title"></div>
+            <div class="loginbox-social">
+                <div class="social-title "></div>
+                <div class="social-buttons">
+                    <div style="margin: 0 auto 0 auto;">
+                        <img src="~/Images/8.png" />
+                    </div>
+                </div>
+            </div>
+            @*<div class="loginbox-or">
+                <div class="or-line"></div>
+                <div class="or">OR</div>
+            </div>*@
+            <div class="loginbox-textbox">
+                @*<input type="text" class="form-control" placeholder="UserName" name="UserName" />*@
+                @*@Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })*@
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "用户名" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+
+
+
+
+            <div class="loginbox-textbox">
+                @*<input type="text" class="form-control"  placeholder="Password" name="Password" />*@
+                @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "密码" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="loginbox-forgot">
+                @*<a href="">忘记密码?</a>*@
+                @*<div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>*@
+            </div>
+            <div class="loginbox-submit">
+                <input type="submit" class="btn btn-primary btn-block" value="登录">
+            </div>
+            <div class="loginbox-signup">
+                <a href="register.html"></a>
+            </div>
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="~/Scripts/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Scripts/assets/js/beyond.js"></script>
+
+    <!--Google Analytics::Demo Only-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-52103994-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+}
+</body>
+
+<!--Body Ends-->
+</html>

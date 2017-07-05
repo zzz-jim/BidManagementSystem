@@ -1,0 +1,35 @@
+<tr>
+	<td class="tdcss">项目类型：</td>
+
+	<td colspan=1>
+		<select id="Drop1364262284" class="k-list-container k-popup k-group k-reset" name="Drop1364262284" style="width:152px;height:24px;"> <option selected="" value=国家自然基金>国家自然基金</option><option value=省自然基金>省自然基金</option><option value=省科技攻关项目>省科技攻关项目</option><option value=省科技攻关项目（自筹）>省科技攻关项目（自筹）</option><option value=省中医药科研课题>省中医药科研课题</option><option value=省中医药科研课题（自筹）省医学科研课题>省中医药科研课题（自筹）省医学科研课题</option><option value=省医学科研课题（自筹）>省医学科研课题（自筹）</option><option value=合作项目（国家级）>合作项目（国家级）</option><option value=合作项目（省级）>合作项目（省级）</option><option selected value=合作项目（市级）>合作项目（市级）</option><option value=市科技计划项目>市科技计划项目</option><option value=市科技计划项目（自筹）>市科技计划项目（自筹）</option><option value=院级升级以上培育基金项目>院级升级以上培育基金项目</option><option value=院资助项目>院资助项目</option><option value=中华国际医学交流基金会科研基金项目（合作）>中华国际医学交流基金会科研基金项目（合作）</option></select>
+	</td>
+	<td class="tdcss"> 立项类型：</td>
+	<td colspan=1><select id="Drop968600384"  name="Drop968600384" style="width:152px;height:24px;" class="k-list-container k-popup k-group k-reset"  class=" customSelect"> <option selected="" value=国家级>国家级</option><option value=省级>省级</option><option value=市级>市级</option><option value=局级>局级</option><option value=院级>院级</option></select></td>
+	<td class="tdcss">申请时间：</td>
+	<td colspan=1><input id="Date442495555" type="text"  style="width:158px;height:30px;" background-color: #fbfbfb; " name="Date442495555" alt="申请时间" class="in" readonly="readonly"></td>
+</tr>
+<tr>
+	<td>申请人：</td>
+	<td colspan=1><input id="Text435761615" type="text"  class="customTextBox" readonly="" alt="申请人" value="宏控件-用户姓名" name="Text435761615" /></td>
+	<td> 科室：</td>
+	<td colspan=1><input readonly="" type="text"  class="customTextBox" alt="科室" id="Text289827346" value="宏控件-用户部门" name="Text289827346" /></td>
+	<td>项目负责人：</td>
+	<td colspan=1>
+		<input id="Text1783445882" type="text"  class="customTextBox" name="Text1783445882" readonly="" />
+		<input type="button" id="selectForSingleUser" onclick="TselectSingleUser(Text1783445882)" value="点击选择用户" />
+	</td>
+</tr>
+<tr>
+	<td>项目参与人员：</td>
+	<td colspan=5>
+		<input type="text" class=customTextBox" id="Text309804476" readonly="" alt="项目参与人员" name="Text309804476" />
+		<input type="button" id="select" onclick="TselectUser(Text309804476)" value="点击选择用户" />
+	</td>
+</tr>
+<tr>
+	<td>概述：</td>
+	<td colspan=5>
+		<textarea id="TextArea683159807" style="width: 590px; height: 53px; margin: 0px;" name="TextArea683159807" alt="概述"></textarea>
+	</td>
+</tr>

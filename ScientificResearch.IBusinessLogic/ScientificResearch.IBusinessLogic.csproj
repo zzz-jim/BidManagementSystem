@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{65725F94-A331-43A2-93B9-3BB00485DD67}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScientificResearch.IBusinessLogic</RootNamespace>
+    <AssemblyName>ScientificResearch.IBusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IContinuingEducationRecordService.cs" />
+    <Compile Include="IFundsThresholdService.cs" />
+    <Compile Include="ITravelFundsDetailService.cs" />
+    <Compile Include="IProjectBonusCreditService.cs" />
+    <Compile Include="IFundsManageProgramStatisticsService.cs" />
+    <Compile Include="IScienceResearchAmountOfApplicationStatisticService.cs" />
+    <Compile Include="IScienceResearchAmountOfFundStatisticService.cs" />
+    <Compile Include="IScienceResearchAmountOfSectionStatisticService.cs" />
+    <Compile Include="IScienceResearchOfCapitalStatisticService.cs" />
+    <Compile Include="IStatisticService.cs" />
+    <Compile Include="IApplicationService.cs" />
+    <Compile Include="IERPBuMenService.cs" />
+    <Compile Include="IERPNFormService.cs" />
+    <Compile Include="IERPNWorkFlowNodeService.cs" />
+    <Compile Include="IERPNWorkFlowService.cs" />
+    <Compile Include="IERPRiZhiService.cs" />
+    <Compile Include="IFundsRecordService.cs" />
+    <Compile Include="IProjectRecordService.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScientificResearch.DataTransferModel\ScientificResearch.DataTransferModel.csproj">
+      <Project>{8119c621-a2c1-4c23-9f4e-2ff097698128}</Project>
+      <Name>ScientificResearch.DataTransferModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.DomainModel\ScientificResearch.DomainModel.csproj">
+      <Project>{0528edad-54f8-43dd-b6cb-d3d29e3544e9}</Project>
+      <Name>ScientificResearch.DomainModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

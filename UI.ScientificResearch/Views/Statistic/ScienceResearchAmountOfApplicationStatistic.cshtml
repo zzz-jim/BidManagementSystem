@@ -1,0 +1,105 @@
+﻿@model IEnumerable<IGrouping<String, ScientificResearch.DataTransferModel.ScienceResearchAmountOfApplicationStatisticTransferObject>>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/Custom/Print.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#PrintBtn").click(function () {
+            var printDivId = "printScienceResearchAmountOfApplicationStatistic";
+            areaPrintFun(printDivId);
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div id="searcharea">
+        开始时间：<input type="text" id="startTime" name="startTime" />
+        结束时间：<input type="text" id="endTime" name="endTime" />
+        <input type="submit" id="search" name="search" style="width: 55px; height: 28px" value="查询" />
+        <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />
+    </div>
+    <br/>
+    <div id="printScienceResearchAmountOfApplicationStatistic">
+        <table class="table">
+            <tr>
+                <th>
+                    项目
+                </th>
+                <th>
+                    项目类型
+                </th>
+                <th>
+                    未成功申请书个数
+                </th>
+                <th>
+                    成功申请书个数
+                </th>
+            </tr>
+
+            @foreach (var firstGroupedItem in Model)
+        {
+            var secondGroupItems = firstGroupedItem.GroupBy(x => x.ProjectApprovalType);
+
+            foreach (var secondGroupedItem in secondGroupItems)
+            {
+        <tr>
+            <td>@secondGroupedItem.First().Modeule</td>
+            <td>@secondGroupedItem.First().ProjectApprovalType</td>
+            <td>@secondGroupedItem.Sum(x => x.ApplicationCount)</td>
+            <td>@secondGroupedItem.Sum(x => x.ApplicationSuccessCount)</td>
+        </tr>
+            }
+        }
+        </table>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        function startChange() {
+            var startDate = start.value(),
+            endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            var endDate = end.value(),
+            startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        var start = $("#startTime").kendoDatePicker({
+            change: startChange
+        }).data("kendoDatePicker");
+
+        var end = $("#endTime").kendoDatePicker({
+            change: endChange
+        }).data("kendoDatePicker");
+        $("#startTime").attr("readonly", true);
+        $("#endTime").attr("readonly", true);
+        start.max(end.value());
+        end.min(start.value());
+    });
+</script>
+

@@ -1,0 +1,42 @@
+    <tr >
+        <td class="tdcss">申请人：</td>
+        <td colspan="3"><input type="text"  class="customTextBox" id="Text36681564" readonly="" alt="申请人" value="宏控件-用户姓名" name="Text36681564" />　</td>
+        <td class="tdcss">申请科室：</td>
+        <td ><input id="Text317309579" type="text"  class="customTextBox" readonly="" alt="申请科室"  value="宏控件-用户部门" name="Text317309579" /></td>
+    </tr>
+    
+    <tr >
+        <td >参加人员：</td>
+        <td  colspan="3">
+        <input id="Text40054923" type="text"  class="customTextBox" readonly="" alt="参加人员" value="点击选择用户" name="Text40054923" />
+            <input type="button" id="select" onclick="TselectUser(Text40054923)" value="点击选择用户" />
+        </td>
+        <td  >参会地点：</td>
+        <td ><input id="Text952846795" type="text"  class="customTextBox" alt="参会地点" name="Text952846795" /></td>
+    </tr>
+    <tr >
+        <td >会议开始时间：</td>
+        <td ><input onclick="setday(this)" type="text" style="width:158px;height:25px;" id="Date871934256"   alt="会议开始时间"  name="Date871934256" /></td>
+        <td class="tdcss">会议结束时间：</td>
+        <td ><input onclick="setday(this)" type="text"  style="width:158px;height:25px;" id="Date1368098065"  alt="会议结束时间" name="Date1368098065" /></td>
+        <td >申请时间：</td>
+        <td ><input onclick="setday(this)" type="text"  style="width:158px;height:30px;" id="Date792640018" class="in"  alt="申请时间" name="Date792640018" /></td>
+    </tr>
+    <tr >
+        <td > 会务费：</td>
+        <td ><input type="text"  class="customTextBox" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" id="Num527853997" onpaste="return !/D/.test(clipboardData.getData('text'))"  alt="会务费" name="Num527853997" /></td>
+        <td >住宿费：</td>
+        <td ><input type="text"  class="customTextBox" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" id="Num570081273" onpaste="return !/D/.test(clipboardData.getData('text'))"  alt="住宿费" name="Num570081273" /></td>
+        <td >参会身份：</td>
+		<td ><select id="Drop967564018"  name="Drop967564018" style="width:152px;height:24px;" class="k-list-container k-popup k-group k-reset"  class=" customSelect"> <option selected="" value=学员>学员</option><option value=委员>委员</option><option value=其他>其他</option><option value=无>无</option></select></td>
+    </tr>
+    <tr >
+        <td>&nbsp; 备注：</td>
+        <td colspan="5"><textarea style="width: 590px; height: 53px; margin: 0px;" id="TextArea1761429388" rows="1" cols="1" name="TextArea1761429388" alt="备注"></textarea></td>
+    </tr>
+    <tr >
+        <td >会议内容：</td>
+        <td  colspan="5"><textarea style="width: 590px; height: 53px; margin: 0px;" id="TextArea1387630950" rows="1" cols="1" name="TextArea1387630950"></textarea> </td>
+    </tr>
+
+

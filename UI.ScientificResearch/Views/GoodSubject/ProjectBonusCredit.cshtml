@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ProjectBonusCreditViewModel>
+
+    
+
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped table-bordered table-hover">
+
+                          <tr>
+                              <th></th>
+                              <th>国家级</th>
+                              <th>省级</th>
+                              <th>市级</th>
+                              <th>局级</th>
+                              <th>院级</th>
+                          </tr>
+                          @foreach (var item in Model)
+                          {
+
+                              <tr>
+                                  @if (@item.ProjectLevel == "国家级")
+                                  {
+                                      <td>@item.ProjectType</td>
+                                      @*<td><input type="text" value="@item.Credit" /></td>*@
+                                      <td>@item.Credit</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                  }
+                                  @if (@item.ProjectLevel == "省级")
+                                  {
+                                      <td>@item.ProjectType</td>
+                                      <td>0</td>
+                                      @*<td><input type="text" value="@item.Credit" /></td>*@
+                                      <td>@item.Credit</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                  }
+                                  @if (@item.ProjectLevel == "市级")
+                                  {
+                                      <td>@item.ProjectType</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      @*<td><input type="text" value="@item.Credit" /></td>*@
+                                      <td>@item.Credit</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                  }
+                                  @if (@item.ProjectLevel == "局级")
+                                  {
+                                      <td>@item.ProjectType</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      @*<td><input type="text" value="@item.Credit" /></td>*@
+                                      <td>@item.Credit</td>
+                                      <td>0</td>
+                                  }
+                                  @if (@item.ProjectLevel == "院级")
+                                  {
+                                      <td>@item.ProjectType</td>
+                                      @*<td ><input type="text" value="@item.ProjectType" /></td>*@
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      @*<td><input type="text" value="@item.Credit" /></td>*@
+                                      <td>@item.Credit</td>
+                                  }
+                              </tr>
+                          }
+
+                      </table>
+

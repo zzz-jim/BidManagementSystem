@@ -1,0 +1,75 @@
+﻿@model UI.ScientificResearch.Areas.ApplicationIdentity.Models.IndexViewModel
+@{
+    ViewBag.Title = "管理你的账户";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("修改您的密码", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Pick a password", "SetPassword")
+            }
+        </p>
+        <p>
+            电话号码: @(Model.PhoneNumber ?? "无") [
+            @if (Model.PhoneNumber != null)
+            {
+                @Html.ActionLink("Change", "AddPhoneNumber")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Remove", "RemovePhoneNumber")
+            }
+            else
+            {
+                @Html.ActionLink("添加", "AddPhoneNumber")
+            }
+            ]
+        </p>
+        <p>
+            外部登录: @Model.Logins.Count
+            @Html.ActionLink("[管理]", "ManageLogins")
+        </p>
+        @if (Model.TwoFactor)
+        {
+            <form method="post" action="/Manage/DisableTFA">
+                <p>
+                    两个因素是目前是启用的：
+                    <input type="submit" value="禁用" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/EnableTFA">
+                <p>
+                    两个因素是目前是禁用的:
+                    <input type="submit" value="启用" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+        @if (Model.BrowserRemembered)
+        {
+            <form method="post" action="/Manage/ForgetBrowser">
+                <p>
+                    目前浏览器能记住这俩个因素:
+                    <input type="submit" value="忘记浏览器" class="btn btn-default" />
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/RememberBrowser">
+                <p>
+                    目前浏览器不记住这俩个因素:
+                    <input type="submit" value="记住浏览器" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+    </div>
+</div>

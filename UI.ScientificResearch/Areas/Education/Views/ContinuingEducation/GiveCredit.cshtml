@@ -1,0 +1,140 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ContinuingEducationRecordViewModel>
+
+@{
+    Layout = "~/Areas/Education/Views/Shared/_PopUpLayout.cshtml";
+}
+@Html.Partial("_ContinuingEducationWizardPartial")
+<input type="hidden" id="Freeze" value="@ViewBag.Id" />
+
+<script type="text/javascript">
+    //$(function () {
+    //    $("#checkAll").click(function () {
+    //        $('input[name="seletedItem"]').each(function () {
+    //            $(this).attr("checked", !$(this).attr("checked"));
+    //        })
+    //    });
+    //});
+
+    //$(function () {
+    //    var onClose = function () {
+    //        parent.location.reload();
+    //    }
+    //    $("#ChangeState").click(function () {
+            
+    //        var continueId = $[("input[name='seletId']:checked").val()];
+          
+    //        if (continueId == null) {
+    //            alert("请选择授予学分的用户！");
+    //            return false;
+    //        }
+    //        else {
+    //            $("#UpdateId").val(continueId)
+    //        }
+    //    });
+    //});
+
+
+
+    function selectAll() {
+        var val = document.getElementById("ckAll");
+        if (val.checked == false) {
+            var chs = document.getElementsByName("checkItem");
+            for (var i = 0; i < chs.length; i++) {
+                chs[i].checked = false;
+            }
+        }
+        else {
+            var chs = document.getElementsByName("checkItem");
+            for (var i = 0; i < chs.length; i++) {
+                chs[i].checked = true;
+            }
+        }
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+   <input type="text" hidden="hidden" id="UpdateId" name="UpdateId" />
+<table class="table">
+    <p>
+        <input type="submit" value="授予学分" id="ChangeState" onclick="return confirm('确定授予学分吗？')" />
+    </p>
+    <tr>
+        <th>
+            @*<input type="checkbox" value="全选" name="checkAll" id="checkAll" />*@
+            <input type="checkbox" id="ckAll" onclick="selectAll()" />
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Credit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreditLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsGranted)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @*<input type="checkbox" class="seletId" name="seletedItem" value="@item.Id" />*@
+            @Html.CheckBox("checkItem", new {value=item.Id })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Credit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreditLevel)
+        </td>
+        @if (item.IsGranted == false)
+        {
+            <td>
+                未授予学分
+            </td>
+        }
+        else if (item.IsGranted == true)
+        {
+            <td>已授予学分</td>
+        }
+
+        else
+        {
+            <td></td>
+        }
+            @Html.HiddenFor(modelItem => item.AccountCredit)
+
+            @Html.HiddenFor(modelItem => item.CreditType)
+
+            @Html.HiddenFor(modelItem => item.IsProjectCredit)
+
+            @Html.HiddenFor(modelItem => item.UserId)
+
+            @Html.HiddenFor(modelItem => item.NworkToDoId)
+      
+            @Html.HiddenFor(modelItem => item.CreatedBy)
+       
+            @Html.HiddenFor(modelItem => item.CreatedTime)
+       
+            @Html.HiddenFor(modelItem => item.UpdatedBy)
+       
+            @Html.HiddenFor(modelItem => item.UpdatedTime)
+        
+            @Html.HiddenFor(modelItem => item.UserDegree)
+       
+            @Html.HiddenFor(modelItem => item.UserDuty)
+    </tr>
+}
+</table>
+}

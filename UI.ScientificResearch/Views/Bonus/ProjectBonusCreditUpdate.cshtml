@@ -1,0 +1,107 @@
+﻿@model ScientificResearch.ViewModel.ProjectBonusCreditViewModel
+
+@{
+    ViewBag.Title = "ProjectBonusCreditUpdate";
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function(){
+        var updateFlag="@ViewBag.UpdateResult";
+        if(updateFlag=="Yes")
+        {
+            alert("更新成功！");
+            parent.location.reload();
+        }
+        else if(updateFlag=="No")
+        {
+            alert("更新失败！");
+        }
+        else
+        {
+        
+        }
+    });
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @*<p><font style="color:red">@ViewBag.UpdateResult</font></p>*@
+
+    <table class="table table-striped table-bordered table-hover">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ModuleName)
+            </td>
+           @*@{if (Model.ModuleName == "政府采购")
+            {
+
+            }}"<select id="ModuleName" name="ModuleName">
+                    <option value="政府采购">政府采购</option>
+                    <option value="学科技术带头人">学科技术带头人</option>
+                    <option value="论文发表">论文发表</option>
+                    <option value="政府采购">政府采购</option>
+                    <option value="学术会议">学术会议</option>
+                    <option value="科技成果">科技成果</option>
+                </select>*@
+                @*@Html.HiddenFor(model => model.ModuleName)*@
+           <td>
+               <input type="text" readonly="readonly" id="ModuleName" name="ModuleName" value="@Model.ModuleName" />
+           </td>
+        </tr>
+
+        @if (Model.ModuleName == "继续教育")
+        {
+            <input hidden="hidden" id="ProjectType" name="ProjectType" value="继续教育" />
+        }
+        else
+        {
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ProjectType)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.ProjectType)
+                @Html.ValidationMessageFor(model => model.ProjectType, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        }
+        <tr>
+            <td>@Html.LabelFor(model => model.ProjectLevel)</td>
+            <td>
+                <input type="text" readonly="readonly" id="ProjectLevel" name="ProjectLevel" value="@Model.ProjectLevel" />
+                @*@Html.EditorFor(model => model.ProjectLevel)
+                @Html.ValidationMessageFor(model => model.ProjectLevel, "", new { @class = "text-danger" })*@
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Credit)
+            </td>
+            <td>
+                <input type="text" id="Credit" name="Credit" value="@Model.Credit" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+                @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        @Html.HiddenFor(model => model.IsDeleted)
+        @Html.HiddenFor(model => model.CreatedBy)
+        @Html.HiddenFor(model => model.CreateTime)
+        @Html.HiddenFor(model => model.UpdateBy)
+        @Html.HiddenFor(model => model.UpdateTime)
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="更新" class="btn btn-default" />
+            </td>
+        </tr>
+    </table>
+
+}
+
+@*<div>
+    @Html.ActionLink("继续添加", "ProjectBonusCreditAdd", "Bonus")
+</div>*@

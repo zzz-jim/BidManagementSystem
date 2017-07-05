@@ -1,0 +1,328 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/SplitStrings.js"></script>
+<script src="~/Scripts/Custom/forms.js"></script>
+<script src="~/Scripts/Custom/file.js"></script>
+<script type="text/javascript">
+    UploadFile();
+    $(function () {
+        function show() {
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear() + "年";
+            str += (mydate.getMonth() + 1) + "月";
+            str += mydate.getDate() + "日";
+            return str;
+        }
+        $(".in").val(show());
+    });
+
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage = "";
+            if ($("#WenHao").val().trim() == "") {
+                errorMessage = errorMessage + "项目名称不能为空！！！";
+            }
+            if ($("#Text173991076").val().trim() == "") {
+                errorMessage = errorMessage + "继续进修单位不能为空！！！";
+            }
+            if ($("#Text1544375407").val().trim() == "") {
+                errorMessage = errorMessage + "邮编不能为空！！！";
+            }
+            if ($("#Date1708221790").val().trim() == "") {
+                errorMessage = errorMessage + "继举办开始时间不能为空！！！";
+            }
+            if ($("#Date757334737").val().trim() == "") {
+                errorMessage = errorMessage + "继举办结束时间不能为空！！！";
+            }
+            if ($("#Text509845911").val().trim() == "") {
+                errorMessage = errorMessage + "举办方式不能为空！！！";
+            }
+            if ($("#Num1376621237").val().trim() == "") {
+                errorMessage = errorMessage + "举办期限不能为空！！！";
+            }
+            if ($("#Text1325353134").val().trim() == "") {
+                errorMessage = errorMessage + "考核方式不能为空！！！";
+            }
+            if ($("#Text1745874712").val().trim() == "") {
+                errorMessage = errorMessage + "教学对象不能为空！！！";
+            }
+            if ($("#Num250360477").val().trim() == "") {
+                errorMessage = errorMessage + "拟招生人数！！！";
+            }
+            if ($("#Num456178466").val().trim() == "") {
+                errorMessage = errorMessage + "教学总学时数！！！";
+            }
+            if ($("#Num565144636").val().trim() == "") {
+                errorMessage = errorMessage + "讲授理论时数！！！";
+            }
+            if ($("#Num776381854").val().trim() == "") {
+                errorMessage = errorMessage + "实验（技术示范）时数！！！";
+            }
+            if ($("#Text1949244572").val().trim() == "") {
+                errorMessage = errorMessage + "举办地点！！！";
+            }
+            if ($("#Num817265970").val().trim() == "") {
+                errorMessage = errorMessage + "拟授学员分数数值！！！";
+            }
+            if ($("#Text31971642").val().trim() == "") {
+                errorMessage = errorMessage + "主办联系电话！！！";
+            }
+            if ($("#Text1114937625").val().trim() == "") {
+                errorMessage = errorMessage + "主办单位！！！";
+            }
+            if ($("#Text864774782").val().trim() == "") {
+                errorMessage = errorMessage + "主办联系人！！！";
+            }
+            if ($("#Text539046141").val().trim() == "") {
+                errorMessage = errorMessage + "申报联系电话！！！";
+            }
+            if ($("#Text675003468").val().trim() == "") {
+                errorMessage = errorMessage + "申报单位！！！";
+            }
+            if ($("#Text1487944624").val().trim() == "") {
+                errorMessage = errorMessage + "项目负责人通讯地址！！！";
+            }
+            if ($("#Text1619943745").val().trim() == "") {
+                errorMessage = errorMessage + "项目负责人联系电话！！！";
+            }
+            if ($("#Text1209026157").val().trim() == "") {
+                errorMessage = errorMessage + "申报联系人！！！";
+            }
+            if ($("#TextArea1434059400").val().trim() == "") {
+                errorMessage = errorMessage + "国外本领域的最新进展！！！";
+            }
+            if ($("#TextArea1006475741").val().trim() == "") {
+                errorMessage = errorMessage + "主板单位近几年与项目有关的工作概况！！！";
+            }
+            if ($("#TextArea646275798").val().trim() == "") {
+                errorMessage = errorMessage + "本领域存在的问题！！！";
+            }
+            if ($("#TextArea1697092597").val().trim() == "") {
+                errorMessage = errorMessage + "项目创新之处！！！";
+            }
+            if ($("#TextArea623498541").val().trim() == "") {
+                errorMessage = errorMessage + "项目培训需求及效益效果分析！！！";
+            }
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+
+    $(function () {
+
+        $("#Save").click(function () {
+            var url1 = "/ContinuingEducation/ApplicationRejected?flag=Save";
+            //alert(url1);
+            submitForm("form", url1);
+        })
+        $("#Reported").click(function () {
+            var url2 = "/ContinuingEducation/ApplicationRejected?flag=Reported";
+            // alert(url2)
+            submitForm("form", url2);
+        })
+    })
+</script>
+<div id="treeviewwindow" style="width:300px;height:400px;">
+    @Html.Partial("_SelectUserPartial")
+</div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+      @Html.HiddenFor(model => model.NWorkToDoID)
+    <div>
+        @*<div><b>填写申请书</b> -> @Model.WorkName</div>*@
+        @Html.ValidationSummary(true)
+
+        <table id="data" class="table">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.WenHao)
+                </td>
+                <td colspan="5">
+                    @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
+                    @Html.ValidationMessageFor(model => model.WenHao)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    项目编号:
+                </td>
+                <td>
+                    <input readonly="readonly" id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
+                </td>
+                <td colspan="5"></td>
+            </tr>
+
+            @Html.Raw(Model.FormContent)
+            @Html.HiddenFor(model => model.FormContent)
+            @Html.ValidationMessageFor(model => model.FormContent)
+
+           
+
+            <tr>
+                <td colspan="2">
+                    <div id="areadyuploadfile"></div>
+                </td>
+                <td colspan="2">
+                    <p id="fuJian_Save_P"></p>
+                </td>
+                <td colspan="2">
+                    <div id="table_save"></div>
+                </td>
+            </tr>
+
+            @if (Model.IsRejected == true && Model.IsTemporary == false)
+            {
+                <tr>
+                    <td colspan="3" style="vertical-align:middle; text-align:center;">
+                        <div><input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" /></div>
+                    </td>
+                    <td colspan="3" style="vertical-align:middle; text-align:center;">
+                        <div> <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" /></div>
+                    </td>
+                </tr>
+
+    <tr>
+        <td colspan="6">
+            <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <input type="button" value="上传" id="btnUploadFile" />
+        </td>
+    </tr>
+
+            }
+
+            else if (Model.IsTemporary == true && Model.IsRejected == false)
+            {
+                <tr>
+                    <td colspan="3" style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>
+                    <td colspan="3" style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" id="Reported" class="btn btn-blue" />
+                    </td>
+                </tr>
+    <tr>
+        <td colspan="6">
+            <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <input type="button" value="上传" id="btnUploadFile" />
+        </td>
+    </tr>
+            }
+
+            else if (Model.IsTemporary == false && Model.IsRejected == false)
+            {
+
+                <script>@Html.Raw(ViewBag.PiLiangSet);</script>
+
+                <tr>
+                    <td colspan="6" style="vertical-align:middle; text-align:center;">
+                        已上报
+                    </td>
+                </tr>
+            }
+        </table>
+
+        @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
+
+        @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
+
+        @Html.HiddenFor(model => model.TimeStr, new { @readOnly = "readOnly " })
+
+        @Html.HiddenFor(model => model.FuJianList)
+
+        @Html.HiddenFor(model => model.ShenPiYiJian)
+
+        @Html.HiddenFor(model => model.JieDianID, new { @readOnly = "readOnly " })
+
+        @Html.HiddenFor(model => model.JieDianName, new { @readOnly = "readOnly " })
+
+        @Html.HiddenFor(model => model.ShenPiUserList)
+
+        @Html.HiddenFor(model => model.OKUserList)
+
+        @Html.HiddenFor(model => model.StateNow)
+
+        @Html.HiddenFor(model => model.LateTime)
+
+        @Html.HiddenFor(model => model.BeiYong2)
+
+        @Html.HiddenFor(model => model.ApplicationId)
+
+        @Html.HiddenFor(model => model.ApplicationStatus)
+
+        @Html.HiddenFor(model => model.NWorkToDoID)
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        //$("#CreatedTime").kendoDatePicker();
+
+        function startChange() {
+            var startDate = start.value(),
+            endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            var endDate = end.value(),
+            startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        var start = $("#Date1708221790").kendoDatePicker({
+            change: startChange
+        }).data("kendoDatePicker");
+
+        var end = $("#Date757334737").kendoDatePicker({
+            change: endChange
+        }).data("kendoDatePicker");
+        $("#Date1708221790").attr("readonly", true);
+        $("#Date757334737").attr("readonly", true);
+        start.max(end.value());
+        end.min(start.value());
+    });
+</script>
+
+

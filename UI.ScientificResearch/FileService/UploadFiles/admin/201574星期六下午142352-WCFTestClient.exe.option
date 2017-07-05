@@ -1,0 +1,7 @@
+SecurityPrompt : Enabled
+RefreshPrompt : Enabled
+RegenerateConfig : Enabled
+ProjectBase:C:\Users\Administrator\AppData\Local\Temp\Test Client Projects\12.0
+http://localhost:54279/HealthService.svc
+http://localhost:8081/HealthService.svc
+http://localhost:8081/PatientService.svc

@@ -1,0 +1,165 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IEnumerable<PF.DomainModel.Identity.Section>
+
+@{
+    ViewBag.Title = "科室管理";
+}
+<script src="~/Scripts/custom/windows.js"></script>
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Index", "SectionAdmin", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group" style="display: flex;">
+                @Html.TextBox("Name", "", new { @class = "btn btn-default" })
+                <span class="input-group-btn">
+                    <input type="submit" value="科室名称查询" class="btn btn-default" />
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+}
+<br />
+<p>
+    <a href="#" onclick="return popUp('1000px', '500px', '/SectionAdmin/Create', '新建科室')"><span>新建</span></a>
+</p>
+
+ 
+<style>
+    p  {background-image: url('../../Content/images/add.jpg');
+              height:39px;
+              width:83px;
+              display:inline-block;
+    }
+        p a span {
+         display:inline-block;
+         margin-left:45px;
+         height:20px;
+         margin-top:10px;
+        }
+  
+    .table {
+        color:#316388;
+      
+    }
+    h2 {
+     color:#135380;}
+
+        table.table th {
+           background:#e5e5e5;
+          
+            border:#c4c4c4 solid 1px;
+            font-size:14px;
+        }
+
+    /*table tbody tr.even td {
+        background:#f8fcfd;
+    }
+
+    table tbody tr.ruled td {
+      
+        background-color: #C6E3FF;
+        border-color: #3292FC;
+         font-size:14px;
+    }*/
+    /*.table td {font-size:13px;
+               height:20px;
+    }*/
+</style>
+
+
+<script type="text/javascript">
+    /* 当鼠标移到表格上是，当前一行背景变色 */
+    $(document).ready(function () {
+        $(".table tr td").mouseover(function () {
+            $(this).parent().find("td").css("background-color", "#d5f4fe");
+        });
+    })
+    /* 当鼠标在表格上移动时，离开的那一行背景恢复 */
+    $(document).ready(function () {
+        $(".table tr td").mouseout(function () {
+            var bgc = $(this).parent().attr("bg");
+            $(this).parent().find("td").css("background-color", bgc);
+        });
+    })
+
+    $(document).ready(function () {
+        var color = "#f8fcfd"
+        $(".table tr:odd td").css("background-color", color);  //改变偶数行背景色
+        /* 把背景色保存到属性中 */
+        $(".table tr:odd").attr("bg", color);
+        $(".table tr:even").attr("bg", "#fff");
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table" id="changecolor">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InsuranceCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+           院区
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InsuranceCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.Hospital.Name)
+        </td>
+        <td>
+            <a href="#" onclick="return popUp('1000px', '500px', '/SectionAdmin/Edit?id=' + '@item.Id', '科室修改')"><span>修改</span></a> |
+            @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+            @Html.ActionLink("删除", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+@if (Model != null)
+{
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("index", new { page }));
+}

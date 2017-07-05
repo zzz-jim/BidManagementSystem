@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 matterItem">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">
+                                待办事宜
+                            </a>
+                        </li>
+
+                        <li class="tab-red">
+                            <a data-toggle="tab" href="#profile">
+                                已办事宜
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane in active">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="widget">
+                                        <div class="widget-body">
+                                            @Html.Action("AllToDoThings", "ContinuingEducation")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profile" class="tab-pane">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="widget">
+                                        <div class="widget-body">
+                                            @Html.Action("AllWorkDoneList", "ContinuingEducation")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="horizontal-space"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

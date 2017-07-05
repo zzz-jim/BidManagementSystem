@@ -1,0 +1,97 @@
+#fullscreen-toggler{
+    padding-left: 20px;
+}
+#refresh-toggler{
+    padding-left: 20px;
+}
+
+.matterItem{
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}a:hover{
+     text-decoration: none;
+ }
+ .pagination li{
+     border-radius: 0px 2px 2px 0px;
+     background-clip: padding-box;
+     cursor: pointer;
+ }
+ .DTTTFooter{
+     text-align: right;
+ }
+ .tasksUl{
+     border-bottom: 1px solid #F3F3F3;
+ }
+ .notification-body .title{
+     line-height: 28px;
+ }
+
+ .chartFlow img{
+     width: 100%;
+     height: 250px;
+ }
+ .flowTitle{
+     text-align: center
+ }
+ .chartText{
+     line-height: 2.3;
+     height: 250px;
+     text-indent: 2rem;
+ }
+ .getMore{
+     float: right;
+ }
+ .getMore a{
+     color: #fff;
+     padding-left: 10px;
+     padding-right: 10px;
+ }
+ .getMore a:hover{
+     background-color: #f0981c;
+     padding-top: 10px;
+     padding-bottom:10px ;
+     width: 30px;
+ }
+ .getmoreNew a:hover{
+     background-color:#4cae4c;
+ }
+.well.with-footer{
+    padding-bottom: 19px;
+}
+.newApplication,.deleteApplication{
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+.newApplication:hover{
+    background-color: #f0981c;
+    padding-top: 10px;
+    padding-bottom:10px ;
+    width: 30px;
+}
+.deleteApplication:hover{
+    background-color: #f0981c;
+    padding-top: 10px;
+    padding-bottom:10px ;
+    width: 30px;
+}
+input[type="text"]{
+    border-radius:5px !important;
+    height: 30px;
+}
+.selectBtn{
+    height:25px ;
+    line-height: 25px;
+    border-radius: 5px;
+    padding: 0px !important;
+}
+input[type="checkbox"]{
+    opacity: 1;
+    position: inherit;
+    width: auto;
+    height: auto;
+    margin: 0;
+}

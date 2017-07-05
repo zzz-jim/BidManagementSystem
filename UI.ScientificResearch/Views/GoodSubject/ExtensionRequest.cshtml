@@ -1,0 +1,187 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.common.min.css" />
+<link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.default.min.css" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
+<script src="~/Scripts/Custom/form.js"></script>
+<script type="text/javascript">
+    var fuJian = "";
+    $(function () {
+        areadHaveFillIn();
+    });
+
+    $(function () {
+        $("#btnUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                ajaxFileUploadFillIn();
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        })
+    })
+
+    $(document).ready(function () {
+        $("#Date523939630").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            value: new Date()
+        });
+        $("#Date523939630").attr("readonly", true);
+    });
+
+    $(function () {
+        $("#Reported").click(function () {
+            var url1 = "/GoodSubject/ExtensionRequest?flag=Reported";
+            submitForm("form", url1);
+        })
+        $("#Save").click(function () {
+            var url2 = "/GoodSubject/ExtensionRequest?flag=Save";
+            submitForm("form", url2);
+        })
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage="";
+            if ($("#Date523939630").val().trim() == "") {
+                errorMessage =errorMessage+ "推迟时间不能为空！";
+            }
+            if ($("#TextArea178969737").val().trim() == "") {
+                errorMessage = errorMessage + "概述能为空！";
+            }
+
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        var wheatherHiddenBtn = "@ViewBag.wheatherHiddenBtn";
+        if (wheatherHiddenBtn == "Yes") {
+            $("input[name='Reported']").hide();
+            $("input[name='Save']").hide();
+            $("#uploadFile").hide();
+            $("#btnUploadFile").hide();
+        }
+        else {
+        }
+    });
+</script>
+<style type="text/css">
+    input[type="text"] {
+        width: 150px;
+        height: 24px;
+    }
+
+    textarea {
+        margin: 0px;
+        width: 618px;
+        height: 190px;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<!-- Project Step Wizard -->
+@Html.Partial("_GoodSubjectWizardPartial")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal widget-body">
+        <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+        <table class="table">
+            @Html.ValidationSummary(true)
+            
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.WorkName)
+
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.ApplicationId)
+
+                @Html.HiddenFor(model => model.FormID)
+
+                @Html.HiddenFor(model => model.WorkFlowID)
+
+                @Html.HiddenFor(model => model.UserName)
+
+                @Html.HiddenFor(model => model.TimeStr)
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.HiddenFor(model => model.JieDianID)
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+                @Html.HiddenFor(model => model.OKUserList)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.LateTime)
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+
+                @Html.HiddenFor(model => model.FuJianList)
+                
+                @Html.Raw(Model.FormContent)
+                @Html.HiddenFor(model => model.FormContent)
+                @Html.ValidationMessageFor(model => model.FormContent)
+
+                 <tr>
+                <td colspan="4">
+                    <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                    <input type="button" value="上传" id="btnUploadFile" />
+                    <div id="areadyuploadfile"></div>
+                </td>
+            </tr>
+            <tr>
+
+
+                <td colspan="2" style="vertical-align:middle; text-align:center;">
+                    <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                </td>
+                @if (ViewBag.act == "save")
+                {
+                    <td colspan="2" style="vertical-align:middle; text-align:center;">
+                      已保存
+                    </td>
+                }
+                else
+                {
+                    <td colspan="2" style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" />
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+}
+<script>@Html.Raw(ViewBag.PiLiangSet)</script>
+
+

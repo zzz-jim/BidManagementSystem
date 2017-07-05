@@ -1,0 +1,251 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+
+@{
+    ViewBag.Title = "StatisticManageContainer";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+}
+<h2>StatisticManageContainer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NWorkToDoID)@model IEnumerable<scientificresearch.viewmodel.erpnworktodoviewmodel>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 matterItem">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home">
+                                    政府采购统计
+                                </a>
+                            </li>
+
+                            <li class="tab-red">
+                                <a data-toggle="tab" href="#profile">
+                                    科研立项统计
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane in active">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="widget">
+                                            <div class="widget-body">
+                                                @Html.Action("ScienceProjectStatisticsAnalysis", "Statistic")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="profile" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="widget">
+                                            <div class="widget-body">
+                                                @Html.Action("ScienceProjectEstablishStatisticsAnalysis", "Statistic")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="horizontal-space"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WenHao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkFlowID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeStr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FuJianList)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShenPiYiJian)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JieDianID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JieDianName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShenPiUserList)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OKUserList)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StateNow)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeiYong1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeiYong2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormKeys)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormValues)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsRejected)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsLocked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsTemporary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectEstablishTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NWorkToDoID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WenHao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkFlowID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FuJianList)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShenPiYiJian)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JieDianID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JieDianName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShenPiUserList)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OKUserList)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StateNow)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeiYong1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeiYong2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormKeys)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormValues)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsRejected)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsLocked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsTemporary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectEstablishTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

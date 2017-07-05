@@ -1,0 +1,116 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPRiZhiViewModel>
+
+@{
+    //Layout = "~/Areas/Education/Views/Shared/_PopUpLayout.cshtml";
+    Layout = null;
+ }
+
+<div id="AreadyDoWindow">
+
+</div>
+<script type="text/javascript">
+    function OpenAreadyDoWindow(id)
+    {
+        $("#AreadyDoWindow").kendoWindow({
+            position: {
+                top: "15%", // or "100px"
+                left: "13%"
+            },
+            width:"80%",
+            height:"80%",
+            modal: true,
+            draggable: true,
+            title:"已办",
+            visible: false,
+            actions: [
+                    "Pin",
+                    "Close",
+                   // "Minimize",
+                 // "Maximize"
+            ],
+            resizable: false,
+            close: function(e) {
+                parent.location.reload();//刷新页面
+            }
+        });
+
+        $.ajax({
+            url: "/Education/ContinuingEducation/ReturnStateValue?id=" + id,
+            type:"post",
+            success:function(data){
+                if (data != null) {
+                    // $("#MaxWindow").html(data);
+
+                    var k = data;
+                    //判断返回的状态来控制弹出框第一个打开的页面
+                    if (data == "AplicationWriting") {
+                        $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="110%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/SubmitApplication?id=' + id + '">继教申请书</iframe>');
+                    }
+                    else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
+                    {
+                        if (data == "ApplicationRejected") {
+                            $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ApplicationRejected?id=' + id + '">继教申请书</iframe>');
+                        }
+                        else {
+                            $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ApplicationAgree?id=' + id + '">继教申请书</iframe>');
+                        }
+                    }
+                    else if (data == "ApplicationApproved" || data == "NoticeUnwrite" || data == "NoticeNotIssued")//继教通知
+                    {
+                        //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                        $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ContinueNotice?id=' + id + '">继教通知</iframe>');
+                    }
+                    else if (data == "SentNotice")//人员记录
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/PersonRecord?id=' + id + '">人员记录</iframe>');
+                    }
+                    else if (data == "AddMeetingPerson" || data == "ProjectProcessing")//过程记录
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ProcessRecordList?id=' + id + '">过程记录</iframe>');
+                    }
+                    else if (data == "GiveCrediting" || data == "GavenCredited")//授予学分
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="90%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/GiveCredit?id=' + id + '">授予学分</iframe>');
+                    }
+                }
+                else {
+                    alert("发生异常！");
+                }
+            }
+        });
+        $("#AreadyDoWindow").data("kendoWindow").center().open();
+    }
+
+</script>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>
+            申请人
+        </th>
+        <th>
+            操作
+        </th>
+        <th>
+            上报时间
+        </th>
+    </tr>
+    @{int NO = 0;}
+    @foreach (var item in Model)
+    {
+        { NO++; }
+        <tr onclick="OpenAreadyDoWindow(@item.FKApplicationID)">
+            <td>@NO</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoSomething)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStr)
+            </td>
+        </tr>
+    }
+</table>

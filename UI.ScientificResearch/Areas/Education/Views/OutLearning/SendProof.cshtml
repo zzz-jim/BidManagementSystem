@@ -1,0 +1,149 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<script src="../../../../Scripts/Custom/forms.js"></script>
+
+<style type="text/css">
+    input[type="text"] {
+        width: 150px;
+        height: 24px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#Save").click(function () {
+            var url1 = "/Education/OutLearning/SendProof?flag=Save";
+            //alert(url1);
+            submitForm("form", url1);
+        })
+        $("#Reported").click(function () {
+            var url2 = "/Education/OutLearning/SendProof?flag=Reported";
+            // alert(url2)
+            submitForm("form", url2);
+        })
+    })
+</script>
+
+@Html.Partial("_OutLearningWizardPartial")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal widget-body">
+
+        <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+        <table class="table">
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.NWorkToDoID)
+
+            @Html.HiddenFor(model => model.WorkName)
+
+            @Html.HiddenFor(model => model.ApplicationId)
+
+            @Html.HiddenFor(model => model.FormID)
+
+            @Html.HiddenFor(model => model.WorkFlowID)
+
+            @Html.HiddenFor(model => model.UserName)
+
+            @Html.HiddenFor(model => model.TimeStr)
+
+            @Html.HiddenFor(model => model.FuJianList)
+
+            @Html.HiddenFor(model => model.ShenPiYiJian)
+
+            @Html.HiddenFor(model => model.JieDianID)
+
+            @Html.HiddenFor(model => model.JieDianName)
+
+            @Html.HiddenFor(model => model.ShenPiUserList)
+
+            @Html.HiddenFor(model => model.OKUserList)
+
+            @Html.HiddenFor(model => model.StateNow)
+
+            @Html.HiddenFor(model => model.LateTime)
+
+            @Html.HiddenFor(model => model.BeiYong2)
+
+            @Html.HiddenFor(model => model.ApplicationStatus)
+
+            @Html.HiddenFor(model => model.ApplicationId)
+
+            @Html.HiddenFor(model => model.FormKeys)
+
+            @Html.HiddenFor(model => model.FormValues)
+
+            @Html.HiddenFor(model => model.IsRejected)
+
+            @Html.HiddenFor(model => model.IsLocked)
+
+            @Html.HiddenFor(model => model.IsTemporary)
+
+            @Html.HiddenFor(model => model.IsDeleted)
+
+            @Html.HiddenFor(model => model.ProjectStatus)
+
+            @Html.HiddenFor(model => model.ProjectEstablishTime)
+
+            @Html.HiddenFor(model => model.WenHao)
+
+            @Html.HiddenFor(model => model.BeiYong1)
+
+
+            @Html.Raw(Model.FormContent)
+            @Html.HiddenFor(model => model.FormContent)
+            @Html.ValidationMessageFor(model => model.FormContent)
+
+
+            @if (ViewBag.act == "Save")
+            {
+                <tr>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                    </td>
+                    <td style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>
+                </tr>
+
+            }
+
+            else if (Model.IsTemporary == true)
+            {
+                <tr>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                    </td>
+                    <td style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>
+                </tr>
+            }
+            else if (Model.IsRejected == false && Model.IsTemporary == false)
+            {
+
+
+            }
+            else
+            {
+                <tr>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                    </td>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

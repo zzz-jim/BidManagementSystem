@@ -1,0 +1,50 @@
+﻿<div class="page-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    流程简述
+
+                </div>
+                <div class="chartFlow">
+                    <img src="~/Images/thContEduLCT.gif" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    详细说明
+
+                </div>
+                <div class="chartText">
+                    继续教育系统主要是对医生参加继续教育活动所获积分进行管理（可对每个职工的论文、政府采购立项、获得科学技术奖、教学查房等活动直接给予学分），项目类的学分，经由管理员发起继教通知后登记项目过程及参与人员后直接授予学分，所有学分数据可按照人员、科室检索统计，并且对各类继教活动的实际收费记录进行汇总，如出现经费支出，需管理员拟定费用支出申请表，通过各级领导审核方可进入财务科实际入账。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    待办事项
+                    <span class="getMore"><a href="/Education/ContinuingEducation/WorkContainer">更多</a></span>
+                </div>
+                @*@Html.Action("Top10WorkToDoList", "Approval")*@
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    当前正在进行的事项
+                    <span class="getMore getmoreNew"><a href="/Education/ContinuingEducation/ApplicationList">更多</a></span>
+                </div>
+                @*@Html.Action("Top10WorkDoingList", "Approval")*@
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>

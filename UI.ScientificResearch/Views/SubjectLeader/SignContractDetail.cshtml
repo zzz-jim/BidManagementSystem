@@ -1,0 +1,90 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<!-- Project Step Wizard -->
+@Html.Partial("_SubjectLeaderWizardPartial")
+<input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+<div>
+    <table class="table"></table>
+
+    @Html.HiddenFor(model => model.WorkName)
+
+    @Html.HiddenFor(model => model.WorkName)
+
+    @Html.HiddenFor(model => model.WenHao)
+
+    @Html.HiddenFor(model => model.WenHao)
+
+    @Html.HiddenFor(model => model.FormID)
+
+    @Html.HiddenFor(model => model.FormID)
+
+    @Html.HiddenFor(model => model.WorkFlowID)
+
+    @Html.HiddenFor(model => model.WorkFlowID)
+
+    @Html.HiddenFor(model => model.UserName)
+
+    @Html.HiddenFor(model => model.UserName)
+
+    @Html.HiddenFor(model => model.TimeStr)
+
+    @Html.HiddenFor(model => model.TimeStr)
+
+    @Html.HiddenFor(model => model.FuJianList)
+
+    @Html.HiddenFor(model => model.FuJianList)
+
+    @Html.HiddenFor(model => model.ShenPiYiJian)
+
+    @Html.HiddenFor(model => model.ShenPiYiJian)
+
+    @Html.HiddenFor(model => model.JieDianID)
+
+    @Html.HiddenFor(model => model.JieDianID)
+
+    @Html.HiddenFor(model => model.JieDianName)
+
+    @Html.HiddenFor(model => model.JieDianName)
+
+    @Html.HiddenFor(model => model.ShenPiUserList)
+
+    @Html.HiddenFor(model => model.ShenPiUserList)
+
+    @Html.HiddenFor(model => model.OKUserList)
+
+    @Html.HiddenFor(model => model.OKUserList)
+
+    @Html.HiddenFor(model => model.StateNow)
+
+    @Html.HiddenFor(model => model.StateNow)
+
+    @Html.HiddenFor(model => model.LateTime)
+
+    @Html.HiddenFor(model => model.LateTime)
+
+    @Html.HiddenFor(model => model.BeiYong1)
+
+    @Html.HiddenFor(model => model.BeiYong1)
+
+    @Html.HiddenFor(model => model.BeiYong2)
+
+    @Html.HiddenFor(model => model.BeiYong2)
+
+    @Html.HiddenFor(model => model.ApplicationStatus)
+
+    @Html.HiddenFor(model => model.ApplicationStatus)
+
+    @Html.HiddenFor(model => model.ApplicationId)
+
+    @Html.HiddenFor(model => model.ApplicationId)
+
+    <tr>
+        <td>
+            @Html.Raw(Model.FormContent)
+        </td>
+    </tr>
+</div>

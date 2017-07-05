@@ -1,0 +1,69 @@
+﻿@using ScientificResearch.Utility.Enums
+<!-- workflow id 1087   公务出差申请书审批流程-->
+<!--Page Related Scripts-->
+<script src="~/Scripts/assets/js/fuelux/wizard/wizard-custom.js"></script>
+
+<div class="widget-body">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div id="WiredWizard" class="wizard wizard-wired" data-target="#WiredWizardsteps">
+                <ul class="steps">
+                    <li id="ApprovalStep1" data-target="#wiredstep1" class="ApprovalStepStepComplete"><span class="step">1</span><span class="title">部门经理审批</span><span class="chevron"></span></li>
+                    <li id="ApprovalStep2" data-target="#wiredstep2" class="ApprovalStepStepComplete"><span class="step">2</span><span class="title">住院医实习生负责</span> <span class="chevron"></span></li>
+                    <li id="ApprovalStep3" data-target="#wiredstep3" class="ApprovalStepStepComplete"><span class="step">3</span><span class="title">科教科科员审批</span> <span class="chevron"></span></li>
+                    <li id="ApprovalStep4" data-target="#wiredstep4" class="ApprovalStepStepComplete"><span class="step">4</span><span class="title">科教科科长审批</span> <span class="chevron"></span></li>
+                    <li id="ApprovalStep5" data-target="#wiredstep5" class="ApprovalStepStepComplete"><span class="step">5</span><span class="title">超级管理员审批审批</span> <span class="chevron"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>var ApplicationApprovalWorkflowNodeId = 0;</script>
+@*申请人
+    轮转生负责人(轮转生使用)
+    护理部审核(护士使用)
+    科教科科员审核
+    科教科科长
+    超级管理员审批审批*@
+<!-- 部门经理审批, 科教科科员审批, 科教科科长审批, 超级管理员审批审批-->
+
+@if (Model.JieDianName == ApplicationApprovalWorkflowNode.部门经理审批.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 1;</script>
+}
+else if (Model.JieDianName == ApplicationApprovalWorkflowNode.住院医实习生负责.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 2;</script>
+}
+else if (Model.JieDianName == ApplicationApprovalWorkflowNode.科教科科员审批.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 3;</script>
+}
+else if (Model.JieDianName == ApplicationApprovalWorkflowNode.科教科科长审批.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 4;</script>
+}
+else if (Model.JieDianName == ApplicationApprovalWorkflowNode.超级管理员审批审批.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 5;</script>
+}
+else if (Model.JieDianName == ApplicationApprovalWorkflowNode.结束.ToString())
+{
+    <script> ApplicationApprovalWorkflowNodeId = 6;</script>
+}
+else
+{
+    @*Empty.*@
+}
+<script type="text/javascript">
+    var idApprovalStepPre = "#ApprovalStep";
+
+    for (var i = 0; i < ApplicationApprovalWorkflowNodeId; i++) {
+        var id = idApprovalStepPre + i;
+        $(id).removeClass("ApprovalStepStepComplete").addClass("complete");
+    }
+
+    if (ApplicationApprovalWorkflowNodeId != 6) {
+        $(idApprovalStepPre + ApplicationApprovalWorkflowNodeId).removeClass("ApprovalStepStepComplete").addClass("active");
+    }
+</script>

@@ -1,0 +1,182 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>过程记录审批</title>
+    <script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+    <script src="~/Scripts/ajaxfileupload.js"></script>
+    <script src="~/Scripts/Custom/form.js"></script>
+    <style type="text/css">
+        .trheight {
+            line-height: 30px;
+        }
+    </style>
+    <script type="text/javascript">
+        var currentnode = "@ViewBag.CurrentNodeSerils";
+        var allcount = parseInt("@ViewBag.allCount");
+        $(function () {
+            fileListInitializeAgree(currentnode, allcount);
+            shenPiyiJianListinitialize(currentnode, allcount);
+        });
+
+        $(function () {
+            $("#btnUploadFile").click(function () {
+                if ($("#uploadFile").val().length > 0) {
+                    ajaxFileUploadAgree(currentnode, allcount);
+                }
+                else {
+                    alert("请选择要上传的文件！！");
+                }
+            })
+        })
+
+        $(function () {
+            $("#Approval").click(function () {
+                var url1 = "/SubjectLeader/processAgree?flag=Approval";
+                submitForm("form", url1);
+            })
+            $("#Reject").click(function () {
+                var url2 = "/SubjectLeader/processAgree?flag=Reject";
+                submitForm("form", url2);
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            var isRightPersonApproval = "@ViewBag.isRightPersonApproval";
+            AuthorityAboutSeeOrClick(isRightPersonApproval);
+        });
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal widget-body">
+            <h4>@ViewBag.Title</h4>
+            <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+            <table class="table">
+                @Html.ValidationSummary(true)
+
+                @Html.HiddenFor(model => model.NWorkToDoID)
+                @Html.HiddenFor(model => model.ApplicationId)
+                @*审批，未被驳回，继续审批或驳回*@
+
+                @Html.HiddenFor(model => model.WorkName, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.NWorkToDoID, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.UserName, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.TimeStr, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+                @Html.HiddenFor(model => model.JieDianID, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.FormKeys)
+
+                @Html.HiddenFor(model => model.FormValues)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.Raw(Model.FormContent)
+                @Html.HiddenFor(model => model.FormContent)
+                @Html.ValidationMessageFor(model => model.FormContent)
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.ShenPiYiJian)
+                    </td>
+                    <td colspan="7">
+                        <input type="text" id="SingleShenPiYiJian" name="SingleShenPiYiJian" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>审批意见列表：</td>
+                    <td colspan="7">
+                        <div id="ShenPiYiJianList">
+                        </div>
+                    </td>
+                </tr>
+
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+
+
+                @Html.HiddenFor(model => model.OKUserList, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.JieDianName, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.LateTime, new { @readOnly = "readOnly " })
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+
+                @Html.HiddenFor(model => model.IsTemporary)
+
+                @Html.HiddenFor(model => model.IsRejected)
+
+                @Html.HiddenFor(model => model.IsDeleted)
+
+                @Html.HiddenFor(model => model.IsLocked)
+
+
+                @if (Model.JieDianName == "结束")
+                {
+
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">
+                            <input type="hidden" value=@Model.FuJianList id="thisPageFuJian">
+                            <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                            <input type="button" id="btnUploadFile" value="上传" />
+                            <div id="uploadingfile">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="通&nbsp&nbsp&nbsp过" name="Approval" id="Approval" class="btn btn-blue" />
+                        </td>
+                        <td colspan="4" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="驳&nbsp&nbsp&nbsp回" name="Reject" id="Reject" class="btn btn-blue" />
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+            <!-- Application SubjectLeader Steps Time Line -->
+            @*@Html.Partial("_SubjectLeaderProcessApproveWizardPartial")*@
+            @Html.Partial("_ApproveWizardPartial")
+        </div>
+    }
+</body>
+</html>
+<script>@Html.Raw(ViewBag.PiLiangSet)</script>
+<script>
+    $("#selectForSingleUser").hide();
+    $("#select").hide();
+</script>

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="71ce895394e64272b7ebdb3124fdf046" Name="Diagram1">
+        <EntityTypeShape EntityType="CSPostOAModel.ERPAnPai" Width="1.5" PointX="5.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBaoJia" Width="1.5" PointX="8.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBaoXiao" Width="1.5" PointX="8.75" PointY="8.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBBSBanKuai" Width="1.5" PointX="10.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBBSTieZi" Width="1.5" PointX="10.75" PointY="6.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBook" Width="1.5" PointX="5.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBookJieHuan" Width="1.5" PointX="7.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBuMen" Width="1.5" PointX="10.75" PointY="10.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBuyChanPin" Width="1.5" PointX="0.75" PointY="13.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPBuyOrder" Width="1.5" PointX="2.75" PointY="13.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarBaoXian" Width="1.5" PointX="12.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarBaoYang" Width="1.5" PointX="12.75" PointY="6.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarInfo" Width="1.5" PointX="12.75" PointY="11.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarJiaYou" Width="1.5" PointX="9.75" PointY="14.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarLog" Width="1.5" PointX="11.75" PointY="15.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarShiYong" Width="1.5" PointX="13.75" PointY="15.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarWeiHu" Width="1.5" PointX="14.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCarWeiZhang" Width="1.5" PointX="14.75" PointY="6.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCommon" Width="1.5" PointX="14.75" PointY="10.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPContract" Width="1.5" PointX="15.75" PointY="14.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPContractChanPin" Width="1.5" PointX="16.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCrmSetting" Width="1.5" PointX="2.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCustomFuWu" Width="1.5" PointX="4.75" PointY="18.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCustomHuiFang" Width="1.5" PointX="16.75" PointY="7.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCustomInfo" Width="1.5" PointX="6.75" PointY="18.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCustomNeed" Width="1.5" PointX="0.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPCYDIC" Width="1.5" PointX="8.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPDangAn" Width="1.5" PointX="17.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPDanWeiInfo" Width="1.5" PointX="17.75" PointY="18.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPFileList" Width="1.5" PointX="18.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPGongGao" Width="1.5" PointX="18.75" PointY="8.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPGuDing" Width="1.5" PointX="10.75" PointY="20.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPGuDingJiLu" Width="1.5" PointX="12.75" PointY="20.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPHuiBao" Width="1.5" PointX="14.75" PointY="20.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPHuiYuan" Width="1.5" PointX="19.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJiangCheng" Width="1.5" PointX="19.75" PointY="18.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJiangChengZhiDu" Width="1.5" PointX="20.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJianLi" Width="1.5" PointX="20.75" PointY="6.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJiaoSe" Width="1.5" PointX="16.75" PointY="22.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJinDu" Width="1.5" PointX="18.75" PointY="22.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJiXiao" Width="1.5" PointX="20.75" PointY="22.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJiXiaoCanShu" Width="1.5" PointX="2.75" PointY="23.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJSDIC" Width="1.5" PointX="21.75" PointY="11.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJuanKu" Width="1.5" PointX="21.75" PointY="14.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPJXDetails" Width="1.5" PointX="21.75" PointY="18.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPKaoQin" Width="1.5" PointX="22.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPKaoQinSetting" Width="1.5" PointX="22.75" PointY="7.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPLanEmail" Width="1.5" PointX="12.75" PointY="24.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPLanEmailShou" Width="1.5" PointX="22.75" PointY="21.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPLinkLog" Width="1.5" PointX="8.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPLinkMan" Width="1.5" PointX="23.75" PointY="11.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPLiRun" Width="1.5" PointX="14.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPMeeting" Width="1.5" PointX="20.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPMianShi" Width="1.5" PointX="22.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPMobile" Width="1.5" PointX="24.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNetEmail" Width="1.5" PointX="0.75" PointY="26.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNetEmailShou" Width="1.5" PointX="2.75" PointY="26.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNForm" Width="1.5" PointX="24.75" PointY="5.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNFormType" Width="1.5" PointX="24.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkDetails" Width="1.5" PointX="24.75" PointY="22.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkFlow" Width="1.5" PointX="0.75" PointY="7.625" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkFlowNode" Width="1.5" PointX="24.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkFlowToDoUser" Width="1.5" PointX="25.75" PointY="10.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkFlowWT" Width="1.5" PointX="25.75" PointY="13.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkFlowWTLog" Width="1.5" PointX="25.75" PointY="16.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPNWorkToDo" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPOffice" Width="1.5" PointX="16.75" PointY="27.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPPeiXun" Width="1.5" PointX="26.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPPeiXunRiJi" Width="1.5" PointX="10.75" PointY="28.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPPeiXunXiaoGuo" Width="1.5" PointX="26.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPPinShen" Width="1.5" PointX="26.75" PointY="23.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPProduct" Width="1.5" PointX="26.75" PointY="27.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPProject" Width="1.5" PointX="27.75" PointY="7.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPRedHead" Width="1.5" PointX="27.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPRenShiHeTong" Width="1.5" PointX="28.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPReport" Width="1.5" PointX="27.75" PointY="15.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPReportType" Width="1.5" PointX="0.75" PointY="30.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPRiZhi" Width="1.5" PointX="2.75" PointY="30.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSaveFileName" Width="1.5" PointX="12.75" PointY="30.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSerils" Width="1.5" PointX="28.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSheBei" Width="1.5" PointX="18.75" PointY="30.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPShenPi" Width="1.5" PointX="28.75" PointY="22.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPShiShi" Width="1.5" PointX="20.75" PointY="30.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPShouKuan" Width="1.5" PointX="28.75" PointY="25.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSongYang" Width="1.5" PointX="28.75" PointY="29.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSupplyLink" Width="1.5" PointX="29.75" PointY="7.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSupplys" Width="1.5" PointX="29.75" PointY="13.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPSystemSetting" Width="1.5" PointX="22.75" PointY="31.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTalkInfo" Width="1.5" PointX="30.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTalkOnlineUser" Width="1.5" PointX="8.75" PointY="32.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTalkSetting" Width="1.5" PointX="14.75" PointY="32.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTaskFP" Width="1.5" PointX="30.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTelFile" Width="1.5" PointX="30.75" PointY="24.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKu" Width="1.5" PointX="30.75" PointY="29.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKuKaoShi" Width="1.5" PointX="0.75" PointY="33.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKuKaoShiJieGuo" Width="1.5" PointX="2.75" PointY="33.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKuShiJuan" Width="1.5" PointX="31.75" PointY="5.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKuShiJuanSet" Width="1.5" PointX="4.75" PointY="33.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTiKuType" Width="1.5" PointX="31.75" PointY="11.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTongXunLu" Width="1.5" PointX="10.75" PointY="33.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTouSu" Width="1.5" PointX="31.75" PointY="14.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPTreeList" Width="1.5" PointX="32.75" PointY="19.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPUser" Width="1.5" PointX="32.75" PointY="23.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPUserDesk" Width="1.5" PointX="32.75" PointY="2.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPVote" Width="1.5" PointX="22.75" PointY="34.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPWorkPlan" Width="1.5" PointX="24.75" PointY="34.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPWorkRiZhi" Width="1.5" PointX="33.75" PointY="5.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPXCDetails" Width="1.5" PointX="33.75" PointY="8.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPXinChou" Width="1.5" PointX="6.75" PointY="35.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPXinChouCanShu" Width="1.5" PointX="33.75" PointY="11.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPXueXi" Width="1.5" PointX="33.75" PointY="14.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPXueXiXinDe" Width="1.5" PointX="12.75" PointY="35.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPYinZhang" Width="1.5" PointX="14.75" PointY="35.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.ERPYinZhangLog" Width="1.5" PointX="26.75" PointY="35.875" />
+        <EntityTypeShape EntityType="CSPostOAModel.FundsRecord" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.ProjectRecord" Width="1.5" PointX="6" PointY="7.375" />
+        <AssociationConnector Association="CSPostOAModel.FK_FundsRecord_ERPNWorkFlow" />
+        <AssociationConnector Association="CSPostOAModel.FK_ProjectRecord_ERPNWorkFlow" />
+        <AssociationConnector Association="CSPostOAModel.FK_FundsRecord_ERPNWorkToDo" />
+        <AssociationConnector Association="CSPostOAModel.FK_ProjectRecord_ERPNWorkToDo" />
+        <EntityTypeShape EntityType="CSPostOAModel.TravelFundsDetail" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="CSPostOAModel.FK_TravelFundsDetail_FundsRecord" />
+        <EntityTypeShape EntityType="CSPostOAModel.ProjectBonusCredit" Width="1.5" PointX="35.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.PaperMagazine" Width="1.5" PointX="35.375" PointY="18.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.PaperMagazineLevel" Width="1.5" PointX="35.375" PointY="22.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.PaperMagazineType" Width="1.5" PointX="35.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.PaperBonusCredit" Width="1.5" PointX="29.375" PointY="35.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.ContinuingEducationRecord" Width="1.5" PointX="35.375" PointY="30.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

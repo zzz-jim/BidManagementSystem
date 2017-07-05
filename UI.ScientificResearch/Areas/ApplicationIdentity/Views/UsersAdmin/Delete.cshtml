@@ -1,0 +1,31 @@
+﻿@model PF.DomainModel.Identity.ApplicationUser
+
+@{
+    ViewBag.Title = "删除用户";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<h3>您确定要删除此用户?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           用户名：
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回用户列表", "Index")
+        </div>
+    }
+</div>

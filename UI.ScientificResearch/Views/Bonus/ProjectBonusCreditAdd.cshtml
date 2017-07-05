@@ -1,0 +1,145 @@
+﻿@model ScientificResearch.ViewModel.ProjectBonusCreditViewModel
+
+@{
+    ViewBag.Title = "ProjectBonusCreditAdd";
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function(){
+        var updateFlag="@ViewBag.addSuccessFlag";
+        if(updateFlag=="Yes")
+        {
+            alert("更新成功！");
+            parent.location.reload();
+        }
+        else if(updateFlag=="No")
+        {
+            alert("更新失败！");
+        }
+        else
+        {
+
+        }
+    });
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table table-striped table-bordered table-hover">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ModuleName)
+            </td>
+            <td>
+                @*<select id="ModuleName" name="ModuleName">
+                    <option value="政府采购">政府采购</option>
+                    <option value="学科技术带头人">学科技术带头人</option> 
+                    <option value="论文发表">论文发表</option>
+                    <option value="政府采购">政府采购</option>
+                    <option value="学术会议">学术会议</option>
+                    <option value="科技成果">科技成果</option>
+                </select>*@
+                @*@Html.EditorFor(model => model.ModuleName)
+                @Html.ValidationMessageFor(model => model.ModuleName, "", new { @class = "text-danger" })*@
+                <input type="text" readonly="readonly" id="ModuleName" name="ModuleName" value="@ViewBag.ModuleName" />
+            </td>
+        </tr>
+       
+           @if (ViewBag.ModuleName == "继续教育")
+           {
+            <input hidden="hidden" id="ProjectType" name="ProjectType" value="继续教育" />
+             }
+           else
+            {<tr>
+            <td>
+                @Html.LabelFor(model => model.ProjectType)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.ProjectType)
+                @Html.ValidationMessageFor(model => model.ProjectType, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+    }
+        <tr>
+            <td>@Html.LabelFor(model => model.ProjectLevel)</td>
+            <td>
+                @if (ViewBag.ModuleName == "政府采购")
+{
+                  <select id="ProjectLevel" name="ProjectLevel">
+                      <option value="国家级">国家级</option>
+                      <option value="省级">省级</option>
+                      <option value="市级">市级</option>
+                      <option value="局级">局级</option>
+                      <option value="院级">院级</option>
+                 </select>
+}
+                @if (ViewBag.ModuleName == "学科技术带头人")
+                {
+                      <select id="ProjectLevel" name="ProjectLevel">
+                          <option value="第一层次">第一层次</option>
+                          <option value="第二层次">第二层次</option>
+                          <option value="第三层次">第三层次</option>
+                          <option value="第四层次">第四层次</option>
+                          <option value="第五层次">第五层次</option>
+                 </select> 
+                }
+                @if (ViewBag.ModuleName == "论文发表")
+                {
+                    <select id="ProjectLevel" name="ProjectLevel">
+                        <option value="特I类期刊">特I类期刊</option>
+                        <option value="I类期刊">I类期刊</option>
+                        <option value="II类期刊">II类期刊</option>
+                        <option value="III类期刊">III类期刊</option>
+                    </select>
+                }
+                @if (ViewBag.ModuleName == "科教成果奖")
+                {
+                    <select id="ProjectLevel" name="ProjectLevel">
+                        <option value="一等奖">一等奖</option>
+                        <option value="二等奖">二等奖</option>
+                        <option value="三等奖">三等奖</option>
+                        <option value="四等奖">四等奖</option>
+                        <option value="鼓励奖">鼓励奖</option>
+                    </select>
+                }
+                @if (ViewBag.ModuleName == "继续教育")
+                {
+                    <select id="ProjectLevel" name="ProjectLevel">
+                        <option value="国家继续教育项目">国家继续教育项目</option>
+                        <option value="省级继续教育项目">省级继续教育项目</option>
+                        <option value="市级继续教育项目">市级继续教育项目</option>
+                        <option value="县级继续教育项目">县级继续教育项目</option>
+                    </select>
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Credit)
+            </td>
+            <td>
+                <input type="text" id="Credit" name="Credit" value="@Model.Credit" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+                @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        @Html.HiddenFor(model => model.IsDeleted)
+        @Html.HiddenFor(model => model.CreatedBy)
+        @Html.HiddenFor(model => model.CreateTime)
+        @Html.HiddenFor(model => model.UpdateBy)
+        @Html.HiddenFor(model => model.UpdateTime)
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="保存" class="btn btn-default" />
+            </td>
+        </tr>
+    </table>
+}
+
+@*<div>
+    @Html.ActionLink("继续添加", "ProjectBonusCreditAdd", "Bonus")
+</div>*@
+

@@ -1,0 +1,35 @@
+﻿@model ScientificResearch.DomainModel.PaperMagazine
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        var limit="@ViewBag.Isuccess";
+        if (limit =="true") {
+            alert("修改成功！")
+            parent.location.reload();
+        }
+        //else (limit == false)
+        //{
+        //    alert("修改失败！");
+        //}
+    });
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.CreateTime)
+    @Html.HiddenFor(model => model.UpdateBy)
+    @Html.HiddenFor(model => model.UpdateTime)
+    @Html.HiddenFor(model => model.IsDeleted)
+    <table class="table">
+        <tr><td>期刊名称</td><td>@Html.EditorFor(model => model.Name)</td><td>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>期刊级别</td><td>@Html.DropDownList("LevelId", (List<SelectListItem>)ViewBag.PaperMagazineLevel)</td><td></td></tr>
+        <tr><td>期刊类型</td><td>@Html.DropDownList("TypeId", (List<SelectListItem>)ViewBag.PaperMagazineType)</td><td></td></tr>
+        <tr><td colspan="3"><input type="submit" value="修改" class="btn btn-blue" /></td></tr>
+    </table>
+}

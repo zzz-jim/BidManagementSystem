@@ -1,0 +1,219 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/form.js"></script>
+<script type="text/javascript">
+    var fuJian = "";
+    $(function () {
+        areadHaveFillIn();
+    });
+    $(function () {
+
+        $("#btnUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                ajaxFileUploadFillIn();
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $("#Date385338748").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+    });
+    $(function () {
+        function show() {
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear() + "年";
+            str += (mydate.getMonth() + 1) + "月";
+            str += mydate.getDate() + "日";
+            return str;
+        }
+        $(".in").val(show());
+    });
+    //上报成功的提示
+    $(function(){
+        var sendupsuccess = "@ViewBag.SendUpSuccess";
+        if (sendupsuccess == "True")
+        {
+            alert("上报成功！");
+            parent.location.reload();
+        }
+        
+    });
+
+    $(function () {
+        $("#Reported").click(function () {
+            var url1 = "/Approval/ProcessRecords?flag=Reported";
+            submitForm("form", url1);
+        })
+        $("#Save").click(function () {
+            var url2 = "/Approval/ProcessRecords?flag=Save";
+            submitForm("form", url2);
+        })
+    })
+</script>
+
+
+<div id="treeviewWindowForSingleUser" style="width:200px;height:400px;">
+    @Html.Partial("_SelectSingleUserPartial")
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal widget-body">
+        <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+        <table class="table">
+            @Html.ValidationSummary(true)
+            @*@if (ViewBag.act == "save")
+            {
+
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.WorkName)
+
+                @Html.HiddenFor(model => model.ApplicationId)
+
+                @Html.HiddenFor(model => model.FormID)
+
+                @Html.HiddenFor(model => model.WorkFlowID)
+
+                @Html.HiddenFor(model => model.UserName)
+
+                @Html.HiddenFor(model => model.TimeStr)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.HiddenFor(model => model.JieDianID)
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+                @Html.HiddenFor(model => model.OKUserList)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.LateTime)
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+
+                @Html.Raw(Model.FormContent)
+                @Html.HiddenFor(model => model.FormContent)
+                @Html.ValidationMessageFor(model => model.FormContent)
+
+
+                <tr>
+                    <td colspan="4" style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" />
+                    </td>
+                    <td colspan="4" style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="修改数据" name="Updatedata" class="btn btn-blue" />
+                    </td>
+                </tr>
+
+            }
+            else
+            {*@
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.WorkName)
+
+                @Html.HiddenFor(model => model.ApplicationId)
+
+                @Html.HiddenFor(model => model.FormID)
+
+                @Html.HiddenFor(model => model.WorkFlowID)
+
+                @Html.HiddenFor(model => model.UserName)
+
+                @Html.HiddenFor(model => model.TimeStr)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.HiddenFor(model => model.JieDianID)
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+                @Html.HiddenFor(model => model.OKUserList)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.LateTime)
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+
+                @Html.Raw(Model.FormContent)
+                @Html.HiddenFor(model => model.FormContent)
+                @Html.ValidationMessageFor(model => model.FormContent)
+
+                <tr>
+                    <td colspan="4">
+                        <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                        <input type="button" value="上传" id="btnUploadFile" />
+
+                    </td>
+                </tr>
+                 <tr>
+                <td colspan="8">
+                    <div id="areadyuploadfile"></div>
+                    <p id="fuJian_Save_P"></p>
+                    <div id="table_save"></div>
+                </td>
+            </tr>
+               
+                @if(Model.IsTemporary == true)
+                {
+                    <tr>
+                        <td colspan="4" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="保存并上报" id="Reported" name="Reported" class="btn btn-blue" />
+                        </td>
+                        <td colspan="4" style="vertical-align:middle; text-align:center;">
+                            已保存
+                        </td>
+                    </tr>
+                }
+                else
+                {<tr>
+                     <td colspan="4" style="vertical-align:middle; text-align:center;">
+                         <input type="submit" value="保存并上报" id="Reported" name="Reported" class="btn btn-blue" />
+                     </td>
+                     <td colspan="4" style="vertical-align:middle; text-align:center;">
+                         <input type="submit" value="保&nbsp&nbsp&nbsp存" id="Save" name="Save" class="btn btn-blue" />
+                     </td>
+                </tr>
+               }
+
+                   
+            @*}*@
+        </table>
+    </div>
+}
+<script>@Html.Raw(ViewBag.PiLiangSet)</script>
+

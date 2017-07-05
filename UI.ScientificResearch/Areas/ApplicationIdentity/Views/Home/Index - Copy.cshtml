@@ -1,0 +1,1357 @@
+﻿@{Layout = null;}
+
+<!DOCTYPE html>
+@using System.Web.Mvc;
+@using UI.ScientificResearch.Extensions;
+
+@{
+    string allRoles = Session[SessionKeyEnum.UserRoles.ToString()].ToString();
+    string[] rolesArry = allRoles.Split(',');
+    
+    if (rolesArry.Length > 2 || allRoles.Contains("超级管理员"))
+    {
+    }
+    else
+    {
+        ViewBag.HiddenLi= "Hidden";
+    }
+}
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>招投标管理系统</title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="tabs and accordions" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="~/Content/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="~/Content/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/animate.min.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/new-cover.css" rel="stylesheet" />
+    <!--Page Related styles-->
+    <link href="~/Content/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Scripts/assets/js/skins.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.default.min.css" />
+    @*<link href="~/Content/Kendo/2014.2.716/kendo.rtl.min.css" rel="stylesheet">*@
+
+    <!--文本框大小 -->
+    <link href="~/Content/customTextBoxStlye.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
+    <script src="~/Scripts/Kendo/2014.2.716/cultures/kendo.culture.zh-CN.min.js"></script>
+    <script src="~/Scripts/layer/layer.min.js"></script>
+    @*<script src="~/Content/shared/js/console.js"></script>*@
+    <script src="~/Scripts/assets/js/skins.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var IsHiddenLi = "@ViewBag.HiddenLi";
+            if (IsHiddenLi == "Hidden")
+            {
+                $("#Approval_ProjectBonusCredit").remove();
+                $("#Approval_ScienceFundsManageContainer").remove();
+                $("#Approval_ScienceStatisticContainer").remove();
+                $("#GoodSubject_ScienceFundsManageContainer").remove();
+                $("#GoodSubject_ScienceStatisticContainer").remove();
+                $("#SubjectLeader_ProjectBonusCredit").remove();
+                $("#SubjectLeader_ScienceFundsManageContainer").remove();
+                $("#PaperPublish_ProjectBonusCredit").remove();
+                $("#PaperPublish_ScienceFundsManageContainer").remove();
+                $("#PaperPublish_PaperConfigManageContainer").remove();
+                $("#PaperPublish_PaperBonusCreditList").remove();
+                $("#PaperPublish_ScienceStatisticContainer").remove();
+                $("#ScienceConference_ScienceFundsManageContainer").remove();
+                $("#ScienceConference_ScienceStatisticContainer").remove();
+                $("#ResearchAward_ProjectBonusCredit").remove();
+                $("#ResearchAward_ScienceFundsManageContainer").remove();
+                $("#ScienceStatistic_Controller").remove();
+            }
+        });
+    </script>
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajax({
+                url: "/Approval/UpToDoThings",
+                type: "get",
+                success: function (data) {
+                    if (data != null) {
+                        $("#ToDoThingsCount").append("<lable>" + data.length + "</lable>");
+                    }
+                    else {
+
+                    }
+                }
+            });
+
+            $("#todoli").mouseenter(function () {
+                $("#todoul").empty();
+                $.ajax({
+                    url: "/Approval/UpToDoThings",
+                    type: "get",
+                    success: function (data) {
+                        if (data != null) {
+                            var html = "<li> " + data.length + "个待办事宜</li>";
+                            if (data.length > 10) {
+                                for (var i = 0; i < 9; i++) {
+                                    //将json时间转换
+                                    var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
+                                    var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
+                                    html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < data.length; i++) {
+                                    //将json时间转换
+                                    var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
+                                    var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
+                                    html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
+                                }
+                            }
+                            html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" id="Approval_WorkContainer"><a href="/Approval/AllWorkContainer">更多>></a></li>';
+                            $("#todoul").append(html);
+                        }
+                    }
+                });
+            }).mouseleave(function () {
+                $("#todoul").empty();
+            });
+        });
+        $(function () {
+            $.ajax({
+                url: "/Approval/LatedReimburse",
+                type: "get",
+                success: function (data) {
+                    if (data != null) {
+                        var html="";
+                        for (var i = 0; i < data.length; i++)
+                        {
+                            var html0 = '<li class="task-item"></li>';
+                            if (data[i].IsRejected == true)
+                            { 
+                                var html1 = '<div class="task-state"><span class="label label-yellow">' + data[i].UserName + '上报的' + data[i].Type + '被驳回</span></div>';
+                            }
+                            else
+                            {
+                                if (data[i].JieDianName == "结束") {
+                                    var html1 = '<div class="task-state"><span class="label label-orange"> ' + data[i].UserName + '上报的' + data[i].Type + '通过审批</span></div>';
+                                }
+                                else {
+                                    var html1 = '<div class="task-state"><span class="label label-palegreen"> ' + data[i].UserName + '上报的'+data[i].Type+'待' + data[i].JieDianName + '审批</span></div>';
+                                }
+                            }
+                            //将json时间转换
+                            var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
+                            var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
+                            var html2 = '<div class="task-time">' + ChangedTimeStr + '</div>';
+                            if(data[i].JieDianName!="结束")
+                            {
+                                var html3 = '<div class="task-creator"><a href=""> 需要' + data[i].JieDianName + '</a></div>';
+                            }
+                            else
+                            {
+                                var html3 = '<div class="task-creator"><a href=""> 结束</a></div>';
+                            }
+                            html =html + html1 + html2 + html3;
+                        }
+                        $("#LatedReimburseUl").append(html);
+                    }
+                    else {
+                        alert("发生异常!");
+
+                    }
+                }
+            });
+        });
+        //小张
+        $(function () {
+            $.ajax({
+                url: "/Approval/LatedAppraval",
+                type: "get",
+                success: function (data) {
+                    if (data != null) {
+                        var html = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var htmlfirst = '<li class="ticket-item"><div class="row">';
+                            var html1 = '<div class="ticket-user col-lg-6 col-sm-12"><span class="user-name">' + data[i].ApplicationManName + '</span><span class="user-company">' + data[i].Department + '</span></div>';
+                            var html2 = '<div class="ticket-time  col-lg-4 col-sm-6 col-xs-12"><div class="divider hidden-md hidden-sm hidden-xs"></div><i class="fa fa-clock-o"></i><span class="time">' + data[i].TimeDifference + '小时 以前</span></div>';
+                            var html3 = '<div class="ticket-type  col-lg-2 col-sm-6 col-xs-12"><span class="divider hidden-xs"></span><span class="type">' + data[i].ApprovalManName + '</span></div>';
+                            var html4 = '<div class="ticket-state bg-palegreen"><i class="fa fa-check"></i></div>';
+                            var htmlend = '</div></li>';
+                            html =html+ htmlfirst + html1 + html2 + html3 + html4+htmlend;
+                        }
+                        $("#LatedApprovalUl").append(html);
+                    }
+                    else {
+                        alert("发生异常!");
+
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<!-- /Head -->
+<!-- Body -->
+<body>
+    <div id="AllToDoWindow">
+
+    </div>
+    <script type="text/javascript">
+        function OpeToDoWindow(id) {
+            $("#AllToDoWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "80%",
+                height: "80%",
+                modal: true,
+                draggable: true,
+                title: "待办",
+                visible: false,
+                actions: [
+                        "Pin",
+                        "Close",
+                       // "Minimize",
+                     // "Maximize"
+                ],
+                resizable: false,
+                close: function (e) {
+                    parent.location.reload();//刷新页面
+                }
+            });
+
+            $.ajax({
+                url: "/Approval/RiZhiReturnStateValue?id=" + id,
+                type: "post",
+                success: function (data) {
+                    if (data != null) {
+                        // $("#MaxWindow").html(data);
+                        var k = data;
+                        //判断返回的状态来控制弹出框第一个打开的页面
+                        //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                        if (data["ReturnState"] == "AplicationWriting") {
+                            $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + data["applicationId"] + '">项目登记</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
+                        {
+                            if (data["ReturnState"] == "ApplicationRejected") {
+                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + data["applicationId"] + '">项目登记</iframe>');
+                            }
+                            else {
+                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + data["applicationId"] + '">项目登记</iframe>');
+                            }
+                        }
+                        else if (data["ReturnState"] == "ApplicationApproved" || data["ReturnState"] == "ProjectEstablishing")//全部通过审批
+                        {
+                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                            $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + data["applicationId"] + '">项目登记</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ProjectEstablished" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                        {
+                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/SignContract?id=' + data["applicationId"] + '">合同记录</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ContractSigned" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
+                        {
+                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ProcessRecordList?id=' + data["applicationId"] + '">过程记录</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ConcludeUnWrite" || data["ReturnState"] == "ConcludeUnSubmit")//申请书已提交和待审批中
+                        {
+                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/Conclusions?id=' + data["applicationId"] + '">项目结题</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ProjectConcluding" || data["ReturnState"] == "ProjectConcluded" || data["ReturnState"] == "ConcludeRejected")//申请书已提交和待审批中
+                        {
+                            if (data["ReturnState"] == "ConcludeRejected") {
+                                $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ConclusionsRejected?id=' + data["applicationId"] + '">项目结题</iframe>');
+                            }
+                            else {
+                                $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ConclusionsAgree?id=' + data["applicationId"] + '">项目结题</iframe>');
+                            }
+                        }
+                        else if (data["ReturnState"] == "ExtensionUnWrite")//
+                        {
+                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" style="border:0px" src="/Approval/ExtensionRequest?id=' + data["applicationId"] + '">项目延期</iframe>');
+                        }
+                        else if (data["ReturnState"] == "ExtensionRequestApproving" || data["ReturnState"] == "ExtensionAgreed" || data["ReturnState"] == "ExtensionRejected")//申请书已提交和待审批中
+                        {
+                            if (data["ReturnState"] == "ExtensionRejected") {
+                                $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" src="/Approval/ExtensionRejected?id=' + data["applicationId"] + '">项目延期</iframe>');
+                            }
+                            else {
+                                $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="75%" scrolling="no" src="/Approval/ExtensionAgree?id=' + data["applicationId"] + '">项目延期</iframe>');
+                            }
+                        }
+
+                    }
+                    else {
+                        alert("发生异常！");
+                    }
+                }
+            });
+            $("#AllToDoWindow").data("kendoWindow").center().open();
+        };
+    </script>
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loading-progress">
+            <div class="rotator">
+                <div class="rotator">
+                    <div class="rotator colored">
+                        <div class="rotator">
+                            <div class="rotator colored">
+                                <div class="rotator colored"></div>
+                                <div class="rotator"></div>
+                            </div>
+                            <div class="rotator colored"></div>
+                        </div>
+                        <div class="rotator"></div>
+                    </div>
+                    <div class="rotator"></div>
+                </div>
+                <div class="rotator"></div>
+            </div>
+            <div class="rotator"></div>
+        </div>
+    </div>
+    <!--  /Loading Container -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <img src="~/Content/assets/img/logo.png" alt="" />
+                        </small>
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <!-- /Sidebar Collapse -->
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+                    <div class="navbar-account">
+                        <ul class="account-area">
+                            <li>
+                                <a class=" dropdown-toggle" data-toggle="dropdown" title="快速导航" href="#">
+                                    <i class="icon fa fa-warning"></i>
+                                </a>
+                                <!--Notification Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-phone bg-themeprimary white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">前台首页</span>
+                                                    <!--<span class="description">01:00 pm</span>-->
+                                                </div>
+                                                <!--<div class="notification-extra">
+                                                    <i class="fa fa-clock-o themeprimary"></i>
+                                                    <span class="description">office</span>
+                                                </div>-->
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-check bg-darkorange white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">后台首页</span>
+
+                                                </div>
+                                                <!--<div class="notification-extra">
+                                                    <i class="fa fa-clock-o darkorange"></i>
+                                                </div>-->
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Approval/Index">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-gift bg-warning white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">政府采购管理子系统</span>
+
+                                                </div>
+                                                <!--<div class="notification-extra">
+                                                    <i class="fa fa-calendar warning"></i>
+                                                    <i class="fa fa-clock-o warning"></i>
+                                                    <span class="description">at home</span>
+                                                </div>-->
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Education/ContinuingEducation/Index">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-glass bg-success white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">政府采购管理子系统</span>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                   
+                                    <li>
+                                        <a href="/ApplicationIdentity/Home/About">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-glass bg-success white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">设置</span>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-footer ">
+                                        <span>
+                                            今天, @DateTime.Now.Month 月 @DateTime.Now.Day 日
+                                        </span>
+                                        @*<span class="pull-right">
+                                                10°c
+                                                <i class="wi wi-cloudy"></i>
+                                            </span>*@
+                                    </li>
+                                </ul>
+                                <!--/Notification Dropdown-->
+                            </li>
+
+                            
+                           
+                            <li id="todoli">
+                                <a class="dropdown-toggle" data-toggle="dropdown" title="待办事宜">
+                                    <i class="icon fa fa-tasks"></i>
+                                    <span class="badge" id="ToDoThingsCount"></span>
+                                </a>
+                                <!--Tasks Dropdown-->
+                                <ul id="todoul" style="width:600px;" class="pull-right dropdown-menu dropdown-tasks dropdown-arrow "></ul>
+                                <!--/Tasks Dropdown-->
+                            </li>
+
+                            @Html.Partial("_LoginPartial")
+
+                            @*<li>
+                                    <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                        <div class="avatar" title="View your public profile">
+                                            <img src="~/Content/assets/img/avatars/adam-jansen.jpg">
+                                        </div>
+                                        <section>
+                                            <h2><span class="profile"><span>David Stevenson</span></span></h2>
+                                        </section>
+                                    </a>
+                                    <!--Login Area Dropdown-->
+                                    <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                        <li class="username"><a>David Stevenson</a></li>
+                                        <li class="email"><a>David.Stevenson@live.com</a></li>
+                                        <!--Avatar Area-->
+                                        <li>
+                                            <div class="avatar-area">
+                                                <img src="~/Content/assets/img/avatars/adam-jansen.jpg" class="avatar">
+                                                <span class="caption">Change Photo</span>
+                                            </div>
+                                        </li>
+                                        <!--Avatar Area-->
+                                        <li class="edit">
+                                            <a href="profile.html" class="pull-left">Profile</a>
+                                            <a href="#" class="pull-right">Setting</a>
+                                        </li>
+                                        <!--Theme Selector Area-->
+                                        <li class="theme-area">
+                                            <ul class="colorpicker" id="skin-changer">
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/Content/assets/css/skins/blue.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/Content/assets/css/skins/azure.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/Content/assets/css/skins/teal.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/Content/assets/css/skins/green.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/Content/assets/css/skins/orange.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/Content/assets/css/skins/pink.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/Content/assets/css/skins/darkred.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/Content/assets/css/skins/purple.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/Content/assets/css/skins/darkblue.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/Content/assets/css/skins/gray.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/Content/assets/css/skins/black.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/Content/assets/css/skins/deepblue.min.css"></a></li>
+                                            </ul>
+                                        </li>
+                                        <!--/Theme Selector Area-->
+                                        <li class="dropdown-footer">
+                                            <a href="login.html">
+                                                Sign out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!--/Login Area Dropdown-->
+                                </li>*@
+                            <!-- /Account Area -->
+                            <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                            <!-- Settings -->
+                        </ul>
+                        @*<div class="setting">
+                                <a id="btn-setting" title="Setting" href="#">
+                                    <i class="icon glyphicon glyphicon-cog"></i>
+                                </a>
+                            </div>
+                            <div class="setting-container">
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixednavbar">
+                                    <span class="text">Fixed Navbar</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixedsidebar">
+                                    <span class="text">Fixed SideBar</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixedbreadcrumbs">
+                                    <span class="text">Fixed BreadCrumbs</span>
+                                </label>
+
+                            </div>*@
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    @*<input type="text" class="searchinput" />
+                        <i class="searchicon fa fa-search"></i>*@
+                    @*<div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>*@
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--UI Elements-->
+                    <li id="Approval_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-flask"></i>
+                            <span class="label label-info" id="Scientific"><strong>政府采购</strong> </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            @*<li id="Approval_WorkContainer">
+                                    <a href="/Approval/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="Approval_ApplicationList">
+                                <a href="/Approval/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="Approval_ProcessingProjectList">
+                                <a href="/Approval/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            <li id="Approval_ProjectBonusCredit">
+                                    <a href="/Approval/ProjectBonusCredit">
+                                        <span class="badge badge-azure">奖励设置</span>
+                                    </a>
+                                </li>
+                            <li id="Approval_ScienceFundsManageContainer">
+                                <a href="/Approval/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                            <li id="Approval_ScienceStatisticContainer">
+                                <a href="/Approval/ScienceStatisticContainer">
+                                    <span class="badge badge-azure  ">统计分析</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!--Tables-->
+                    <li id="GoodSubject_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-flask"></i>
+                            <span class="label label-info" id="GoodSubject"><strong> 政府采购</strong> </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            @*<li id="GoodSubject_WorkContainer">
+                                    <a href="/GoodSubject/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="GoodSubject_ApplicationList">
+                                <a href="/GoodSubject/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="GoodSubject_ProcessingProjectList">
+                                <a href="/GoodSubject/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            @*<li id="GoodSubject_ProjectBonusCredit">
+                                    <a href="/GoodSubject/ProjectBonusCredit">
+                                        <span class="menu-text">奖励设置</span>
+                                    </a>
+                                </li>*@
+                            <li id="GoodSubject_ScienceFundsManageContainer">
+                                <a href="/GoodSubject/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                            <li id="GoodSubject_ScienceStatisticContainer">
+                                <a href="/GoodSubject/StatisticManageContainer">
+                                    <span class="badge badge-azure">统计分析</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--Forms-->
+                    <li id="SubjectLeader_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-user"></i>
+                            <span class="label label-info" id="SubjectLeader"><strong> 学科技术带头人</strong> </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            @*<li id="SubjectLeader_WorkContainer">
+                                    <a href="/SubjectLeader/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="SubjectLeader_ApplicationList">
+                                <a href="/SubjectLeader/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="SubjectLeader_ProcessingProjectList">
+                                <a href="/SubjectLeader/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            <li id="SubjectLeader_ProjectBonusCredit">
+                                    <a href="/SubjectLeader/ProjectBonusCredit">
+                                        <span class="badge badge-azure">奖励设置</span>
+                                    </a>
+                                </li>
+                            <li id="SubjectLeader_ScienceFundsManageContainer">
+                                <a href="/SubjectLeader/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--Charts-->
+                    <li id="PaperPublish_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-folder-open-o"></i>
+                            <span class="label label-info" id="PaperPublish"> <strong>论文管理</strong> </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            @*<li id="PaperPublish_WorkContainer">
+                                    <a href="/PaperPublish/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="PaperPublish_ApplicationList">
+                                <a href="/PaperPublish/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="PaperPublish_ProcessingProjectList">
+                                <a href="/PaperPublish/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            <li id="PaperPublish_ProjectBonusCredit">
+                                    <a href="/PaperPublish/ProjectBonusCredit">
+                                        <span class="badge badge-azure">奖励设置</span>
+                                    </a>
+                                </li>
+                            <li id="PaperPublish_ScienceFundsManageContainer">
+                                <a href="/PaperPublish/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                            <li id="PaperPublish_PaperConfigManageContainer">
+                                <a href="/PaperPublish/PaperConfigManageContainer">
+                                    <span class="badge badge-azure"> 论文配置</span>
+                                </a>
+                            </li>
+                            <li id="PaperPublish_PaperBonusCreditList">
+                                <a href="/PaperPublish/PaperBonusCreditList">
+                                    <span class="badge badge-azure"> 学分配置</span>
+                                </a>
+                            </li>
+                            <li id="PaperPublish_ScienceStatisticContainer">
+                                <a href="/PaperPublish/ScienceStatisticContainer">
+                                    <span class="badge badge-azure">统计分析</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--Mail-->
+                    <li id="ScienceConference_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-book"></i>
+                            <span class="label label-info" id="ScienceConference"> <strong>学术会议</strong> </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            @*<li id="ScienceConference_WorkContainer">
+                                    <a href="/ScienceConference/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="ScienceConference_ApplicationList">
+                                <a href="/ScienceConference/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="ScienceConference_ProcessingProjectList">
+                                <a href="/ScienceConference/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            <li id="ScienceConference_ScienceFundsManageContainer">
+                                <a href="/ScienceConference/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                            <li id="ScienceConference_ScienceStatisticContainer">
+                                <a href="/ScienceConference/ScienceStatisticContainer">
+                                    <span class="badge badge-azure">统计分析</span>
+                                </a>
+                            </li>
+                            @*<li id="ScienceConference_WorkContainer">
+                                    <a href="/ScienceConference/ScienceFundsManageContainer">
+                                        <span class="menu-text">公务出差审批单</span>
+                                    </a>
+                                </li>*@
+                        </ul>
+                    </li>
+                    <li id="ResearchAward_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-trophy"></i>
+                            <span class="label label-info" id="ResearchAward"> <strong>科技成果 </strong></span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            @*<li id="ResearchAward_WorkContainer">
+                                    <a href="/ResearchAward/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="ResearchAward_ApplicationList">
+                                <a href="/ResearchAward/ApplicationList">
+                                    <span class="badge badge-azure">项目登记</span>
+                                </a>
+                            </li>
+                            <li id="ResearchAward_ProcessingProjectList">
+                                <a href="/ResearchAward/ProcessingProjectList">
+                                    <span class="badge badge-azure">过程记录</span>
+                                </a>
+                            </li>
+                            <li id="ResearchAward_ProjectBonusCredit">
+                                    <a href="/ResearchAward/ProjectBonusCredit">
+                                        <span class="badge badge-azure">奖励设置</span>
+                                    </a>
+                                </li>
+                            <li id="ResearchAward_ScienceFundsManageContainer">
+                                <a href="/ResearchAward/ScienceFundsManageContainer">
+                                    <span class="badge badge-azure">资金管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--More Pages-->
+                    <li id="ScienceStatistic_Controller">
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-bar-chart-o"></i>
+
+                            <span class="label label-info">
+                                <strong>科研统计</strong>
+                            </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a href="/Statistic/ScienceResearchAmountOfSectionStatistic">
+                                    <span class="badge badge-azure">科室科研数量统计</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/Statistic/ScienceResearchAmountOfApplicationStatistic">
+                                    <span class="badge badge-azure"> 科研申请书统计</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Statistic/ScienceResearchOfCapitalStatistic">
+                                    <span class="badge badge-azure">科研资金统计</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Statistic/ScienceResearchAmountOfFundStatistic">
+                                    <span class="badge badge-azure">科研经费统计</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Statistic/ScienceResearchProjectStatistic">
+                                    <span class="badge badge-azure"> 项目信息统计</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="#">主页</a>
+                        </li>
+                        <li class="active">控制面板</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                <!-- Page Header -->
+                <div class="page-header position-relative">
+                    <div class="header-title">
+                        <h1>
+                            控制面板
+                        </h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+                <!-- /Page Header -->
+                <!-- Page Body -->
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="databox radius-bordered databox-shadowed databox-graded">
+                                        <a href="/Approval/WorkContainer">
+                                            <div class="databox-left bg-themesecondary">
+                                                <div class="databox-piechart">
+                                                    <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">50%</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="databox-right">
+                                                <span class="databox-number themesecondary">14</span>
+                                                <div class="databox-text darkgray">
+                                                    待办事宜
+                                                </div>
+                                                <div class="databox-stat themesecondary radius-bordered">
+                                                    <i class="stat-icon icon-lg fa fa-tasks"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="databox radius-bordered databox-shadowed databox-graded">
+                                        <div class="databox-left bg-themethirdcolor">
+                                            <div class="databox-piechart">
+                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="15" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span class="white font-90">15%</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="databox-right">
+                                            <span class="databox-number themethirdcolor">1</span>
+                                            <div class="databox-text darkgray">未读消息</div>
+                                            <div class="databox-stat themethirdcolor radius-bordered">
+                                                <i class="stat-icon  icon-lg fa fa-envelope-o"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="databox radius-bordered databox-shadowed databox-graded">
+                                        <div class="databox-left bg-themeprimary">
+                                            <div class="databox-piechart">
+                                                <div id="users-pie" data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="76" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">76%</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="databox-right">
+                                            <span class="databox-number themeprimary">98</span>
+                                            <div class="databox-text darkgray">已审批通过项目</div>
+                                            <div class="databox-state bg-themeprimary">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="databox radius-bordered databox-shadowed databox-graded">
+                                        <div class="databox-left no-padding bordered-left-2 bordered-palegreen">
+                                            <img src="~/Content/assets/img/avatars/John-Smith.jpg" style="width:65px; height:65px;">
+                                        </div>
+                                        <div class="databox-right padding-top-20">
+                                            <div class="databox-stat palegreen">
+                                                @*<i class="stat-icon icon-xlg fa fa-phone"></i>*@
+                                            </div>
+                                            <div class="databox-text darkgray">张小明</div>
+                                            <div class="databox-text darkgray">超级管理员</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                            <div class="widget">
+                                <div class="widget-header bordered-bottom bordered-themeprimary">
+                                    <i class="widget-icon fa fa-tasks themeprimary"></i>
+                                    <span class="widget-caption themeprimary">近期经费</span>
+                                </div><!--Widget Header-->
+                                <div class="widget-body">
+                                    <div class="widget-main no-padding">
+                                        <div class="task-container">
+                                            <div class="task-search">
+                                                <span class="input-icon">
+                                                    <input type="text" class="form-control" placeholder="搜索">
+                                                    <i class="fa fa-search gray"></i>
+                                                </span>
+                                            </div>
+                                            <ul class="tasks-list" id="LatedReimburseUl">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div><!--Widget Main Container-->
+                                </div><!--Widget Body-->
+                            </div>
+
+                        </div>
+                        <div class="col-lg-8 col-sm-12 col-xs-12">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="widget">
+                                        <div class="widget-header bordered-bottom bordered-themesecondary">
+                                            <i class="widget-icon fa fa-tags themesecondary"></i>
+                                            <span class="widget-caption themesecondary">最近审批</span>
+                                        </div><!--Widget Header-->
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <div class="tickets-container">
+                                                    <ul class="tickets-list" id="LatedApprovalUl">
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="~/Scripts/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Scripts/assets/js/beyond.min.js"></script>
+
+
+    <!--Page Related Scripts-->
+    <!--Sparkline Charts Needed Scripts-->
+    <script src="~/Scripts/assets/js/charts/sparkline/jquery.sparkline.js"></script>
+    <script src="~/Scripts/assets/js/charts/sparkline/sparkline-init.js"></script>
+
+    <!--Easy Pie Charts Needed Scripts-->
+    <script src="~/Scripts/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+    <script src="~/Scripts/assets/js/charts/easypiechart/easypiechart-init.js"></script>
+
+    <!--Flot Charts Needed Scripts-->
+    <script src="~/Scripts/assets/js/charts/flot/jquery.flot.js"></script>
+    <script src="~/Scripts/assets/js/charts/flot/jquery.flot.resize.js"></script>
+    <script src="~/Scripts/assets/js/charts/flot/jquery.flot.pie.js"></script>
+    <script src="~/Scripts/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+    <script src="~/Scripts/assets/js/charts/flot/jquery.flot.orderBars.js"></script>
+
+    <script>
+        // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
+        $(window).bind("load", function () {
+
+            /*Sets Themed Colors Based on Themes*/
+            themeprimary = getThemeColorFromCss('themeprimary');
+            themesecondary = getThemeColorFromCss('themesecondary');
+            themethirdcolor = getThemeColorFromCss('themethirdcolor');
+            themefourthcolor = getThemeColorFromCss('themefourthcolor');
+            themefifthcolor = getThemeColorFromCss('themefifthcolor');
+
+            //Sets The Hidden Chart Width
+            $('#dashboard-bandwidth-chart')
+                .data('width', $('.box-tabbs')
+                    .width() - 20);
+
+            //-------------------------Visitor Sources Pie Chart----------------------------------------//
+            var data = [
+                {
+                    data: [[1, 21]],
+                    color: '#fb6e52'
+                },
+                {
+                    data: [[1, 12]],
+                    color: '#e75b8d'
+                },
+                {
+                    data: [[1, 11]],
+                    color: '#a0d468'
+                },
+                {
+                    data: [[1, 10]],
+                    color: '#ffce55'
+                },
+                {
+                    data: [[1, 46]],
+                    color: '#5db2ff'
+                }
+            ];
+            var placeholder = $("#dashboard-pie-chart-sources");
+            placeholder.unbind();
+
+            $.plot(placeholder, data, {
+                series: {
+                    pie: {
+                        innerRadius: 0.45,
+                        show: true,
+                        stroke: {
+                            width: 4
+                        }
+                    }
+                }
+            });
+
+            //------------------------------Visit Chart------------------------------------------------//
+            var data2 = [
+            //    {
+            //    color: themesecondary,
+            //    label: "项目申请书",
+            //    data: [[3, 2], [4, 5], [5, 4], [6, 11], [7, 12], [8, 11], [9, 8], [10, 14], [11, 12], [12, 16], [13, 9],
+            //    [14, 10], [15, 14], [16, 15], [17, 9]],
+
+            //    lines: {
+            //        show: true,
+            //        fill: true,
+            //        lineWidth: .1,
+            //        fillColor: {
+            //            colors: [{
+            //                opacity: 0
+            //            }, {
+            //                opacity: 0.4
+            //            }]
+            //        }
+            //    },
+            //    points: {
+            //        show: false
+            //    },
+            //    shadowSize: 0
+            //},
+                {
+                    color: themeprimary,
+                    label: "项目申请书",
+                    data: [[3, 10], [4, 13], [5, 12], [6, 16], [7, 19], [8, 19], [9, 24], [10, 19], [11, 18], [12, 21], [13, 17],
+                    [14, 14], [15, 12], [16, 14], [17, 15]],
+                    bars: {
+                        order: 1,
+                        show: true,
+                        borderWidth: 0,
+                        barWidth: 0.4,
+                        lineWidth: .5,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.4
+                            }, {
+                                opacity: 1
+                            }]
+                        }
+                    }
+                },
+                {
+                    color: themethirdcolor,
+                    label: "项目经费",
+                    data: [[3, 14], [4, 11], [5, 10], [6, 9], [7, 5], [8, 8], [9, 5], [10, 6], [11, 4], [12, 7], [13, 4],
+                    [14, 3], [15, 4], [16, 6], [17, 4]],
+                    lines: {
+                        show: true,
+                        fill: false,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.3
+                            }, {
+                                opacity: 0
+                            }]
+                        }
+                    },
+                    points: {
+                        show: true
+                    }
+                }
+            ];
+            var options = {
+                legend: {
+                    show: false
+                },
+                xaxis: {
+                    tickDecimals: 0,
+                    color: '#f3f3f3'
+                },
+                yaxis: {
+                    min: 0,
+                    color: '#f3f3f3',
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    },
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: false,
+                    borderWidth: 0,
+                    aboveData: false,
+                    color: '#fbfbfb'
+
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    defaultTheme: false,
+                    content: " <b>%x May</b> , <b>%s</b> : <span>%y</span>",
+                }
+            };
+            var placeholder = $("#dashboard-chart-visits");
+            var plot = $.plot(placeholder, data2, options);
+
+            //------------------------------Real-Time Chart-------------------------------------------//
+            var data = [],
+                totalPoints = 300;
+
+            function getRandomData() {
+
+                if (data.length > 0)
+                    data = data.slice(1);
+
+                // Do a random walk
+
+                while (data.length < totalPoints) {
+
+                    var prev = data.length > 0 ? data[data.length - 1] : 50,
+                        y = prev + Math.random() * 10 - 5;
+
+                    if (y < 0) {
+                        y = 0;
+                    } else if (y > 100) {
+                        y = 100;
+                    }
+
+                    data.push(y);
+                }
+
+                // Zip the generated y values with the x values
+
+                var res = [];
+                for (var i = 0; i < data.length; ++i) {
+                    res.push([i, data[i]]);
+                }
+
+                return res;
+            }
+            // Set up the control widget
+            var updateInterval = 100;
+            var plot = $.plot("#dashboard-chart-realtime", [getRandomData()], {
+                yaxis: {
+                    color: '#f3f3f3',
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    }
+                },
+                xaxis: {
+                    color: '#f3f3f3',
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    }
+                },
+                colors: [themeprimary],
+                series: {
+                    lines: {
+                        lineWidth: 0,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.5
+                            }, {
+                                opacity: 0
+                            }]
+                        },
+                        steps: false
+                    },
+                    shadowSize: 0
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: false,
+                    borderWidth: 0,
+                    aboveData: false
+                }
+            });
+
+            function update() {
+
+                plot.setData([getRandomData()]);
+
+                plot.draw();
+                setTimeout(update, updateInterval);
+            }
+            update();
+
+
+            //-------------------------Initiates Easy Pie Chart instances in page--------------------//
+            InitiateEasyPieChart.init();
+
+            //-------------------------Initiates Sparkline Chart instances in page------------------//
+            InitiateSparklineCharts.init();
+        });
+
+    </script>
+    <!--Google Analytics::Demo Only-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-52103994-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <script>
+        var Scientific = document.getElementById("Scientific");
+        Scientific.onclick = function () {
+            window.location.href = "/Approval/Index";
+        };
+        var GoodSubject = document.getElementById("GoodSubject");
+        GoodSubject.onclick = function () {
+            window.location.href = "/GoodSubject/Index";
+        };
+        var SubjectLeader = document.getElementById("SubjectLeader");
+        SubjectLeader.onclick = function () {
+            window.location.href = "/SubjectLeader/Index";
+        };
+        var PaperPublish = document.getElementById("PaperPublish");
+        PaperPublish.onclick = function () {
+            window.location.href = "/PaperPublish/Index";
+        };
+        var ScienceConference = document.getElementById("ScienceConference");
+        ScienceConference.onclick = function () {
+            window.location.href = "/ScienceConference/Index";
+        };
+        var ResearchAward = document.getElementById("ResearchAward");
+        ResearchAward.onclick = function () {
+            window.location.href = "/ResearchAward/Index";
+        };
+    </script>
+
+</body>
+<!--  /Body -->
+</html>

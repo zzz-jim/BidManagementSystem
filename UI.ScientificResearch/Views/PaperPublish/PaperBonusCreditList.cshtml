@@ -1,0 +1,231 @@
+﻿@model IEnumerable<ScientificResearch.DomainModel.PaperBonusCredit>
+
+
+<div id="CreateNewApp">
+    <div id="newapplicationbutton">
+        <input type="button" id="CreateButton" value="学分奖励配置" />  @*<input type="button" id="EditButton" value="修改刊物" />*@
+    </div>
+    <div id="Application">
+    </div>
+</div>
+    <br/>
+<div id="MaxWindow">
+</div>
+
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.BonusCredit)
+        </th>*@
+        <th>
+            期刊类型
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.TypeId)
+        </th>*@
+        <th>
+            期刊级别
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.LevelId)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.AuthorLevelId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreditType)
+        </th>*@
+        <th>
+            第一作者学分
+        </th>
+        <th>
+            第二作者学分
+        </th>
+        <th>
+            第三作者学分
+        </th>
+        <th>
+            第四作者学分
+        </th>
+        <th>
+            第五作者学分
+        </th>
+        <th>
+            第六作者学分
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Author7)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr ondblclick="OpenMaxWindow(@item.Id)">
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BonusCredit)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.TypeId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.LevelId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorLevelId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditType)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Author1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author6)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Author7)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateTime)
+                </td>*@
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                @*@Html.ActionLink("删除", "DeletePaperBonusCredit", new { id = item.Id })*@
+                <input type="button" value="删除" onclick="publicationDelte('@item.Id')" />
+            </td>
+        </tr>
+    }
+
+</table>
+<script type="text/javascript">
+    function publicationDelte(id)
+    {
+        $.ajax({
+            url: "/PaperPublish/DeletePaperBonusCredit?id=" + id,
+            type: "post",
+            success: function (data) {
+                if (data != null) {
+                    if (data == "Yes")
+                    {
+                        alert("删除成功！");
+                        parent.location.reload();
+                    }
+                    else if (data == "No") {
+                        alert("删除失败!");
+                    }
+                    else {
+
+                    }
+                }
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript">
+        $(function () {
+            var onClose = function () {
+                parent.location.reload();//刷新包含SubmitApplication的页面
+            }
+            $("#CreateButton").click(function () {
+                var random1 = Math.floor(Math.random() * 1000 + 1);
+                $("#Application").kendoWindow({
+                    position: {
+                        top: "15%", // or "100px"
+                        left: "15%"
+                    },
+                    width: "70%",
+                    height: "70%",
+                    draggable: true,
+                    resizable: false,
+                    title: "学分奖励配置",
+                    visible: false,
+                    actions: [
+                            "Pin",
+                            "Close",
+                    ],
+                    close: onClose,
+                    //  resizable: false,
+                    modal: true,
+                });
+                $("#Application").append(' <iframe id="application" width="100%" height="90%" style="border:0px" src="/PaperPublish/CreatePaperBonusCredit">学分奖励配置</iframe>');
+                $("#Application").data("kendoWindow").center().open();
+            });
+        })
+</script>
+
+<script type="text/javascript">
+
+    function OpenMaxWindow(id) {
+        $("#MaxWindow").kendoWindow({
+            position: {
+                top: "15%", // or "100px"
+                left: "13%"
+            },
+            width: "80%",
+            height: "80%",
+            draggable: true,
+            //title:"申请书",
+            title: "学分奖励配置修改",
+            visible: false,
+            actions: [
+                    "Pin",
+                    "Close",
+                   // "Minimize",
+                 // "Maximize"
+            ],
+            modal: true,
+            resizable: false,
+            close: function (e) {
+                parent.location.reload();//刷新页面
+            }
+        });
+
+        $("#MaxWindow").append(' <iframe id="application" width="100%" height="90%" style="border:0px" src="/PaperPublish/EditPaperBonusCredit?id=' + id + '">学分奖励配置修改</iframe>');
+        $("#MaxWindow").data("kendoWindow").center().open();
+    }
+</script>

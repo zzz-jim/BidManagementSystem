@@ -1,0 +1,33 @@
+﻿@model ScientificResearch.DomainModel.PaperMagazineType
+
+@{
+    ViewBag.Title = "MagazineTypeDetail";
+}
+
+<h2>MagazineTypeDetail</h2>
+
+<div>
+    <h4>PaperMagazineType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeName)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditMagazineType", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "PaperMagazineTypeList")
+</p>

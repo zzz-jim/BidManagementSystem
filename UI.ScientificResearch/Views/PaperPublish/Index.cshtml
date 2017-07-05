@@ -1,0 +1,50 @@
+﻿<div class="page-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    流程简述
+
+                </div>
+                <div class="chartFlow">
+                    <img src="~/Images/pmFlowChart.gif" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    详细说明
+
+                </div>
+                <div class="chartText">
+                    该模块实现所有发表的论文在线上进行登记、记录论文题目，姓名，科室，杂志名称，论文类型，发票金额，刊物级别等信息，申请人在发表论文前，要先进行论文申请，科教科开介绍信后，发表人方可发表论文，发表论文通过后，发表人在系统中登记论文相关信息（杂志名称、论文题目、所有作者名称、发表时间、发票金额、上传论文扫描件），系统根据所填杂志名称自动生成刊物级别，科教科根据所填写内容以及论文复印件（现场），进行论文审核。在审核过程中，需选择论文类型，系统自动根据标准（论文级别、论文类型）生成报销单根据报销流程进行财务报销。并且自动根据标准生成继续教育学分并记录在继续教育的非项目类学分列表中。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    待办事项
+                    <span class="getMore"><a href="/PaperPublish/WorkContainer">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkToDoList", "PaperPublish")
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    当前正在进行的事项
+                    <span class="getMore getmoreNew"><a href="/PaperPublish/ProcessingProjectList">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkDoingList", "PaperPublish")
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>

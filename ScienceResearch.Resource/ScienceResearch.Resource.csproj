@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56CC897D-6B77-4BEE-84E5-ABCAA4748EAA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScienceResearch.Resource</RootNamespace>
+    <AssemblyName>ScienceResearch.Resource</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database\FormDesign\Application\Application_GoodSubject.html" />
+    <Content Include="Database\FormDesign\Application\Application_PaperPublish.html" />
+    <Content Include="Database\FormDesign\Application\Application_PaperPublish.txt" />
+    <Content Include="Database\FormDesign\Application\Application_ResearchAward.html" />
+    <Content Include="Database\FormDesign\Application\Application_ResearchAward.txt" />
+    <Content Include="Database\FormDesign\Application\Application_ScienceConference.html" />
+    <Content Include="Database\FormDesign\Application\Application_ScienceConference.txt" />
+    <Content Include="Database\FormDesign\Application\Application_ScienceResearch.html" />
+    <Content Include="Database\FormDesign\Application\Application_ScienceResearch.txt" />
+    <Content Include="Database\FormDesign\Application\Application_SubjectLeader.html" />
+    <Content Include="Database\FormDesign\Application\Application_SubjectLeader.txt" />
+    <Content Include="Database\FormDesign\Application\Application_PaperPublishs.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_GoodSubject.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_PaperPublish.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_ResearchAward.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_ScienceConference.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_ScienceResearch.html" />
+    <Content Include="Database\FormDesign\Conclusion\Conclusion_SubjectLeader.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_GoodSubject.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_PaperPublish.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_ResearchAward.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_ScienceConference.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_ScienceResearch.html" />
+    <Content Include="Database\FormDesign\Contract\Contract_SubjectLeader.html" />
+    <Content Include="Database\FormDesign\Education\Application_continueapply.html" />
+    <Content Include="Database\FormDesign\Education\Application_ContinueNotice.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\Application.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\bookCostRegist.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\CostRegist.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\GraduationCertificate.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\RewardSituation.html" />
+    <Content Include="Database\FormDesign\GraduateStudent\zhuanshengben.html" />
+    <Content Include="Database\FormDesign\InternLearning\AddDepartment.html" />
+    <Content Include="Database\FormDesign\InternLearning\AddDepartPlan.html" />
+    <Content Include="Database\FormDesign\InternLearning\AddPerson.html" />
+    <Content Include="Database\FormDesign\InternLearning\EidtDepart.html" />
+    <Content Include="Database\FormDesign\InternLearning\jieshouApplication.html" />
+    <Content Include="Database\FormDesign\OutLearning\Application.html" />
+    <Content Include="Database\FormDesign\OutLearning\BorrowRegistration.html" />
+    <Content Include="Database\FormDesign\OutLearning\chengnuobook.html" />
+    <Content Include="Database\FormDesign\OutLearning\Completion.html" />
+    <Content Include="Database\FormDesign\OutLearning\paichuzhengming.html" />
+    <Content Include="Database\FormDesign\OutLearning\TaskTracking.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_GoodSubject.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_PaperPublish.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_ResearchAward.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_ScienceConference.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_ScienceResearch.html" />
+    <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_SubjectLeader.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_GoodSubject.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_PaperPublish.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_ResearchAward.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_ScienceConference.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_ScienceResearch.html" />
+    <Content Include="Database\FormDesign\ProjectRecord\ProjectRecord_SubjectLeader.html" />
+    <Content Include="Database\FormDesign\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\DbScripts\" />
+    <Folder Include="Database\UpgradeScripts\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
