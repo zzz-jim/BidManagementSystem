@@ -40,7 +40,7 @@ namespace ScientificResearch.Utility.Helper
             string oldvalue;
             string newvalue;
 
-            oldvalue = "id=\"" + textboxId + "\"";
+            oldvalue = "name=\"" + textboxId + "\"";
             newvalue = oldvalue + " value=\"" + textboxValue + "\"";
 
             formContent = formContent.Replace(oldvalue, newvalue);
@@ -59,7 +59,7 @@ namespace ScientificResearch.Utility.Helper
             string oldvalue;
             string newvalue;
 
-            oldvalue = "id=\"" + checkBoxId + "\"";
+            oldvalue = "name=\"" + checkBoxId + "\"";
             newvalue = oldvalue + " checked";
 
             formContent = formContent.Replace(oldvalue, newvalue);
@@ -78,7 +78,7 @@ namespace ScientificResearch.Utility.Helper
             string oldvalue;
             string newvalue;
 
-            oldvalue = "id=\"" + radioId + "\"";
+            oldvalue = "name=\"" + radioId + "\"";
             newvalue = oldvalue + " checked";
 
             formContent = formContent.Replace(oldvalue, newvalue);

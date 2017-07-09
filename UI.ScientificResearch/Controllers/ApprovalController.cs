@@ -2259,18 +2259,6 @@ namespace UI.ScientificResearch.Controllers
             var itemList = temerpnformmodel.ItemsList;
             string formKeys, formvalues;
             Hepler.GetFormKeyValueAndRemark(collection, itemList, out formKeys, out formvalues);
-            //string formKeys = "项目类型#立项类型#立项时间#登记人#科室#项目负责人#项目参与人员#概述#外部编号";
-            //string programeType = collection["Drop1364262284"].ToString();
-            //string prjectapprovalType = collection["Drop968600384"].ToString();
-            //string applyDate = collection["Date442495555"].ToString();
-            //string applyMan = collection["Text435761615"].ToString();
-            //string department = collection["Text289827346"].ToString();
-            //string programLeader = collection["Text1783445882"].ToString();
-            //string temMenber = collection["Text309804476"].ToString();
-            //string summarize = collection["TextArea683159807"].ToString();
-            //string externalNumber = collection["Text309803372"].ToString();
-            //string formvalues = programeType + "#" + prjectapprovalType + "#" + applyDate + "#" + applyMan + "#" + department + "#" + programLeader + "#" + temMenber + "#" + summarize + "#" + externalNumber;
-
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -2302,9 +2290,9 @@ namespace UI.ScientificResearch.Controllers
                 model.IsRejected = false;
 
                 //申请书状态
-                model.ApplicationStatus = ApplicationStatus.AplicationWriting.ToString();
+                model.ApplicationStatus = BiddingProjectStatus.ProjectRegitered.ToString();
                 //整个项目进行的状态
-                model.ProjectStatus = ApplicationStatus.AplicationWriting.ToString();
+                model.ProjectStatus = BiddingProjectStatus.ProjectRegitered.ToString();
                 int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
                 //todo:日志
 
@@ -2322,7 +2310,6 @@ namespace UI.ScientificResearch.Controllers
                 model.NWorkToDoID = nworktodoid;
                 /// return RedirectToAction("SubmitApplication", new { id = model.NWorkToDoID });
                 return Json(AddRiZhiSuccess, JsonRequestBehavior.AllowGet);
-
             }
             else//上报
             {
@@ -2336,13 +2323,13 @@ namespace UI.ScientificResearch.Controllers
                 //页面加载后就上报,就添加新上报的数据行
                 if (model.NWorkToDoID == 0)
                 {
-                    model.ApplicationStatus = ApplicationStatus.ApplicationApproving.ToString();
-                    model.ProjectStatus = ApplicationStatus.ApplicationApproving.ToString();
+                    model.ApplicationStatus = BiddingProjectStatus.ProjectRegitered.ToString();
+                    model.ProjectStatus = BiddingProjectStatus.ProjectRegitered.ToString();
                     //上报时设置保存为false、驳回为false、删除为false、冻结为false
-                    model.IsTemporary = false;
-                    model.IsRejected = false;
-                    model.IsDeleted = false;
+                    model.IsTemporary = true;
                     model.IsLocked = false;
+                    model.IsDeleted = false;
+                    model.IsRejected = false;
 
                     int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
 
@@ -2378,13 +2365,13 @@ namespace UI.ScientificResearch.Controllers
                 //先保存在上报的,就更新保存数据行的IsIsTemporary
                 else
                 {
-                    model.ApplicationStatus = ApplicationStatus.ApplicationApproving.ToString();
-                    model.ProjectStatus = ApplicationStatus.ApplicationApproving.ToString();
+                    model.ApplicationStatus = BiddingProjectStatus.ProjectRegitered.ToString();
+                    model.ProjectStatus = BiddingProjectStatus.ProjectRegitered.ToString();
                     //上报时设置保存为false、驳回为false、删除为false、冻结为false
-                    model.IsTemporary = false;
-                    model.IsRejected = false;
-                    model.IsDeleted = false;
+                    model.IsTemporary = true;
                     model.IsLocked = false;
+                    model.IsDeleted = false;
+                    model.IsRejected = false;
 
                     bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
                     //todo:add rizhi

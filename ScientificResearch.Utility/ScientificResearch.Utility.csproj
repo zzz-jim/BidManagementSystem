@@ -65,6 +65,7 @@
     <Compile Include="DataTableExtension.cs" />
     <Compile Include="Enums\ApplicationSortField.cs" />
     <Compile Include="Enums\ApplicationApprovalWorkflowNode.cs" />
+    <Compile Include="Enums\ProjectStatus.cs" />
     <Compile Include="Enums\ContinuingRecordSortField.cs" />
     <Compile Include="Enums\ModuleNameOfScienceResearch.cs" />
     <Compile Include="Enums\PaperPublishTypeOfWorkflowId.cs">

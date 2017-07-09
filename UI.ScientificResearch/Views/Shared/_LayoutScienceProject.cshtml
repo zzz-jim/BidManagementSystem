@@ -219,32 +219,23 @@
                         var k = data;
                         //判断返回的状态来控制弹出框第一个打开的页面
                         //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
-                        if (data["ReturnState"] == "AplicationWriting") {
+                        if (data["ReturnState"] == "ProjectRegitered") {
                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + data["applicationId"] + '">项目注册</iframe>');
                         }
-                        else if (data["ReturnState"] == "ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
-                        {
-                            if (data["ReturnState"] == "ApplicationRejected") {
-                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + data["applicationId"] + '">项目注册</iframe>');
-                            }
-                            else {
-                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + data["applicationId"] + '">项目注册</iframe>');
-                            }
-                        }
-                        else if (data["ReturnState"] == "ApplicationApproved" || data["ReturnState"] == "ProjectEstablishing")//全部通过审批
+                        else if (data["ReturnState"] == "TenderNotice")//招标公告发布后
                         {
                             //为申请书iframe的src赋值id是ERPNWorkToDo的ID
                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + data["applicationId"] + '">项目注册</iframe>');
                         }
-                        else if (data["ReturnState"] == "ProjectEstablished" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                        else if (data["ReturnState"] == "RegisterInfo" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
                         {
                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SignContract?id=' + data["applicationId"] + '">合同记录</iframe>');
                         }
-                        else if (data["ReturnState"] == "ContractSigned" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
+                        else if (data["ReturnState"] == "OpenBidsDocument" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
                         {
                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProcessRecordList?id=' + data["applicationId"] + '">过程记录</iframe>');
                         }
-                        else if (data["ReturnState"] == "ConcludeUnWrite" || data["ReturnState"] == "ConcludeUnSubmit")//申请书已提交和待审批中
+                        else if (data["ReturnState"] == "BidWinnerNotice" || data["ReturnState"] == "ConcludeUnSubmit")//申请书已提交和待审批中
                         {
                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/Conclusions?id=' + data["applicationId"] + '">项目结题</iframe>');
                         }
