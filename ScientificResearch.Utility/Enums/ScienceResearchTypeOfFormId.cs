@@ -7,9 +7,9 @@ namespace ScientificResearch.Utility.Enums
     public enum ScienceResearchTypeOfFormId
     {
         /// <summary>
-        /// 申请书
+        /// 采购申请书
         /// </summary>
-        Application = 1037,
+        Application = 2116,
 
         /// <summary>
         /// 确立书

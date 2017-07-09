@@ -30,6 +30,11 @@ namespace ScientificResearch.Utility.Constants
         public static readonly char SharpChar = '#';
 
         /// <summary>
+        /// # strings
+        /// </summary>
+        public static readonly string SharpString = "#";
+
+        /// <summary>
         /// The key const of upload attachment path.
         /// </summary>
         public static readonly string AttachmentPathKey = "AttachmentPath";

@@ -16,6 +16,7 @@ using UI.ScientificResearch.Extensions;
 using System.Data;
 using ScientificResearch.DomainModel;
 using UI.ScientificResearch.Models;
+using System.Text;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -192,8 +193,8 @@ namespace UI.ScientificResearch.Controllers
                 // 自动生成 编号
                 //model.BeiYong1 = CommonHelper.GenerateProjectNumber(ApplicationType.ScienceResearch);
                 string Number = CommonHelper.GenerateProjectNumber(ApplicationType.ScienceResearch);
-                
-                string content=formModel.ContentStr;
+
+                string content = formModel.ContentStr;
                 if (content.Contains(""))
                 {
                     string oldvalue = "Text309803372";
@@ -206,7 +207,7 @@ namespace UI.ScientificResearch.Controllers
                 model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, MySession[SessionKeyEnum.SectionName].ToString());
                 model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
 
-              
+
 
                 ////绑定工作名称
                 var workFlowModel = ERPNWorkFlowService.GetEntityById(workflowId);
@@ -1223,22 +1224,22 @@ namespace UI.ScientificResearch.Controllers
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ///合同记录中的成果形式和数量
             model = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Contract && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
-            var resultQuantity=model.FormValues.Split(Constant.SharpChar);
-            string  ResultCount = resultQuantity[2].ToString();
+            var resultQuantity = model.FormValues.Split(Constant.SharpChar);
+            string ResultCount = resultQuantity[2].ToString();
             ViewBag.Achieve = ResultCount;
 
             ///论文关联的显示
             var mainResult = ApplicationService.GetEntityById(applicationid);
             string Number = mainResult.BeiYong1;
             var lunwenResult = ApplicationService.GetEntities(p => p.BeiYong1 == Number && p.FormID == (int)PaperPublishTypeOfFormId.Application).ToList();
-            if (lunwenResult.Count >0)
+            if (lunwenResult.Count > 0)
             {
-                string lunWen=null;
+                string lunWen = null;
                 foreach (var item in lunwenResult)
                 {
-                    lunWen+= item.WenHao+",";
+                    lunWen += item.WenHao + ",";
                 }
-                ViewBag.LunWen=lunWen;
+                ViewBag.LunWen = lunWen;
             }
             else
             {
@@ -1270,7 +1271,7 @@ namespace UI.ScientificResearch.Controllers
                     return RedirectToAction("ConclusionsAgree", new { id = id });
                 }
             }
-           
+
             //根据applicationid获取所有经费记录的总金额
             var tempfundslist = FundsRecordService.GetEntities(p => p.ApplicationId == applicationid).ToList();
             double totaloutmoney = 0;
@@ -1292,7 +1293,7 @@ namespace UI.ScientificResearch.Controllers
             if (nextaction == "save")
             {
                 model = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Conclusion && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
-                ViewBag.Id =model.ApplicationId;
+                ViewBag.Id = model.ApplicationId;
                 ViewBag.act = "save";
                 return View(model);
 
@@ -1393,16 +1394,16 @@ namespace UI.ScientificResearch.Controllers
             {
                 ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
                 model = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
-                if (model.IsTemporary ==true)
+                if (model.IsTemporary == true)
                 {
                     ViewBag.Id = model.ApplicationId;
                     ViewBag.act = "save";
                     return View(model);
                 }
-               else
-               { 
-                return RedirectToAction("ExtensionAgree", new { id = applicationid });
-               }
+                else
+                {
+                    return RedirectToAction("ExtensionAgree", new { id = applicationid });
+                }
             }
 
             //点击保存后的view
@@ -1769,12 +1770,13 @@ namespace UI.ScientificResearch.Controllers
 
             if (result.WorkflowId == 1033)
             {
-                if (result.IsRejected ==false && result.IsTemporary== false)
+                if (result.IsRejected == false && result.IsTemporary == false)
                 {
                     ReturnReimburseState = "RejectAndTemporary";
                 }
-                else { 
-                ReturnReimburseState = "TravelTemporary";
+                else
+                {
+                    ReturnReimburseState = "TravelTemporary";
                 }
             }
             else
@@ -2238,6 +2240,8 @@ namespace UI.ScientificResearch.Controllers
         [ValidateInput(false)]
         public ActionResult SubmitApplication(string flag, ERPNWorkToDoViewModel model, FormCollection collection)
         {
+
+            // TODO:
             ///验证
             if (!ModelState.IsValid)
             {
@@ -2251,23 +2255,25 @@ namespace UI.ScientificResearch.Controllers
 
             //加载表单内容
             var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Application).ToViewModel();
+
+            var itemList = temerpnformmodel.ItemsList;
+            string formKeys, formvalues;
+            Hepler.GetFormKeyValueAndRemark(collection, itemList, out formKeys, out formvalues);
+            //string formKeys = "项目类型#立项类型#立项时间#登记人#科室#项目负责人#项目参与人员#概述#外部编号";
+            //string programeType = collection["Drop1364262284"].ToString();
+            //string prjectapprovalType = collection["Drop968600384"].ToString();
+            //string applyDate = collection["Date442495555"].ToString();
+            //string applyMan = collection["Text435761615"].ToString();
+            //string department = collection["Text289827346"].ToString();
+            //string programLeader = collection["Text1783445882"].ToString();
+            //string temMenber = collection["Text309804476"].ToString();
+            //string summarize = collection["TextArea683159807"].ToString();
+            //string externalNumber = collection["Text309803372"].ToString();
+            //string formvalues = programeType + "#" + prjectapprovalType + "#" + applyDate + "#" + applyMan + "#" + department + "#" + programLeader + "#" + temMenber + "#" + summarize + "#" + externalNumber;
+
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
-
-            string formKeys = "项目类型#立项类型#立项时间#登记人#科室#项目负责人#项目参与人员#概述#外部编号";
-           
-            string programeType = collection["Drop1364262284"].ToString();
-            string prjectapprovalType = collection["Drop968600384"].ToString();
-            string applyDate = collection["Date442495555"].ToString();
-            string applyMan = collection["Text435761615"].ToString();
-            string department = collection["Text289827346"].ToString();
-            string programLeader = collection["Text1783445882"].ToString();
-            string temMenber = collection["Text309804476"].ToString();
-            string summarize = collection["TextArea683159807"].ToString();
-            string externalNumber = collection["Text309803372"].ToString();
-            string formvalues = programeType + "#" + prjectapprovalType + "#" + applyDate + "#" + applyMan + "#" + department + "#" + programLeader + "#" + temMenber + "#" + summarize + "#" + externalNumber;
-
             model.FormContent = FormContentReplaceHelper.ReplaceFormContentValue(model.FormContent, collection);
 
             try
@@ -2760,7 +2766,7 @@ namespace UI.ScientificResearch.Controllers
 
             string fundstime = collection["FundsTime"].ToString();
             string endtime = collection["EndTime"].ToString();
-            string superiorfundtime= collection["SuperiorFundTime"].ToString();
+            string superiorfundtime = collection["SuperiorFundTime"].ToString();
             DateTime fundtime = Convert.ToDateTime(fundstime);
             DateTime etime = Convert.ToDateTime(endtime);
             DateTime supertime = Convert.ToDateTime(superiorfundtime);
@@ -2824,7 +2830,7 @@ namespace UI.ScientificResearch.Controllers
                 }
             }
             //上报
-            else 
+            else
             {
                 //写系统日志
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
@@ -2965,8 +2971,8 @@ namespace UI.ScientificResearch.Controllers
             string[] projectTypeList = { "ProjectType", "ProjectType1", "ProjectType2", "ProjectType3", "ProjectType4", "ProjectType5", "ProjectType6", "ProjectType7", "ProjectType8", "ProjectType9", "ProjectType0" };
             string[] thresholdList = { "threshold", "threshold1", "threshold2", "threshold3", "threshold4", "threshold5", "threshold6", "threshold7", "threshold8", "threshold9", "threshold0" };
 
-           
-           
+
+
 
             model.FormKeys = formKeys;
             model.FormValues = formvalues;
@@ -3001,7 +3007,7 @@ namespace UI.ScientificResearch.Controllers
                 //第一次保存
                 if (model.NWorkToDoID == 0)
                 {
-                   
+
                     string act = "save";
                     model.IsTemporary = true;
                     model.IsDeleted = false;
@@ -3021,7 +3027,7 @@ namespace UI.ScientificResearch.Controllers
                     bool isUpdateSuccess = ApplicationService.UpdateApplication(erpnworktodomodel.ToDataTransferObjectModel());
 
                     return Json(returnid, JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("SignContract", new { id = returnid, nextaction = act });
+                    // return RedirectToAction("SignContract", new { id = returnid, nextaction = act });
                 }
                 //第二次或第N次保存
                 else
@@ -3046,7 +3052,7 @@ namespace UI.ScientificResearch.Controllers
                 }
             }
             //上报
-            else 
+            else
             {
                 ERPNWorkToDoViewModel erpnworktodomodel = new ERPNWorkToDoViewModel();
                 erpnworktodomodel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -3107,7 +3113,7 @@ namespace UI.ScientificResearch.Controllers
                     model.LateTime = DateTime.Now.AddHours(double.Parse(temperpworkflownodemodel.JieShuHours.ToString()));
 
                     int isAddSuccess = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
-                    
+
                     //更新申请书中的ApplicationStatus为ProjectProcessing
                     erpnworktodomodel.ApplicationStatus = ApplicationStatus.ContractSigned.ToString();
                     erpnworktodomodel.ProjectStatus = ApplicationStatus.BigProjectProcessing.ToString();
@@ -3271,7 +3277,7 @@ namespace UI.ScientificResearch.Controllers
                 return Json(isAddsuccess, JsonRequestBehavior.AllowGet);
             }
             //上报
-            else 
+            else
             {
                 #region 已办日志
 
@@ -3512,7 +3518,7 @@ namespace UI.ScientificResearch.Controllers
 
                 ///成功标志
                 int isAddsuccess = 1;
-                return Json(isAddsuccess,JsonRequestBehavior.AllowGet);
+                return Json(isAddsuccess, JsonRequestBehavior.AllowGet);
                 //// 更新成功并且更新后，申请书状态变为 已经审批通过，跳转到项目确立页面
                 //return RedirectToAction("processAgree", new { id = model.NWorkToDoID });
             }
@@ -3633,7 +3639,7 @@ namespace UI.ScientificResearch.Controllers
                 ViewBag.SendUpSuccess = true;
 
                 return View(model);
-               // return RedirectToAction("ProcessRecordsRejected", new { id = model.NWorkToDoID.ToString() });
+                // return RedirectToAction("ProcessRecordsRejected", new { id = model.NWorkToDoID.ToString() });
             }
             //上报collection["Reported"]
             else
@@ -3955,7 +3961,7 @@ namespace UI.ScientificResearch.Controllers
             string nodeSerils;
             string act = string.Empty;
             //审批
-            if (flag=="Approval")
+            if (flag == "Approval")
             {
                 var attachment = model.FuJianList;
                 FundsRecordService.GetEntityById(model.FundsRecordID);
@@ -4105,7 +4111,7 @@ namespace UI.ScientificResearch.Controllers
                     int UpdateSuccess = 1;
                     return Json(UpdateSuccess, JsonRequestBehavior.AllowGet);
                     // 更新成功并且更新后，申请书状态变为 已经审批通过，跳转到项目确立页面
-                   // return RedirectToAction("ReimburseAgree", new { id = model.FundsRecordID });
+                    // return RedirectToAction("ReimburseAgree", new { id = model.FundsRecordID });
                 }
                 //toDoAction == "驳回"
                 else
@@ -4141,7 +4147,7 @@ namespace UI.ScientificResearch.Controllers
                     int returnid = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
 
                     return Json(returnid, JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("ReimburseRejected", new { id = model.FundsRecordID });
+                    // return RedirectToAction("ReimburseRejected", new { id = model.FundsRecordID });
                 }
             }
             //差旅报销单的日志
@@ -4201,7 +4207,7 @@ namespace UI.ScientificResearch.Controllers
 
                     return Json(returnid, JsonRequestBehavior.AllowGet);
                     //继续审批
-                   // return RedirectToAction("ReimburseAgree", new { id = model.FundsRecordID });
+                    // return RedirectToAction("ReimburseAgree", new { id = model.FundsRecordID });
                 }
                 else if (nodeSerils == "结束")
                 {
@@ -4220,7 +4226,7 @@ namespace UI.ScientificResearch.Controllers
 
                     bool UpdateRiZhiSuccess = ERPRiZhiService.UpdateERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
 
-                    int UpdateSuccess=1;
+                    int UpdateSuccess = 1;
                     return Json(UpdateSuccess, JsonRequestBehavior.AllowGet);
                     // 更新成功并且更新后，申请书状态变为 已经审批通过，跳转到项目确立页面
                     //return RedirectToAction("ReimburseAgree", new { id = model.FundsRecordID });
@@ -4260,7 +4266,7 @@ namespace UI.ScientificResearch.Controllers
                     int returnid = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
 
                     return Json(returnid, JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("TravelExpensesRejected", new { id = model.FundsRecordID });
+                    // return RedirectToAction("TravelExpensesRejected", new { id = model.FundsRecordID });
                 }
             }
 
@@ -4819,7 +4825,7 @@ namespace UI.ScientificResearch.Controllers
 
             model.OKUserList = "默认";
             //保存
-            if (flag=="Save")
+            if (flag == "Save")
             {
                 //添加申请人保存
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
@@ -4854,7 +4860,7 @@ namespace UI.ScientificResearch.Controllers
                     int returncolusionid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
 
                     return Json(returncolusionid, JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("Conclusions", new { id = model.ApplicationId, nextaction = act });
+                    // return RedirectToAction("Conclusions", new { id = model.ApplicationId, nextaction = act });
                 }
                 //第二次或第N次保存
                 else
@@ -4877,7 +4883,7 @@ namespace UI.ScientificResearch.Controllers
                 }
             }
             //上报
-            else 
+            else
             {
                 //写系统日志
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
@@ -4932,7 +4938,7 @@ namespace UI.ScientificResearch.Controllers
                     int returncolusionid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
 
                     return Json(returncolusionid, JsonRequestBehavior.AllowGet);
-                  //  return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
+                    //  return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
                 }
                 //先点保存再上报，就更新保存数据行的IsTemprory
                 else
@@ -4956,7 +4962,7 @@ namespace UI.ScientificResearch.Controllers
                     ///成功标准
                     int AddSuccess = 1;
                     return Json(AddSuccess, JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
+                    // return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
                 }
             }
             ////修改数据
@@ -5107,7 +5113,7 @@ namespace UI.ScientificResearch.Controllers
 
                 return Json(returnid, JsonRequestBehavior.AllowGet);
                 //继续审批
-               // return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
+                // return RedirectToAction("ConclusionsAgree", new { id = model.ApplicationId });
             }
             else if (nodeSerils == "结束")
             {
@@ -5321,7 +5327,7 @@ namespace UI.ScientificResearch.Controllers
             model.OKUserList = "默认";
 
             //保存
-            if (flag=="Save")
+            if (flag == "Save")
             {
                 //添加申请人保存
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
@@ -5354,8 +5360,8 @@ namespace UI.ScientificResearch.Controllers
 
                     ///成功标志
                     int UpdateSuccess = 1;
-                    return Json(UpdateSuccess,JsonRequestBehavior.AllowGet);
-                   // return RedirectToAction("ExtensionRequest", new { id = returnextensionrequestid, nextaction = act });
+                    return Json(UpdateSuccess, JsonRequestBehavior.AllowGet);
+                    // return RedirectToAction("ExtensionRequest", new { id = returnextensionrequestid, nextaction = act });
                 }
                 //第二次或第N次保存
                 else
@@ -5378,7 +5384,7 @@ namespace UI.ScientificResearch.Controllers
                 }
             }
             //上报
-            else 
+            else
             {
                 //写系统日志
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
@@ -5602,7 +5608,7 @@ namespace UI.ScientificResearch.Controllers
 
                 return Json(returnid, JsonRequestBehavior.AllowGet);
                 //继续审批
-               // return RedirectToAction("ExtensionAgree", new { id = model.ApplicationId });
+                // return RedirectToAction("ExtensionAgree", new { id = model.ApplicationId });
             }
             else if (nodeSerils == "结束")
             {
@@ -5624,7 +5630,7 @@ namespace UI.ScientificResearch.Controllers
                 int UpdateSuccess = 1;
                 return Json(UpdateSuccess, JsonRequestBehavior.AllowGet);
                 // 更新成功并且更新后，申请书状态变为 已经审批通过，跳转到项目确立页面
-               // return RedirectToAction("ExtensionAgree", new { id = model.ApplicationId });
+                // return RedirectToAction("ExtensionAgree", new { id = model.ApplicationId });
             }
             //toDoAction == "驳回"
             else
@@ -5907,7 +5913,7 @@ namespace UI.ScientificResearch.Controllers
 
             bool hasRolesFlag = HasRolesFlag();
             IEnumerable<ERPNWorkToDoTransferObject> resultpage;
-            int totalcount=0;
+            int totalcount = 0;
             //非普通用户
             if (hasRolesFlag)
             {
@@ -5919,7 +5925,7 @@ namespace UI.ScientificResearch.Controllers
                     && p.StateNow == "正在办理"
                     && ((Freeze == Constant.All) ? true : p.IsLocked == (Freeze == "冻结"))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
-                 totalcount = resultpage.Count();
+                totalcount = resultpage.Count();
             }
             //普通用户
             else
@@ -6319,9 +6325,9 @@ namespace UI.ScientificResearch.Controllers
             IEnumerable<ApplicationUser> allUserList = new List<ApplicationUser>();
             using (ApplicationDbContext userManager = new ApplicationDbContext())
             {
-                 allUserList = userManager.Users.ToList();
+                allUserList = userManager.Users.ToList();
             }
-            return Json(allUserList,JsonRequestBehavior.AllowGet);
+            return Json(allUserList, JsonRequestBehavior.AllowGet);
         }
 
         #region Private Method
@@ -6594,8 +6600,8 @@ namespace UI.ScientificResearch.Controllers
                 }
             }
             else
-            { 
-            
+            {
+
             }
             return hasRolesFlag;
         }
@@ -6641,26 +6647,28 @@ namespace UI.ScientificResearch.Controllers
             return View();
         }
 
-        public ActionResult UpoadFilePageCreate(UploadFilePageType type) {
+        public ActionResult UpoadFilePageCreate(UploadFilePageType type)
+        {
 
             return View();
         }
 
         public ActionResult UpoadFileListPage(UploadFilePageType type)
         {
-            var results = new List<FileUploadViewModels>() ;
+            var results = new List<FileUploadViewModels>();
 
-            results.Add(new FileUploadViewModels {
-                CreateTime=DateTime.Today.AddDays(-10),
-                FileAddress="",
-                 FileName= "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
-                  
-                 FileSize= "5735 KB ",
-                  FileType=UploadFilePageType.招标代理合同,
-                  Number=1,
-                  OperatorId="123",
-                  OperatorName= "肖燕",
-                   Remark= "招标代理合同"
+            results.Add(new FileUploadViewModels
+            {
+                CreateTime = DateTime.Today.AddDays(-10),
+                FileAddress = "",
+                FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
+
+                FileSize = "5735 KB ",
+                FileType = UploadFilePageType.招标代理合同,
+                Number = 1,
+                OperatorId = "123",
+                OperatorName = "肖燕",
+                Remark = "招标代理合同"
             });
             results.Add(new FileUploadViewModels
             {

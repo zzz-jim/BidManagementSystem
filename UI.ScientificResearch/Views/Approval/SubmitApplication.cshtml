@@ -150,9 +150,9 @@
         @Html.ValidationSummary(true)
 
         <table id="data" class="table">
-            @*<tr>
+            <tr>
                     <td class="tdcss">
-                        @Html.LabelFor(model => model.WenHao)：
+                        @Html.LabelFor(model => model.WenHao)
                     </td>
                     <td colspan="5">
                         @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
@@ -161,13 +161,13 @@
                 </tr>
                 <tr>
                     <td>
-                        项目编号：
+                        项目编号
                     </td>
                     <td>
                         <input  id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
                     </td>
                     <td colspan="5"></td>
-                </tr>*@
+                </tr>
 
             @Html.Raw(Model.FormContent)
             @Html.HiddenFor(model => model.FormContent)
