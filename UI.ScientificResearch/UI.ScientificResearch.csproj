@@ -1884,6 +1884,10 @@
       <Project>{d4ffe9f9-a98f-47ff-bf10-1062a2c87f45}</Project>
       <Name>ScientificResearch.BusinessLogicImplement</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.DataAccessImplement\ScientificResearch.DataAccessImplement.csproj">
+      <Project>{E50F1D79-1EEC-4B3A-A8C1-DB58D1D69B8E}</Project>
+      <Name>ScientificResearch.DataAccessImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScientificResearch.DataTransferModel\ScientificResearch.DataTransferModel.csproj">
       <Project>{8119c621-a2c1-4c23-9f4e-2ff097698128}</Project>
       <Name>ScientificResearch.DataTransferModel</Name>
@@ -1895,6 +1899,10 @@
     <ProjectReference Include="..\ScientificResearch.IBusinessLogic\ScientificResearch.IBusinessLogic.csproj">
       <Project>{65725f94-a331-43a2-93b9-3bb00485dd67}</Project>
       <Name>ScientificResearch.IBusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScientificResearch.IDataAccess\ScientificResearch.IDataAccess.csproj">
+      <Project>{2C66F0A6-3EC3-4F19-A5FB-2B55809E706D}</Project>
+      <Name>ScientificResearch.IDataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScientificResearch.Utility\ScientificResearch.Utility.csproj">
       <Project>{d1b14f79-496f-457e-ad20-e858a74006cc}</Project>

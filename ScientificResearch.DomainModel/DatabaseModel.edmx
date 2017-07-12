@@ -2076,6 +2076,21 @@
           <Property Name="UpdateBy" Type="varchar" MaxLength="64" />
           <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="ProjectFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+          <Property Name="FileType" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FileAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FileSize" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OperatorName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OperatorId" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="ProjectRecord">
           <Key>
             <PropertyRef Name="ID" />
@@ -2100,6 +2115,27 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="FuJianList" Type="varchar" MaxLength="5000" />
           <Property Name="SuperiorFundTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProjectRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BidSection" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsSubmitRegistrationFee" Type="bit" Nullable="false" />
+          <Property Name="RegistrationFee" Type="bigint" Nullable="false" />
+          <Property Name="IsSubmitBidBondFee" Type="bit" Nullable="false" />
+          <Property Name="BidBondFee" Type="bigint" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RegisterTime" Type="datetime" />
+          <Property Name="OperatorName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="OperatorId" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" />
         </EntityType>
         <EntityType Name="TravelFundsDetail">
           <Key>
@@ -2129,6 +2165,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
+          <End Role="ERPNWorkToDo" Type="Self.ERPNWorkToDo" Multiplicity="1" />
+          <End Role="ProjectFile" Type="Self.ProjectFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectFile">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectRecord_ERPNWorkFlow">
           <End Role="ERPNWorkFlow" Type="Self.ERPNWorkFlow" Multiplicity="1" />
           <End Role="ProjectRecord" Type="Self.ProjectRecord" Multiplicity="*" />
@@ -2149,6 +2197,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ProjectRecord">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectRegistration_ERPNWorkToDo">
+          <End Role="ERPNWorkToDo" Type="Self.ERPNWorkToDo" Multiplicity="1" />
+          <End Role="ProjectRegistration" Type="Self.ProjectRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectRegistration">
               <PropertyRef Name="ApplicationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2288,11 +2348,17 @@
           <EntitySet Name="PaperMagazineLevel" EntityType="Self.PaperMagazineLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaperMagazineType" EntityType="Self.PaperMagazineType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectBonusCredit" EntityType="Self.ProjectBonusCredit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectFile" EntityType="Self.ProjectFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectRecord" EntityType="Self.ProjectRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectRegistration" EntityType="Self.ProjectRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TravelFundsDetail" EntityType="Self.TravelFundsDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_FundsRecord_ERPNWorkFlow" Association="Self.FK_FundsRecord_ERPNWorkFlow">
             <End Role="ERPNWorkFlow" EntitySet="ERPNWorkFlow" />
             <End Role="FundsRecord" EntitySet="FundsRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectFileRecord_ERPNWorkToDo" Association="Self.FK_ProjectFileRecord_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectFile" EntitySet="ProjectFile" />
           </AssociationSet>
           <AssociationSet Name="FK_ProjectRecord_ERPNWorkFlow" Association="Self.FK_ProjectRecord_ERPNWorkFlow">
             <End Role="ERPNWorkFlow" EntitySet="ERPNWorkFlow" />
@@ -2301,6 +2367,10 @@
           <AssociationSet Name="FK_ProjectRecord_ERPNWorkToDo" Association="Self.FK_ProjectRecord_ERPNWorkToDo">
             <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
             <End Role="ProjectRecord" EntitySet="ProjectRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectRegistration_ERPNWorkToDo" Association="Self.FK_ProjectRegistration_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectRegistration" EntitySet="ProjectRegistration" />
           </AssociationSet>
           <AssociationSet Name="FK_TravelFundsDetail_FundsRecord" Association="Self.FK_TravelFundsDetail_FundsRecord">
             <End Role="FundsRecord" EntitySet="FundsRecord" />
@@ -2456,6 +2526,16 @@
           <EntitySet Name="PaperBonusCredit" EntityType="CSPostOAModel.PaperBonusCredit" />
           <EntitySet Name="FundsThreshold" EntityType="CSPostOAModel.FundsThreshold" />
           <EntitySet Name="ContinuingEducationRecord" EntityType="CSPostOAModel.ContinuingEducationRecord" />
+          <EntitySet Name="ProjectFile" EntityType="CSPostOAModel.ProjectFile" />
+          <EntitySet Name="ProjectRegistration" EntityType="CSPostOAModel.ProjectRegistration" />
+          <AssociationSet Name="FK_ProjectFileRecord_ERPNWorkToDo" Association="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectFile" EntitySet="ProjectFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectRegistration_ERPNWorkToDo" Association="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectRegistration" EntitySet="ProjectRegistration" />
+          </AssociationSet>
           
         </EntityContainer>
         <EntityType Name="ERPAnPai">
@@ -3604,6 +3684,8 @@
           <Property Name="IsTemporary" Type="Boolean" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="ProjectStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProjectFile" Relationship="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo" FromRole="ERPNWorkToDo" ToRole="ProjectFile" />
+          <NavigationProperty Name="ProjectRegistration" Relationship="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo" FromRole="ERPNWorkToDo" ToRole="ProjectRegistration" />
         </EntityType>
         <EntityType Name="ERPOffice">
           <Key>
@@ -4640,6 +4722,68 @@
           <Property Name="UserDegree" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="UserDuty" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ProjectFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+          <Property Name="FileType" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FileAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OperatorName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="OperatorId" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ERPNWorkToDo" Relationship="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo" FromRole="ProjectFile" ToRole="ERPNWorkToDo" />
+        </EntityType>
+        <EntityType Name="ProjectRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContactName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BidSection" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsSubmitRegistrationFee" Type="Boolean" Nullable="false" />
+          <Property Name="RegistrationFee" Type="Int64" Nullable="false" />
+          <Property Name="IsSubmitBidBondFee" Type="Boolean" Nullable="false" />
+          <Property Name="BidBondFee" Type="Int64" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterTime" Type="DateTime" Precision="3" />
+          <Property Name="OperatorName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="OperatorId" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ERPNWorkToDo" Relationship="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo" FromRole="ProjectRegistration" ToRole="ERPNWorkToDo" />
+        </EntityType>
+        <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
+          <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
+          <End Type="CSPostOAModel.ProjectFile" Role="ProjectFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectFile">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectRegistration_ERPNWorkToDo">
+          <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
+          <End Type="CSPostOAModel.ProjectRegistration" Role="ProjectRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectRegistration">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
      
         </Schema>
     </edmx:ConceptualModels>
@@ -6880,6 +7024,44 @@
                 <ScalarProperty Name="NworkToDoId" ColumnName="NworkToDoId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectFile">
+            <EntityTypeMapping TypeName="CSPostOAModel.ProjectFile">
+              <MappingFragment StoreEntitySet="ProjectFile">
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileAddress" ColumnName="FileAddress" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectRegistration">
+            <EntityTypeMapping TypeName="CSPostOAModel.ProjectRegistration">
+              <MappingFragment StoreEntitySet="ProjectRegistration">
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="RegisterTime" ColumnName="RegisterTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="BidBondFee" ColumnName="BidBondFee" />
+                <ScalarProperty Name="IsSubmitBidBondFee" ColumnName="IsSubmitBidBondFee" />
+                <ScalarProperty Name="RegistrationFee" ColumnName="RegistrationFee" />
+                <ScalarProperty Name="IsSubmitRegistrationFee" ColumnName="IsSubmitRegistrationFee" />
+                <ScalarProperty Name="BidSection" ColumnName="BidSection" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

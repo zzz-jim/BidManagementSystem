@@ -133,6 +133,10 @@
         <EntityTypeShape EntityType="CSPostOAModel.PaperMagazineType" Width="1.5" PointX="35.375" PointY="26.75" />
         <EntityTypeShape EntityType="CSPostOAModel.PaperBonusCredit" Width="1.5" PointX="29.375" PointY="35.75" />
         <EntityTypeShape EntityType="CSPostOAModel.ContinuingEducationRecord" Width="1.5" PointX="35.375" PointY="30.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.ProjectFile" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="CSPostOAModel.ProjectRegistration" Width="1.5" PointX="3" PointY="39.5" />
+        <AssociationConnector Association="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo" />
+        <AssociationConnector Association="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

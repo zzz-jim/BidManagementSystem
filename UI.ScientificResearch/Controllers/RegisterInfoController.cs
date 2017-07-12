@@ -16,6 +16,8 @@ using UI.ScientificResearch.Extensions;
 using System.Data;
 using ScientificResearch.DomainModel;
 using UI.ScientificResearch.Models;
+using ScientificResearch.IDataAccess;
+using ScientificResearch.DataAccessImplement;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -37,7 +39,7 @@ namespace UI.ScientificResearch.Controllers
         private IProjectBonusCreditService ProjectBonusCreditService;
         private IStatisticService StatisticService;
         private IFundsThresholdService FundsThresholdService;
-
+        private IProjectRegistrationRepository ProjectRegistrationService;
 
         private ISession MySession;
 
@@ -70,6 +72,7 @@ namespace UI.ScientificResearch.Controllers
                 new ProjectBonusCreditServiceImplement(),
                 new StatisticServiceImplement(),
                 new FundsThresholdServiceImplement(),
+                new ProjectRegistrationRepository(),
                 new SessionManager()
             )
         {
@@ -88,6 +91,7 @@ namespace UI.ScientificResearch.Controllers
             IProjectBonusCreditService eProjectBonusCreditService,
             IStatisticService statisticService,
             IFundsThresholdService eFundsThresholdService,
+            IProjectRegistrationRepository projectRegistrationService,
             ISession session
             )
         {
@@ -103,6 +107,7 @@ namespace UI.ScientificResearch.Controllers
             this.ProjectBonusCreditService = eProjectBonusCreditService;
             this.StatisticService = statisticService;
             this.FundsThresholdService = eFundsThresholdService;
+            this.ProjectRegistrationService = projectRegistrationService;
             this.MySession = session;
 
 
@@ -110,7 +115,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000001",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "2标段",
+                BidSection = "2标段",
                 CompanyName = "四川科华展示设备有限公司",
                 ContactName = "倪志华",
                 Email = "2460122779@qq.com",
@@ -128,7 +133,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000002",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "四川艺术职业学院教学设施维修改造工程",
+                BidSection = "四川艺术职业学院教学设施维修改造工程",
                 CompanyName = "四川省长坤包装制品有限公司",
                 ContactName = "旦海燕",
                 Email = "410311781@qq.com",
@@ -147,7 +152,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000003",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "1标段",
+                BidSection = "1标段",
                 CompanyName = "四川邛崃水电工程建设集团有限公司",
                 ContactName = "旦海燕",
                 Email = "410311781@qq.com",
@@ -165,7 +170,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000004",
                 CreateTime = DateTime.Now.AddDays(-8),
-                BiddingSection = "3标段",
+                BidSection = "3标段",
                 CompanyName = "四川圆瑞建设工程有限责任公司",
                 ContactName = "周慧",
                 Email = "410311781@qq.com",

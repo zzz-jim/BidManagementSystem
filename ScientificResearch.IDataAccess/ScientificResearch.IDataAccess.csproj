@@ -56,6 +56,8 @@
     <Compile Include="IERPNWorkToDoRepository.cs" />
     <Compile Include="IERPRiZhiRepository.cs" />
     <Compile Include="IFundsManageProgramStatisticsRepository.cs" />
+    <Compile Include="IProjectRegistrationRepository.cs" />
+    <Compile Include="IProjectFileRepository.cs" />
     <Compile Include="IScienceResearchAmountOfApplicationStatisticRepository.cs" />
     <Compile Include="IScienceResearchAmountOfFundStatisticRepository.cs" />
     <Compile Include="IScienceResearchAmountOfSectionStatisticRepository.cs" />

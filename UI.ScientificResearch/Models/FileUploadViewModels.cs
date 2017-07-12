@@ -37,7 +37,7 @@ namespace UI.ScientificResearch.Models
         public string OperatorId { get; set; }
 
         [Display(Name = "上传时间")]
-        public DateTime CreateTime { get; set; }
+        public DateTime CreatedTime { get; set; }
 
         [Display(Name = "文件名称")]
         public string FileName { get; set; }

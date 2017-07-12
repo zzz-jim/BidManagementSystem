@@ -9,7 +9,7 @@ namespace ScientificResearch.Utility.Enums
         /// <summary>
         /// 申请书
         /// </summary>
-        Application = 1051,
+        Application = 1081,
 
         /// <summary>
         /// 确立书

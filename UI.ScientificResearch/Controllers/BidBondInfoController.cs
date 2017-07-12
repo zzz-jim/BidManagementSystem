@@ -110,7 +110,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000001",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "2标段",
+                BidSection = "2标段",
                 CompanyName = "四川科华展示设备有限公司",
                 ContactName = "倪志华",
                 Email = "2460122779@qq.com",
@@ -128,7 +128,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000001",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "1标段",
+                BidSection = "1标段",
                 CompanyName = "四川省长坤包装制品有限公司",
                 ContactName = "旦海燕",
                 Email = "410311781@qq.com",
@@ -147,7 +147,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000003",
                 CreateTime = DateTime.Today.AddDays(-10),
-                BiddingSection = "1标段",
+                BidSection = "1标段",
                 CompanyName = "四川省长坤包装制品有限公司",
                 ContactName = "旦海燕",
                 Email = "410311781@qq.com",
@@ -167,7 +167,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 Id = "000004",
                 CreateTime = DateTime.Now.AddDays(-8),
-                BiddingSection = "3标段",
+                BidSection = "3标段",
                 CompanyName = "四川天瑞刨智科技有限公司",
                 ContactName = "周慧",
                 //TendererAccount = "4402265319100018264",

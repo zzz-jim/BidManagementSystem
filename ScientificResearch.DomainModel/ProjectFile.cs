@@ -12,18 +12,19 @@ namespace ScientificResearch.DomainModel
     using System;
     using System.Collections.Generic;
     
-    public partial class ERPCarInfo
+    public partial class ProjectFile
     {
         public int ID { get; set; }
-        public string CarName { get; set; }
-        public string CarPaiHao { get; set; }
-        public string CarXingHao { get; set; }
-        public string LeiXing { get; set; }
-        public string SuoShuDep { get; set; }
-        public string DriverUser { get; set; }
-        public string NowState { get; set; }
-        public string UserName { get; set; }
-        public Nullable<System.DateTime> TimeStr { get; set; }
-        public string BackInfo { get; set; }
+        public int ApplicationId { get; set; }
+        public int FileType { get; set; }
+        public string FileName { get; set; }
+        public string FileAddress { get; set; }
+        public string FileSize { get; set; }
+        public string Remark { get; set; }
+        public string OperatorName { get; set; }
+        public string OperatorId { get; set; }
+        public Nullable<System.DateTime> CreatedTime { get; set; }
+    
+        public virtual ERPNWorkToDo ERPNWorkToDo { get; set; }
     }
 }

@@ -1,15 +1,68 @@
 ﻿@model IEnumerable<UI.ScientificResearch.Models.FileUploadViewModels>
 @using ScientificResearch.Utility.Enums;
+@*@{
+        Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+    }*@
+
 @{
-    Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
+
+<!-- Project Step Wizard -->
+@Html.Partial("_ScienceResearchWizardPartial")
+
 
 <h4>@((UploadFilePageType)(int)ViewBag.UploadFilePageType)</h4>
 
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<script src="~/Scripts/Custom/forms.js"></script>
+<script type="text/javascript">
+
+    var fuJian = "";
+    $(function () {
+        areadHaveFillIn();
+    });
+    $(function () {
+        $("#btnUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                // TODO: 重新写上传的方法，直接写数据库
+                ajaxFileUploadFillIn();
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        })
+    })
+
+</script>
+
 <p>
-    @Html.ActionLink("上传文件", "Create", new { type = ViewBag.UploadFilePageType })
+    @*@Html.ActionLink("上传文件", "Create", new { type = ViewBag.UploadFilePageType })*@
+
+
 </p>
 <table class="table">
+
+    <tr>
+        <td colspan="4">
+            <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            <input type="button" value="上传" id="btnUploadFile" />
+        </td>
+        <td colspan="1">
+            <div id="areadyuploadfile"></div>
+        </td>
+        <td colspan="1">
+            <p id="fuJian_Save_P"></p>
+        </td>
+        <td colspan="1">
+            <div id="table_save"></div>
+        </td>
+    </tr>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Number)
@@ -24,7 +77,7 @@
             @Html.DisplayNameFor(model => model.OperatorId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreateTime)
+            @Html.DisplayNameFor(model => model.CreatedTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FileName)
@@ -54,7 +107,7 @@
                 @Html.DisplayFor(modelItem => item.OperatorId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreateTime)
+                @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FileName)

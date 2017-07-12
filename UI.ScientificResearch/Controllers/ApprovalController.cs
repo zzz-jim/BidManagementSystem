@@ -207,8 +207,6 @@ namespace UI.ScientificResearch.Controllers
                 model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, MySession[SessionKeyEnum.SectionName].ToString());
                 model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
 
-
-
                 ////绑定工作名称
                 var workFlowModel = ERPNWorkFlowService.GetEntityById(workflowId);
                 model.WorkName = User.Identity.Name + Constant.DoubleHyphenString + workFlowModel.WorkFlowName;
@@ -2290,9 +2288,9 @@ namespace UI.ScientificResearch.Controllers
                 model.IsRejected = false;
 
                 //申请书状态
-                model.ApplicationStatus = BiddingProjectStatus.ProjectRegitered.ToString();
+                model.ApplicationStatus = BiddingProjectStatus.ProjectRegitering.ToString();
                 //整个项目进行的状态
-                model.ProjectStatus = BiddingProjectStatus.ProjectRegitered.ToString();
+                model.ProjectStatus = BiddingProjectStatus.ProjectRegitering.ToString();
                 int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
                 //todo:日志
 
@@ -6646,7 +6644,7 @@ namespace UI.ScientificResearch.Controllers
 
             results.Add(new FileUploadViewModels
             {
-                CreateTime = DateTime.Today.AddDays(-10),
+                CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
 
@@ -6659,7 +6657,7 @@ namespace UI.ScientificResearch.Controllers
             });
             results.Add(new FileUploadViewModels
             {
-                CreateTime = DateTime.Now.AddDays(-8),
+                CreatedTime = DateTime.Now.AddDays(-8),
                 FileAddress = "",
                 FileName = "川国土资【2016】90号2016年度第一批省投资土地开发整理项目立项的合同-新安、太平.pdf",
 
@@ -6677,7 +6675,7 @@ namespace UI.ScientificResearch.Controllers
         {
             var result = new FileUploadViewModels
             {
-                CreateTime = DateTime.Today.AddDays(-10),
+                CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
                 FileSize = "5735 KB ",

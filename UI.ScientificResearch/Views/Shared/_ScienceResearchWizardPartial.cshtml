@@ -23,15 +23,14 @@
         <div class="step-pane active" id="simplewizardinwidgetstep1">
             <div>
                 @Html.ActionLink("项目注册", "ApplicationAgree", new { id = ViewBag.Id }, new { id = "ApplicationAgree" })
-                @Html.ActionLink("招标合同资料", "ProjectEstablish", new { id = ViewBag.Id }, new { id = "ProjectEstablish" })
-                @Html.ActionLink("招标文件", "SignContract", new { id = ViewBag.Id }, new { id = "SignContract" })
-                @Html.ActionLink("招标公告", "SignContract", new { id = ViewBag.Id }, new { id = "SignContract" })
-                @Html.ActionLink("报名情况", "ProcessRecordList", new { id = ViewBag.Id }, new { id = "ProcessRecordList" })
-                @Html.ActionLink("保证金情况", "ReimburseWorkList", new { id = ViewBag.Id }, new { id = "ReimburseWorkList" })
-                @Html.ActionLink("开评标资料", "ProcessRecordList", new { id = ViewBag.Id }, new { id = "ProcessRecordList" })
-                @Html.ActionLink("课题结题", "Conclusions", new { id = ViewBag.Id }, new { id = "Conclusions" })
-                @Html.ActionLink("中标通知书", "ExtensionRequest", new { id = ViewBag.Id }, new { id = "ExtensionRequest" })
-
+                @Html.ActionLink("项目注册确认", "ProjectEstablish", new { id = ViewBag.Id }, new { id = "ProjectEstablish" })
+                @Html.ActionLink("招标合同资料", "ContractList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "Contract" })
+                @Html.ActionLink("招标文件", "BiddingDocumentList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "BiddingDocument" })
+                @Html.ActionLink("招标公告", "ProcessingProjectList", new { id = ViewBag.Id }, new { id = "TenderNotice" })
+                @Html.ActionLink("报名情况", "List" ,"RegisterInfo", new { id = ViewBag.Id }, new { id = "RegisterInfo" })
+                @Html.ActionLink("保证金情况", "List", "BidBondInfo", new { id = ViewBag.Id }, new { id = "BidBondInfo" })
+                @Html.ActionLink("开评标资料", "OpenBidsDocumentList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "OpenBidsDocument" })
+                @Html.ActionLink("中标通知书", "ScienceFundsManageContainer", new { id = ViewBag.Id }, new { id = "BidWinnerNotice" })
             </div>
         </div>
     </div>
@@ -49,69 +48,63 @@
                 currentProjectApplicationStatus = data;
                 //alert("status:" + currentProjectApplicationStatus);
 
-                switch (currentProjectApplicationStatus) {
-                    case "ApplicationRejected":
-                    case "AplicationWriting":
-                    case "ApplicationApproving":
-                        $("#ProjectEstablish").hide();
-                        $("#SignContract").hide();
-                        $("#ProcessRecordList").hide();
-                        $("#ReimburseWorkList").hide();
-                        $("#Conclusions").hide();
-                        $("#ExtensionRequest").hide();
-                        ApplicationProjectStatusWorkflowNodeId = 1;
-                        break;
-                    case "ApplicationApproved":
-                    case "ProjectEstablishing":
-                        $("#SignContract").hide();
-                        $("#ProcessRecordList").hide();
-                        $("#ReimburseWorkList").hide();
-                        $("#Conclusions").hide();
-                        $("#ExtensionRequest").hide();
-                        ApplicationProjectStatusWorkflowNodeId = 2;
-                        break;
-                    case "ProjectEstablished":
-                    case "ContractSigning":
-                        $("#ProcessRecordList").hide();
-                        $("#ReimburseWorkList").hide();
-                        $("#Conclusions").hide();
-                        $("#ExtensionRequest").hide();
-                        ApplicationProjectStatusWorkflowNodeId = 3;
-                        break;
-                    case "ContractSigned":
-                    case "ProjectProcessing":
-                    case "ConcludeUnWrite":
-                    case "ExtensionUnWrite":
-                        ApplicationProjectStatusWorkflowNodeId = 4;
-                        $(step5).removeClass("ProjectStepComplete").addClass("active");
-                        break;
-                    case "ConcludeUnSubmit":
-                    case "ProjectConcluding":
-                        ApplicationProjectStatusWorkflowNodeId = 6;
-                        break;
-                    case "ProjectConcluded":
-
-                        ApplicationProjectStatusWorkflowNodeId = 7;
-                        break;
-                    // TODO: jim will discuss with xiao bo...
-                    case "ExtensionRequestApproving":
-                    case "ExtensionAgreed":
-                        ApplicationProjectStatusWorkflowNodeId = 8;
-                        break;
-                    default:
-                        // Error page 404....
-                        break;
-                }
+                //switch (currentProjectApplicationStatus) {
+                //    case "ApplicationRejected":
+                //    case "AplicationWriting":
+                //    case "ProjectRegitering":
+                //        $("#Contract").hide();
+                //        $("#BiddingDocument").hide();
+                //        $("#ProcessRecordList").hide();
+                //        $("#ReimburseWorkList").hide();
+                //        $("#BidWinnerNotice").hide();
+                //        $("#ExtensionRequest").hide();
+                //        ApplicationProjectStatusWorkflowNodeId = 1;
+                //        break;
+                //    case "ProjectRegitered":
+                //    case "Contracting":
+                //        $("#BiddingDocument").hide();
+                //        $("#ProcessRecordList").hide();
+                //        $("#ReimburseWorkList").hide();
+                //        $("#BidWinnerNotice").hide();
+                //        $("#ExtensionRequest").hide();
+                //        ApplicationProjectStatusWorkflowNodeId = 2;
+                //        break;
+                //    case "TenderNoticeAnnounced":
+                //    case "ContractSigning":
+                //        $("#ProcessRecordList").hide();
+                //        $("#ReimburseWorkList").hide();
+                //        $("#BidWinnerNotice").hide();
+                //        $("#ExtensionRequest").hide();
+                //        ApplicationProjectStatusWorkflowNodeId = 3;
+                //        break;
+                //    case "ContractSigned":
+                //    case "ProjectProcessing":
+                //    case "ConcludeUnWrite":
+                //    case "ExtensionUnWrite":
+                //        ApplicationProjectStatusWorkflowNodeId = 4;
+                //        $(step5).removeClass("ProjectStepComplete").addClass("active");
+                //        break;
+                //    case "ConcludeUnSubmit":
+                //    case "ProjectConcluding":
+                //        ApplicationProjectStatusWorkflowNodeId = 6;
+                //        break;
+                //    case "BidWinnerNoticeAnnounced":
+                //        ApplicationProjectStatusWorkflowNodeId = 7;
+                //        break;
+                //    default:
+                //        // Error page 404....
+                //        break;
+            }
 
                 var idPre = "#step";
 
-                for (var i = 0; i < ApplicationProjectStatusWorkflowNodeId; i++) {
-                    var id = idPre + i;
-                    $(id).removeClass("ProjectStepComplete").addClass("complete");
-                }
+            for(var i = 0; i<ApplicationProjectStatusWorkflowNodeId; i++) {
+            var id = idPre + i;
+            $(id).removeClass("ProjectStepComplete").addClass("complete");
+        }
 
-                $(idPre + ApplicationProjectStatusWorkflowNodeId).removeClass("ProjectStepComplete").addClass("active");
-            }
+        $(idPre + ApplicationProjectStatusWorkflowNodeId).removeClass("ProjectStepComplete").addClass("active");
+    }
         });
     })
 </script>

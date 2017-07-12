@@ -40,7 +40,7 @@ namespace UI.ScientificResearch.Models
 
         [Required]
         [Display(Name = "标段")]
-        public string BiddingSection { get; set; }
+        public string BidSection { get; set; }
 
         [Required]
         [Display(Name = "付款人户名")]

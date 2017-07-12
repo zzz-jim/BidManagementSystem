@@ -219,19 +219,19 @@
                         var k = data;
                         //判断返回的状态来控制弹出框第一个打开的页面
                         //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
-                        if (data["ReturnState"] == "ProjectRegitered") {
+                        if (data["ReturnState"] == "ProjectRegitering") {
                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + data["applicationId"] + '">项目注册</iframe>');
                         }
-                        else if (data["ReturnState"] == "TenderNotice")//招标公告发布后
+                        else if (data["ReturnState"] == "ProjectRegitered")//项目已注册
                         {
                             //为申请书iframe的src赋值id是ERPNWorkToDo的ID
                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + data["applicationId"] + '">项目注册</iframe>');
                         }
-                        else if (data["ReturnState"] == "RegisterInfo" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                        else if (data["ReturnState"] == "TenderNoticeAnnounced" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
                         {
                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SignContract?id=' + data["applicationId"] + '">合同记录</iframe>');
                         }
-                        else if (data["ReturnState"] == "OpenBidsDocument" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
+                        else if (data["ReturnState"] == "BidWinnerNoticeAnnounced" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
                         {
                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProcessRecordList?id=' + data["applicationId"] + '">过程记录</iframe>');
                         }
@@ -388,7 +388,7 @@
                                             </div>
                                         </a>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="/ApplicationIdentity/Home/About">
                                             <div class="clearfix">
@@ -645,26 +645,7 @@
                                 Scientific.onclick = function () {
                                     window.location.href = "/Approval/Index";
                                 };
-                                var GoodSubject = document.getElementById("GoodSubject");
-                                GoodSubject.onclick = function () {
-                                    window.location.href = "/GoodSubject/Index";
-                                };
-                                var SubjectLeader = document.getElementById("SubjectLeader");
-                                SubjectLeader.onclick = function () {
-                                    window.location.href = "/SubjectLeader/Index";
-                                };
-                                var PaperPublish = document.getElementById("PaperPublish");
-                                PaperPublish.onclick = function () {
-                                    window.location.href = "/PaperPublish/Index";
-                                };
-                                var ScienceConference = document.getElementById("ScienceConference");
-                                ScienceConference.onclick = function () {
-                                    window.location.href = "/ScienceConference/Index";
-                                };
-                                var ResearchAward = document.getElementById("ResearchAward");
-                                ResearchAward.onclick = function () {
-                                    window.location.href = "/ResearchAward/Index";
-                                };
+
     </script>
 
     <!--Page Related Scripts-->

@@ -60,6 +60,8 @@
     <Compile Include="FundsThresholdRepository.cs" />
     <Compile Include="ProjectBonusCreditRepository.cs" />
     <Compile Include="FundsManageProgramStatisticsRepository.cs" />
+    <Compile Include="ProjectRegistrationRepository.cs" />
+    <Compile Include="ProjectRecordRepository.cs" />
     <Compile Include="ScienceResearchAmountOfApplicationStatisticRepository.cs" />
     <Compile Include="ScienceResearchAmountOfFundStatisticRepository.cs" />
     <Compile Include="ScienceResearchAmountOfSectionStatisticRepository.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="ERPRiZhiRepository.cs" />
     <Compile Include="TravelFundsDetailRepository.cs" />
     <Compile Include="FundsRecordRepository.cs" />
-    <Compile Include="ProjectRecordRepository.cs" />
+    <Compile Include="ProjectFileRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
