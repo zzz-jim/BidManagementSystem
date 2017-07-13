@@ -218,9 +218,19 @@ namespace UI.ScientificResearch.Controllers
             return View();
         }
 
-        public ActionResult Create(UploadFilePageType type)
+        public ActionResult Create(int applicationId)
         {
+            applicationId = 41105;
 
+            return View(new ProjectRegistrationViewModel() { ApplicationId = applicationId });
+        }
+
+        [HttpPost]
+        public ActionResult Create(ProjectRegistrationViewModel model)
+        {
+            model.CreatedTime = DateTime.Now;
+
+            ProjectRegistrationService.AddEntity(model.ConvertTo<ProjectRegistration>());
             return View();
         }
 
@@ -231,6 +241,18 @@ namespace UI.ScientificResearch.Controllers
 
             return View(this.registerInfoViewModelsList);
         }
+
+        public ActionResult ProjectList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "报名情况";
+
+            var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            var models= tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
+            ViewBag.ApplicationId = applicationId;
+            return View(models);
+        }
+
 
         public ActionResult Details(string id)
         {

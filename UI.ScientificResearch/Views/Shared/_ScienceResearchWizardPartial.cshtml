@@ -27,8 +27,8 @@
                 @Html.ActionLink("招标合同资料", "ContractList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "Contract" })
                 @Html.ActionLink("招标文件", "BiddingDocumentList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "BiddingDocument" })
                 @Html.ActionLink("招标公告", "ProcessingProjectList", new { id = ViewBag.Id }, new { id = "TenderNotice" })
-                @Html.ActionLink("报名情况", "List" ,"RegisterInfo", new { id = ViewBag.Id }, new { id = "RegisterInfo" })
-                @Html.ActionLink("保证金情况", "List", "BidBondInfo", new { id = ViewBag.Id }, new { id = "BidBondInfo" })
+                @Html.ActionLink("报名情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "RegisterInfo" })
+                @Html.ActionLink("保证金情况", "ProjectList", "BidBondInfo", new { id = ViewBag.Id }, new { id = "BidBondInfo" })
                 @Html.ActionLink("开评标资料", "OpenBidsDocumentList", "UploadFilePage", new { id = ViewBag.Id }, new { id = "OpenBidsDocument" })
                 @Html.ActionLink("中标通知书", "ScienceFundsManageContainer", new { id = ViewBag.Id }, new { id = "BidWinnerNotice" })
             </div>
