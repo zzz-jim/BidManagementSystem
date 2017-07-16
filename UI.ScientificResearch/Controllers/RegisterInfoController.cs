@@ -249,7 +249,7 @@ namespace UI.ScientificResearch.Controllers
 
             var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
             var models= tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
-            ViewBag.ApplicationId = applicationId;
+            ViewBag.Id = applicationId;
             return View(models);
         }
 

@@ -29,7 +29,10 @@ namespace UI.ScientificResearch.Models
         [Required]
         [Display(Name = "报名费金额")]
         public long RegistrationFee { get; set; }
+
+        [Display(Name = "是否交保证金")]
         public bool IsSubmitBidBondFee { get; set; }
+        [Display(Name = "保证金")]
         public long BidBondFee { get; set; }
         [Required]
         [Display(Name = "备注说明")]
