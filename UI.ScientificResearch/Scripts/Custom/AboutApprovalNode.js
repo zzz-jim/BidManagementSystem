@@ -28,9 +28,9 @@ function areadHaveFillIn() {
 };
 //填写申请书新增文件使用
 function ajaxFileUploadFillIn() {
- 
+
     $.ajaxFileUpload
-    (
+        (
         {
             url: '/FileService/Upload', //用于文件上传的服务器端请求地址
             type: 'post',
@@ -62,14 +62,55 @@ function ajaxFileUploadFillIn() {
                 alert(e);
             }
         }
-    )
+        )
+
+    return false;
+}
+//填写申请书新增文件使用
+function ajaxFileUploadFillInWithData(data) {
+
+    $.ajaxFileUpload
+        (
+        {
+            data: data,// TODO: 放入applicationId
+            url: '/FileService/Upload', //用于文件上传的服务器端请求地址
+            type: 'post',
+            secureuri: false, //一般设置为false
+            fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
+            dataType: 'json', //返回值类型 一般设置为json
+            success: function (data, status) //服务器成功响应处理函数
+            {
+                if (data.isSuccessful) {
+                    alert("文件上传成功！");
+                    // TODO: jim
+                    //$("#downloadFile").text(data.name);
+                    $("#areadyuploadfile").append("<p><a href=/FileService/Download?fileName=" + data.name + ">" + data.name + "</a></p>");
+                    //附件路径
+                    fuJian = fuJian + data.Name + "\\\\" + data.name + ";";
+                    $("#FuJianList").attr("value", fuJian);
+                } else {
+                    alert(data.name + "上传失败，请重新操作");
+                }
+
+                if (typeof (data.error) != 'undefined') {
+                    if (data.error != '') {
+                        alert(data.error);
+                    }
+                }
+            },
+            error: function (data, status, e) //服务器响应失败处理函数
+            {
+                alert(e);
+            }
+        }
+        )
 
     return false;
 }
 //审批的时候使用
 function ajaxFileUploadAgree(currentnode, allcount) {
     $.ajaxFileUpload
-    (
+        (
         {
             url: '/FileService/Upload', //用于文件上传的服务器端请求地址
             type: 'post',
@@ -83,8 +124,8 @@ function ajaxFileUploadAgree(currentnode, allcount) {
                     // TODO: jim
                     $("#uploadingfile").append("<p><a href=/FileService/Download?fileName=" + data.name + ">" + data.name + "</a></p>");
                     //附件路径
-                    
-                    for (var i = 0; i <= parseInt(allcount) ; i++) {
+
+                    for (var i = 0; i <= parseInt(allcount); i++) {
                         if (i == currentnode) {
                             if (thisPageFuJian.indexOf("~" + i + "#") >= 0) {
                                 thisPageFuJian = thisPageFuJian + data.Name + "\\\\" + data.name + ";";
@@ -111,7 +152,7 @@ function ajaxFileUploadAgree(currentnode, allcount) {
                 alert(e);
             }
         }
-    )
+        )
     return false;
 }
 //审批过程中已有的文件
@@ -122,7 +163,7 @@ function fileListInitializeAgree(currentnode, allcount) {   //初始化页面
     if ($("#thisPageFuJian").val() != undefined) {
         thisPageFuJian = $("#thisPageFuJian").val();
     }
-        //如果数据库的FuJianList无值
+    //如果数据库的FuJianList无值
     else {
         thisPageFuJian = "";
     }
@@ -131,7 +172,7 @@ function fileListInitializeAgree(currentnode, allcount) {   //初始化页面
     var tableId = new Array();
     //将每个人的文件路径放在fuJian数组中
     var fuJian = filesOfSomeone(thisPageFuJian, currentnode);
-    for (var i = 0; i < parseInt(allcount) ; i++) {
+    for (var i = 0; i < parseInt(allcount); i++) {
         //第一个节点不执行任何操作
         if (i == 0) {
 
@@ -151,7 +192,7 @@ function fileListInitializeAgree(currentnode, allcount) {   //初始化页面
             }
         }
     }
-    for (var j = 0; j < (parseInt(currentnode)) ; j++) {
+    for (var j = 0; j < (parseInt(currentnode)); j++) {
         var fuJians = "";
         if (fuJian[j] != "") {
             fuJians = fuJian[j].split(";");

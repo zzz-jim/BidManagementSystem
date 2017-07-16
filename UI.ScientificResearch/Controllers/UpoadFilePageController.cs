@@ -16,6 +16,8 @@ using UI.ScientificResearch.Extensions;
 using System.Data;
 using ScientificResearch.DomainModel;
 using UI.ScientificResearch.Models;
+using ScientificResearch.IDataAccess;
+using ScientificResearch.DataAccessImplement;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -38,6 +40,7 @@ namespace UI.ScientificResearch.Controllers
         private IStatisticService StatisticService;
         private IFundsThresholdService FundsThresholdService;
 
+        private IProjectFileRepository FileService;
 
         private ISession MySession;
 
@@ -70,6 +73,7 @@ namespace UI.ScientificResearch.Controllers
                 new ProjectBonusCreditServiceImplement(),
                 new StatisticServiceImplement(),
                 new FundsThresholdServiceImplement(),
+                new ProjectFileRepository(),
                 new SessionManager()
             )
         {
@@ -88,6 +92,7 @@ namespace UI.ScientificResearch.Controllers
             IProjectBonusCreditService eProjectBonusCreditService,
             IStatisticService statisticService,
             IFundsThresholdService eFundsThresholdService,
+            IProjectFileRepository fileService,
             ISession session
             )
         {
@@ -104,8 +109,8 @@ namespace UI.ScientificResearch.Controllers
             this.ProjectBonusCreditService = eProjectBonusCreditService;
             this.StatisticService = statisticService;
             this.FundsThresholdService = eFundsThresholdService;
+            this.FileService = fileService;
             this.MySession = session;
-
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
@@ -268,6 +273,8 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult List(UploadFilePageType type)
         {
             ViewBag.UploadFilePageType = (int)type;
+
+
             return View(this.fileUploadViewModelsList.Where(x => x.FileType == type));
         }
 
@@ -276,14 +283,15 @@ namespace UI.ScientificResearch.Controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public ActionResult ContractList()
+        public ActionResult ContractList(int applicationId)
         {
             ViewBag.Module = "政府采购";
             ViewBag.Title = "招标代理合同";
 
             UploadFilePageType type = UploadFilePageType.招标代理合同;
             ViewBag.UploadFilePageType = (int)type;
-            return View("List", this.fileUploadViewModelsList.Where(x => x.FileType == type));
+            ViewBag.Id = applicationId;
+            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
         /// <summary>
@@ -291,14 +299,15 @@ namespace UI.ScientificResearch.Controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public ActionResult OpenBidsDocumentList()
+        public ActionResult OpenBidsDocumentList(int applicationId)
         {
             ViewBag.Module = "政府采购";
             ViewBag.Title = "开评标相关资料";
 
             UploadFilePageType type = UploadFilePageType.开评标相关资料;
             ViewBag.UploadFilePageType = (int)type;
-            return View("List", this.fileUploadViewModelsList.Where(x => x.FileType == type));
+            ViewBag.Id = applicationId;
+            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
         /// <summary>
@@ -306,14 +315,15 @@ namespace UI.ScientificResearch.Controllers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public ActionResult BiddingDocumentList()
+        public ActionResult BiddingDocumentList(int applicationId)
         {
             ViewBag.Module = "政府采购";
             ViewBag.Title = "招标文件";
 
             UploadFilePageType type = UploadFilePageType.招标文件;
             ViewBag.UploadFilePageType = (int)type;
-            return View("List", this.fileUploadViewModelsList.Where(x => x.FileType == UploadFilePageType.招标文件));
+            ViewBag.Id = applicationId;
+            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
         public ActionResult Details(string id)

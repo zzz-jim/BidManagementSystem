@@ -2,12 +2,18 @@
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
+using System.Linq;
 
 using ScientificResearch.BusinessLogicImplement;
 using ScientificResearch.IBusinessLogic;
 using ScientificResearch.Utility.Constants;
 using ScientificResearch.Utility;
 using UI.ScientificResearch.Extensions;
+using ScientificResearch.Utility.Enums;
+using ScientificResearch.IDataAccess;
+using ScientificResearch.DataAccessImplement;
+using ScientificResearch.DomainModel;
+using Microsoft.AspNet.Identity;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -27,6 +33,7 @@ namespace UI.ScientificResearch.Controllers
         private IProjectRecordService ProjectRecordService;
 
         private IStatisticService StatisticService;
+        private IProjectFileRepository FileService;
 
         private IFundsManageProgramStatisticsService FundsManageProgramStatisticsService;
         //private ISession session;
@@ -46,7 +53,8 @@ namespace UI.ScientificResearch.Controllers
                 new FundsRecordServiceImplement(),
                 new ProjectRecordServiceImplement(),
                 new StatisticServiceImplement(),
-                new FundsManageProgramStatisticsImplement()
+                new FundsManageProgramStatisticsImplement(),
+                new ProjectFileRepository()
             )//, new SessionManager())
         {
         }
@@ -61,7 +69,8 @@ namespace UI.ScientificResearch.Controllers
             IFundsRecordService eFundsRecordService,
             IProjectRecordService eProjectRecordService,
             IStatisticService statisticService,
-            IFundsManageProgramStatisticsService fundsManageProgramStatisticsService
+            IFundsManageProgramStatisticsService fundsManageProgramStatisticsService,
+         IProjectFileRepository fileService
             )
         //, ISession session)
         {
@@ -77,6 +86,7 @@ namespace UI.ScientificResearch.Controllers
             // this.session = session;
             this.StatisticService = statisticService;
             this.FundsManageProgramStatisticsService = fundsManageProgramStatisticsService;
+            this.FileService = fileService;
         }
 
         #endregion
@@ -89,13 +99,36 @@ namespace UI.ScientificResearch.Controllers
         {
             string exceptionMsg = string.Empty;
             var formContent = Request.Form;
+            int applicationId;// 项目的Id
+            UploadFilePageType fileType;// 文件类型
+            string remark = string.Empty;
+
+            try
+            {
+                applicationId = Convert.ToInt32(formContent["application_id"]);
+                fileType = (UploadFilePageType)Convert.ToInt32(formContent["file_type"]);
+                remark = formContent["remark"];
+            }
+            catch (Exception ex)
+            {
+                return Json(
+                    new
+                    {
+                        isSuccessful = false,
+                        error = "项目的Id或文件类型不正确",
+                    },
+                    "text/html", JsonRequestBehavior.AllowGet);
+            }
+
             var uploadedFiles = Request.Files;
             string fileName = string.Empty;
             bool isSuccessful = false;
             string userName = Constant.USER_NAME;
             string Date = DateTime.Now.ToString();
             string newFileName = string.Empty;
-
+            string filePath = string.Empty;
+            int fileSize = 0;
+            // step1，先保存到服务器中
             if (uploadedFiles.Count > 0)
             {
                 foreach (string file in uploadedFiles)
@@ -119,9 +152,9 @@ namespace UI.ScientificResearch.Controllers
                         //去掉文件名中的非法字符
                         newFileName = ReplaceBadCharOfFileName.ReplaceBadCharOfFileNames(newFileName);
                         string newFilePath = newServerPath + "\\" + newFileName;
-                        string filePath = Path.Combine(newFilePath);
+                        filePath = Path.Combine(newFilePath);
                         currentFile.SaveAs(filePath);
-
+                        fileSize = currentFile.ContentLength;
                         if (System.IO.File.Exists(filePath))
                         {
                             isSuccessful = true;
@@ -132,6 +165,39 @@ namespace UI.ScientificResearch.Controllers
                         isSuccessful = false;
                         exceptionMsg += ex.Message;
                     }
+                }
+            }
+
+            if (isSuccessful)
+            {
+                try
+                {
+                    // step2，记录相关信息到数据库中的文件上传记录表中 
+                    FileService.AddEntity(new ProjectFile
+                    {
+                        ApplicationId = applicationId,
+                        CreatedTime = DateTime.Now,
+                        FileName = fileName,
+                        FileType = (int)fileType,
+                        FileAddress = filePath,
+                        FileSize = (fileSize / 1000).ToString() + " KB",
+                        OperatorName = User.Identity.GetUserName(),
+                        OperatorId = User.Identity.GetUserId(),
+                        Remark=remark
+                    });
+
+                }
+                catch (Exception ex)
+                {
+                    // 记录日志
+
+                    return Json(
+                        new
+                        {
+                            isSuccessful = false,
+                            error = "文件上传失败，请重新上传",
+                        },
+                        "text/html", JsonRequestBehavior.AllowGet);
                 }
             }
 
