@@ -310,6 +310,7 @@
                 //parent.location.reload();//刷新包含SubmitApplication的页面// TODO:暂时注释掉，每次刷新影响效率
             }
             $("#CreaateButtn").click(function () {
+                $("#Application")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
                 var random1 = Math.floor(Math.random() * 1000 + 1);
                 $("#Application").kendoWindow({
                     position: {
@@ -340,6 +341,7 @@
     <script type="text/javascript">
 
         function OpenMaxWindow(id) {
+            $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
             $("#MaxWindow").kendoWindow({
                 position: {
                     top: "15%", // or "100px"
