@@ -183,7 +183,7 @@ namespace UI.ScientificResearch.Controllers
                         FileSize = (fileSize / 1000).ToString() + " KB",
                         OperatorName = User.Identity.GetUserName(),
                         OperatorId = User.Identity.GetUserId(),
-                        Remark=remark
+                        Remark = remark
                     });
 
                 }
@@ -223,6 +223,11 @@ namespace UI.ScientificResearch.Controllers
         /// <returns></returns>
         public ActionResult Download(string fileName)
         {
+            if (fileName.Contains(Constant.Slash))
+            {
+                fileName = fileName.Split(Constant.Slash).Last();
+            }
+
             string userName = Constant.USER_NAME;
             try
             {

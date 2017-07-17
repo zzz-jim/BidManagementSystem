@@ -6,6 +6,7 @@
 
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    int index = 1;
 }
 
 <!-- Project Step Wizard -->
@@ -95,9 +96,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
+            <td>@index</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Remark)
             </td>
@@ -114,7 +113,7 @@
                 @Html.DisplayFor(modelItem => item.FileName)
             </td>
             <td>
-                <a href="@Html.DisplayFor(modelItem => item.FileAddress)">下载</a>
+                <a href="/FileService/Download?fileName=@Html.DisplayFor(modelItem => item.FileAddress)">下载</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FileSize)
@@ -125,6 +124,8 @@
                 @Html.ActionLink("删除", "Delete", new { id = item.Id })
             </td>
         </tr>
+
+        index++;
     }
 
 </table>

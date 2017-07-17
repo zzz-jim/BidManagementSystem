@@ -45,6 +45,11 @@ namespace ScientificResearch.Utility.Constants
         public static readonly char Comma = ',';
 
         /// <summary>
+        /// \ string
+        /// </summary>
+        public static readonly char  Slash = '\\';
+
+        /// <summary>
         /// System config pagesize for list view.
         /// </summary>
         public static readonly int PageSize = 10;
@@ -186,12 +191,12 @@ namespace ScientificResearch.Utility.Constants
         /// <summary>
         /// 保存继教申请书
         /// </summary>
-        public static readonly string SaveSubmitApplication ="保存(继教申请书)";
+        public static readonly string SaveSubmitApplication = "保存(继教申请书)";
 
         /// <summary>
         /// 上报继教申请书
         /// </summary>
-        public static readonly string  ReportSubmitAppplication="上报(继教申请书)";
+        public static readonly string ReportSubmitAppplication = "上报(继教申请书)";
 
         /// <summary>
         /// 驳回
@@ -241,7 +246,7 @@ namespace ScientificResearch.Utility.Constants
         /// <summary>
         /// 过程记录被驳回
         /// </summary>
-        public static readonly string RejectProcess ="过程记录被驳回，需修改数据";
+        public static readonly string RejectProcess = "过程记录被驳回，需修改数据";
 
         /// <summary>
         /// 保存经费报销单
@@ -261,7 +266,7 @@ namespace ScientificResearch.Utility.Constants
         /// <summary>
         /// 添加(差旅报销单)
         /// </summary>
-        public static readonly string AddTravel= "添加(差旅报销单)";
+        public static readonly string AddTravel = "添加(差旅报销单)";
 
         /// <summary>
         /// 审批(经费报销单)
@@ -293,6 +298,6 @@ namespace ScientificResearch.Utility.Constants
         /// </summary>
         public static readonly string RejectReiburse = "经费报销单被驳回，需修改数据";
 
-        
+
     }
 }
