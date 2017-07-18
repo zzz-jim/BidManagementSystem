@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\FormDesign\Application\Application_政府采购.html" />
     <Content Include="Database\FormDesign\Application\Application_GoodSubject.html" />
     <Content Include="Database\FormDesign\Application\Application_PaperPublish.html" />
     <Content Include="Database\FormDesign\Application\Application_PaperPublish.txt" />
