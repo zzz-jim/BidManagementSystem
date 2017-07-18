@@ -25,16 +25,16 @@
     })
 
 
-    $(function () {
-        function show() {
-            var mydate = new Date();
-            var str = "" + mydate.getFullYear() + "年";
-            str += (mydate.getMonth() + 1) + "月";
-            str += mydate.getDate() + "日";
-            return str;
-        }
-        $(".in").val(show());
-    });
+    //$(function () {
+    //    function show() {
+    //        var mydate = new Date();
+    //        var str = "" + mydate.getFullYear() + "年";
+    //        str += (mydate.getMonth() + 1) + "月";
+    //        str += mydate.getDate() + "日";
+    //        return str;
+    //    }
+    //    $(".in").val(show());
+    //});
 
 
     $(function () {
@@ -133,7 +133,6 @@
         </div>*@
     @Html.Partial("_SelectSingleUserPartial")
 </div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -144,23 +143,23 @@
 
         <table id="data" class="table">
             <tr>
-                    <td class="tdcss">
-                        @Html.LabelFor(model => model.WenHao)
-                    </td>
-                    <td colspan="5">
-                        @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
-                        @Html.ValidationMessageFor(model => model.WenHao)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        项目编号
-                    </td>
-                    <td>
-                        <input  id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
-                    </td>
-                    <td colspan="5"></td>
-                </tr>
+                <td class="tdcss">
+                    @Html.LabelFor(model => model.WenHao)
+                </td>
+                <td colspan="5">
+                    @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
+                    @Html.ValidationMessageFor(model => model.WenHao)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    项目编号
+                </td>
+                <td>
+                    <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
+                </td>
+                <td colspan="5"></td>
+            </tr>
 
             @Html.Raw(Model.FormContent)
             @Html.HiddenFor(model => model.FormContent)
@@ -261,4 +260,11 @@
     }
 </style>
 @*<script>@Html.Raw(ViewBag.PiLiangSet)</script>*@
-
+<script>
+    $(document).ready(function () {
+        $("#Date222222222").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+        $("#Date222222222").attr("readonly", true);
+    });
+</script>
