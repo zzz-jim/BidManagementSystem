@@ -111,81 +111,81 @@
 
 
 <script type="text/javascript">
-    $(function () {
-        var random1 = Math.floor(Math.random() * 1000 + 1);
-        var random2 = Math.floor(Math.random() * 1000 + 1);
-        var customApplicationId = $("#Freeze").val();
+    //$(function () {
+    //    var random1 = Math.floor(Math.random() * 1000 + 1);
+    //    var random2 = Math.floor(Math.random() * 1000 + 1);
+    //    var customApplicationId = $("#Freeze").val();
 
-        $.ajax({
-            url: "/Approval/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=FirstLoad" + "&k=" + random1,
-            type: "get",
+    //    $.ajax({
+    //        url: "/Approval/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=FirstLoad" + "&k=" + random1,
+    //        type: "get",
 
-            success: function (returndata1) {
-                if (returndata1 == "areadyFreezed") {
-                    $("#btnFreez").val("启用此项目");
-                    $("input[name='Approval']").attr("disabled", true);
-                    $("input[name='Reject']").attr("disabled", true);
-                    $("input[name='Save']").attr("disabled", true);
-                    $("input[name='Reported']").attr("disabled", true);
-                    $("input[name='UpdateData']").attr("disabled", true);
-                    $("#btnUploadFile").attr("disabled", true);
-                }
-                else if (returndata1 == "notFreezed") {
-                    $("#btnFreez").val("冻结此项目");
-                    $("input[name='Approval']").attr("disabled", false);
-                    $("input[name='Reject']").attr("disabled", false);
-                    $("input[name='Save']").attr("disabled", false);
-                    $("input[name='Reported']").attr("disabled", false);
-                    $("input[name='UpdateData']").attr("disabled", false);
-                    $("#btnUploadFile").attr("disabled", false);
-                }
-                else {
-                    alert("wrong!");
-                }
-            }
-        });
+    //        success: function (returndata1) {
+    //            if (returndata1 == "areadyFreezed") {
+    //                $("#btnFreez").val("启用此项目");
+    //                $("input[name='Approval']").attr("disabled", true);
+    //                $("input[name='Reject']").attr("disabled", true);
+    //                $("input[name='Save']").attr("disabled", true);
+    //                $("input[name='Reported']").attr("disabled", true);
+    //                $("input[name='UpdateData']").attr("disabled", true);
+    //                $("#btnUploadFile").attr("disabled", true);
+    //            }
+    //            else if (returndata1 == "notFreezed") {
+    //                $("#btnFreez").val("冻结此项目");
+    //                $("input[name='Approval']").attr("disabled", false);
+    //                $("input[name='Reject']").attr("disabled", false);
+    //                $("input[name='Save']").attr("disabled", false);
+    //                $("input[name='Reported']").attr("disabled", false);
+    //                $("input[name='UpdateData']").attr("disabled", false);
+    //                $("#btnUploadFile").attr("disabled", false);
+    //            }
+    //            else {
+    //                alert("wrong!");
+    //            }
+    //        }
+    //    });
 
-        $("#btnFreez").click(function () {
-            var btnFreezValue = $("#btnFreez").val();
-            var freezeState;
-            if (btnFreezValue == "启用此项目") {
-                //启用
-                freezeState = "Freezed";
-            }
-            else if (btnFreezValue == "冻结此项目") {
-                //冻结
-                freezeState = "Freezing";
-            }
-            $.ajax({
-                url: "/Approval/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=" + freezeState + "&k=" + random2,
-                type: "get",
-                success: function (returndata3) {
-                    if (returndata3 == "areadyFreezed") {
-                        $("#btnFreez").val("启用此项目");
-                        $("input[name='Approval']").attr("disabled", true);
-                        $("input[name='Reject']").attr("disabled", true);
-                        $("input[name='Save']").attr("disabled", true);
-                        $("input[name='Reported']").attr("disabled", true);
-                        $("input[name='UpdateData']").attr("disabled", true);
-                        $("#btnUploadFile").attr("disabled", true);
-                        alert("操作成功，关于此项目的任何操作都不能继续进行！");
-                    }
-                    else if (returndata3 == "notFreezed") {
-                        $("#btnFreez").val("冻结此项目");
-                        $("input[name='Approval']").attr("disabled", false);
-                        $("input[name='Reject']").attr("disabled", false);
-                        $("input[name='Save']").attr("disabled", false);
-                        $("input[name='Reported']").attr("disabled", false);
-                        $("input[name='UpdateData']").attr("disabled", false);
-                        $("#btnUploadFile").attr("disabled", false);
-                        alert("操作成功，项目可继续进行");
-                    }
-                    else {
-                        alert("wrong!");
-                    }
-                }
-            });
-        });
+    //    $("#btnFreez").click(function () {
+    //        var btnFreezValue = $("#btnFreez").val();
+    //        var freezeState;
+    //        if (btnFreezValue == "启用此项目") {
+    //            //启用
+    //            freezeState = "Freezed";
+    //        }
+    //        else if (btnFreezValue == "冻结此项目") {
+    //            //冻结
+    //            freezeState = "Freezing";
+    //        }
+    //        $.ajax({
+    //            url: "/Approval/RetrunFreezeFlag?id=" + customApplicationId + "&pagestate=" + freezeState + "&k=" + random2,
+    //            type: "get",
+    //            success: function (returndata3) {
+    //                if (returndata3 == "areadyFreezed") {
+    //                    $("#btnFreez").val("启用此项目");
+    //                    $("input[name='Approval']").attr("disabled", true);
+    //                    $("input[name='Reject']").attr("disabled", true);
+    //                    $("input[name='Save']").attr("disabled", true);
+    //                    $("input[name='Reported']").attr("disabled", true);
+    //                    $("input[name='UpdateData']").attr("disabled", true);
+    //                    $("#btnUploadFile").attr("disabled", true);
+    //                    alert("操作成功，关于此项目的任何操作都不能继续进行！");
+    //                }
+    //                else if (returndata3 == "notFreezed") {
+    //                    $("#btnFreez").val("冻结此项目");
+    //                    $("input[name='Approval']").attr("disabled", false);
+    //                    $("input[name='Reject']").attr("disabled", false);
+    //                    $("input[name='Save']").attr("disabled", false);
+    //                    $("input[name='Reported']").attr("disabled", false);
+    //                    $("input[name='UpdateData']").attr("disabled", false);
+    //                    $("#btnUploadFile").attr("disabled", false);
+    //                    alert("操作成功，项目可继续进行");
+    //                }
+    //                else {
+    //                    alert("wrong!");
+    //                }
+    //            }
+    //        });
+    //    });
 
-    });
+    //});
 </script>
