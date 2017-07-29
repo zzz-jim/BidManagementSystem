@@ -7,7 +7,10 @@ namespace ScientificResearch.ViewModel
 {
     public class ERPNWorkToDoViewModel
     {
-       
+        public ERPNWorkToDoViewModel()
+        {
+            BidSectionList = new List<ProjectBidSectionViewModel>();
+        }
 
         public int NWorkToDoID { get; set; }
         public string WorkName { get; set; }
@@ -84,6 +87,6 @@ namespace ScientificResearch.ViewModel
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<DateTime> ProjectEstablishTime { get; set; }
 
-      //  public IList<FundsThresholdViewModel> FundsLimitsList { get; set; }
+        public List<ProjectBidSectionViewModel> BidSectionList { get; set; }
     }
 }

@@ -73,6 +73,7 @@
     <Compile Include="ERPNWorkFlowRepository.cs" />
     <Compile Include="ERPNWorkToDoRepository.cs" />
     <Compile Include="ERPRiZhiRepository.cs" />
+    <Compile Include="ProjectBidSectionRepository.cs" />
     <Compile Include="TravelFundsDetailRepository.cs" />
     <Compile Include="FundsRecordRepository.cs" />
     <Compile Include="ProjectFileRepository.cs" />

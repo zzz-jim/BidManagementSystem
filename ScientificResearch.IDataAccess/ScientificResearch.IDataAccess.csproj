@@ -63,6 +63,7 @@
     <Compile Include="IScienceResearchAmountOfSectionStatisticRepository.cs" />
     <Compile Include="IScienceResearchOfCapitalStatisticRepository.cs" />
     <Compile Include="IStatisticRepository.cs" />
+    <Compile Include="IProjectBidSectionRepository.cs" />
     <Compile Include="ITravelFundsDetailRepository.cs" />
     <Compile Include="IFundsRecordRepository.cs" />
     <Compile Include="IProjectRecordRepository.cs" />

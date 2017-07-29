@@ -45,7 +45,7 @@ namespace ScientificResearch.DataTransferModel
                 IsTemporary = domainModel.IsTemporary,
                 IsDeleted = domainModel.IsDeleted,
                 ProjectStatus = domainModel.ProjectStatus,
-               // FundsLimitsList=null,
+                //ProjectBidSection = domainModel.ProjectBidSection,
             };
         }
 
@@ -80,7 +80,6 @@ namespace ScientificResearch.DataTransferModel
                 IsTemporary = model.IsTemporary,
                 IsDeleted = model.IsDeleted,
                 ProjectStatus = model.ProjectStatus,
-               // FundsThresholdDetail = model.FundsLimitsList.Select(x => x.ToDomainModel()).ToList(),
             };
         }
     }

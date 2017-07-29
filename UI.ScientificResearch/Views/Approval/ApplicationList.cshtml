@@ -12,8 +12,9 @@
 <div id="fundssearchdata">
     项目名称:
     <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
-
-
+项目编号:
+    <input type="text" name="projectNumber" id="projectNumber" style="width: 150px; height: 30px">&nbsp;
+	
     状态:
 
     <select id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
@@ -26,13 +27,6 @@
         <option value=ProjectRejected>项目未立项</option>
     </select>&nbsp;
 
-    是否冻结:
-
-    <select id="Freeze" name="Freeze" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
-        <option value=全部>全部</option>
-        <option value=启用 selected="selected">启用</option>
-        <option value=冻结>冻结</option>
-    </select>&nbsp;
     @*<div id="example" style="margin-left:-339px;margin-top:-6px">
     *@
     @*<div class="demo-section" style="width:470px">
@@ -307,6 +301,8 @@
     <script type="text/javascript">
         $(function () {
             var onClose = function () {
+			application.fadeIn();// 渐变效果
+			 // undo.fadeIn();// 渐变效果
                 //parent.location.reload();//刷新包含SubmitApplication的页面// TODO:暂时注释掉，每次刷新影响效率
             }
             $("#CreaateButtn").click(function () {
@@ -325,15 +321,16 @@
                     title: "项目注册",
                     visible: false,
                     actions: [
-                            "Pin",
-                            "Close",
-                    ],
+                            "Pin","Custom", "Minimize", "Maximize", "Close"],
                     close: onClose
                     //  resizable: false,
 
                 });
                 $("#Application").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication">项目申请书</iframe>');
                 $("#Application").data("kendoWindow").center().open();
+				
+                        creaateButtn.fadeOut();
+
             });
         })
 
@@ -432,6 +429,9 @@
     </script>
     <script>
         $(document).ready(function () {
+		 var creaateButtn = $("#CreaateButtn"),
+                        application = $("#Application");
+
             function startChange() {
                 var startDate = start.value(),
                 endDate = end.value();

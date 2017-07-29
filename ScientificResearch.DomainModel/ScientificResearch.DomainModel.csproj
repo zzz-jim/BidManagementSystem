@@ -433,6 +433,9 @@
     <Compile Include="PaperMagazineType.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectBidSection.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProjectBonusCredit.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>

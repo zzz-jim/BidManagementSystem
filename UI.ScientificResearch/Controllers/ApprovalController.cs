@@ -2262,6 +2262,29 @@ namespace UI.ScientificResearch.Controllers
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
             model.FormContent = FormContentReplaceHelper.ReplaceFormContentValue(model.FormContent, collection);
 
+            int countOfTravelItems;
+
+            if (!string.IsNullOrEmpty(Request["count"]))
+            {
+                countOfTravelItems = Convert.ToInt32(Request["count"]);
+            }
+            else
+            {
+                countOfTravelItems = 0;
+            }
+
+            string[] itemNameArray = { "SectionName", "SectionNumber"};
+            string[,] travelItemValues = new string[countOfTravelItems, 2];
+
+            for (int i = 1; i < countOfTravelItems + 1; i++)
+            {
+                var item = new ProjectBidSectionViewModel();
+                item.SectionName = Request["item" + i.ToString() + itemNameArray[0]];
+                item.SectionNumber = Request["item" + i.ToString() + itemNameArray[1]];
+                item.CreatedTime = DateTime.Now;
+                model.BidSectionList.Add(item);
+            }
+
             try
             {
                 model.StateNow = "正在办理";
@@ -2291,7 +2314,7 @@ namespace UI.ScientificResearch.Controllers
                 model.ApplicationStatus = BiddingProjectStatus.ProjectRegitering.ToString();
                 //整个项目进行的状态
                 model.ProjectStatus = BiddingProjectStatus.ProjectRegitering.ToString();
-                int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
+                int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x=>x.ConvertTo<ProjectBidSection>()).ToList());
                 //todo:日志
 
                 //写系统日志
@@ -2329,7 +2352,7 @@ namespace UI.ScientificResearch.Controllers
                     model.IsDeleted = false;
                     model.IsRejected = false;
 
-                    int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel());
+                    int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
 
                     //写系统日志
                     ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();

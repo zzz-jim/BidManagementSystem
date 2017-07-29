@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ScientificResearch.DomainModel;
+using System;
 using System.Collections.Generic;
 
 namespace ScientificResearch.DataTransferModel
 {
     public class ERPNWorkToDoTransferObject
     {
-        //public ERPNWorkToDoTransferObject()
-        //{
-        //    FundsLimitsList = new List<FundsThresholdTransferObjectTransferObject>();
-        //}
-
+        public ERPNWorkToDoTransferObject()
+        {
+            ProjectBidSection = new List<ProjectBidSection>();
+        }
 
         public int ID { get; set; }
         public string WorkName { get; set; }
@@ -44,6 +44,7 @@ namespace ScientificResearch.DataTransferModel
         public string ProjectStatus { get; set; }
         public Nullable<DateTime> ProjectEstablishTime { get; set; }
 
+        public ICollection<ProjectBidSection> ProjectBidSection { get; set; }
         //public IList<FundsThresholdTransferObjectTransferObject> FundsLimitsList { get; set; }
     }
 }

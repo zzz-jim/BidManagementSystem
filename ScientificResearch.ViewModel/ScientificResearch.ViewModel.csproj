@@ -54,6 +54,7 @@
     <Compile Include="Extensions\PaperPublishStatisticsExtension.cs" />
     <Compile Include="Extensions\ScienceConferenceStatisticsExtension.cs" />
     <Compile Include="FundsThresholdViewModel.cs" />
+    <Compile Include="ProjectBidSectionViewModel.cs" />
     <Compile Include="ScienceConferenceStatisticsViewModel.cs">
       <SubType>Code</SubType>
     </Compile>

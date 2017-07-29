@@ -1,5 +1,5 @@
 ﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
-
+@using System.Collections.Generic;
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
@@ -164,7 +164,35 @@
             @Html.Raw(Model.FormContent)
             @Html.HiddenFor(model => model.FormContent)
             @Html.ValidationMessageFor(model => model.FormContent)
+        </table>
+        <table class="table" id="tb1">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionName)
+                </th>
+            </tr>
 
+            <tr>
+                <td><input type="text" style="width:100px;" name="item1SectionName" id="item1SectionName" /></td>
+                <td><input type="text" style="width:100px;" name="item1SectionNumber" id="item1SectionNubmer" /></td>
+            </tr>
+        </table>
+
+        <input id="count" type="hidden" name="count" value="1">
+
+        <script src="~/Scripts/Custom/bidSection.js"></script>
+        <input type="button" value=" + " id="add" />
+        <script type="text/javascript">
+            $(function () {
+                //点击按钮 + 为表格新增一行,添加标段
+                addBidSection();
+            });
+        </script>
+
+        <table class="table">
             <tr>
                 <td colspan="4">
                     <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
@@ -186,29 +214,29 @@
             </tr>
 
             @if (Model.IsTemporary != null)
-            {
-                if (Model.IsTemporary == true)
                 {
-                    <tr>
-                        <td colspan="2" style="vertical-align:middle; text-align:center;">
-                            <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" id="Reported" class="btn btn-blue" />
-                        </td>
-                        <td colspan="2" style="vertical-align:middle; text-align:center;">
-                            已保存
-                        </td>
-                    </tr>
+                    if (Model.IsTemporary == true)
+                    {
+                <tr>
+                    <td colspan="2" style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" id="Reported" class="btn btn-blue" />
+                    </td>
+                    <td colspan="2" style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>
+                </tr>
+                    }
+                    else
+                    {
+                <tr>
+                    <td colspan="4" style="vertical-align:middle; text-align:center;">
+                        已上报
+                    </td>
+                </tr>
+                    }
                 }
                 else
                 {
-                    <tr>
-                        <td colspan="4" style="vertical-align:middle; text-align:center;">
-                            已上报
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
                 <tr>
                     <td colspan="2" style="vertical-align:middle; text-align:center;">
                         <div> <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" id="Reported" /></div>
@@ -217,10 +245,9 @@
                         <div><input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" /></div>
                     </td>
                 </tr>
-            }
+                }
 
         </table>
-
 
         @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
 

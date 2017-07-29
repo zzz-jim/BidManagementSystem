@@ -20,6 +20,7 @@ namespace ScientificResearch.DomainModel
             this.ProjectRecord = new HashSet<ProjectRecord>();
             this.ProjectFile = new HashSet<ProjectFile>();
             this.ProjectRegistration = new HashSet<ProjectRegistration>();
+            this.ProjectBidSection = new HashSet<ProjectBidSection>();
         }
     
         public int ID { get; set; }
@@ -54,5 +55,6 @@ namespace ScientificResearch.DomainModel
         public virtual ICollection<ProjectRecord> ProjectRecord { get; set; }
         public virtual ICollection<ProjectFile> ProjectFile { get; set; }
         public virtual ICollection<ProjectRegistration> ProjectRegistration { get; set; }
+        public virtual ICollection<ProjectBidSection> ProjectBidSection { get; set; }
     }
 }

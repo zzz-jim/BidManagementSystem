@@ -9,6 +9,7 @@ namespace ScientificResearch.IBusinessLogic
     public interface IApplicationService
     {
         int AddApplication(ERPNWorkToDoTransferObject model);
+        int AddApplication(ERPNWorkToDoTransferObject model, List<ProjectBidSection> sectionList);
         bool UpdateApplication(ERPNWorkToDoTransferObject model);
         bool DeleteEntityById(int id);
         ERPNWorkToDoTransferObject GetEntityById(int id);

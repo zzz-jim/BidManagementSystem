@@ -151,5 +151,6 @@ namespace ScientificResearch.DomainModel
         public virtual DbSet<ContinuingEducationRecord> ContinuingEducationRecord { get; set; }
         public virtual DbSet<ProjectFile> ProjectFile { get; set; }
         public virtual DbSet<ProjectRegistration> ProjectRegistration { get; set; }
+        public virtual DbSet<ProjectBidSection> ProjectBidSection { get; set; }
     }
 }

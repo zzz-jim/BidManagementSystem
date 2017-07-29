@@ -21,8 +21,13 @@ namespace ScientificResearch.DataAccessImplement
             {
                 context.ERPNWorkToDo.Add(entity);
 
+                if (entity.ProjectBidSection.Any())
+                {
+                    context.ProjectBidSection.AddRange(entity.ProjectBidSection);
+                }
+
                 // 已写入基础数据库的对象的数目
-                if (1 == context.SaveChanges())
+                if (context.SaveChanges() > 0)
                 {
                     result = entity.ID;
                 }

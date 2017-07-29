@@ -14,14 +14,16 @@ namespace ScientificResearch.BusinessLogicImplement
     {
         private IERPNWorkToDoRepository repository;
 
+        private IProjectBidSectionRepository sectionRepository;
         public ApplicationServiceImplement()
             // Calls the constructor that takes 1 argument
-            : this(new ERPNWorkToDoRepository())
+            : this(new ERPNWorkToDoRepository(), new ProjectBidSectionRepository())
         { }
 
-        public ApplicationServiceImplement(IERPNWorkToDoRepository repository)
+        public ApplicationServiceImplement(IERPNWorkToDoRepository repository, IProjectBidSectionRepository sectionRepository)
         {
             this.repository = repository;
+            this.sectionRepository = sectionRepository;
         }
 
         public int AddApplication(ERPNWorkToDoTransferObject model)
@@ -29,14 +31,32 @@ namespace ScientificResearch.BusinessLogicImplement
             return repository.AddEntity(model.ToDomainModel());
         }
 
+        public int AddApplication(ERPNWorkToDoTransferObject model, List<ProjectBidSection> sectionList)
+        {
+            var tempModel = model.ToDomainModel();
+            tempModel.ProjectBidSection = sectionList;
+            return repository.AddEntity(tempModel);
+        }
+
         public bool UpdateApplication(ERPNWorkToDoTransferObject model)
         {
             return repository.UpdateEntity(model.ToDomainModel());
         }
 
+        public bool UpdateApplication(ERPNWorkToDoTransferObject model, List<ProjectBidSection> sectionList)
+        {
+            var tempModel = model.ToDomainModel();
+            tempModel.ProjectBidSection = sectionList;
+            return repository.UpdateEntity(tempModel);
+        }
+
         public ERPNWorkToDoTransferObject GetEntityById(int id)
         {
-            return repository.GetEntityById(id).ToDataTransferObjectModel();
+            var result = repository.GetEntityById(id).ToDataTransferObjectModel();
+
+            result.ProjectBidSection = sectionRepository.GetEntities(x => x.ApplicationId==id).ToList();
+
+            return result;
         }
 
         public bool DeleteEntityById(int id)
@@ -70,6 +90,6 @@ namespace ScientificResearch.BusinessLogicImplement
         {
             return repository.GetAllPageEntities(whereLambda, sortField);
         }
-        
+
     }
 }

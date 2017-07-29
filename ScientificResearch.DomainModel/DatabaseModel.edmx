@@ -2061,6 +2061,16 @@
           <Property Name="UpdateBy" Type="varchar" MaxLength="64" />
           <Property Name="UpdateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="ProjectBidSection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
+          <Property Name="SectionNumber" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SectionName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreatedTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="ProjectBonusCredit">
           <Key>
             <PropertyRef Name="Id" />
@@ -2162,6 +2172,18 @@
             </Principal>
             <Dependent Role="FundsRecord">
               <PropertyRef Name="WorkflowId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectBidSection_ERPNWorkToDo">
+          <End Role="ERPNWorkToDo" Type="Self.ERPNWorkToDo" Multiplicity="1" />
+          <End Role="ProjectBidSection" Type="Self.ProjectBidSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectBidSection">
+              <PropertyRef Name="ApplicationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2347,6 +2369,7 @@
           <EntitySet Name="PaperMagazine" EntityType="Self.PaperMagazine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaperMagazineLevel" EntityType="Self.PaperMagazineLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaperMagazineType" EntityType="Self.PaperMagazineType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectBidSection" EntityType="Self.ProjectBidSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectBonusCredit" EntityType="Self.ProjectBonusCredit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectFile" EntityType="Self.ProjectFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectRecord" EntityType="Self.ProjectRecord" Schema="dbo" store:Type="Tables" />
@@ -2355,6 +2378,10 @@
           <AssociationSet Name="FK_FundsRecord_ERPNWorkFlow" Association="Self.FK_FundsRecord_ERPNWorkFlow">
             <End Role="ERPNWorkFlow" EntitySet="ERPNWorkFlow" />
             <End Role="FundsRecord" EntitySet="FundsRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectBidSection_ERPNWorkToDo" Association="Self.FK_ProjectBidSection_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectBidSection" EntitySet="ProjectBidSection" />
           </AssociationSet>
           <AssociationSet Name="FK_ProjectFileRecord_ERPNWorkToDo" Association="Self.FK_ProjectFileRecord_ERPNWorkToDo">
             <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
@@ -2535,6 +2562,11 @@
           <AssociationSet Name="FK_ProjectRegistration_ERPNWorkToDo" Association="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo">
             <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
             <End Role="ProjectRegistration" EntitySet="ProjectRegistration" />
+          </AssociationSet>
+          <EntitySet Name="ProjectBidSection" EntityType="CSPostOAModel.ProjectBidSection" />
+          <AssociationSet Name="FK_ProjectBidSection_ERPNWorkToDo" Association="CSPostOAModel.FK_ProjectBidSection_ERPNWorkToDo">
+            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
+            <End Role="ProjectBidSection" EntitySet="ProjectBidSection" />
           </AssociationSet>
           
         </EntityContainer>
@@ -3686,6 +3718,7 @@
           <Property Name="ProjectStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProjectFile" Relationship="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo" FromRole="ERPNWorkToDo" ToRole="ProjectFile" />
           <NavigationProperty Name="ProjectRegistration" Relationship="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo" FromRole="ERPNWorkToDo" ToRole="ProjectRegistration" />
+          <NavigationProperty Name="ProjectBidSection" Relationship="CSPostOAModel.FK_ProjectBidSection_ERPNWorkToDo" FromRole="ERPNWorkToDo" ToRole="ProjectBidSection" />
         </EntityType>
         <EntityType Name="ERPOffice">
           <Key>
@@ -4780,6 +4813,29 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ProjectRegistration">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProjectBidSection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
+          <Property Name="SectionNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ERPNWorkToDo" Relationship="CSPostOAModel.FK_ProjectBidSection_ERPNWorkToDo" FromRole="ProjectBidSection" ToRole="ERPNWorkToDo" />
+        </EntityType>
+        <Association Name="FK_ProjectBidSection_ERPNWorkToDo">
+          <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
+          <End Type="CSPostOAModel.ProjectBidSection" Role="ProjectBidSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ERPNWorkToDo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectBidSection">
               <PropertyRef Name="ApplicationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -7060,6 +7116,17 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectBidSection">
+            <EntityTypeMapping TypeName="CSPostOAModel.ProjectBidSection">
+              <MappingFragment StoreEntitySet="ProjectBidSection">
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="SectionNumber" ColumnName="SectionNumber" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

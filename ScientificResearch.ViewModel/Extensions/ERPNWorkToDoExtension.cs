@@ -1,6 +1,7 @@
 ﻿using ScientificResearch.DataTransferModel;
-using ScientificResearch.Utility.Enums;
 using ScientificResearch.Utility.Constants;
+using ScientificResearch.Utility.Enums;
+using ScientificResearch.Utility.Helper;
 using System.Linq;
 
 namespace ScientificResearch.ViewModel
@@ -52,7 +53,7 @@ namespace ScientificResearch.ViewModel
                 IsDeleted = viewModel.IsDeleted,
                 ProjectStatus = viewModel.ProjectStatus,
                 ProjectEstablishTime = viewModel.ProjectEstablishTime,
-               // FundsLimitsList = viewModel.FundsLimitsList.Select(x => x.ToDataTransferObjectModel()).ToList(),
+                // FundsLimitsList = viewModel.FundsLimitsList.Select(x => x.ToDataTransferObjectModel()).ToList(),
             };
         }
 
@@ -93,8 +94,7 @@ namespace ScientificResearch.ViewModel
                 IsDeleted = model.IsDeleted,
                 ProjectStatus = model.ProjectStatus,
                 ProjectEstablishTime = model.ProjectEstablishTime,
-               // FundsLimitsList = model.FundsLimitsList.Select(x => x.ToViewModel()).ToList(),
-               // FundsLimitsList = null,
+                BidSectionList = model.ProjectBidSection.Select(x => x.ConvertTo<ProjectBidSectionViewModel>()).ToList(),
             };
         }
 
