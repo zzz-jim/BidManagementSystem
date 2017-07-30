@@ -64,7 +64,7 @@
         var allcount = parseInt("@ViewBag.allCount");
         $(function () {
             fileListInitializeAgree(currentnode, allcount);
-            shenPiyiJianListinitialize(currentnode, allcount);
+            //shenPiyiJianListinitialize(currentnode, allcount);
         });
 
         $(function () {
@@ -180,13 +180,13 @@
                         <input type="text" id="SingleShenPiYiJian" name="SingleShenPiYiJian"/>
                     </td>
                 </tr>
-                <tr>
+                @*<tr>
                     <td>审批意见列表：</td>
                     <td colspan="5">
                         <div id="ShenPiYiJianList">
                         </div>
                     </td>
-                </tr>
+                </tr>*@
 
                 @Html.HiddenFor(model => model.ShenPiUserList)
                 @Html.HiddenFor(model => model.StateNow)
@@ -198,7 +198,7 @@
                 }
                 else
                 {
-                    <tr>
+                    @*<tr>
                         <td colspan="6">
                             <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
                             <input type="button" id="btnUploadFile" value="上传" />
@@ -207,7 +207,7 @@
                             </div>
                         </td>
 
-                    </tr>
+                    </tr>*@
                     @*<tr>
                         <td colspan="3" style="vertical-align:middle; text-align:center;">
                             <input type="submit" value="通过" name="Approval" id="Approval" class="btn btn-blue" />

@@ -69,6 +69,13 @@ namespace ScientificResearch.DataAccessImplement
             using (var context = new CSPostOAEntities())
             {
                 int intId = (int)id;
+                var bidSectionModel = context.ProjectBidSection.Where(u => u.ApplicationId == intId);
+
+                if (bidSectionModel.Any())
+                {
+                    context.ProjectBidSection.RemoveRange(bidSectionModel);// 删除项目时，先删除标段信息
+                }
+
                 var deleteEntity = context.ERPNWorkToDo.FirstOrDefault(u => u.ID == intId);
 
                 if (deleteEntity != null)
@@ -76,13 +83,14 @@ namespace ScientificResearch.DataAccessImplement
                     context.ERPNWorkToDo.Remove(deleteEntity);
                     context.Entry(deleteEntity).State = EntityState.Deleted;
 
-                    if (1 == context.SaveChanges())
+                    try
                     {
+                        context.SaveChanges();
                         result = true;
                     }
-                    else
+                    catch (Exception)
                     {
-                        result = false;
+                        throw;
                     }
                 }
                 else
