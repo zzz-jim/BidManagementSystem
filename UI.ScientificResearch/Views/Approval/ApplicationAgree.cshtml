@@ -156,7 +156,7 @@
                         项目名称：
                     </td>
                     <td colspan="5">
-                        <input readonly="readonly" id="WenHao" name="WenHao" value="@Model.WenHao" type="text" class="customTextBox" />
+                        <input id="WenHao" name="WenHao" value="@Model.WenHao" type="text" class="customTextBox" />
                     </td>
                 </tr>
                 <tr id="insert-tr">
@@ -164,7 +164,7 @@
                         项目编号:
                     </td>
                     <td colspan="5">
-                        <input readonly="readonly" id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
+                        <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
                     </td>
                 </tr>
 
@@ -173,13 +173,33 @@
                 @Html.ValidationMessageFor(model => model.FormContent)
 
                 <tr>
+                    <th colspan="2">
+                        @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionNumber)
+                    </th>
+                    <th colspan="2">
+                        @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionName)
+                    </th>
+                </tr>
+                @{int number = 1;}
+                @foreach (var item in Model.BidSectionList)
+                {
+                    string itemSectionName = "item" + number + "SectionName";
+                    string itemSectionNumber = "item" + number + "SectionNumber";
+
+                    <tr>
+                        <td colspan="2"><input readonly="readonly" type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
+                        <td colspan="2"><input readonly="readonly"  type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
+                    </tr>
+                    number++;
+                }
+                @*<tr>
                     <td>
                         @Html.LabelFor(model => model.ShenPiYiJian)
                     </td>
                     <td colspan="5">
                         <input type="text" id="SingleShenPiYiJian" name="SingleShenPiYiJian"/>
                     </td>
-                </tr>
+                </tr>*@
                 @*<tr>
                     <td>审批意见列表：</td>
                     <td colspan="5">
@@ -220,7 +240,6 @@
             </table>
 
         </div>
-
     }
     <input type="hidden" value=@Model.FuJianList id="thisPageFuJian">
     <!-- Application Approval Steps Time Line -->
