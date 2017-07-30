@@ -1209,6 +1209,7 @@
     <Content Include="Content\ueditor\third-party\video-js\font\vjs.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\AboutApprovalNode.js" />
+    <Content Include="Scripts\Custom\bidSection.js" />
     <Content Include="Scripts\Custom\file.js" />
     <Content Include="Scripts\Custom\forms.js" />
     <Content Include="Scripts\Custom\form.js" />

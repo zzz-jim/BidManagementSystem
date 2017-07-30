@@ -174,11 +174,18 @@
                     @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionName)
                 </th>
             </tr>
+            @{int number = 1;}
+            @foreach (var item in Model.BidSectionList)
+            {
+                string itemSectionName = "item" + number + "SectionName";
+                string itemSectionNumber = "item" + number + "SectionNumber";
 
-            <tr>
-                <td><input type="text" style="width:100px;" name="item1SectionName" id="item1SectionName" /></td>
-                <td><input type="text" style="width:100px;" name="item1SectionNumber" id="item1SectionNubmer" /></td>
-            </tr>
+                <tr>
+                    <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
+                    <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
+                </tr>
+                number++;
+            }
         </table>
 
         <input id="count" type="hidden" name="count" value="1">
@@ -188,7 +195,7 @@
         <script type="text/javascript">
             $(function () {
                 //点击按钮 + 为表格新增一行,添加标段
-                addBidSection();
+                addBidSection(@Model.BidSectionList.Count);
             });
         </script>
 
@@ -217,26 +224,26 @@
                 {
                     if (Model.IsTemporary == true)
                     {
-                <tr>
-                    <td colspan="2" style="vertical-align:middle; text-align:center;">
-                        <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" id="Reported" class="btn btn-blue" />
-                    </td>
-                    <td colspan="2" style="vertical-align:middle; text-align:center;">
-                        已保存
-                    </td>
-                </tr>
-                    }
-                    else
-                    {
-                <tr>
-                    <td colspan="4" style="vertical-align:middle; text-align:center;">
-                        已上报
-                    </td>
-                </tr>
-                    }
+                    <tr>
+                        <td colspan="2" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" id="Reported" class="btn btn-blue" />
+                        </td>
+                        <td colspan="2" style="vertical-align:middle; text-align:center;">
+                            已保存
+                        </td>
+                    </tr>
                 }
                 else
                 {
+                    <tr>
+                        <td colspan="4" style="vertical-align:middle; text-align:center;">
+                            已上报
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
                 <tr>
                     <td colspan="2" style="vertical-align:middle; text-align:center;">
                         <div> <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" id="Reported" /></div>
@@ -245,7 +252,7 @@
                         <div><input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" /></div>
                     </td>
                 </tr>
-                }
+            }
 
         </table>
 
@@ -279,7 +286,7 @@
 
         @Html.HiddenFor(model => model.NWorkToDoID)
     </div>
-}
+                }
 
 <style>
     .table .wid {
