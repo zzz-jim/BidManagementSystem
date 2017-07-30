@@ -4,86 +4,67 @@
     Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
 }
 <br />
-<div id="MaxWindow">
 
-
-</div>
-
-<div id="fundssearchdata">
-    项目名称:
-    <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
-项目编号:
-    <input type="text" name="projectNumber" id="projectNumber" style="width: 150px; height: 30px">&nbsp;
-	
-    状态:
-
-    <select id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
-        <option value=全部 selected="selected">全部</option>
-        <option value=AplicationWriting>申请未上报</option>
-        <option value=ApplicationRejected>申请被驳回</option>
-        <option value=ApplicationApproving>申请审批中</option>
-        <option value=ApplicationApproved>申请已通过</option>
-        <option value=ProjectEstablishing>项目未确立</option>
-        <option value=ProjectRejected>项目未立项</option>
-    </select>&nbsp;
-
-    @*<div id="example" style="margin-left:-339px;margin-top:-6px">
-    *@
-    @*<div class="demo-section" style="width:470px">
-    *@
-    <label for="start">开始时间:</label>
-    <input id="startTime" name="startTime" value="" style="width: 150px " />&nbsp;
-    <label for="end">结束时间:</label>
-    <input id="endTime" name="endTime" value="" style="width: 150px" />&nbsp;
-
-    @*<input type="submit" value="导出" style="width: 55px; height: 28px" name="DataToExcel" id="DataToExcel" />*@
-    @*
-        </div>*@
-
-    <style scoped>
-        #example .k-datepicker {
-            vertical-align: middle;
-        }
-
-        #example h3 {
-            clear: both;
-        }
-
-        #example .code-sample {
-            width: 60%;
-            float: left;
-            margin-bottom: 20px;
-        }
-
-        #example .output {
-            width: 24%;
-            margin-left: 4%;
-            float: left;
-        }
-    </style>
-
-</div>
+<div id="MaxWindow"></div>
+<div id="Application"></div>
 <div>
+    <!-- 查询条件 -->
+    <div id="fundssearchdata">
+        项目名称:
+        <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
+        项目编号:
+        <input type="text" name="projectNumber" id="projectNumber" style="width: 150px; height: 30px">&nbsp;
+        状态:
+        <select id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
+            <option value=全部 selected="selected">全部</option>
+            <option value=AplicationWriting>申请未上报</option>
+            <option value=ApplicationRejected>申请被驳回</option>
+            <option value=ApplicationApproving>申请审批中</option>
+            <option value=ApplicationApproved>申请已通过</option>
+            <option value=ProjectEstablishing>项目未确立</option>
+            <option value=ProjectRejected>项目未立项</option>
+        </select>&nbsp;
+
+        <label for="start">开始时间:</label>
+        <input id="startTime" name="startTime" value="" style="width: 150px " />&nbsp;
+        <label for="end">结束时间:</label>
+        <input id="endTime" name="endTime" value="" style="width: 150px" />&nbsp;
+
+        <style scoped>
+            #example .k-datepicker {
+                vertical-align: middle;
+            }
+
+            #example h3 {
+                clear: both;
+            }
+
+            #example .code-sample {
+                width: 60%;
+                float: left;
+                margin-bottom: 20px;
+            }
+
+            #example .output {
+                width: 24%;
+                margin-left: 4%;
+                float: left;
+            }
+        </style>
+    </div>
 
     <div id="CreateNewApp">
-        <div id="newapplicationbutton">
-            <input type="submit" value="查询" onclick="searchrightdataoffundslist()" />
-            <input type="button" id="CreaateButtn" value="新建" />
-        </div>
-        <div id="Application"></div>
-
+        <input type="submit" value="查询" onclick="searchrightdataoffundslist()" />
+        <input type="button" id="CreaateButtn" value="新建" />
     </div>
 </div>
 <br />
 <div id="bigfundsgrid" class="k-content">
-    <div id="fundsGrid">
+    <div id="fundsGrid"></div>
+</div>
 
-    </div>
-    <script>
-        $(function () {
-            searchrightdataoffundslist();
-        });
-
+@section Scripts {
+    <script type="text/javascript">
         function searchrightdataoffundslist() {
             var searchitem2 = $("#projectName").val();
             var searchitem3 = $("#State").val();
@@ -145,7 +126,7 @@
                             // 采购方式
                             d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[19];
                             // 项目内容
-                            d.data[i].ProjectContent= d.data[i].FormValues.split('#')[2];
+                            d.data[i].ProjectContent = d.data[i].FormValues.split('#')[2];
                             // 采购单位
                             d.data[i].ProcurementName = d.data[i].FormValues.split('#')[7];
                             // 采购预算
@@ -218,60 +199,60 @@
                     }
                 },
                 columns: [
-                {
-                    field: "ID",
-                    title: "序号",
-                    hidden: true,
-                },
-                {
-                    field: "BeiYong1",
-                    title: "项目编号",
-                    width: "17%"
-                },
-                {
-                    field: "WenHao",
-                    title: "项目名称",
-                    width: "22%"
-                },
-                //{
-                //    field: "UserName",
-                //    title: "采购文件编号",
-                //    width: "10%"
-                //},
-                {
-                    field: "ProcurementModes",
-                    title: "采购方式",
-                    width: "8%"
-                },
-                {
-                    field: "ProjectContent",
-                    title: "项目内容",
-                    width: "10%",
-                },
-                {
-                    field: "ProcurementName",
-                    title: "采购单位",
-                    width: "10%",
-                },
-                {
-                    field: "Budget",
-                    title: "预算金额(万元)",
-                    width: "10%",
-                },
-                {
-                    field: "Applications",
-                    title: "当前状态",
-                    width: "10%",
-                },
-                {
-                    field: "Agent",
-                    title: "招标代理公司",
-                    width: "7%"
-                },
-                {
-                    command:
-                    [{text: "查看", width: "6%" }, { text: "修改", width: "6%" },{ name: "destroy", text: "删除", width: "6%" }]
-                }
+                    {
+                        field: "ID",
+                        title: "序号",
+                        hidden: true,
+                    },
+                    {
+                        field: "BeiYong1",
+                        title: "项目编号",
+                        width: "17%"
+                    },
+                    {
+                        field: "WenHao",
+                        title: "项目名称",
+                        width: "22%"
+                    },
+                    //{
+                    //    field: "UserName",
+                    //    title: "采购文件编号",
+                    //    width: "10%"
+                    //},
+                    {
+                        field: "ProcurementModes",
+                        title: "采购方式",
+                        width: "8%"
+                    },
+                    {
+                        field: "ProjectContent",
+                        title: "项目内容",
+                        width: "10%",
+                    },
+                    {
+                        field: "ProcurementName",
+                        title: "采购单位",
+                        width: "10%",
+                    },
+                    {
+                        field: "Budget",
+                        title: "预算金额(万元)",
+                        width: "10%",
+                    },
+                    {
+                        field: "Applications",
+                        title: "当前状态",
+                        width: "10%",
+                    },
+                    {
+                        field: "Agent",
+                        title: "招标代理公司",
+                        width: "7%"
+                    },
+                    {
+                        command:
+                        [{ text: "查看", width: "6%" }, { text: "修改", width: "6%" }, { name: "destroy", text: "删除", width: "6%" }]
+                    }
                 ],
                 editable: {
                     //mode: "inline",
@@ -284,25 +265,106 @@
         function onChange(arg) {
             var selected = $.map(this.select(), function (item) {
                 OpenMaxWindow(item.cells[0].outerText);
-
             });
 
             //alert(selected);
             //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
         }
-    </script>
+        function OpenMaxWindow(id) {
+            $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+            $("#MaxWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "60%",
+                height: "70%",
+                draggable: true,
+                //title:"申请书",
+                visible: false,
+                actions: [
+                    "Pin",
+                    "Close",
+                    // "Minimize",
+                    // "Maximize"
+                ],
+                modal: true,
+                resizable: false,
+                close: function (e) {
+                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                }
+            });
 
+            $.ajax({
+                url: "/Approval/ReturnStateValue?id=" + id,
+                type: "post",
+                success: function (data) {
+                    if (data != null) {
+                        // $("#MaxWindow").html(data);
 
-</div>
+                        //判断返回的状态来控制弹出框第一个打开的页面
+                        //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                        if (data == "ProjectRegitering") {
+                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                            $("#MaxWindow").data("kendoWindow").center().open();
+                        }
+                        else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
+                        {
+                            if (data == "ApplicationRejected") {
+                                $.ajax({
+                                    url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                    type: "post",
+                                    success: function (data) {
+                                        if (data != null) {
+                                            if (data == "Equal") {
+                                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
+                                                $("#MaxWindow").data("kendoWindow").center().open();
+                                            }
+                                            else {
+                                                alert("权限不对！");
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
+                                $("#MaxWindow").data("kendoWindow").center().open();
+                            }
+                        }
+                        else if (data == "ProjectRegitered" || data == "ProjectEstablishing")//全部通过审批
+                        {
+                            $.ajax({
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                type: "post",
+                                success: function (data) {
+                                    if (data != null) {
+                                        if (data == "Equal") {
+                                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                                            //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/UploadFilePage/ContractList?applicationId=' + id + '">合同资料</iframe>');
+                                            $("#MaxWindow").data("kendoWindow").center().open();
+                                        }
+                                        else {
+                                            alert("权限不对！");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        alert("发生异常！");
+                    }
+                }
+            });
+        }
 
-
-
-@section Scripts {
-    <script type="text/javascript">
-        $(function () {
+        // 初始化加载
+        $(document).ready(function () {
             var onClose = function () {
-			application.fadeIn();// 渐变效果
-			 // undo.fadeIn();// 渐变效果
+                application.fadeIn();// 渐变效果
+                // undo.fadeIn();// 渐变效果
                 //parent.location.reload();//刷新包含SubmitApplication的页面// TODO:暂时注释掉，每次刷新影响效率
             }
             $("#CreaateButtn").click(function () {
@@ -321,120 +383,26 @@
                     title: "项目注册",
                     visible: false,
                     actions: [
-                            "Pin","Custom", "Minimize", "Maximize", "Close"],
+                        "Pin", "Custom", "Minimize", "Maximize", "Close"],
                     close: onClose
                     //  resizable: false,
 
                 });
                 $("#Application").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication">项目申请书</iframe>');
                 $("#Application").data("kendoWindow").center().open();
-				
-                        creaateButtn.fadeOut();
+
+                creaateButtn.fadeOut();
 
             });
-        })
 
-    </script>
-    <script type="text/javascript">
+            searchrightdataoffundslist();
 
-        function OpenMaxWindow(id) {
-            $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
-            $("#MaxWindow").kendoWindow({
-                position: {
-                    top: "15%", // or "100px"
-                    left: "13%"
-                },
-                width: "60%",
-                height: "70%",
-                draggable: true,
-                //title:"申请书",
-                visible: false,
-                actions: [
-                        "Pin",
-                        "Close",
-                       // "Minimize",
-                     // "Maximize"
-                ],
-                modal: true,
-                resizable: false,
-                close: function (e) {
-                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
-                }
-            });
-
-            $.ajax({
-                url: "/Approval/ReturnStateValue?id=" + id,
-                type: "post",
-                success: function (data) {
-                    if (data != null) {
-                        // $("#MaxWindow").html(data);
-
-                            //判断返回的状态来控制弹出框第一个打开的页面
-                            //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
-                        if (data == "ProjectRegitering") {
-                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
-                                $("#MaxWindow").data("kendoWindow").center().open();
-                            }
-                            else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
-                            {
-                                if (data == "ApplicationRejected") {
-                                    $.ajax({
-                                        url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
-                                        type: "post",
-                                        success: function (data) {
-                                            if (data != null) {
-                                                if (data == "Equal") {
-                                                    $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
-                                                    $("#MaxWindow").data("kendoWindow").center().open();
-                                                }
-                                                else {
-                                                    alert("权限不对！");
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-                                else {
-                                    $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
-                                    $("#MaxWindow").data("kendoWindow").center().open();
-                                }
-                            }
-                        else if (data == "ProjectRegitered" || data == "ProjectEstablishing")//全部通过审批
-                            {
-                                $.ajax({
-                                    url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
-                                    type: "post",
-                                    success: function (data) {
-                                        if (data != null) {
-                                            if (data == "Equal") {
-                                                //为申请书iframe的src赋值id是ERPNWorkToDo的ID 
-                                                //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
-                                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/UploadFilePage/ContractList?applicationId=' + id + '">合同资料</iframe>');
-                                                $("#MaxWindow").data("kendoWindow").center().open();
-                                            }
-                                            else {
-                                                alert("权限不对！");
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                    }
-                    else {
-                        alert("发生异常！");
-                    }
-                }
-            });
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-		 var creaateButtn = $("#CreaateButtn"),
-                        application = $("#Application");
+            var creaateButtn = $("#CreaateButtn"),
+                application = $("#Application");
 
             function startChange() {
                 var startDate = start.value(),
-                endDate = end.value();
+                    endDate = end.value();
 
                 if (startDate) {
                     startDate = new Date(startDate);
@@ -451,7 +419,7 @@
 
             function endChange() {
                 var endDate = end.value(),
-                startDate = start.value();
+                    startDate = start.value();
 
                 if (endDate) {
                     endDate = new Date(endDate);
@@ -479,5 +447,4 @@
             end.min(start.value());
         });
     </script>
-
 }
