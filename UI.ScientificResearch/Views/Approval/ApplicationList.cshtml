@@ -251,7 +251,7 @@
                     },
                     {
                         command:
-                        [{ text: "查看", width: "6%" }, { text: "修改", width: "6%" }, { name: "destroy", text: "删除", width: "6%" }]
+                        [{ name: "destroy", text: "删除", width: "6%" }]
                     }
                 ],
                 editable: {
@@ -305,7 +305,7 @@
                         //判断返回的状态来控制弹出框第一个打开的页面
                         //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
                         if (data == "ProjectRegitering") {
-                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
                             $("#MaxWindow").data("kendoWindow").center().open();
                         }
                         else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
@@ -362,11 +362,15 @@
 
         // 初始化加载
         $(document).ready(function () {
+            var creaateButtn = $("#CreaateButtn"),
+                application = $("#Application");
+            searchrightdataoffundslist();
+
             var onClose = function () {
-                application.fadeIn();// 渐变效果
-                // undo.fadeIn();// 渐变效果
+                creaateButtn.fadeIn();// 渐变效果
                 //parent.location.reload();//刷新包含SubmitApplication的页面// TODO:暂时注释掉，每次刷新影响效率
             }
+
             $("#CreaateButtn").click(function () {
                 $("#Application")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
                 var random1 = Math.floor(Math.random() * 1000 + 1);
@@ -394,11 +398,6 @@
                 creaateButtn.fadeOut();
 
             });
-
-            searchrightdataoffundslist();
-
-            var creaateButtn = $("#CreaateButtn"),
-                application = $("#Application");
 
             function startChange() {
                 var startDate = start.value(),
