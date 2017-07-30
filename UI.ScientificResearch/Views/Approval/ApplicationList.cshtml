@@ -9,7 +9,7 @@
 <div id="Application"></div>
 <div>
     <!-- 查询条件 -->
-    <div id="fundssearchdata">
+    <div>
         项目名称:
         <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
         项目编号:
@@ -68,7 +68,7 @@
         function searchrightdataoffundslist() {
             var searchitem2 = $("#projectName").val();
             var searchitem3 = $("#State").val();
-            var searchitem4 = $("#Freeze").val();
+            var searchitem4 = $("#projectNumber").val();
             var searchitem5 = $("#startTime").val();
             var searchitem6 = $("#endTime").val();
             var dataSource = new kendo.data.DataSource({
@@ -76,7 +76,7 @@
                     read: {
                         type: "post",
                         url: "/Approval/ApplicationListStatistics?projectName=" +
-                        encodeURI(searchitem2) + "&State=" + encodeURI(searchitem3) + "&Freeze=" +
+                        encodeURI(searchitem2) + "&State=" + encodeURI(searchitem3) + "&projectNumber=" +
                         encodeURI(searchitem4) + "&startTime=" + encodeURI(searchitem5) + "&endTime=" +
                         encodeURI(searchitem6) + "",
                         dataType: "json",

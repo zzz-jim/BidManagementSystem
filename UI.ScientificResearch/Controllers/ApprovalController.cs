@@ -1169,7 +1169,7 @@ namespace UI.ScientificResearch.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="nextaction"></param>
-        /// <returns></returns>
+        /// <returns></returns>ApplicationListStatistics
         public ActionResult ConclusionsRejected(string id)
         {
             int id1 = Convert.ToInt32(id);
@@ -2273,7 +2273,7 @@ namespace UI.ScientificResearch.Controllers
                 countOfTravelItems = 0;
             }
 
-            string[] itemNameArray = { "SectionName", "SectionNumber"};
+            string[] itemNameArray = { "SectionName", "SectionNumber" };
             string[,] travelItemValues = new string[countOfTravelItems, 2];
 
             for (int i = 1; i < countOfTravelItems + 1; i++)
@@ -2314,7 +2314,7 @@ namespace UI.ScientificResearch.Controllers
                 model.ApplicationStatus = BiddingProjectStatus.ProjectRegitering.ToString();
                 //整个项目进行的状态
                 model.ProjectStatus = BiddingProjectStatus.ProjectRegitering.ToString();
-                int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x=>x.ConvertTo<ProjectBidSection>()).ToList());
+                int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
                 //todo:日志
 
                 //写系统日志
@@ -5886,7 +5886,7 @@ namespace UI.ScientificResearch.Controllers
         /// <param name="state">状态</param>
         /// <param name="freeze">是否冻结</param>
         /// <returns></returns>
-        public ActionResult ApplicationListStatistics(string projectName, string State, string Freeze, string startTime, string endTime, int pageIndex, int pageSize)
+        public ActionResult ApplicationListStatistics(string projectName, string State, string projectNumber, string startTime, string endTime, int pageIndex, int pageSize)
         {
             DateTime start, end;
             int totalPage = 0;
@@ -5909,14 +5909,7 @@ namespace UI.ScientificResearch.Controllers
                 start = Constant.MinTime;
             }
 
-            //SearchCriteriaProjectName = projectName;
-            //SearchCriteriaProjectStatus = State;
-            //SearchCriteriaIsLocked = Freeze;
-            //SearchCriteriaStartTime = start;
-            //SearchCriteriaEndTime = end;
-            //InitialTheSearchCriteria();
-
-            IEnumerable<ERPNWorkToDoTransferObject> result = SearchProcessingApplicationList(projectName, State, Freeze, start,
+            IEnumerable<ERPNWorkToDoTransferObject> result = SearchProcessingApplicationList(projectName, State, projectNumber, start,
                 end, pageSize, pageIndex, ref totalPage);
 
             bool hasRolesFlag = HasRolesFlag();
@@ -5931,7 +5924,7 @@ namespace UI.ScientificResearch.Controllers
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
                     && p.StateNow == "正在办理"
-                    && ((Freeze == Constant.All) ? true : p.IsLocked == (Freeze == "冻结"))
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
                 totalcount = resultpage.Count();
             }
@@ -5945,7 +5938,7 @@ namespace UI.ScientificResearch.Controllers
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
                     && p.StateNow == "正在办理"
                     && p.UserName == User.Identity.Name
-                    && ((Freeze == Constant.All) ? true : p.IsLocked == (Freeze == "冻结"))
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
                 totalcount = resultpage.Count();
             }
@@ -6407,7 +6400,7 @@ namespace UI.ScientificResearch.Controllers
         /// <param name="end">项目查找结束时间</param>
         /// <param name="totalPage">总页数</param>
         /// <returns></returns>
-        private IEnumerable<ERPNWorkToDoTransferObject> SearchProcessingApplicationList(string projectName, string state, string freeze, DateTime start, DateTime end, int pageSize, int pageIndex, ref int totalPage)
+        private IEnumerable<ERPNWorkToDoTransferObject> SearchProcessingApplicationList(string projectName, string state, string projectNumber, DateTime start, DateTime end, int pageSize, int pageIndex, ref int totalPage)
         {
             bool hasRolesFlag = HasRolesFlag();
             IEnumerable<ERPNWorkToDoTransferObject> result;
@@ -6420,7 +6413,7 @@ namespace UI.ScientificResearch.Controllers
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
                     && p.StateNow == "正在办理"
-                    && ((freeze == Constant.All) ? true : p.IsLocked == (freeze == "冻结"))
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
             }
             //普通用户
@@ -6433,7 +6426,7 @@ namespace UI.ScientificResearch.Controllers
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
                     && p.StateNow == "正在办理"
                     && p.UserName == User.Identity.Name
-                    && ((freeze == Constant.All) ? true : p.IsLocked == (freeze == "冻结"))
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
             }
             return result;
