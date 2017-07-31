@@ -114,7 +114,7 @@ namespace UI.ScientificResearch.Controllers
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000001",
+                //ID = "000001",
                 CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目开评标相关资料-新安、太平.pdf",
@@ -128,7 +128,7 @@ namespace UI.ScientificResearch.Controllers
             });
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000002",
+                //ID = "000002",
                 CreatedTime = DateTime.Now.AddDays(-8),
                 FileAddress = "",
                 FileName = "川国土资【2016】 开评标相关资料-新安、太平.pdf",
@@ -144,7 +144,7 @@ namespace UI.ScientificResearch.Controllers
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000003",
+                //ID = "000003",
                 CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
@@ -158,7 +158,7 @@ namespace UI.ScientificResearch.Controllers
             });
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000004",
+                //ID = "000004",
                 CreatedTime = DateTime.Now.AddDays(-8),
                 FileAddress = "",
                 FileName = "川国土资【2016】90号2016年度第一批省投资土地开发整理项目立项的合同-新安、太平.pdf",
@@ -174,7 +174,7 @@ namespace UI.ScientificResearch.Controllers
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000005",
+                //ID = "000005",
                 CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
@@ -188,7 +188,7 @@ namespace UI.ScientificResearch.Controllers
             });
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000006",
+                //ID = "000006",
                 CreatedTime = DateTime.Now.AddDays(-8),
                 FileAddress = "",
                 FileName = " 屏山县太平乡龙山村龙堂村前哨村和新安镇红庙村新民村新春村土地整理项目12.5(1).doc",
@@ -203,7 +203,7 @@ namespace UI.ScientificResearch.Controllers
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000007",
+                //ID = "000007",
                 CreatedTime = DateTime.Today.AddDays(-10),
                 FileAddress = "",
                 FileName = " 屏山县太平乡龙山村龙堂村前哨村和新安镇红庙村新民村新春村土地整理项目12.5(1).doc",
@@ -217,7 +217,7 @@ namespace UI.ScientificResearch.Controllers
             });
             fileUploadViewModelsList.Add(new FileUploadViewModels
             {
-                Id = "000008",
+                //ID = "000008",
                 CreatedTime = DateTime.Now.AddDays(-8),
                 FileAddress = "",
                 FileName = "四川省烟草公司达州市公司二○一五年度烟叶生产基础设施建设项目设计（第二次）.doc",
@@ -326,9 +326,16 @@ namespace UI.ScientificResearch.Controllers
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
-            var model = this.fileUploadViewModelsList.First(x => x.Id == id);
+            var model = this.fileUploadViewModelsList.First(x => x.ID == id);
+
+            return View(model);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var model = this.FileService.DeleteEntityById(id);
 
             return View(model);
         }

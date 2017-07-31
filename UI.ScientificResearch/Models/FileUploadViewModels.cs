@@ -14,7 +14,7 @@ namespace UI.ScientificResearch.Models
     {
         [Required]
         [Display(Name = "Id")]
-        public string Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [Display(Name = "序号")]

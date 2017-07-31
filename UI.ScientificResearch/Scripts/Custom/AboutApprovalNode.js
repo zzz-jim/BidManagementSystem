@@ -6,6 +6,7 @@ function CheckFileSize() {
     var filepath = file.value;
     var filetypes = [".rar", ".txt", ".zip", ".doc", ".ppt", ".xls", ".pdf", ".docx", ".xlsx"];
 
+    var filemaxsize = 1024 * 10;//10M
     if (filepath) {
         var isnext = false;
         var fileend = filepath.substring(filepath.lastIndexOf("."));
@@ -132,6 +133,7 @@ function ajaxFileUploadFillInWithData(data) {
                     //附件路径
                     fuJian = fuJian + data.Name + "\\\\" + data.name + ";";
                     $("#FuJianList").attr("value", fuJian);
+                    location.reload();//刷新当前页面
                 } else {
                     alert(data.name + "上传失败，请重新操作");
                 }
