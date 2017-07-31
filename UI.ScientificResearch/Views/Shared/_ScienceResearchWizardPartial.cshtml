@@ -94,17 +94,17 @@
                 //    default:
                 //        // Error page 404....
                 //        break;
-            }
+                //}
 
                 var idPre = "#step";
 
-            for(var i = 0; i<ApplicationProjectStatusWorkflowNodeId; i++) {
-            var id = idPre + i;
-            $(id).removeClass("ProjectStepComplete").addClass("complete");
-        }
+                for (var i = 0; i < ApplicationProjectStatusWorkflowNodeId; i++) {
+                    var id = idPre + i;
+                    $(id).removeClass("ProjectStepComplete").addClass("complete");
+                }
 
-        $(idPre + ApplicationProjectStatusWorkflowNodeId).removeClass("ProjectStepComplete").addClass("active");
-    }
+                $(idPre + ApplicationProjectStatusWorkflowNodeId).removeClass("ProjectStepComplete").addClass("active");
+            }
         });
     })
 </script>
