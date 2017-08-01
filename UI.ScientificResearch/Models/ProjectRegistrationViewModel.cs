@@ -24,6 +24,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "标段")]
         public string BidSection { get; set; }
         [Required]
+        [Display(Name = "标段Id")]
+        public int BidSectionId { get; set; }
+        [Required]
         [Display(Name = "是否交报名费")]
         public bool IsSubmitRegistrationFee { get; set; }
         [Required]

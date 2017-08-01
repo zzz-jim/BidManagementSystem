@@ -2136,6 +2136,7 @@
           <Property Name="ContactName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BidSectionId" Type="int" Nullable="false" />
           <Property Name="BidSection" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="IsSubmitRegistrationFee" Type="bit" Nullable="false" />
           <Property Name="RegistrationFee" Type="bigint" Nullable="false" />
@@ -4792,6 +4793,7 @@
           <Property Name="OperatorId" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="CreatedTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ERPNWorkToDo" Relationship="CSPostOAModel.FK_ProjectRegistration_ERPNWorkToDo" FromRole="ProjectRegistration" ToRole="ERPNWorkToDo" />
+          <Property Name="BidSectionId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
           <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
@@ -7102,6 +7104,7 @@
           <EntitySetMapping Name="ProjectRegistration">
             <EntityTypeMapping TypeName="CSPostOAModel.ProjectRegistration">
               <MappingFragment StoreEntitySet="ProjectRegistration">
+                <ScalarProperty Name="BidSectionId" ColumnName="BidSectionId" />
                 <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
                 <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
                 <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />

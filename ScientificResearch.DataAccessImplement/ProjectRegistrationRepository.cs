@@ -11,23 +11,31 @@ namespace ScientificResearch.DataAccessImplement
     {
         public int AddEntity(ProjectRegistration entity)
         {
-            int result = 0;
-
-            using (var context = new CSPostOAEntities())
+            try
             {
-                context.ProjectRegistration.Add(entity);
+                int result = 0;
 
-                // 已写入基础数据库的对象的数目
-                if (1 == context.SaveChanges())
+                using (var context = new CSPostOAEntities())
                 {
-                    result = entity.ID;
-                }
-                else
-                {
-                    result = 0;
-                }
+                    context.ProjectRegistration.Add(entity);
 
-                return result;
+                    // 已写入基础数据库的对象的数目
+                    if (1 == context.SaveChanges())
+                    {
+                        result = entity.ID;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public bool UpdateEntity(ProjectRegistration entity)

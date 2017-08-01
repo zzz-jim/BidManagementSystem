@@ -20,9 +20,9 @@
 
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ApplicationId)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)
         </th>
@@ -70,9 +70,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ApplicationId)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.CompanyName)
         </td>

@@ -30,6 +30,7 @@ namespace ScientificResearch.DomainModel
         public string OperatorName { get; set; }
         public string OperatorId { get; set; }
         public Nullable<System.DateTime> CreatedTime { get; set; }
+        public int BidSectionId { get; set; }
     
         public virtual ERPNWorkToDo ERPNWorkToDo { get; set; }
     }

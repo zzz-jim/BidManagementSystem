@@ -1568,7 +1568,7 @@ namespace UI.ScientificResearch.Controllers
             string ReturnState = result.ApplicationStatus;//数据库中该条申请书所处状态
             return Json(ReturnState, JsonRequestBehavior.AllowGet);
         }
-
+        
         /// <summary>
         /// 判断首页待办前10条申请书状态，返回状态
         /// </summary>

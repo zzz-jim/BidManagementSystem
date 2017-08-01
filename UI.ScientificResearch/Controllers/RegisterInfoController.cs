@@ -18,6 +18,7 @@ using ScientificResearch.DomainModel;
 using UI.ScientificResearch.Models;
 using ScientificResearch.IDataAccess;
 using ScientificResearch.DataAccessImplement;
+using Microsoft.AspNet.Identity;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -40,6 +41,7 @@ namespace UI.ScientificResearch.Controllers
         private IStatisticService StatisticService;
         private IFundsThresholdService FundsThresholdService;
         private IProjectRegistrationRepository ProjectRegistrationService;
+        private IProjectBidSectionRepository ProjectBidSectionService;
 
         private ISession MySession;
 
@@ -73,6 +75,7 @@ namespace UI.ScientificResearch.Controllers
                 new StatisticServiceImplement(),
                 new FundsThresholdServiceImplement(),
                 new ProjectRegistrationRepository(),
+                new ProjectBidSectionRepository(),
                 new SessionManager()
             )
         {
@@ -92,6 +95,7 @@ namespace UI.ScientificResearch.Controllers
             IStatisticService statisticService,
             IFundsThresholdService eFundsThresholdService,
             IProjectRegistrationRepository projectRegistrationService,
+            IProjectBidSectionRepository projectBidSectionService,
             ISession session
             )
         {
@@ -108,6 +112,7 @@ namespace UI.ScientificResearch.Controllers
             this.StatisticService = statisticService;
             this.FundsThresholdService = eFundsThresholdService;
             this.ProjectRegistrationService = projectRegistrationService;
+            this.ProjectBidSectionService = projectBidSectionService;
             this.MySession = session;
 
 
@@ -220,7 +225,17 @@ namespace UI.ScientificResearch.Controllers
 
         public ActionResult Create(int applicationId)
         {
-            applicationId = 41105;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>() {
+                new SelectListItem(){Value="0",Text="全部",Selected=true}
+                    };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
 
             return View(new ProjectRegistrationViewModel() { ApplicationId = applicationId });
         }
@@ -229,7 +244,8 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult Create(ProjectRegistrationViewModel model)
         {
             model.CreatedTime = DateTime.Now;
-
+            model.OperatorName = User.Identity.Name;
+            model.OperatorId = User.Identity.GetUserId();
             ProjectRegistrationService.AddEntity(model.ConvertTo<ProjectRegistration>());
             return View();
         }
@@ -248,7 +264,7 @@ namespace UI.ScientificResearch.Controllers
             ViewBag.Title = "报名情况";
 
             var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
-            var models= tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
+            var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
             ViewBag.Id = applicationId;
             return View(models);
         }
