@@ -247,7 +247,9 @@ namespace UI.ScientificResearch.Controllers
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
             ProjectRegistrationService.AddEntity(model.ConvertTo<ProjectRegistration>());
-            return View();
+            //上报成功的标志
+            ViewBag.SendUpSuccess = true;
+            return View(model);
         }
 
         public ActionResult List()
@@ -269,7 +271,6 @@ namespace UI.ScientificResearch.Controllers
             return View(models);
         }
 
-
         public ActionResult Details(string id)
         {
             var model = this.registerInfoViewModelsList.First(x => x.Id == id);
@@ -277,6 +278,44 @@ namespace UI.ScientificResearch.Controllers
             return View(model);
         }
 
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var isSuccessful = ProjectRegistrationService.DeleteEntityById(id);
+
+                return Json(
+                    new
+                    {
+                        isSuccessful = isSuccessful,
+                    },
+                    "text/html", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(
+                 new
+                 {
+                     isSuccessful = false,
+                     error = ex.Message
+                 },
+                 "text/html", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var model = ProjectRegistrationService.GetEntityById(id);
+
+            return View(model.ConvertTo<ProjectRegistrationViewModel>());
+        }
+
+        public ActionResult EditBidBondInfo(int id)
+        {
+            var model = ProjectRegistrationService.GetEntityById(id);
+
+            return View(model.ConvertTo<ProjectRegistrationViewModel>());
+        }
         #endregion
     }
 }

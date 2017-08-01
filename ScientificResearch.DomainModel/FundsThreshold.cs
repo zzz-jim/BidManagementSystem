@@ -24,7 +24,6 @@ namespace ScientificResearch.DomainModel
         public Nullable<System.DateTime> CreatedTime { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedTime { get; set; }
-
         public int NWorkToDoID { get; set; }
     }
 }

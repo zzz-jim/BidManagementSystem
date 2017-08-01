@@ -2,123 +2,176 @@
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
-@using (Html.BeginForm())
+@if (ViewBag.SendUpSuccess == true)
 {
-    @Html.AntiForgeryToken()
+    <script type="text/javascript">
+    //上报成功的提示
+    $(function(){
+        var sendupsuccess = "@ViewBag.SendUpSuccess";
+        if (sendupsuccess == "True")
+        {
+            parent.location.reload();
+            alert("保存成功！");
+        }
+    });
+    </script>
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <table class="table">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.HiddenFor(model => model.ApplicationId)
-       
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.CompanyName)
-            </td>
-            <td>
-                @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                @Html.LabelFor(model => model.ContactName)
-            </td>
-            <td>
-                @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td>  @Html.LabelFor(model => model.Phone) </td>
-            <td>
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td>  @Html.LabelFor(model => model.Email) </td>
-            <td>
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td> @Html.LabelFor(model => model.BidSection) </td>
-            <td>
-                @*@Html.EditorFor(model => model.BidSection, new { htmlAttributes = new {  @style = "width:150px" } })*@
-                @Html.DropDownList("BidSection", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
-                @Html.ValidationMessageFor(model => model.BidSection, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td>   @Html.LabelFor(model => model.IsSubmitRegistrationFee) </td>
-            <td>
-                    @Html.EditorFor(model => model.IsSubmitRegistrationFee, new { htmlAttributes = new { @style = "width:150px",@class= "checkbox" } })
-                    @Html.ValidationMessageFor(model => model.IsSubmitRegistrationFee, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        <tr>
-            <td>   @Html.LabelFor(model => model.RegistrationFee) </td>
-            <td>
-                @*@Html.EditorFor(model => model.RegistrationFee, new { htmlAttributes = new { @style = "width:150px" } })*@
-                <input type="text" id="RegistrationFee" name="RegistrationFee" style="width:150px" value="@Model.RegistrationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
-                @Html.ValidationMessageFor(model => model.RegistrationFee, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-
-        @*<tr>
-                @Html.LabelFor(model => model.IsSubmitBidBondFee)
-                <td>
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.IsSubmitBidBondFee)
-                        @Html.ValidationMessageFor(model => model.IsSubmitBidBondFee, "", new { @class = "text-danger" })
-                      </td>
-                  </td>
-              </td>
+            @Html.HiddenFor(model => model.ApplicationId)
 
             <tr>
-                @Html.LabelFor(model => model.BidBondFee)
                 <td>
-                    @Html.EditorFor(model => model.BidBondFee, new { htmlAttributes = new {  @style = "width:150px" } })
-                    @Html.ValidationMessageFor(model => model.BidBondFee, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.CompanyName)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ContactName)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>  @Html.LabelFor(model => model.Phone) </td>
+                <td>
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>  @Html.LabelFor(model => model.Email) </td>
+                <td>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td> @Html.LabelFor(model => model.BidSection) </td>
+                <td>
+                    @*@Html.EditorFor(model => model.BidSection, new { htmlAttributes = new {  @style = "width:150px" } })*@
+                    @Html.DropDownList("BidSection", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.BidSection, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>   @Html.LabelFor(model => model.IsSubmitRegistrationFee) </td>
+                <td>
+                    @Html.EditorFor(model => model.IsSubmitRegistrationFee, new { htmlAttributes = new { @style = "width:150px", @class = "checkbox" } })
+                    @Html.ValidationMessageFor(model => model.IsSubmitRegistrationFee, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>   @Html.LabelFor(model => model.RegistrationFee) </td>
+                <td>
+                    @*@Html.EditorFor(model => model.RegistrationFee, new { htmlAttributes = new { @style = "width:150px" } })*@
+                    <input type="text" id="RegistrationFee" name="RegistrationFee" style="width:150px" value="@Model.RegistrationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+                    @Html.ValidationMessageFor(model => model.RegistrationFee, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            @*<tr>
+                    @Html.LabelFor(model => model.IsSubmitBidBondFee)
+                    <td>
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsSubmitBidBondFee)
+                            @Html.ValidationMessageFor(model => model.IsSubmitBidBondFee, "", new { @class = "text-danger" })
+                          </td>
+                      </td>
                   </td>
-              </td>*@
 
-        <tr>
-            <td>  @Html.LabelFor(model => model.Remark) </td>
-            <td>
-                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
-            </td>
-        </tr>
+                <tr>
+                    @Html.LabelFor(model => model.BidBondFee)
+                    <td>
+                        @Html.EditorFor(model => model.BidBondFee, new { htmlAttributes = new {  @style = "width:150px" } })
+                        @Html.ValidationMessageFor(model => model.BidBondFee, "", new { @class = "text-danger" })
+                      </td>
+                  </td>*@
 
-        <tr>
-            <td>  @Html.LabelFor(model => model.RegisterTime) </td>
-            <td>
-                @Html.EditorFor(model => model.RegisterTime, new { htmlAttributes = new { @style = "width:150px" } })
-                @Html.ValidationMessageFor(model => model.RegisterTime, "", new { @class = "text-danger" })
-            </td>
-        </tr>
+            <tr>
+                <td>  @Html.LabelFor(model => model.Remark) </td>
+                <td>
+                    @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                </td>
+            </tr>
 
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="保存" class="btn btn-default" />
-            </td>
-        </tr>
-    </table>
-}
-<script>
-    $(document).ready(function () {
-        $("#RegisterTime").kendoDatePicker({
-            format: "yyyy-MM-dd"
+            <tr>
+                <td>  @Html.LabelFor(model => model.RegisterTime) </td>
+                <td>
+                    @Html.EditorFor(model => model.RegisterTime, new { htmlAttributes = new { @style = "width:150px" } })
+                    @Html.ValidationMessageFor(model => model.RegisterTime, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="保存" name="Save" class="btn btn-default" />
+                </td>
+            </tr>
+        </table>
+    }
+    <script>
+        $(document).ready(function () {
+            $("#RegisterTime").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+            $("#RegisterTime").attr("readonly", true);
         });
-        $("#RegisterTime").attr("readonly", true);
+    </script>
+    <script type="text/javascript">
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage="";
+            if ($("#CompanyName").val().trim() == "") {
+                errorMessage = errorMessage + "公司名称不能为空！";
+            }
+            if ($("#ContactName").val().trim() == "") {
+                errorMessage = errorMessage + "联系人不能为空！";
+            }
+            if ($("#Phone").val().trim() == "") {
+                errorMessage = errorMessage + "联系电话不能为空！";
+            }
+            if ($("#Email").val().trim() == "") {
+                errorMessage = errorMessage + "邮箱地址不能为空！";
+            }
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
     });
-</script>
+    //上报成功的提示
+    $(function(){
+        var sendupsuccess = "@ViewBag.SendUpSuccess";
+        if (sendupsuccess == "True")
+        {
+            alert("保存成功！");
+            parent.location.reload();
+        }
+    });
+    </script>
+
+}

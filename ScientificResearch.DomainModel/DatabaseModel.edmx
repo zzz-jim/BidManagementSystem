@@ -1990,7 +1990,7 @@
           <Property Name="CreatedTime" Type="datetime" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="64" />
           <Property Name="UpdatedTime" Type="datetime" />
-          <Property Name="NWorkToDoID" Type="int" />
+          <Property Name="NWorkToDoID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PaperBonusCredit">
           <Key>
@@ -2142,7 +2142,7 @@
           <Property Name="RegistrationFee" Type="bigint" Nullable="false" />
           <Property Name="IsSubmitBidBondFee" Type="bit" Nullable="false" />
           <Property Name="BidBondFee" Type="bigint" Nullable="false" />
-          <Property Name="Remark" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="255" />
           <Property Name="RegisterTime" Type="datetime" />
           <Property Name="OperatorName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="OperatorId" Type="varchar" MaxLength="64" Nullable="false" />
@@ -4732,7 +4732,7 @@
           <Property Name="CreatedTime" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedTime" Type="DateTime" Precision="3" />
-          <Property Name="NWorkToDoID" Type="Int32" />
+          <Property Name="NWorkToDoID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ContinuingEducationRecord">
           <Key>
@@ -4787,7 +4787,7 @@
           <Property Name="RegistrationFee" Type="Int64" Nullable="false" />
           <Property Name="IsSubmitBidBondFee" Type="Boolean" Nullable="false" />
           <Property Name="BidBondFee" Type="Int64" Nullable="false" />
-          <Property Name="Remark" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RegisterTime" Type="DateTime" Precision="3" />
           <Property Name="OperatorName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="OperatorId" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />

@@ -117,8 +117,8 @@
         </td>
         <td>
             @Html.ActionLink("修改", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("详情", "Details", new { id=item.ID }) |
-            @Html.ActionLink("删除", "Delete", new { id=item.ID })
+            @Html.ActionLink("保证金", "EditBidBondInfo", new { id = item.ID }) |
+            <a href="#" onclick="deleteitem(@item.ID)">删除</a>
         </td>
     </tr>
 }
@@ -157,6 +157,37 @@
                 $("#Application").data("kendoWindow").center().open();
             });
         })
+
+        function deleteitem(id) {
+            $.ajax(
+                {
+                    url: '/RegisterInfo/Delete/' + id, 
+                    type: 'get',
+                    secureuri: false, //一般设置为false
+                    fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
+                    dataType: 'json', //返回值类型 一般设置为json
+                    success: function (data, status) //服务器成功响应处理函数
+                    {
+                        if (data.isSuccessful) {
+                            alert("删除成功！");
+                            location.reload();//刷新当前页面
+                        } else {
+                            alert(data.name + "删除失败，请重新操作");
+                        }
+
+                        if (typeof (data.error) != 'undefined') {
+                            if (data.error != '') {
+                                alert(data.error);
+                            }
+                        }
+                    },
+                    error: function (data, status, e) //服务器响应失败处理函数
+                    {
+                        alert(e);
+                    }
+                }
+            )
+        };
 
     </script>
 }

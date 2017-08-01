@@ -37,7 +37,6 @@ namespace UI.ScientificResearch.Models
         public bool IsSubmitBidBondFee { get; set; }
         [Display(Name = "保证金")]
         public long BidBondFee { get; set; }
-        [Required]
         [Display(Name = "备注说明")]
         public string Remark { get; set; }
         [Display(Name = "报名时间")]
