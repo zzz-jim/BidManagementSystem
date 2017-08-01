@@ -335,9 +335,27 @@ namespace UI.ScientificResearch.Controllers
 
         public ActionResult Delete(int id)
         {
-            var model = this.FileService.DeleteEntityById(id);
+            try
+            {
+                var isSuccessful = this.FileService.DeleteEntityById(id);
 
-            return View(model);
+                return Json(
+                    new
+                    {
+                        isSuccessful = isSuccessful,
+                    },
+                    "text/html", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(
+                 new
+                 {
+                     isSuccessful = false,
+                     error = ex.Message
+                 },
+                 "text/html", JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion
