@@ -14,7 +14,7 @@
         });
 
         if (flag == false) {
-            alert("请完整填写每一行的数据！");
+            alert("请完整填写每个标段的编号和名称！");
         }
 
         else {
@@ -27,7 +27,90 @@
         $("#count").val(count);
     });
 
-    $("input[name='Reported'],input[name='Save'").click(function () {
+}
+
+
+$(function () {
+    $("input[name='Reported'],input[name='Save'] ").click(function () {
+
+        var errorMessage = "";
+        if ($("#WenHao").val().trim() == "") {
+            errorMessage = errorMessage + "项目名称不能为空！";
+        }
+
+        if ($("#BeiYong1").val().trim() == "") {
+            errorMessage = errorMessage + "_目编号不能为空！";
+        }
+
+        if ($("#Text111111111").val().trim() == "") {
+            errorMessage = errorMessage + "项目内容不能为空！";
+        }
+
+        if ($("#Date222222222").val().trim() == "") {
+            errorMessage = errorMessage + "委托日期不能为空！";
+        }
+
+        if ($("#Text333333333").val().trim() == "") {
+            errorMessage = errorMessage + "开标场所不能为空！";
+        }
+
+        if ($("#Text444444444").val().trim() == "") {
+            errorMessage = errorMessage + "采购单位不能为空！";
+        }
+
+        if ($("#Text555555555").val().trim() == "") {
+            errorMessage = errorMessage + "采购单位联系人不能为空！";
+        }
+
+        if ($("#Text666666666").val().trim() == "") {
+            errorMessage = errorMessage + "采购单位联系电话不能为空！";
+        }
+
+        if ($("#Text777777777").val().trim() == "") {
+            errorMessage = errorMessage + "采购单位联系地址不能为空！";
+        }
+
+        if ($("#Text888888888").val().trim() == "") {
+            errorMessage = errorMessage + "项目审批（核准）单位不能为空！";
+        }
+
+        if ($("#Text999999999").val().trim() == "") {
+            errorMessage = errorMessage + "项目审批（核准）文号不能为空！";
+        }
+
+        if ($("#Text111111112").val().trim() == "") {
+            errorMessage = errorMessage + "项目备案单位不能为空！";
+        }
+
+        if ($("#Text111111113").val().trim() == "") {
+            errorMessage = errorMessage + "项目备案文号不能为空！";
+        }
+
+        if ($("#Text111111114").val().trim() == "") {
+            errorMessage = errorMessage + "采购预算不能为空！";
+        }
+
+        if ($("#Text111111115").val().trim() == "") {
+            errorMessage = errorMessage + "项目负责人不能为空！";
+        }
+
+        if ($("#Text111111116").val().trim() == "") {
+            errorMessage = errorMessage + "项目负责人电话不能为空！";
+        }
+
+        if ($("#item1SectionName").val().trim() == "") {
+            errorMessage = errorMessage + "项目至少包含一个标段！";
+        }
+
+        if ($("#item1SectionNumber").val().trim() == "") {
+            errorMessage = errorMessage + "项目至少包含一个标段编号！";
+        }
+
+        if (errorMessage != "") {
+            alert(errorMessage);
+            return false;
+        }
+
         //isOrNotReport为true，就提交表单
         var isOrNotReport = true;
         $("#tb1 tr").each(function () {
@@ -47,7 +130,7 @@
                         }
                     }
                 });
-                //若本行为填写数据，则删除本行
+                //若本行未填写数据，则删除本行
                 if (flag == false) {
                     $(this).remove();
                     listCount--;
@@ -74,7 +157,7 @@
                         }
                     });
                     if (isAllData == false) {
-                        alert("请完整填写每一行前7列数据！");
+                        alert("请完整填写每个标段的编号和名称！");
                         isOrNotReport = false;
                     }
                 }
@@ -111,9 +194,10 @@
                 }
             }
         }
+
         $("#count").val(rows_Count - 1);
         if (isOrNotReport == false) {
             return false;
         }
     });
-}
+});

@@ -8,13 +8,12 @@
 
 <input type="hidden" id="Freeze" value="@ViewBag.Id" />
 <div>
-
+    <div id="MaxWindow"></div>
     <div id="CreateNewApp">
         <div id="newapplicationbutton">
             <input type="button" id="CreaateButtn" value="报名登记" />
         </div>
         <div id="Application"></div>
-
     </div>
 </div>
 
@@ -116,8 +115,8 @@
             @Html.DisplayFor(modelItem => item.CreatedTime)
         </td>
         <td>
-            @Html.ActionLink("修改", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("保证金", "EditBidBondInfo", new { id = item.ID }) |
+            <a href="#" onclick="edititem(@item.ID)">修改</a> |
+            <a href="#" onclick="EditBidBondInfo(@item.ID)">保证金</a> |
             <a href="#" onclick="deleteitem(@item.ID)">删除</a>
         </td>
     </tr>
@@ -187,6 +186,56 @@
                     }
                 }
             )
+        };
+
+        // 修改
+        function edititem(id) {
+        $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+            $("#MaxWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "60%",
+                height: "70%",
+                title: "项目报名情况",
+                visible: false,
+                actions: [
+                    "Pin", "Minimize", "Maximize", "Close"
+                ],
+                modal: true,
+                resizable: false,
+                close: function (e) {
+                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                }
+            });
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/Edit?id=' + id + '">项目报名情况</iframe>');
+            $("#MaxWindow").data("kendoWindow").center().open();
+        };
+
+        // 修改项目保证金情况
+        function EditBidBondInfo(id) {
+        $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+            $("#MaxWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "60%",
+                height: "70%",
+                title: "项目保证金情况",
+                visible: false,
+                actions: [
+                    "Pin", "Minimize", "Maximize", "Close"
+                ],
+                modal: true,
+                resizable: false,
+                close: function (e) {
+                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                }
+            });
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/EditBidBondInfo?id=' + id + '">项目保证金情况</iframe>');
+            $("#MaxWindow").data("kendoWindow").center().open();
         };
 
     </script>

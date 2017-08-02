@@ -227,7 +227,7 @@ namespace UI.ScientificResearch.Controllers
         {
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
             var selectItemList = new List<SelectListItem>() {
-                new SelectListItem(){Value="0",Text="全部",Selected=true}
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
                     };
             if (bidSections.Any())
             {
@@ -246,6 +246,8 @@ namespace UI.ScientificResearch.Controllers
             model.CreatedTime = DateTime.Now;
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
+            var bidSectionInfo=ProjectBidSectionService.GetEntityById(model.BidSectionId);
+            model.BidSection = bidSectionInfo.SectionName;
             ProjectRegistrationService.AddEntity(model.ConvertTo<ProjectRegistration>());
             //上报成功的标志
             ViewBag.SendUpSuccess = true;
@@ -306,15 +308,59 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult Edit(int id)
         {
             var model = ProjectRegistrationService.GetEntityById(id);
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
+            var selectItemList = new List<SelectListItem>() {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+                    };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
 
+            ViewBag.bidSectionsList = selectItemList;
             return View(model.ConvertTo<ProjectRegistrationViewModel>());
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProjectRegistrationViewModel model)
+        {
+            model.OperatorName = User.Identity.Name;
+            model.OperatorId = User.Identity.GetUserId();
+            var bidSectionInfo = ProjectBidSectionService.GetEntityById(model.BidSectionId);
+            model.BidSection = bidSectionInfo.SectionName;
+            ProjectRegistrationService.UpdateEntity(model.ConvertTo<ProjectRegistration>());
+            //上报成功的标志
+            ViewBag.SendUpSuccess = true;
+            return View(model);
         }
 
         public ActionResult EditBidBondInfo(int id)
         {
             var model = ProjectRegistrationService.GetEntityById(id);
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
+            var selectItemList = new List<SelectListItem>() {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+                    };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
 
+            ViewBag.bidSectionsList = selectItemList;
             return View(model.ConvertTo<ProjectRegistrationViewModel>());
+        }
+
+        [HttpPost]
+        public ActionResult EditBidBondInfo(ProjectRegistrationViewModel model)
+        {
+            model.OperatorName = User.Identity.Name;
+            model.OperatorId = User.Identity.GetUserId();
+            ProjectRegistrationService.UpdateEntity(model.ConvertTo<ProjectRegistration>());
+            //上报成功的标志
+            ViewBag.SendUpSuccess = true;
+            return View(model);
         }
         #endregion
     }

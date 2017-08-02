@@ -67,8 +67,8 @@ else
                 <td> @Html.LabelFor(model => model.BidSection) </td>
                 <td>
                     @*@Html.EditorFor(model => model.BidSection, new { htmlAttributes = new {  @style = "width:150px" } })*@
-                    @Html.DropDownList("BidSection", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.BidSection, "", new { @class = "text-danger" })
+                    @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.BidSectionId, "", new { @class = "text-danger" })
                 </td>
             </tr>
 

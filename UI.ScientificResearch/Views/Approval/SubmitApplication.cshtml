@@ -37,21 +37,6 @@
     //});
 
 
-    $(function () {
-        $("input[name='Reported'],input[name='Save'] ").click(function () {
-            var errorMessage = "";
-            if ($("#WenHao").val().trim() == "") {
-                errorMessage = errorMessage + "项目名称不能为空！";
-            }
-            if (errorMessage == "") {
-
-            }
-            else {
-                alert(errorMessage);
-                return false;
-            }
-        });
-    });
 
     $(function () {
 
@@ -174,18 +159,35 @@
                     @Html.DisplayNameFor(model => model.BidSectionList.FirstOrDefault().SectionName)
                 </th>
             </tr>
-            @{int number = 1;}
-            @foreach (var item in Model.BidSectionList)
+
+            @if (Model.BidSectionList.Any())
             {
+                int number = 1;
+                foreach (var item in Model.BidSectionList)
+                {
+                    string itemSectionName = "item" + number + "SectionName";
+                    string itemSectionNumber = "item" + number + "SectionNumber";
+
+                    <tr>
+                        <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
+                        <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
+                    </tr>
+                    number++;
+                }
+            }
+            else
+            {
+
+                int number = 1;
                 string itemSectionName = "item" + number + "SectionName";
                 string itemSectionNumber = "item" + number + "SectionNumber";
 
                 <tr>
-                    <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
-                    <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
+                    <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" /></td>
+                    <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" /></td>
                 </tr>
-                number++;
             }
+
         </table>
 
         <input id="count" type="hidden" name="count" value="1">
@@ -201,24 +203,24 @@
 
         <table class="table">
             @*<tr>
-                <td colspan="4">
-                    <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">
-                    <input type="button" value="上传" id="btnUploadFile" />
-                </td>
-                <td colspan="1">
-                    <div id="areadyuploadfile"></div>
-                </td>
-                <td colspan="1">
-                    <p id="fuJian_Save_P"></p>
-                </td>
-                <td colspan="1">
-                    <div id="table_save"></div>
-                </td>
-            </tr>*@
+                    <td colspan="4">
+                        <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1">
+                        <input type="button" value="上传" id="btnUploadFile" />
+                    </td>
+                    <td colspan="1">
+                        <div id="areadyuploadfile"></div>
+                    </td>
+                    <td colspan="1">
+                        <p id="fuJian_Save_P"></p>
+                    </td>
+                    <td colspan="1">
+                        <div id="table_save"></div>
+                    </td>
+                </tr>*@
 
             @if (Model.IsTemporary != null)
                 {
@@ -286,7 +288,7 @@
 
         @Html.HiddenFor(model => model.NWorkToDoID)
     </div>
-                }
+}
 
 <style>
     .table .wid {
@@ -295,10 +297,10 @@
 </style>
 @*<script>@Html.Raw(ViewBag.PiLiangSet)</script>*@
 <script>
-    $(document).ready(function () {
-        $("#Date222222222").kendoDatePicker({
-            format: "yyyy-MM-dd"
-        });
-        $("#Date222222222").attr("readonly", true);
-    });
+            $(document).ready(function () {
+                $("#Date222222222").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#Date222222222").attr("readonly", true);
+            });
 </script>
