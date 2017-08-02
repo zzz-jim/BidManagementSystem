@@ -14,8 +14,8 @@
         <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
         项目编号:
         <input type="text" name="projectNumber" id="projectNumber" style="width: 150px; height: 30px">&nbsp;
-        状态:
-        <select id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
+        @*状态:*@
+        <select hidden id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
             <option value=全部 selected="selected">全部</option>
             <option value=AplicationWriting>申请未上报</option>
             <option value=ApplicationRejected>申请被驳回</option>
@@ -227,7 +227,7 @@
                     {
                         field: "ProjectContent",
                         title: "项目内容",
-                        width: "10%",
+                        width: "18%",
                     },
                     {
                         field: "ProcurementName",
@@ -239,19 +239,19 @@
                         title: "预算金额(万元)",
                         width: "10%",
                     },
-                    {
-                        field: "Applications",
-                        title: "当前状态",
-                        width: "10%",
-                    },
+                    //{
+                    //    field: "Applications",
+                    //    title: "当前状态",
+                    //    width: "10%",
+                    //},
                     {
                         field: "Agent",
-                        title: "招标代理公司",
-                        width: "7%"
+                        title: "代理公司",
+                        width: "8%"
                     },
                     {
                         command:
-                        [{ name: "destroy", text: "删除", width: "6%" }]
+                        [{ name: "destroy", text: "删除", width: "5%" }]
                     }
                 ],
                 editable: {
