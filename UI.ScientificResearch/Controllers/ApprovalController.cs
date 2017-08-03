@@ -6706,8 +6706,16 @@ namespace UI.ScientificResearch.Controllers
         }
 
 
+        public ActionResult Test()
+        {
+            return View();
+        }
 
-
+        [HttpPost]
+        public ActionResult Test(string content)
+        {
+            return View();
+        }
     }
 }
 

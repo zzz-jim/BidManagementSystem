@@ -2134,6 +2134,7 @@
     <Content Include="Views\RegisterInfo\ProjectList.cshtml" />
     <Content Include="Views\RegisterInfo\Edit.cshtml" />
     <Content Include="Views\RegisterInfo\EditBidBondInfo.cshtml" />
+    <Content Include="Views\Approval\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

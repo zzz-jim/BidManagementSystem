@@ -1,0 +1,67 @@
+﻿@*<script src="/Content/Ueditor/ueditor.all.min.js"></script>*@
+
+
+<script src="/Content/Ueditor/ueditor.config.js"></script>
+<script src="/Content/Ueditor/ueditor.all.js"></script>
+<link href="/Content/Ueditor/themes/iframe.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    <textarea id="editor" name="editor">
+
+</textarea>
+    <input type="submit" id="Save" value="提交" />
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var editor = new baidu.editor.ui.Editor({
+            UEDITOR_HOME_URL: '/Content/ueditor/',//配置编辑器路径
+            iframeCssUrl: '/Content/ueditor/themes/iframe.css',//样式路径
+            initialContent: '欢迎使用ueditor',//初始化编辑器内容
+            autoHeightEnabled: true,//高度自动增长
+            minFrameHeight: 500//最小高度
+        });
+        editor.render('editor');
+
+        $(function () {
+            //var content = editor.getContent();
+            $("#Save").click(function () {
+                var url1 = "/Approval/Test?content=jjj" + "jim";
+                //alert(url1);
+                submitForm("form", url1);
+            });
+            //$("#Reported").click(function() {
+            //    var url2 = "/ContinuingEducation/ApplicationRejected?flag=Reported";
+            //    // alert(url2)
+            //    submitForm("form", url2);
+            //});
+        });
+
+        //异步提交表单
+        function submitForm(form, url) {
+            $(form).submit(function () {
+                jQuery.ajax({
+                    url: url,
+                    data: $(form).serialize(),
+                    type: "POST",
+                    beforeSend: function () {
+                        //在异步提交成功前要做的操作
+                    },
+                    success: function (data) {
+                        if (data > 0) {
+                            alert("操作成功");
+                            //parent.location.reload();//刷新页面
+                        }
+                        else {
+                            alert("操作失败");
+                            //parent.location.reload();//刷新页面
+                        }
+                    }
+                });
+                return false;
+            });
+        }
+    </script>
+}
+
