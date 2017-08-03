@@ -1,0 +1,111 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+<!--TODO:demo-->
+<script src="~/Content/Ueditor/ueditor.config.js"></script>
+<script src="~/Content/Ueditor/ueditor.all.js"></script>
+<link href="~/Content/Ueditor/themes/iframe.css" rel="stylesheet" />
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <tr>
+        <td class="tdcss">
+            @Html.LabelFor(model => model.WenHao)
+        </td>
+        <td colspan="5">
+            @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
+            @Html.ValidationMessageFor(model => model.WenHao)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            项目编号
+        </td>
+        <td>
+            <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
+        </td>
+        <td colspan="5"></td>
+    </tr>
+    <br />
+    <br />
+    @Html.TextAreaFor(m => m.FormContent)
+    <br />
+    <br />
+    <input type="submit" id="Save" value="提交" />
+
+    @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
+
+    @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
+
+    @Html.HiddenFor(model => model.TimeStr, new { @readOnly = "readOnly " })
+
+    @Html.HiddenFor(model => model.FuJianList)
+
+    @Html.HiddenFor(model => model.ShenPiYiJian)
+
+    @Html.HiddenFor(model => model.JieDianID, new { @readOnly = "readOnly " })
+
+    @Html.HiddenFor(model => model.JieDianName, new { @readOnly = "readOnly " })
+
+    @Html.HiddenFor(model => model.ShenPiUserList)
+
+    @Html.HiddenFor(model => model.OKUserList)
+
+    @Html.HiddenFor(model => model.StateNow)
+
+    @Html.HiddenFor(model => model.LateTime)
+
+    @Html.HiddenFor(model => model.BeiYong2)
+
+    @Html.HiddenFor(model => model.ApplicationId)
+
+    @Html.HiddenFor(model => model.ApplicationStatus)
+
+    @Html.HiddenFor(model => model.NWorkToDoID)
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var editor = new baidu.editor.ui.Editor({
+            UEDITOR_HOME_URL: '/Content/ueditor/',//配置编辑器路径
+            iframeCssUrl: '/Content/ueditor/themes/iframe.css',//样式路径
+            initialContent: '欢迎使用ueditor',//初始化编辑器内容
+            autoHeightEnabled: true,//高度自动增长
+            minFrameHeight: 500//最小高度
+        });
+        editor.render('FormContent');
+
+        $(function () {
+            $("#Save").click(function () {
+                $('#FormContent').val(editor.getContent());
+                var url1 = "/Approval/TenderNotice";
+                submitForm("form", url1);
+            });
+        });
+
+        //异步提交表单
+        function submitForm(form, url) {
+            $(form).submit(function () {
+                jQuery.ajax({
+                    url: url,
+                    data: $(form).serialize(),
+                    type: "POST",
+                    beforeSend: function () {
+                        //在异步提交成功前要做的操作
+                    },
+                    success: function (data) {
+                        if (data > 0) {
+                            alert("操作成功");
+                            //parent.location.reload();//刷新页面
+                        }
+                        else {
+                            alert("操作失败");
+                            //parent.location.reload();//刷新页面
+                        }
+                    }
+                });
+                return false;
+            });
+        }
+    </script>
+}
