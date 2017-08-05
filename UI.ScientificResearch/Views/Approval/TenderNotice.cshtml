@@ -78,7 +78,7 @@
         $(function () {
             $("#Save").click(function () {
                 $('#FormContent').val(editor.getContent());
-                var url1 = "/Approval/TenderNotice";
+                var url1 = "/Approval/TenderNotice?flag=Save";
                 submitForm("form", url1);
             });
         });

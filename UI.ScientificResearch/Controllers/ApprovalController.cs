@@ -6836,9 +6836,9 @@ namespace UI.ScientificResearch.Controllers
                 model.IsRejected = false;
 
                 //申请书状态
-                model.ApplicationStatus = BiddingProjectStatus.ProjectRegitering.ToString();
+                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
                 //整个项目进行的状态
-                model.ProjectStatus = BiddingProjectStatus.ProjectRegitering.ToString();
+                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
                 int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
                 //todo:日志
 
@@ -6848,7 +6848,7 @@ namespace UI.ScientificResearch.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(政府采购申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = nworktodoid.ToString();
                 int AddRiZhiSuccess = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
