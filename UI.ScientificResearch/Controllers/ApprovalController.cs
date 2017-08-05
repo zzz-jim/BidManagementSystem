@@ -6790,7 +6790,7 @@ namespace UI.ScientificResearch.Controllers
             }
             else
             {
-                return View(application.ToViewModel());
+                return View(tenderNoticeModel.ToViewModel());
             }
         }
 
@@ -6828,135 +6828,103 @@ namespace UI.ScientificResearch.Controllers
             var temperpworkflownodemodel = ERPNWorkFlowNodeService.GetEntityById(jiedianid);
             model.LateTime = DateTime.Now.AddHours(double.Parse(temperpworkflownodemodel.JieShuHours.ToString()));
 
-            if (flag == "Save")//保存
+            //// 更改当前结点id和name
+            //var currentNode = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value);
+            //string nextNodeSerial = currentNode.NextNode;
+            //var nextNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.NodeSerils == nextNodeSerial && p.WorkFlowID == model.WorkFlowID).ToList();
+            //model.JieDianID = nextNodeModel.First().ID;
+            //model.JieDianName = nextNodeModel.First().NodeName;
+
+            //页面加载后就上报,就添加新上报的数据行
+            if (model.NWorkToDoID == 0)
             {
+                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
+                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
+                //上报时设置保存为false、驳回为false、删除为false、冻结为false
                 model.IsTemporary = true;
                 model.IsLocked = false;
                 model.IsDeleted = false;
                 model.IsRejected = false;
 
-                //申请书状态
-                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
-                //整个项目进行的状态
-                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
                 int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
-                //todo:日志
 
                 //写系统日志
                 ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
+                ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
                 //已办
                 MyRiZhi.UserName = User.Identity.Name;
-                MyRiZhi.DoSomething = "保存(政府采购申请书)";
+                MyRiZhi.DoSomething = User.Identity.Name + "上报(政府采购申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
                 MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = nworktodoid.ToString();
+                MyRiZhi.TimeStr = DateTime.Now;
+                MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+
                 int AddRiZhiSuccess = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
 
-                model.NWorkToDoID = nworktodoid;
-                /// return RedirectToAction("SubmitApplication", new { id = model.NWorkToDoID });
+                //待办
+                MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
+
+                MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
+                MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
+                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FKAction = "待办";
+                MyRiZhi1.FKApplicationID = nworktodoid.ToString();
+                MyRiZhi1.TimeStr = DateTime.Now;
+                MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+
+                int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
                 return Json(AddRiZhiSuccess, JsonRequestBehavior.AllowGet);
             }
-            else//上报
+            //先保存在上报的,就更新保存数据行的IsIsTemporary
+            else
             {
-                // 更改当前结点id和name
-                var currentNode = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value);
-                string nextNodeSerial = currentNode.NextNode;
-                var nextNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.NodeSerils == nextNodeSerial && p.WorkFlowID == model.WorkFlowID).ToList();
-                model.JieDianID = nextNodeModel.First().ID;
-                model.JieDianName = nextNodeModel.First().NodeName;
+                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
+                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
+                //上报时设置保存为false、驳回为false、删除为false、冻结为false
+                model.IsTemporary = true;
+                model.IsLocked = false;
+                model.IsDeleted = false;
+                model.IsRejected = false;
 
-                //页面加载后就上报,就添加新上报的数据行
-                if (model.NWorkToDoID == 0)
-                {
-                    model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
-                    model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
-                    //上报时设置保存为false、驳回为false、删除为false、冻结为false
-                    model.IsTemporary = true;
-                    model.IsLocked = false;
-                    model.IsDeleted = false;
-                    model.IsRejected = false;
+                bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
+                //todo:add rizhi
 
-                    int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
+                //更新已办，新增上报，写系统日志
+                ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
+                ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
+                //更新已办
+                string nworktodoid = model.NWorkToDoID.ToString();
+                string formname = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
+                MyRiZhi.UserName = User.Identity.Name;
+                MyRiZhi.DoSomething = User.Identity.Name + "上报的(政府采购申请书)";
+                MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
+                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FKAction = "已办";
+                MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
+                MyRiZhi.TimeStr = DateTime.Now;
+                MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
-                    //写系统日志
-                    ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
-                    ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
-                    //已办
-                    MyRiZhi.UserName = User.Identity.Name;
-                    MyRiZhi.DoSomething = User.Identity.Name + "上报(政府采购申请书)";
-                    MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
-                    MyRiZhi.FKAction = "已办";
-                    MyRiZhi.FKApplicationID = nworktodoid.ToString();
-                    MyRiZhi.TimeStr = DateTime.Now;
-                    MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+                bool updateRiZhiSuccess = ERPRiZhiService.UpdateERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
 
-                    int AddRiZhiSuccess = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
+                //新增待办
+                MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
+                MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
+                MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
+                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FKAction = "待办";
+                MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
+                MyRiZhi1.TimeStr = DateTime.Now;
+                MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+                int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
 
-                    //待办
-                    MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
-
-                    MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
-                    MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
-                    MyRiZhi1.FKAction = "待办";
-                    MyRiZhi1.FKApplicationID = nworktodoid.ToString();
-                    MyRiZhi1.TimeStr = DateTime.Now;
-                    MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
-
-                    int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
-                    return Json(AddRiZhiSuccess, JsonRequestBehavior.AllowGet);
-                }
-                //先保存在上报的,就更新保存数据行的IsIsTemporary
-                else
-                {
-                    model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
-                    model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
-                    //上报时设置保存为false、驳回为false、删除为false、冻结为false
-                    model.IsTemporary = true;
-                    model.IsLocked = false;
-                    model.IsDeleted = false;
-                    model.IsRejected = false;
-
-                    bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
-                    //todo:add rizhi
-
-                    //更新已办，新增上报，写系统日志
-                    ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
-                    ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
-                    //更新已办
-                    string nworktodoid = model.NWorkToDoID.ToString();
-                    string formname = ScienceResearchTypeOfFormId.TenderNotice.ToString();
-                    MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
-                    MyRiZhi.UserName = User.Identity.Name;
-                    MyRiZhi.DoSomething = User.Identity.Name + "上报的(政府采购申请书)";
-                    MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
-                    MyRiZhi.FKAction = "已办";
-                    MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
-                    MyRiZhi.TimeStr = DateTime.Now;
-                    MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
-
-                    bool updateRiZhiSuccess = ERPRiZhiService.UpdateERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
-
-                    //新增待办
-                    MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
-                    MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
-                    MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
-                    MyRiZhi1.FKAction = "待办";
-                    MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
-                    MyRiZhi1.TimeStr = DateTime.Now;
-                    MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
-                    int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
-
-                    return Json(AddRiZhi1Success, JsonRequestBehavior.AllowGet);
-                }
+                return Json(AddRiZhi1Success, JsonRequestBehavior.AllowGet);
             }
         }
     }

@@ -348,6 +348,26 @@
                                 }
                             });
                         }
+                        else if (data == "TenderNotice")//全部通过审批
+                        {
+                            $.ajax({
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                type: "post",
+                                success: function (data) {
+                                    if (data != null) {
+                                        if (data == "Equal") {
+                                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                                            //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/TenderNotice?id=' + id + '">招标公告</iframe>');
+                                            $("#MaxWindow").data("kendoWindow").center().open();
+                                        }
+                                        else {
+                                            alert("权限不对！");
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                     else {
                         alert("发生异常！");

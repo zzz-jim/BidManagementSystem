@@ -32,7 +32,6 @@
     <br />
     <br />
     <input type="submit" id="Save" value="提交" />
-
     @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
 
     @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
@@ -96,11 +95,11 @@
                     success: function (data) {
                         if (data > 0) {
                             alert("操作成功");
-                            //parent.location.reload();//刷新页面
+                            parent.location.reload();//刷新页面
                         }
                         else {
                             alert("操作失败");
-                            //parent.location.reload();//刷新页面
+                            parent.location.reload();//刷新页面
                         }
                     }
                 });
