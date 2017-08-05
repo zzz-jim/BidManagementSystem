@@ -150,7 +150,7 @@ namespace UI.ScientificResearch.Controllers
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
 
                 FileSize = "5735 KB ",
-                FileType = UploadFilePageType.招标代理合同,
+                FileType = UploadFilePageType.合同资料,
                 Number = 1,
                 OperatorId = "123",
                 OperatorName = "李东",
@@ -164,7 +164,7 @@ namespace UI.ScientificResearch.Controllers
                 FileName = "川国土资【2016】90号2016年度第一批省投资土地开发整理项目立项的合同-新安、太平.pdf",
 
                 FileSize = "6422 KB ",
-                FileType = UploadFilePageType.招标代理合同,
+                FileType = UploadFilePageType.合同资料,
                 Number = 2,
                 OperatorId = "123",
                 OperatorName = "陈小燕",
@@ -286,9 +286,9 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult ContractList(int applicationId)
         {
             ViewBag.Module = "政府采购";
-            ViewBag.Title = "招标代理合同";
+            ViewBag.Title = UploadFilePageType.合同资料.ToString();
 
-            UploadFilePageType type = UploadFilePageType.招标代理合同;
+            UploadFilePageType type = UploadFilePageType.合同资料;
             ViewBag.UploadFilePageType = (int)type;
             ViewBag.Id = applicationId;
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));

@@ -6665,7 +6665,7 @@ namespace UI.ScientificResearch.Controllers
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
 
                 FileSize = "5735 KB ",
-                FileType = UploadFilePageType.招标代理合同,
+                FileType = UploadFilePageType.合同资料,
                 Number = 1,
                 OperatorId = "123",
                 OperatorName = "肖燕",
@@ -6678,7 +6678,7 @@ namespace UI.ScientificResearch.Controllers
                 FileName = "川国土资【2016】90号2016年度第一批省投资土地开发整理项目立项的合同-新安、太平.pdf",
 
                 FileSize = "6422 KB ",
-                FileType = UploadFilePageType.招标代理合同,
+                FileType = UploadFilePageType.合同资料,
                 Number = 2,
                 OperatorId = "123",
                 OperatorName = "肖燕",
@@ -6695,7 +6695,7 @@ namespace UI.ScientificResearch.Controllers
                 FileAddress = "",
                 FileName = "川国土资【2016】89号2016年度第一批省投资高标准基本农田建设项目立项的合同-新安、太平.pdf",
                 FileSize = "5735 KB ",
-                FileType = UploadFilePageType.招标代理合同,
+                FileType = UploadFilePageType.合同资料,
                 Number = 1,
                 OperatorId = "123",
                 OperatorName = "肖燕",

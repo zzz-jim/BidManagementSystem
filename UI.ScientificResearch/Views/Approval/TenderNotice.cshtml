@@ -6,14 +6,19 @@
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
+
+<!-- Project Step Wizard -->
+@Html.Partial("_ScienceResearchWizardPartial")
+
 @using (Html.BeginForm())
 {
+    <br />
     <tr>
         <td class="tdcss">
             @Html.LabelFor(model => model.WenHao)
         </td>
         <td colspan="5">
-            @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
+            @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox", @readOnly = "readOnly " } })
             @Html.ValidationMessageFor(model => model.WenHao)
         </td>
     </tr>
@@ -22,7 +27,7 @@
             项目编号
         </td>
         <td>
-            <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
+            <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" readonly="readonly" />
         </td>
         <td colspan="5"></td>
     </tr>
@@ -32,6 +37,7 @@
     <br />
     <br />
     <input type="submit" id="Save" value="提交" />
+    <input type="hidden" id="Freeze" value="@Model.NWorkToDoID" />
     @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
 
     @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })

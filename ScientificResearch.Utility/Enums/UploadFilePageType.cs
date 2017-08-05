@@ -11,7 +11,7 @@ namespace ScientificResearch.Utility.Enums
         /// <summary>
         /// 4.1论文申请书
         /// </summary>
-        招标代理合同 = 1,
+        合同资料 = 1,
         项目概况相关资料 = 2,
         招标文件 = 3,
         开评标相关资料= 4
