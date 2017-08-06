@@ -2141,6 +2141,7 @@
     <Content Include="Views\RegisterInfo\GetBidSectionList.cshtml" />
     <Content Include="Views\RegisterInfo\CreateBidWinnerNotice.cshtml" />
     <Content Include="Views\RegisterInfo\GetRegisterInfoList.cshtml" />
+    <Content Include="Views\RegisterInfo\BidWinnerNoticeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

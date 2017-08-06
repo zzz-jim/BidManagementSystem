@@ -543,6 +543,81 @@ namespace UI.ScientificResearch.Controllers
             return View(new List<ProjectBidSectionViewModel> { /*new ProjectBidSectionViewModel() { ApplicationId = applicationId }*/ });
         }
 
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetBidSectionListByApplicationId(int applicationId)
+        {
+            var application = ApplicationService.GetEntityById(applicationId);
+
+            if (application == null)
+            {
+                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+            }
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+
+            if (bidSections.Any())
+            {
+                var result = bidSections.Select(x => x.ConvertTo<ProjectBidSectionViewModel>()).ToList();
+
+                if (result.Any())
+                {
+                    //序号
+                    int number = 1;
+                    foreach (var item in result)
+                    {
+                        item.Number = number;
+                        item.ProjectName = application.WenHao;
+                        number++;
+                    }
+                }
+
+                return Json(new { data = result, total = result.Count() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { data = new List<ProjectBidSectionViewModel> { }, total = 0 }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 查出该标段下的所有公司
+        /// </summary>
+        /// <param name="sectionId"></param>
+        /// <returns></returns>
+        public ActionResult GetRegisterInfoListBySectionId(int sectionId)
+        {
+            // 查出该标段下的所有公司的 前三甲，在页面上编辑中标 得分及名次信息
+            var registCompanyList = ProjectRegistrationService.GetEntities(x => x.BidSectionId == sectionId && x.IsShow);
+            if (registCompanyList.Any())
+            {
+                var result = registCompanyList.Select(x => x.ConvertTo<ProjectRegistrationViewModel>()).ToList();
+
+                //序号
+                int number = 1;
+                foreach (var item in result)
+                {
+                    item.Number = number;
+                    item.RankDescription = "第" + item.Rank + "名";
+                    number++;
+                }
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new List<ProjectRegistrationViewModel> { }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 中标通知书列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BidWinnerNoticeList(int applicationId)
+        {
+            ViewBag.ApplicationId = applicationId;
+            return View();
+        }
 
         #endregion
     }

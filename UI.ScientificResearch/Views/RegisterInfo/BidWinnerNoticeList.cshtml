@@ -1,0 +1,189 @@
+﻿@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    //Layout = null;
+    //Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+}
+
+<!-- Project Step Wizard -->
+@Html.Partial("_ScienceResearchWizardPartial")
+
+
+<input type="hidden" id="Freeze" value="@ViewBag.ApplicationId" />
+<div id="fundsmanagersearchdata">
+    @*项目名称：<input type="text" id="porgramename" style="width: 150px; height: 30px">&nbsp;
+        标段名称：<input type="text" id="locationdepartment" style="width: 150px; height: 30px">&nbsp;
+        类型：<select id="type" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
+            <option selected>全部</option>
+            <option>支出</option>
+            <option>收入</option>
+        </select>
+        &nbsp;
+        项目类型：<select id="fundstype" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
+            <option selected>全部</option>
+            <option>投标经费</option>
+        </select>
+        &nbsp;
+        开始时间:<input type="text" id="fmstarttime" value="" style="width: 150px">&nbsp;
+        结束时间:<input type="text" id="fmendtime" value="" style="width: 150px">&nbsp;
+        操作人:<input type="text" id="fundsoprator" style="width: 150px; height: 30px">&nbsp;
+        <input type="button" id="search" value="查询" onclick="searchrightdataoffundsmanagers()" style="width: 55px; height: 28px" />
+        <input type="button" id="CreaateButtn" value="新建" style="width: 55px; height: 28px" /><div id="Application"></div>
+        <input type="hidden" id="formid" name="formid" value="@ViewBag.ApplicationId>*@
+</div>
+<br />
+<div id="bigfundsmanagergrid" class="k-content">
+    <div id="fundsManagerGrid">
+
+    </div>
+
+    <script>
+        $(function () {
+            searchrightdataoffundsmanagers();
+        });
+        function searchrightdataoffundsmanagers() {
+            //var searchitem2 = $("#porgramename").val();
+            //var searchitem3 = $("#locationdepartment").val();
+            //var searchitem4 = $("#type").val();
+            //var searchitem5 = $("#fundstype").val();
+            //var searchitem6 = $("#fmstarttime").val();
+            //var searchitem7 = $("#fmendtime").val();
+            //var searchitem8 = $("#fundsoprator").val();
+            //var searchitem9 = $("#formid").val();
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        type: "post",
+                        url: "/RegisterInfo/GetBidSectionListByApplicationId?applicationId=@ViewBag.ApplicationId",
+                        //encodeURI(searchitem2) + "&locationdepartment=" + encodeURI(searchitem3) + "&type=" +
+                        //encodeURI(searchitem4) + "&fundstype='" + encodeURI(searchitem5) + "&starttime=" +
+                        //encodeURI(searchitem6) + "&endtime=" + encodeURI(searchitem7) + "&fundsoprator=" +
+                        //encodeURI(searchitem8) + "&formid=" + encodeURI(searchitem9) + "",
+                        dataType: "json",
+                        contentType: "application/json",
+                    },
+                    edit: {
+                        type: "post",
+                        url: "/RegisterInfo/CreateBidWinnerNotice?sectionId=",
+                        dataType: "json",
+                        complete: function (e) {
+                            $("#fundsGrid").data("kendoGrid").dataSource.read();
+                        }
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation == "read") {
+                            var parameter = {
+                                pageIndex: options.page,
+                                pageSize: options.pageSize
+                            };
+                            return kendo.stringify(parameter);
+                        }
+                        if (operation == "edit") {
+                            options.action = operation;
+                            return { modelId: kendo.stringify(options.models[options.models.length - 1].ID) };
+                        }
+                    },
+                },
+
+                batch: true,
+                pageSize: 5,
+
+                schema: {
+
+                    data: function (d) {
+                        return d.data;
+                    },
+                    total: function (d) {
+                        return d.total;
+                    }
+                },
+                serverPaging: true,
+            });
+
+            $("#fundsManagerGrid").kendoGrid({
+                dataSource: dataSource,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5,
+                    messages: {
+                        display: "显示{0}-{1}条，共{2}条",
+                        empty: "没有数据",
+                        page: "页",
+                        of: "/ {0}",
+                        itemsPerPage: "条/页",
+                        first: "第一页",
+                        previous: "前一页",
+                        next: "下一页",
+                        last: "最后一页",
+                        refresh: "刷新"
+                    }
+                },
+                detailInit: detailSearch,
+                columns: [
+                    {
+                        field: "Number",
+                        title: "序号",
+                        width: "8%"
+                    },
+                    {
+                        field: "SectionNumber",
+                        title: "标段编号",
+                        width: "8%"
+                    },
+                    {
+                        field: "SectionName",
+                        title: "标段名称",
+                        width: "8%"
+                    },
+                    {
+                        field: "ProjectName",
+                        title: "项目名称",
+                        width: "20%"
+                    },
+                    {
+                        field: "ID",
+                        title: "ID",
+                        hidden: true,
+                    }, 
+                    {
+                        command:
+                        [{ name: "edit", text: "中标登记", width: "5%" }]
+                    }
+                ],
+                editable: {
+                    //mode: "inline",
+                    mode: "popup"
+                },
+                selectable: true,
+            });
+        }
+
+        // 查询标段中标详情
+        function detailSearch(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "jsonp",
+                    transport: {
+                        read: "/RegisterInfo/GetRegisterInfoListBySectionId?sectionId=" + e.data.ID
+                    },
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 5,
+                    //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Number", title: "序号", width: "25%" },
+                    { field: "RankDescription", title: "名次", width: "25%" },
+                    { field: "CompanyName", title: "中标候选人名称", width: "25%" },
+                    { field: "TenderOffer", title: "投标报价", width: "25%" },
+                    { field: "Score", title: "综合评标得分", width: "25%" }
+                ]
+            });
+        }
+    </script>
+</div>

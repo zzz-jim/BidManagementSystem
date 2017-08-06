@@ -55,6 +55,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "名次")]
         public Nullable<int> Rank { get; set; }
 
+        [Display(Name = "名次")]
+        public string RankDescription { get; set; }
+
         [Display(Name = "综合评标等分")]
         public Nullable<decimal> Score { get; set; }
 
@@ -63,5 +66,7 @@ namespace UI.ScientificResearch.Models
 
         [Display(Name = "是否上榜")]
         public bool IsShow { get; set; }
+
+        public int Number { get; set; }
     }
 }
