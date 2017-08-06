@@ -48,7 +48,20 @@ namespace UI.ScientificResearch.Models
         [Required]
         [Display(Name = "操作人ID")]
         public string OperatorId { get; set; }
+
         [Display(Name = "创建时间")]
         public Nullable<DateTime> CreatedTime { get; set; }
+
+        [Display(Name = "名次")]
+        public Nullable<int> Rank { get; set; }
+
+        [Display(Name = "综合评标等分")]
+        public Nullable<decimal> Score { get; set; }
+
+        [Display(Name = "投标报价")]
+        public Nullable<long> TenderOffer { get; set; }
+
+        [Display(Name = "是否上榜")]
+        public bool IsShow { get; set; }
     }
 }

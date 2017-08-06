@@ -1,0 +1,124 @@
+﻿@model UI.ScientificResearch.Models.ProjectRegistrationViewModel
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+@if (ViewBag.SendUpSuccess == true)
+{
+    <script type="text/javascript">
+    //上报成功的提示
+    $(function(){
+        var sendupsuccess = "@ViewBag.SendUpSuccess";
+        if (sendupsuccess == "True")
+        {
+            parent.location.reload();
+            alert("保存成功！");
+        }
+    });
+    </script>
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <table class="table">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.ApplicationId)
+            @Html.HiddenFor(model => model.OperatorId)
+            @Html.HiddenFor(model => model.OperatorName)
+            @Html.HiddenFor(model => model.CreatedTime)
+            @Html.HiddenFor(model => model.BidSectionId)
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.CompanyName)
+                </td>
+                <td>
+                    @Html.DropDownList("ID", ViewBag.bidCompanyList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>  @Html.LabelFor(model => model.Rank) </td>
+                <td>
+                    <select id="Rank" name="Rank">
+                        <option value="1">第一名</option>
+                        <option value="2">第二名</option>
+                        <option value="3">第三名</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>  @Html.LabelFor(model => model.Score) </td>
+                <td>
+                    @*@Html.EditorFor(model => model.Score, new { htmlAttributes = new { @style = "width:150px" } })*@
+                    <input type="text" id="Score" name="Score" style="width:150px" value="@Model.RegistrationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+
+                    @Html.ValidationMessageFor(model => model.Score, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>  @Html.LabelFor(model => model.TenderOffer) </td>
+                <td>
+                    @*@Html.EditorFor(model => model.TenderOffer, new { htmlAttributes = new { @style = "width:150px" } })*@
+                    <input type="text" id="TenderOffer" name="TenderOffer" style="width:150px" value="@Model.RegistrationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+
+                    @Html.ValidationMessageFor(model => model.TenderOffer, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="保存" name="Save" class="btn btn-default" />
+                </td>
+            </tr>
+        </table>
+    }
+    <script>
+        $(document).ready(function () {
+            $("#RegisterTime").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+            $("#RegisterTime").attr("readonly", true);
+        });
+    </script>
+    <script type="text/javascript">
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage="";
+            if ($("#Rank").val().trim() == "") {
+                errorMessage = errorMessage + "名次不能为空！";
+            }
+            if ($("#Score").val().trim() == "") {
+                errorMessage = errorMessage + "综合评标等分不能为空！";
+            }
+            if ($("#TenderOffer").val().trim() == "") {
+                errorMessage = errorMessage + "投标报价不能为空！";
+            }
+            if ($("#ID").val().trim() == "") {
+                errorMessage = errorMessage + "公司名称不能为空！";
+            }
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+    //上报成功的提示
+    $(function(){
+        var sendupsuccess = "@ViewBag.SendUpSuccess";
+        if (sendupsuccess == "True")
+        {
+            alert("保存成功！");
+            parent.location.reload();
+        }
+    });
+    </script>
+
+}

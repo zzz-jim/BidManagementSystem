@@ -31,6 +31,10 @@ namespace ScientificResearch.DomainModel
         public string OperatorId { get; set; }
         public Nullable<System.DateTime> CreatedTime { get; set; }
         public int BidSectionId { get; set; }
+        public Nullable<int> Rank { get; set; }
+        public Nullable<decimal> Score { get; set; }
+        public Nullable<long> TenderOffer { get; set; }
+        public bool IsShow { get; set; }
     
         public virtual ERPNWorkToDo ERPNWorkToDo { get; set; }
     }

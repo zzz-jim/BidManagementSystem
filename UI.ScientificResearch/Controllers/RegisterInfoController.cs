@@ -226,9 +226,10 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult Create(int applicationId)
         {
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
-            var selectItemList = new List<SelectListItem>() {
+            var selectItemList = new List<SelectListItem>()
+            {
                 //new SelectListItem(){Value="0",Text="全部",Selected=true}
-                    };
+            };
             if (bidSections.Any())
             {
                 var selectList = new SelectList(bidSections, "ID", "SectionName");
@@ -246,7 +247,7 @@ namespace UI.ScientificResearch.Controllers
             model.CreatedTime = DateTime.Now;
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
-            var bidSectionInfo=ProjectBidSectionService.GetEntityById(model.BidSectionId);
+            var bidSectionInfo = ProjectBidSectionService.GetEntityById(model.BidSectionId);
             model.BidSection = bidSectionInfo.SectionName;
             ProjectRegistrationService.AddEntity(model.ConvertTo<ProjectRegistration>());
             //上报成功的标志
@@ -305,13 +306,19 @@ namespace UI.ScientificResearch.Controllers
             }
         }
 
+        /// <summary>
+        /// 添加和修改报名情况
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
-            var selectItemList = new List<SelectListItem>() {
+            var selectItemList = new List<SelectListItem>()
+            {
                 //new SelectListItem(){Value="0",Text="全部",Selected=true}
-                    };
+            };
             if (bidSections.Any())
             {
                 var selectList = new SelectList(bidSections, "ID", "SectionName");
@@ -322,6 +329,11 @@ namespace UI.ScientificResearch.Controllers
             return View(model.ConvertTo<ProjectRegistrationViewModel>());
         }
 
+        /// <summary>
+        /// 添加和修改报名情况
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(ProjectRegistrationViewModel model)
         {
@@ -335,13 +347,19 @@ namespace UI.ScientificResearch.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// 添加和修改保证金情况
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ActionResult EditBidBondInfo(int id)
         {
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
-            var selectItemList = new List<SelectListItem>() {
+            var selectItemList = new List<SelectListItem>()
+            {
                 //new SelectListItem(){Value="0",Text="全部",Selected=true}
-                    };
+            };
             if (bidSections.Any())
             {
                 var selectList = new SelectList(bidSections, "ID", "SectionName");
@@ -352,6 +370,11 @@ namespace UI.ScientificResearch.Controllers
             return View(model.ConvertTo<ProjectRegistrationViewModel>());
         }
 
+        /// <summary>
+        /// 添加和修改保证金情况
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EditBidBondInfo(ProjectRegistrationViewModel model)
         {
@@ -362,6 +385,165 @@ namespace UI.ScientificResearch.Controllers
             ViewBag.SendUpSuccess = true;
             return View(model);
         }
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditBidWinnerNotice(int id)
+        {
+            var model = ProjectRegistrationService.GetEntityById(id);
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
+            return View(model.ConvertTo<ProjectRegistrationViewModel>());
+        }
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult CreateBidWinnerNotice(int sectionId)
+        {
+            // 查出该标段下的所有公司，在页面上编辑中标 得分及名次信息
+            var registCompanyList = ProjectRegistrationService.GetEntities(x => x.BidSectionId == sectionId);
+
+            if (!registCompanyList.Any())
+            {
+                return View(@"<script type='text/javascript'>alert('该标段还没有公司报名！'); </script> ");
+            }
+
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+
+            if (registCompanyList.Any())
+            {
+                var selectList = new SelectList(registCompanyList, "ID", "CompanyName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidCompanyList = selectItemList;
+
+            return View(new ProjectRegistrationViewModel());
+
+        }
+
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateBidWinnerNotice(ProjectRegistrationViewModel model)
+        {
+            var projectInfo = ProjectRegistrationService.GetEntityById(model.ID);
+
+            if (projectInfo == null)
+            {
+                return View(@"<script type='text/javascript'>alert('该公司报名信息不正确！'); </script> ");
+            }
+
+            projectInfo.IsShow = true;
+            projectInfo.Score = model.Score;
+            projectInfo.Rank = model.Rank;
+            projectInfo.TenderOffer = model.TenderOffer;
+
+            ProjectRegistrationService.UpdateEntity(projectInfo);
+
+            //上报成功的标志
+            ViewBag.SendUpSuccess = true;
+            return View(model);
+        }
+
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetRegisterInfoList(int sectionId)
+        {
+            // 查出该标段下的所有公司，在页面上编辑中标 得分及名次信息
+            var registCompanyList = ProjectRegistrationService.GetEntities(x => x.BidSectionId == sectionId);
+
+            return View(registCompanyList.Select(x => x.ConvertTo<ProjectRegistrationViewModel>()));
+        }
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditBidWinnerNotice(ProjectRegistrationViewModel model)
+        {
+            model.OperatorName = User.Identity.Name;
+            model.OperatorId = User.Identity.GetUserId();
+            ProjectRegistrationService.UpdateEntity(model.ConvertTo<ProjectRegistration>());
+            //上报成功的标志
+            ViewBag.SendUpSuccess = true;
+            return View(model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public ActionResult ProjectBidWinnerNoticeList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "报名情况";
+
+            var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
+            ViewBag.Id = applicationId;
+            return View(models);
+        }
+
+        /// <summary>
+        /// 添加和修改中标通知书
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetBidSectionList(int applicationId)
+        {
+            var application = ApplicationService.GetEntityById(applicationId);
+
+            if (application == null)
+            {
+                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+            }
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+
+            if (bidSections.Any())
+            {
+                var result = bidSections.Select(x => x.ConvertTo<ProjectBidSectionViewModel>());
+
+                ViewBag.ProjectName = application.WenHao;
+
+                return View(result);
+            }
+
+            return View(new List<ProjectBidSectionViewModel> { /*new ProjectBidSectionViewModel() { ApplicationId = applicationId }*/ });
+        }
+
+
         #endregion
     }
 }

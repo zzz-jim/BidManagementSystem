@@ -2136,6 +2136,11 @@
     <Content Include="Views\RegisterInfo\EditBidBondInfo.cshtml" />
     <Content Include="Views\Approval\Test.cshtml" />
     <Content Include="Views\Approval\TenderNotice.cshtml" />
+    <Content Include="Views\RegisterInfo\EditBidWinnerNotice.cshtml" />
+    <Content Include="Views\RegisterInfo\ProjectBidWinnerNoticeList.cshtml" />
+    <Content Include="Views\RegisterInfo\GetBidSectionList.cshtml" />
+    <Content Include="Views\RegisterInfo\CreateBidWinnerNotice.cshtml" />
+    <Content Include="Views\RegisterInfo\GetRegisterInfoList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

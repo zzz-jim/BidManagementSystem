@@ -49,7 +49,7 @@
 <table class="table">
 
     <tr>
-        <td colspan="4">
+        <td colspan="8">
             <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
         </td>
     </tr>
@@ -77,9 +77,9 @@
         <th>
             @Html.DisplayNameFor(model => model.OperatorName)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.OperatorId)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.CreatedTime)
         </th>
@@ -105,9 +105,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.OperatorName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.OperatorId)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
