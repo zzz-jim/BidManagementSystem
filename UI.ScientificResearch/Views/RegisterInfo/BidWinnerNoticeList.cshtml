@@ -7,7 +7,7 @@
 <!-- Project Step Wizard -->
 @Html.Partial("_ScienceResearchWizardPartial")
 
-
+<div id="MaxWindow"></div>
 <input type="hidden" id="Freeze" value="@ViewBag.ApplicationId" />
 <div id="fundsmanagersearchdata">
     @*项目名称：<input type="text" id="porgramename" style="width: 150px; height: 30px">&nbsp;
@@ -129,17 +129,17 @@
                     {
                         field: "SectionNumber",
                         title: "标段编号",
-                        width: "8%"
+                        width: "20%"
                     },
                     {
                         field: "SectionName",
                         title: "标段名称",
-                        width: "8%"
+                        width: "20%"
                     },
                     {
                         field: "ProjectName",
                         title: "项目名称",
-                        width: "20%"
+                        width: "40%"
                     },
                     {
                         field: "ID",
@@ -148,7 +148,8 @@
                     }, 
                     {
                         command:
-                        [{ name: "edit", text: "中标登记", width: "5%" }]
+                        //[{ name: "edit", text: "中标登记", width: "5%" }]
+                        [{ text: "中标登记", width: "5%", click: createBidWinnerNotice}]
                     }
                 ],
                 editable: {
@@ -174,8 +175,8 @@
                     //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
                 },
                 scrollable: false,
-                sortable: true,
-                pageable: true,
+                sortable: false,
+                pageable: false,
                 columns: [
                     { field: "Number", title: "序号", width: "25%" },
                     { field: "RankDescription", title: "名次", width: "25%" },
@@ -185,5 +186,35 @@
                 ]
             });
         }
+
+        // 中标登记 标段id
+        function createBidWinnerNotice(e) {
+            e.preventDefault();
+
+            var tr = $(e.target).closest("tr"); // get the current table row (tr)
+            // get the data bound to the current table row
+            var data = this.dataItem(tr);
+            $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+            $("#MaxWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "60%",
+                height: "70%",
+                title: "中标登记",
+                visible: false,
+                actions: [
+                    "Pin", "Minimize", "Maximize", "Close"
+                ],
+                modal: true,
+                resizable: false,
+                close: function (e) {
+                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                }
+            });
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ID + '">中标登记</iframe>');
+            $("#MaxWindow").data("kendoWindow").center().open();
+        };
     </script>
 </div>

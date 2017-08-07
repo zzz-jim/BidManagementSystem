@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BidBondInfoViewModels.cs" />
+    <Compile Include="Models\BidWinnerNoticeViewModel.cs" />
     <Compile Include="Models\ProjectRegistrationViewModel.cs" />
     <Compile Include="Models\RegisterInfoViewModels.cs" />
     <Compile Include="Models\FileUploadViewModels.cs" />

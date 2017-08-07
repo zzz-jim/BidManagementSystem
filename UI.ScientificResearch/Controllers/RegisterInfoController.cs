@@ -416,6 +416,8 @@ namespace UI.ScientificResearch.Controllers
         /// <returns></returns>
         public ActionResult CreateBidWinnerNotice(int sectionId)
         {
+            var result = new BidWinnerNoticeViewModel();
+
             // 查出该标段下的所有公司，在页面上编辑中标 得分及名次信息
             var registCompanyList = ProjectRegistrationService.GetEntities(x => x.BidSectionId == sectionId);
 
@@ -423,6 +425,16 @@ namespace UI.ScientificResearch.Controllers
             {
                 return View(@"<script type='text/javascript'>alert('该标段还没有公司报名！'); </script> ");
             }
+
+            var application = ApplicationService.GetEntityById(registCompanyList.First().ApplicationId);
+            var section = ProjectBidSectionService.GetEntityById(sectionId);
+
+            result.ApplicationId = application.ID;
+            result.ProjectName = application.WenHao;
+            result.ProjectNumber = application.BeiYong1;
+            result.BidSectionId = sectionId;
+            result.SectionName = section.SectionName;
+            result.SectionNumber = section.SectionNumber;
 
             var selectItemList = new List<SelectListItem>()
             {
@@ -436,8 +448,41 @@ namespace UI.ScientificResearch.Controllers
             }
 
             ViewBag.bidCompanyList = selectItemList;
+            ViewBag.ApplicationId = application.ID;
+            // 查出该标段下的所有公司的 前三甲，在页面上编辑中标 得分及名次信息
+            var rankedCompanyList = registCompanyList.Where(x => x.IsShow);
+            if (rankedCompanyList.Any())
+            {
+                foreach (var item in rankedCompanyList)
+                {
+                    if (item.Rank == 1)
+                    {
+                        result.CompanyId1 = item.ID;
+                        result.CompanyName1 = item.CompanyName;
+                        result.Score1 = item.Score.Value;
+                        result.TenderOffer1 = item.TenderOffer.Value;
+                    }
+                    else
+                    if (item.Rank == 2)
+                    {
+                        result.CompanyId2 = item.ID;
+                        result.CompanyName2 = item.CompanyName;
+                        result.Score2 = item.Score.Value;
+                        result.TenderOffer2 = item.TenderOffer.Value;
+                    }
+                    else
+                    if (item.Rank == 3)
+                    {
+                        result.CompanyId3 = item.ID;
+                        result.CompanyName3 = item.CompanyName;
+                        result.Score3 = item.Score.Value;
+                        result.TenderOffer3 = item.TenderOffer.Value;
+                    }
+                    else { }
+                }
+            }
 
-            return View(new ProjectRegistrationViewModel());
+            return View(result);
 
         }
 
@@ -448,21 +493,46 @@ namespace UI.ScientificResearch.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateBidWinnerNotice(ProjectRegistrationViewModel model)
+        public ActionResult CreateBidWinnerNotice(BidWinnerNoticeViewModel model)
         {
-            var projectInfo = ProjectRegistrationService.GetEntityById(model.ID);
+            var companyList = ProjectRegistrationService.GetEntities(x => x.ID == model.CompanyId1 || x.ID == model.CompanyId2 || x.ID == model.CompanyId3 || x.IsShow).ToList();
 
-            if (projectInfo == null)
+            if (!companyList.Any())
             {
                 return View(@"<script type='text/javascript'>alert('该公司报名信息不正确！'); </script> ");
             }
 
-            projectInfo.IsShow = true;
-            projectInfo.Score = model.Score;
-            projectInfo.Rank = model.Rank;
-            projectInfo.TenderOffer = model.TenderOffer;
+            foreach (var item in companyList)
+            {
+                if (item.ID == model.CompanyId1)
+                {
+                    item.IsShow = true;
+                    item.Score = model.Score1;
+                    item.TenderOffer = model.TenderOffer1;
+                    item.Rank = 1;
+                }
+                else
+                if (item.ID == model.CompanyId2)
+                {
+                    item.IsShow = true;
+                    item.Score = model.Score2;
+                    item.TenderOffer = model.TenderOffer2;
+                    item.Rank = 2;
+                }
+                else
+                if (item.ID == model.CompanyId3)
+                {
+                    item.IsShow = true;
+                    item.Score = model.Score3;
+                    item.TenderOffer = model.TenderOffer3;
+                    item.Rank = 3;
+                }
+                else
 
-            ProjectRegistrationService.UpdateEntity(projectInfo);
+                    item.IsShow = false;
+
+                ProjectRegistrationService.UpdateEntity(item);
+            }
 
             //上报成功的标志
             ViewBag.SendUpSuccess = true;
@@ -592,7 +662,7 @@ namespace UI.ScientificResearch.Controllers
             var registCompanyList = ProjectRegistrationService.GetEntities(x => x.BidSectionId == sectionId && x.IsShow);
             if (registCompanyList.Any())
             {
-                var result = registCompanyList.Select(x => x.ConvertTo<ProjectRegistrationViewModel>()).ToList();
+                var result = registCompanyList.Select(x => x.ConvertTo<ProjectRegistrationViewModel>()).OrderBy(x => x.Rank).ToList();
 
                 //序号
                 int number = 1;
@@ -616,6 +686,7 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult BidWinnerNoticeList(int applicationId)
         {
             ViewBag.ApplicationId = applicationId;
+            ViewBag.Id = applicationId;
             return View();
         }
 
