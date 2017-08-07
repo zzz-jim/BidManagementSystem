@@ -31,13 +31,11 @@
         </td>
         <td colspan="5"></td>
     </tr>
+    <input type="submit" id="Save" value="提交" />
+    <input type="hidden" id="Freeze" value="@ViewBag.Id" />
     <br />
     <br />
     @Html.TextAreaFor(m => m.FormContent)
-    <br />
-    <br />
-    <input type="submit" id="Save" value="提交" />
-    <input type="hidden" id="Freeze" value="@Model.NWorkToDoID" />
     @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
 
     @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
