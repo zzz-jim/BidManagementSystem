@@ -26,16 +26,39 @@
         areadHaveFillIn();
     });
     $(function () {
-        $("#btnUploadFile").click(function () {
+        // 初稿
+        $("#btnDraftUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
                 // TODO:  remark
-                var jsonData = {"application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark":"测试备注"};
-    ajaxFileUploadFillInWithData(jsonData);
+                var jsonData = { "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "初稿文件" };
+                ajaxFileUploadFillInWithData(jsonData);
             }
             else {
-        alert("请选择要上传的文件！！");
-    }
-        })
+                alert("请选择要上传的文件！！");
+            }
+        });
+        // 初审
+        $("#btnAuditUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                // TODO:  remark
+                var jsonData = { "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "初审文件" };
+                ajaxFileUploadFillInWithData(jsonData);
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        });
+        // 定稿
+         $("#btnFinalUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                // TODO:  remark
+                var jsonData = { "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "终稿文件" };
+                ajaxFileUploadFillInWithData(jsonData);
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        });
     })
 
 </script>
@@ -55,7 +78,13 @@
     </tr>
     <tr>
         <td colspan="1">
-            <input type="button" value="上传" id="btnUploadFile" />
+            <input type="button" value="上传初稿文件" id="btnDraftUploadFile" />
+        </td>
+        <td colspan="1">
+            <input type="button" value="上传初审文件" id="btnAuditUploadFile" />
+        </td>
+        <td colspan="1">
+            <input type="button" value="上传终稿文件" id="btnFinalUploadFile" />
         </td>
         <td colspan="1">
             <div id="areadyuploadfile"></div>
@@ -71,15 +100,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Number)
         </th>
-        @*<th>
+        <th>
             @Html.DisplayNameFor(model => model.Remark)
-        </th>*@
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.OperatorName)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.OperatorId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.OperatorId)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.CreatedTime)
         </th>
@@ -99,15 +128,15 @@
     {
         <tr>
             <td>@index</td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Remark)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OperatorName)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.OperatorId)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.OperatorId)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>

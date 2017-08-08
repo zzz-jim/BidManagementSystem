@@ -323,7 +323,7 @@ namespace UI.ScientificResearch.Controllers
             UploadFilePageType type = UploadFilePageType.招标文件;
             ViewBag.UploadFilePageType = (int)type;
             ViewBag.Id = applicationId;
-            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+            return View(FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
         public ActionResult Details(int id)
