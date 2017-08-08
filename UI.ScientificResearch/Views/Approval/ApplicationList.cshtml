@@ -260,8 +260,62 @@
                 },
                 selectable: true,
                 change: onChange,
+
+                detailInit: detailSearch,
             });
         };
+        // 查询该项目的标段列表详情
+        function detailSearch(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "jsonp",
+                    transport: {
+                        read: "/RegisterInfo/GetBidSectionListByApplicationId2?applicationId=" + e.data.ID
+                    },
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 5,
+                    //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
+                },
+                scrollable: false,
+                sortable: false,
+                pageable: false,
+                columns: [
+                    {
+                        field: "Number",
+                        title: "序号",
+                        width: "8%"
+                    },
+                    {
+                        field: "SectionNumber",
+                        title: "标段编号",
+                        width: "20%"
+                    },
+                    {
+                        field: "SectionName",
+                        title: "标段名称",
+                        width: "20%"
+                    },
+                    {
+                        field: "ProjectName",
+                        title: "项目名称",
+                        width: "40%"
+                    },
+                    {
+                        field: "ID",
+                        title: "ID",
+                        hidden: true,
+                    },
+                    //{
+                    //    command:
+                    //    //[{ name: "edit", text: "中标登记", width: "5%" }]
+                    //    [{ text: "中标登记", width: "5%", click: createBidWinnerNotice }]
+                    //}
+                ],
+            });
+        }
+
         function onChange(arg) {
             var selected = $.map(this.select(), function (item) {
                 OpenMaxWindow(item.cells[0].outerText);

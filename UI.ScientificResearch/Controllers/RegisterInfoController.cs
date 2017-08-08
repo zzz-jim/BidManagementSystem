@@ -651,6 +651,40 @@ namespace UI.ScientificResearch.Controllers
             return Json(new { data = new List<ProjectBidSectionViewModel> { }, total = 0 }, JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult GetBidSectionListByApplicationId2(int applicationId)
+        {
+            var application = ApplicationService.GetEntityById(applicationId);
+
+            if (application == null)
+            {
+                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+            }
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+
+            if (bidSections.Any())
+            {
+                var result = bidSections.Select(x => x.ConvertTo<ProjectBidSectionViewModel>()).ToList();
+
+                if (result.Any())
+                {
+                    //序号
+                    int number = 1;
+                    foreach (var item in result)
+                    {
+                        item.Number = number;
+                        item.ProjectName = application.WenHao;
+                        number++;
+                    }
+                }
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new List<ProjectBidSectionViewModel> { }, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// 查出该标段下的所有公司
         /// </summary>
