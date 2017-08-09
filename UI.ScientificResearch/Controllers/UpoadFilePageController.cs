@@ -39,7 +39,7 @@ namespace UI.ScientificResearch.Controllers
         private IProjectBonusCreditService ProjectBonusCreditService;
         private IStatisticService StatisticService;
         private IFundsThresholdService FundsThresholdService;
-
+        private IProjectBidSectionRepository ProjectBidSectionService;
         private IProjectFileRepository FileService;
 
         private ISession MySession;
@@ -74,6 +74,7 @@ namespace UI.ScientificResearch.Controllers
                 new StatisticServiceImplement(),
                 new FundsThresholdServiceImplement(),
                 new ProjectFileRepository(),
+                new ProjectBidSectionRepository(),
                 new SessionManager()
             )
         {
@@ -93,6 +94,7 @@ namespace UI.ScientificResearch.Controllers
             IStatisticService statisticService,
             IFundsThresholdService eFundsThresholdService,
             IProjectFileRepository fileService,
+            IProjectBidSectionRepository projectBidSectionService,
             ISession session
             )
         {
@@ -110,6 +112,7 @@ namespace UI.ScientificResearch.Controllers
             this.StatisticService = statisticService;
             this.FundsThresholdService = eFundsThresholdService;
             this.FileService = fileService;
+            this.ProjectBidSectionService = projectBidSectionService;
             this.MySession = session;
 
             fileUploadViewModelsList.Add(new FileUploadViewModels
@@ -291,6 +294,19 @@ namespace UI.ScientificResearch.Controllers
             UploadFilePageType type = UploadFilePageType.合同资料;
             ViewBag.UploadFilePageType = (int)type;
             ViewBag.Id = applicationId;
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
@@ -307,6 +323,16 @@ namespace UI.ScientificResearch.Controllers
             UploadFilePageType type = UploadFilePageType.开评标相关资料;
             ViewBag.UploadFilePageType = (int)type;
             ViewBag.Id = applicationId;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
@@ -323,6 +349,16 @@ namespace UI.ScientificResearch.Controllers
             UploadFilePageType type = UploadFilePageType.招标文件;
             ViewBag.UploadFilePageType = (int)type;
             ViewBag.Id = applicationId;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
             return View(FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 

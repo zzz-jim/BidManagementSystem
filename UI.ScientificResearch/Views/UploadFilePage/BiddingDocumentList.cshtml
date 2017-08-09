@@ -72,7 +72,13 @@
 <table class="table">
 
     <tr>
-        <td colspan="8">
+        <td colspan="1">
+            <b> 请选择项目标段：</b>
+        </td>
+        <td colspan="2">
+            @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+        </td>
+        <td colspan="4">
             <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
         </td>
     </tr>

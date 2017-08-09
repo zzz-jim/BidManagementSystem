@@ -207,12 +207,12 @@
                     {
                         field: "BeiYong1",
                         title: "项目编号",
-                        width: "17%"
+                        width: "14%"
                     },
                     {
                         field: "WenHao",
                         title: "项目名称",
-                        width: "22%"
+                        width: "17%"
                     },
                     //{
                     //    field: "UserName",
@@ -227,7 +227,7 @@
                     {
                         field: "ProjectContent",
                         title: "项目内容",
-                        width: "18%",
+                        width: "15%",
                     },
                     {
                         field: "ProcurementName",
@@ -251,7 +251,7 @@
                     },
                     {
                         command:
-                        [{ name: "destroy", text: "删除", width: "5%" }]
+                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除"}]
                     }
                 ],
                 editable: {
@@ -259,7 +259,7 @@
                     mode: "popup"
                 },
                 selectable: true,
-                change: onChange,
+                //change: onChange,
 
                 detailInit: detailSearch,
             });
@@ -316,15 +316,20 @@
             });
         }
 
-        function onChange(arg) {
-            var selected = $.map(this.select(), function (item) {
-                OpenMaxWindow(item.cells[0].outerText);
-            });
+        //function onChange(arg) {
+        //    var selected = $.map(this.select(), function (item) {
+        //        OpenMaxWindow(item.cells[0].outerText);
+        //    });
 
-            //alert(selected);
-            //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
-        }
-        function OpenMaxWindow(id) {
+        //    //alert(selected);
+        //    //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+        //}
+        function OpenMaxWindow(e) {
+            e.preventDefault();
+            var tr = $(e.target).closest("tr"); // get the current table row (tr)
+            // get the data bound to the current table row
+            var data = this.dataItem(tr);
+            var id = data.ID;
             $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
             $("#MaxWindow").kendoWindow({
                 position: {

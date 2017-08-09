@@ -29,7 +29,7 @@
         $("#btnUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
                 // TODO:  remark
-                var jsonData = { "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "测试备注" };
+                var jsonData = { "application_id":@ViewBag.Id,"section_id": $("#BidSectionId").val(),"file_type":@ViewBag.UploadFilePageType,"remark": "测试备注" };
                 ajaxFileUploadFillInWithData(jsonData);
             }
             else {
@@ -49,7 +49,13 @@
 <table class="table">
 
     <tr>
-        <td colspan="8">
+        <td colspan="1">
+            <b> 请选择项目标段：</b>
+        </td>
+        <td colspan="2">
+            @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+        </td>
+        <td colspan="4">
             <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
         </td>
     </tr>

@@ -2091,6 +2091,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectionId" Type="int" Nullable="false" />
           <Property Name="ApplicationId" Type="int" Nullable="false" />
           <Property Name="FileType" Type="int" Nullable="false" />
           <Property Name="FileName" Type="varchar" MaxLength="255" Nullable="false" />
@@ -2188,18 +2189,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ProjectBidSection">
-              <PropertyRef Name="ApplicationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
-          <End Role="ERPNWorkToDo" Type="Self.ERPNWorkToDo" Multiplicity="1" />
-          <End Role="ProjectFile" Type="Self.ProjectFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ERPNWorkToDo">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProjectFile">
               <PropertyRef Name="ApplicationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2387,10 +2376,6 @@
           <AssociationSet Name="FK_ProjectBidSection_ERPNWorkToDo" Association="Self.FK_ProjectBidSection_ERPNWorkToDo">
             <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
             <End Role="ProjectBidSection" EntitySet="ProjectBidSection" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectFileRecord_ERPNWorkToDo" Association="Self.FK_ProjectFileRecord_ERPNWorkToDo">
-            <End Role="ERPNWorkToDo" EntitySet="ERPNWorkToDo" />
-            <End Role="ProjectFile" EntitySet="ProjectFile" />
           </AssociationSet>
           <AssociationSet Name="FK_ProjectRecord_ERPNWorkFlow" Association="Self.FK_ProjectRecord_ERPNWorkFlow">
             <End Role="ERPNWorkFlow" EntitySet="ERPNWorkFlow" />
@@ -4775,6 +4760,7 @@
           <Property Name="OperatorId" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="CreatedTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ERPNWorkToDo" Relationship="CSPostOAModel.FK_ProjectFileRecord_ERPNWorkToDo" FromRole="ProjectFile" ToRole="ERPNWorkToDo" />
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ProjectRegistration">
           <Key>
@@ -7096,6 +7082,7 @@
           <EntitySetMapping Name="ProjectFile">
             <EntityTypeMapping TypeName="CSPostOAModel.ProjectFile">
               <MappingFragment StoreEntitySet="ProjectFile">
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
                 <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
                 <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
                 <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />

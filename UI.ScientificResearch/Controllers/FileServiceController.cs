@@ -100,11 +100,13 @@ namespace UI.ScientificResearch.Controllers
             string exceptionMsg = string.Empty;
             var formContent = Request.Form;
             int applicationId;// 项目的Id
+            int sectionId;//标段Id
             UploadFilePageType fileType;// 文件类型
             string remark = string.Empty;
 
             try
             {
+                sectionId = Convert.ToInt32(formContent["section_id"]);
                 applicationId = Convert.ToInt32(formContent["application_id"]);
                 fileType = (UploadFilePageType)Convert.ToInt32(formContent["file_type"]);
                 remark = formContent["remark"];
@@ -176,6 +178,7 @@ namespace UI.ScientificResearch.Controllers
                     FileService.AddEntity(new ProjectFile
                     {
                         ApplicationId = applicationId,
+                        SectionId = sectionId,
                         CreatedTime = DateTime.Now,
                         FileName = fileName,
                         FileType = (int)fileType,
