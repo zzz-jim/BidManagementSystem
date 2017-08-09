@@ -307,6 +307,7 @@ namespace UI.ScientificResearch.Controllers
             }
 
             ViewBag.bidSectionsList = selectItemList;
+
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
@@ -333,6 +334,9 @@ namespace UI.ScientificResearch.Controllers
                 var selectList = new SelectList(bidSections, "ID", "SectionName");
                 selectItemList.AddRange(selectList);
             }
+
+            ViewBag.bidSectionsList = selectItemList;
+
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 
@@ -359,6 +363,9 @@ namespace UI.ScientificResearch.Controllers
                 var selectList = new SelectList(bidSections, "ID", "SectionName");
                 selectItemList.AddRange(selectList);
             }
+
+            ViewBag.bidSectionsList = selectItemList;
+
             return View(FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
         }
 

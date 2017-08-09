@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
-    <!-- Project Step Wizard -->
+<!-- Project Step Wizard -->
 @Html.Partial("_ScienceResearchWizardPartial")
 
 
@@ -20,8 +20,8 @@
 <table class="table">
     <tr>
         @*<th>
-            @Html.DisplayNameFor(model => model.ApplicationId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.ApplicationId)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)
         </th>
@@ -58,69 +58,70 @@
         <th>
             @Html.DisplayNameFor(model => model.OperatorName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OperatorId)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.OperatorId)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.CreatedTime)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.ApplicationId)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BidSection)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsSubmitRegistrationFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegistrationFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsSubmitBidBondFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BidBondFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisterTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OperatorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OperatorId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedTime)
-        </td>
-        <td>
-            <a href="#" onclick="edititem(@item.ID)">修改</a> |
-            <a href="#" onclick="EditBidBondInfo(@item.ID)">保证金</a> |
-            <a href="#" onclick="deleteitem(@item.ID)">删除</a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.ApplicationId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidSection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSubmitRegistrationFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSubmitBidBondFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidBondFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisterTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OperatorName)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.OperatorId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                <a href="#" onclick="edititem(@item.ID)">修改</a> |
+                <a href="#" onclick="EditBidBondInfo(@item.ID)">保证金</a> |
+                <a href="#" onclick="deleteitem(@item.ID)">删除</a>
+            </td>
+        </tr>
+    }
 
 </table>
 
@@ -160,7 +161,7 @@
         function deleteitem(id) {
             $.ajax(
                 {
-                    url: '/RegisterInfo/Delete/' + id, 
+                    url: '/RegisterInfo/Delete/' + id,
                     type: 'get',
                     secureuri: false, //一般设置为false
                     fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
