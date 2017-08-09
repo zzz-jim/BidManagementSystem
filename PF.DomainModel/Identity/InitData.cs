@@ -54,15 +54,15 @@ namespace PF.DomainModel.Identity
             {
                 Id = "d1",
                 Name = "病区病房",
-                HospitalId="h1"
+                //HospitalId="h1"
             };
             db.SaveChanges();
             Section xxk = new Section
             {
                 Id = "s1",
-                Name = "信息科",
+                Name = "网络部门",
                 InsuranceCode = "000",
-                DepartmentId="d1"
+                //DepartmentId="d1"
             };
             db.SaveChanges();
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();

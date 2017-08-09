@@ -1,7 +1,7 @@
 ﻿@model PF.DomainModel.Identity.Section
 
 @{
-    ViewBag.Title = "编辑科室";
+    ViewBag.Title = "编辑部门";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal widget-body">
-        <h4>科室</h4>
+        <h4>部门</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.Hidden("oldId", Model.Id)
@@ -40,7 +40,7 @@
                 @Html.ValidationMessageFor(model => model.InsuranceCode)
             </div>
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Department, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("DepartmentId", (
@@ -48,7 +48,7 @@
 
 
             </div>
-        </div>
+        </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="保存" class="btn btn-default" />
@@ -58,5 +58,5 @@
 }
 
 <div>
-    @Html.ActionLink("返回科室列表", "Index")
+    @Html.ActionLink("返回部门列表", "Index")
 </div>

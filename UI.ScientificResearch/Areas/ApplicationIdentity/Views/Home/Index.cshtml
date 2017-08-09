@@ -110,38 +110,38 @@ Purchase: http://wrapbootstrap.com
                 }
             });
 
-            $("#todoli").mouseenter(function () {
-                $("#todoul").empty();
-                $.ajax({
-                    url: "/Approval/UpToDoThings",
-                    type: "get",
-                    success: function (data) {
-                        if (data != null) {
-                            var html = "<li> " + data.length + "个待办事宜</li>";
-                            if (data.length > 10) {
-                                for (var i = 0; i < 9; i++) {
-                                    //将json时间转换
-                                    var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
-                                    var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
-                                    html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
-                                }
-                            }
-                            else {
-                                for (var i = 0; i < data.length; i++) {
-                                    //将json时间转换
-                                    var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
-                                    var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
-                                    html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
-                                }
-                            }
-                            html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" id="Approval_WorkContainer"><a href="/Approval/AllWorkContainer">更多>></a></li>';
-                            $("#todoul").append(html);
-                        }
-                    }
-                });
-            }).mouseleave(function () {
-                $("#todoul").empty();
-            });
+            //$("#todoli").mouseenter(function () {
+            //    $("#todoul").empty();
+            //    $.ajax({
+            //        url: "/Approval/UpToDoThings",
+            //        type: "get",
+            //        success: function (data) {
+            //            if (data != null) {
+            //                var html = "<li> " + data.length + "个待办事宜</li>";
+            //                if (data.length > 10) {
+            //                    for (var i = 0; i < 9; i++) {
+            //                        //将json时间转换
+            //                        var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
+            //                        var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
+            //                        html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
+            //                    }
+            //                }
+            //                else {
+            //                    for (var i = 0; i < data.length; i++) {
+            //                        //将json时间转换
+            //                        var ChangingTimeStr = eval('new ' + data[i].TimeStr.replace('/', '', 'g').replace('/', '', 'g'));
+            //                        var ChangedTimeStr = ChangingTimeStr.toLocaleDateString() + " " + ChangingTimeStr.toLocaleTimeString();
+            //                        html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
+            //                    }
+            //                }
+            //                html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" id="Approval_WorkContainer"><a href="/Approval/AllWorkContainer">更多>></a></li>';
+            //                $("#todoul").append(html);
+            //            }
+            //        }
+            //    });
+            //}).mouseleave(function () {
+            //    $("#todoul").empty();
+            //});
         });
         $(function () {
             $.ajax({
@@ -453,7 +453,7 @@ Purchase: http://wrapbootstrap.com
 
 
 
-                            <li id="todoli">
+                            @*<li id="todoli">
                                 <a class="dropdown-toggle" data-toggle="dropdown" title="待办事宜">
                                     <i class="icon fa fa-tasks"></i>
                                     <span class="badge" id="ToDoThingsCount"></span>
@@ -461,7 +461,7 @@ Purchase: http://wrapbootstrap.com
                                 <!--Tasks Dropdown-->
                                 <ul id="todoul" style="width:600px;" class="pull-right dropdown-menu dropdown-tasks dropdown-arrow "></ul>
                                 <!--/Tasks Dropdown-->
-                            </li>
+                            </li>*@
 
                             @Html.Partial("_LoginPartial")
 

@@ -134,17 +134,17 @@ namespace UI.ScientificResearch.Areas.ApplicationIdentity.Controllers
                 else
                 {
                     //由于外键约束，必须新建部门
-                    await DepartmentManager.CreateAsync(department);
-                    //更新所属科室
-                    var sections = SectionManager.Filter(h => h.DepartmentId == oldId).ToList();
-                    foreach (var d in sections)
-                    {
-                        d.DepartmentId = department.Id;
-                        await SectionManager.UpdateAsync(d);
-                    }
-                    //最后删除原部门
-                    var oldDpart = await DepartmentManager.GetByIdAsync(oldId);
-                    await DepartmentManager.DeleteAsync(oldDpart);
+                    //await DepartmentManager.CreateAsync(department);
+                    ////更新所属科室
+                    //var sections = SectionManager.Filter(h => h.DepartmentId == oldId).ToList();
+                    //foreach (var d in sections)
+                    //{
+                    //    d.DepartmentId = department.Id;
+                    //    await SectionManager.UpdateAsync(d);
+                    //}
+                    ////最后删除原部门
+                    //var oldDpart = await DepartmentManager.GetByIdAsync(oldId);
+                    //await DepartmentManager.DeleteAsync(oldDpart);
                 }
                 return RedirectToAction("Details", new { id = department.Id });
             }

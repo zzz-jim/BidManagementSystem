@@ -1,13 +1,13 @@
 ﻿@model PF.DomainModel.Identity.Section
 
 @{
-    ViewBag.Title = "科室详情";
+    ViewBag.Title = "部门详情";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>科室</h4>
+    <h4>部门</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -24,13 +24,13 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.DepartmentId)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.DepartmentId)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.InsuranceCode)
@@ -40,17 +40,17 @@
             @Html.DisplayFor(model => model.InsuranceCode)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Department)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Department.Name)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
 <p>
     @Html.ActionLink("编辑", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("返回科室列表", "Index")
+    @Html.ActionLink("返回部门列表", "Index")
 </p>

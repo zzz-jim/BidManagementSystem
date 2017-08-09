@@ -5469,10 +5469,12 @@ namespace UI.ScientificResearch.Controllers
                     }
                     else if (arrayList[0] == "Department")
                     {
-                        var key = arrayList[1];
-                        var sections = userManager.Sections.Where(x => x.DepartmentId == key).ToList();
+                        //    var key = arrayList[1];
+                        //    var sections = userManager.Sections.Where(x => x.DepartmentId == key).ToList();
 
-                        return Json(sections.Select(x => x.ToDataTransferObjectModel()).ToList(), JsonRequestBehavior.AllowGet);
+                        //    return Json(sections.Select(x => x.ToDataTransferObjectModel()).ToList(), JsonRequestBehavior.AllowGet);
+                        //}
+                        return null;
                     }
                     else if (arrayList[0] == "Section")
                     {

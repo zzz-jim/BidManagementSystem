@@ -94,13 +94,13 @@ namespace UI.ScientificResearch.Areas.ApplicationIdentity.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             Section model = await SectionManager.GetByIdAsync(id);
-            ViewBag.Departments = (from h in DepartmentManager.All()
-                                 select new SelectListItem()
-                                 {
-                                     Text = h.Name,
-                                     Value = h.Id,
-                                     Selected = h.Id == model.DepartmentId
-                                 }).ToList();
+            //ViewBag.Departments = (from h in DepartmentManager.All()
+            //                     select new SelectListItem()
+            //                     {
+            //                         Text = h.Name,
+            //                         Value = h.Id,
+            //                         Selected = h.Id == model.DepartmentId
+            //                     }).ToList();
 
             return View(model);
         }

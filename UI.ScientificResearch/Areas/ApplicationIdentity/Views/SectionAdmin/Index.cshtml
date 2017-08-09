@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<PF.DomainModel.Identity.Section>
 
 @{
-    ViewBag.Title = "科室管理";
+    ViewBag.Title = "部门管理";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("新建科室", "Create")
+    @Html.ActionLink("新建部门", "Create")
 </p>
 <table class="table">
     <tr>
@@ -17,15 +17,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DepartmentId)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.InsuranceCode)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Department)
-        </th>
+        </th>*@
         <th>
            院区
         </th>
@@ -40,18 +40,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.DepartmentId)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.InsuranceCode)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Department.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Department.Hospital.Name)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("编辑", "Edit", new { id=item.Id }) |
             @Html.ActionLink("详情", "Details", new { id=item.Id }) |

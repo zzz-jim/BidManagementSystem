@@ -26,13 +26,13 @@
                     @if (Request.IsAuthenticated && User.IsInRole("超级管理员"))
                     {
                         <li>@Html.ActionLink("用户管理", "Index", "UsersAdmin")</li>
-                        <li>@Html.ActionLink("院区管理", "Index", "HospitalAdmin")</li>
-                        <li>@Html.ActionLink("部门管理", "Index", "DepartmentAdmin")</li>
-                        <li>@Html.ActionLink("科室管理", "Index", "SectionAdmin")</li>
+                        @*<li>@Html.ActionLink("院区管理", "Index", "HospitalAdmin")</li>
+                        <li>@Html.ActionLink("部门管理", "Index", "DepartmentAdmin")</li>*@
+                        <li>@Html.ActionLink("部门管理", "Index", "SectionAdmin")</li>
                         <li>@Html.ActionLink("权限管理", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("权限组管理", "Index", "GroupsAdmin")</li>
-                        <li>@Html.ActionLink("审批流程管理", "ApprovalSetList", "FlowSet", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("经费报销限额管理", "FundsThresholdList", "Statistic", new { area = "" }, null)</li>
+                        @*<li>@Html.ActionLink("审批流程管理", "ApprovalSetList", "FlowSet", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("经费报销限额管理", "FundsThresholdList", "Statistic", new { area = "" }, null)</li>*@
                         <li>@*@Html.ActionLink("接入系统管理", "Index", "AccessSystem")*@</li>
                     }
                     @*<li>@Html.ActionLink("科研系统", "Index", "Approval", new { area = "" }, null)</li>*@

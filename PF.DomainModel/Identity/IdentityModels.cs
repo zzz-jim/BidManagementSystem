@@ -44,7 +44,7 @@ namespace PF.DomainModel.Identity
         public string WorkId { get; set; }
         [Display(Name = "拼音码")]
         public string PinYin { get; set; }
-        [Display(Name = "医师资格")]
+        [Display(Name = "招标资格")]
         public string Qualification { get; set; }
         [Display(Name = "学历")]
         public string Degree { get; set; }
@@ -83,20 +83,20 @@ namespace PF.DomainModel.Identity
     public class Section
     {
         [Key]
-        [Display(Name = "科室代码")]
+        [Display(Name = "部门代码")]
         public string Id { get; set; }
-         [Display(Name = "科室名称")]
+         [Display(Name = "部门名称")]
         public string Name { get; set; }
          [Display(Name = "拼音码")]
          public string PinYin { get; set; }
-         [Display(Name = "部门代码")]
-        public string DepartmentId { get; set; }
-         [Display(Name = "医保代码")]
+         //[Display(Name = "部门代码")]
+        //public string DepartmentId { get; set; }
+         [Display(Name = "备注")]
          [MaxLength(256)]
         public string InsuranceCode { get; set; }
          public virtual ICollection<ApplicationUserSection> ApplicationUsers { get; set; }
-         [Display(Name = "部门")]
-        public virtual Department Department { get; set; }
+         //[Display(Name = "部门")]
+        //public virtual Department Department { get; set; }
        // public string PinYin { get; set; }
 
     }
@@ -111,7 +111,7 @@ namespace PF.DomainModel.Identity
         public string Name { get; set; }
         [Display(Name = "院区代码")]
         public string HospitalId { get; set; }
-        public virtual ICollection<Section> Sections { get; set; }
+        //public virtual ICollection<Section> Sections { get; set; }
         [Display(Name = "院区")]
         public virtual Hospital Hospital { get; set; }
     }

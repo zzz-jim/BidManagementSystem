@@ -12,12 +12,10 @@ namespace PF.Common.Enums.HB.Identity
     public enum UserCategory
     {
         其它 = 0,
-        医生 = 1,
-        护士 = 2,
-        技师 = 3,
-        药师 = 4,
-        机关后勤 = 5,
-
-
+        行政 = 1,
+        财务 = 2,
+        工程 = 3,
+        管理 = 4,
+        后勤 = 5,
     }
 }

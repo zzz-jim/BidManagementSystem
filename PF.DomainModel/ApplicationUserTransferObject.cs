@@ -15,7 +15,7 @@ namespace PF.DomainModel
         public string WorkId { get; set; }
         //[Display(Name = "拼音码")]
         public string PinYin { get; set; }
-        //[Display(Name = "医师资格")]
+        //[Display(Name = "招标资格")]
         public string Qualification { get; set; }
         //[Display(Name = "学历")]
         public string Degree { get; set; }

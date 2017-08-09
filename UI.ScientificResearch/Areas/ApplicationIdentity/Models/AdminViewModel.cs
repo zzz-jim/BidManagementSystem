@@ -54,7 +54,7 @@ namespace UI.ScientificResearch.Areas.ApplicationIdentity.Models
         {
             get;set;
         }
-        [Display(Name = "医师资格")]
+        [Display(Name = "招标资格")]
         public string Qualification { get; set; }
         [Display(Name = "学历")]
         public string Degree { get; set; }

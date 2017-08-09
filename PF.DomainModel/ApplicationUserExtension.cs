@@ -45,7 +45,7 @@ namespace PF.DomainModel
             {
                 Name = domainModel.Name,
                 Id = "Section" + Constant.Comma.ToString() + domainModel.Id,
-                DepartmentId = domainModel.DepartmentId,
+                //DepartmentId = domainModel.DepartmentId,
                 HasChildren = true,
             };
         }
@@ -56,7 +56,7 @@ namespace PF.DomainModel
             {
                 Name = model.Name,
                 Id = model.Id,
-                DepartmentId = model.DepartmentId,
+                //DepartmentId = model.DepartmentId,
             };
         }
 
