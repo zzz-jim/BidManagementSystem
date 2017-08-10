@@ -712,7 +712,6 @@ namespace UI.ScientificResearch.Controllers
             return Json(new List<ProjectRegistrationViewModel> { }, JsonRequestBehavior.AllowGet);
         }
 
-
         /// <summary>
         /// 中标通知书列表
         /// </summary>
@@ -721,6 +720,48 @@ namespace UI.ScientificResearch.Controllers
         {
             ViewBag.ApplicationId = applicationId;
             ViewBag.Id = applicationId;
+            return View();
+        }
+
+        public ActionResult SectionProjectRegisterInfoList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "报名情况";
+
+            var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>()).ToList();
+            ViewBag.Id = applicationId;
+            int number = 1;
+            foreach (var item in models)
+            {
+                item.Number = number;
+                number++;
+            }
+
+            return Json(models, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AllProjectRegisterInfoList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "报名情况";
+
+            return View();
+        }
+
+        public ActionResult AllProjectBidBondInfoList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "保证金情况";
+
+            return View();
+        }
+
+        public ActionResult ALlProjectBidWinnerNoticeList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "中标通知书";
+
             return View();
         }
 

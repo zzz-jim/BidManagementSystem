@@ -107,7 +107,7 @@
             if (IsHiddenLi == "Hidden")
             {
                 $("#Approval_ProjectBonusCredit").remove();
-                $("#Approval_ScienceFundsManageContainer").remove();
+                $("#RegisterInfo_ALlProjectBidWinnerNoticeList").remove();
                 $("#Approval_ScienceStatisticContainer").remove();
                 $("#GoodSubject_ScienceFundsManageContainer").remove();
                 $("#GoodSubject_ScienceStatisticContainer").remove();
@@ -126,7 +126,7 @@
             }
         });
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
 
         $(function () {
             $.ajax({
@@ -175,7 +175,7 @@
                 $("#todoul").empty();
             });
         });
-    </script>
+    </script>*@
 
     @RenderSection("HeadContent", required: false)
 </head>
@@ -415,7 +415,7 @@
                                 <!--/Notification Dropdown-->
                             </li>
 
-                            <li id="todoli">
+                            @*<li id="todoli">
                                 <a class="dropdown-toggle" data-toggle="dropdown" title="待办事宜">
                                     <i class="icon fa fa-tasks"></i>
                                     <span class="badge" id="ToDoThingsCount"></span>
@@ -423,7 +423,7 @@
                                 <!--Tasks Dropdown-->
                                 <ul id="todoul" style="width:600px;" class="pull-right dropdown-menu dropdown-tasks dropdown-arrow "></ul>
                                 <!--/Tasks Dropdown-->
-                            </li>
+                            </li>*@
 
                             @Html.Partial("_LoginPartial")
 
@@ -495,13 +495,13 @@
                                     <span class="badge badge-azure">项目注册</span>
                                 </a>
                             </li>
-                            <li id="UploadFilePage_ContractList">
-                                <a href="/UploadFilePage/ContractList">
+                            <li id="UploadFilePage_AllContractList">
+                                <a href="/UploadFilePage/AllContractList">
                                     <span class="badge badge-azure">合同资料</span>
                                 </a>
                             </li>
-                            <li id="UploadFilePage_BiddingDocumentList">
-                                <a href="/UploadFilePage/BiddingDocumentList">
+                            <li id="UploadFilePage_AllBiddingDocumentList">
+                                <a href="/UploadFilePage/AllBiddingDocumentList">
                                     <span class="badge badge-azure">招标文件</span>
                                 </a>
                             </li>
@@ -510,23 +510,23 @@
                                     <span class="badge badge-azure">招标公告</span>
                                 </a>
                             </li>
-                            <li id="RegisterInfo_List">
-                                <a href="/RegisterInfo/List">
+                            <li id="RegisterInfo_AllProjectRegisterInfoList">
+                                <a href="/RegisterInfo/AllProjectRegisterInfoList">
                                     <span class="badge badge-azure  ">报名情况</span>
                                 </a>
                             </li>
-                            <li id="BidBondInfo_List">
-                                <a href="/BidBondInfo/List">
+                            <li id="RegisterInfo_AllProjectBidBondInfoList">
+                                <a href="/RegisterInfo/AllProjectBidBondInfoList">
                                     <span class="badge badge-azure  ">保证金情况</span>
                                 </a>
                             </li>
-                            <li id="UploadFilePage_OpenBidsDocumentList">
-                                <a href="/UploadFilePage/OpenBidsDocumentList">
+                            <li id="UploadFilePage_AllOpenBidsDocumentList">
+                                <a href="/UploadFilePage/AllOpenBidsDocumentList">
                                     <span class="badge badge-azure  ">开评标相关资料</span>
                                 </a>
                             </li>
-                            <li id="Approval_ScienceFundsManageContainer">
-                                <a href="/Approval/ScienceFundsManageContainer">
+                            <li id="RegisterInfo_ALlProjectBidWinnerNoticeList">
+                                <a href="/RegisterInfo/ALlProjectBidWinnerNoticeList">
                                     <span class="badge badge-azure  ">中标通知书</span>
                                 </a>
                             </li>

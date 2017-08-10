@@ -312,6 +312,43 @@ namespace UI.ScientificResearch.Controllers
         }
 
         /// <summary>
+        /// 招标代理合同
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ActionResult SectionContractList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = UploadFilePageType.合同资料.ToString();
+
+            UploadFilePageType type = UploadFilePageType.合同资料;
+            ViewBag.UploadFilePageType = (int)type;
+            ViewBag.Id = applicationId;
+
+            //var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            //var selectItemList = new List<SelectListItem>()
+            //{
+            //    //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            //};
+            //if (bidSections.Any())
+            //{
+            //    var selectList = new SelectList(bidSections, "ID", "SectionName");
+            //    selectItemList.AddRange(selectList);
+            //}
+
+            //ViewBag.bidSectionsList = selectItemList;
+            var result = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).ToList();
+            int number = 1;
+            foreach (var item in result)
+            {
+                item.Number = number;
+                number++;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);    //return View("List", );//.Where(x => x.FileType == type));
+        }
+
+        /// <summary>
         /// 开评标相关资料
         /// </summary>
         /// <param name="type"></param>
@@ -336,8 +373,44 @@ namespace UI.ScientificResearch.Controllers
             }
 
             ViewBag.bidSectionsList = selectItemList;
-
             return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+        }
+
+        /// <summary>
+        /// 开评标相关资料
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ActionResult SectionOpenBidsDocumentList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "开评标相关资料";
+
+            UploadFilePageType type = UploadFilePageType.开评标相关资料;
+            ViewBag.UploadFilePageType = (int)type;
+            ViewBag.Id = applicationId;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
+
+            var result = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).ToList();
+            int number = 1;
+            foreach (var item in result)
+            {
+                item.Number = number;
+                number++;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -367,6 +440,42 @@ namespace UI.ScientificResearch.Controllers
             ViewBag.bidSectionsList = selectItemList;
 
             return View(FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+        }
+
+        /// <summary>
+        /// 招标文件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ActionResult SectionBiddingDocumentList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "招标文件";
+
+            UploadFilePageType type = UploadFilePageType.招标文件;
+            ViewBag.UploadFilePageType = (int)type;
+            ViewBag.Id = applicationId;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
+            var result = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).ToList();
+            int number = 1;
+            foreach (var item in result)
+            {
+                item.Number = number;
+                number++;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Details(int id)
@@ -399,6 +508,31 @@ namespace UI.ScientificResearch.Controllers
                  },
                  "text/html", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        /// <summary>
+        /// 正在审批中的申请书列表，还未项目确立的申请书
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllContractList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "合同资料";
+            return View();
+        }
+
+        public ActionResult AllOpenBidsDocumentList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "开评标相关资料";
+            return View();
+        }
+
+        public ActionResult AllBiddingDocumentList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "招标文件";
+            return View();
         }
 
         #endregion

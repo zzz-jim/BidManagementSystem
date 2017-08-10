@@ -1,0 +1,533 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+}
+<br />
+
+<div id="MaxWindow"></div>
+<div id="Application"></div>
+<div>
+    <!-- 查询条件 -->
+    <div>
+        项目名称:
+        <input type="text" name="projectName" id="projectName" style="width: 150px; height: 30px">&nbsp;
+        项目编号:
+        <input type="text" name="projectNumber" id="projectNumber" style="width: 150px; height: 30px">&nbsp;
+        @*状态:*@
+        <select hidden id="State" name="State" style="width:150px; height:23px" class="k-list-container k-popup k-group k-reset">
+            <option value=全部 selected="selected">全部</option>
+            <option value=AplicationWriting>申请未上报</option>
+            <option value=ApplicationRejected>申请被驳回</option>
+            <option value=ApplicationApproving>申请审批中</option>
+            <option value=ApplicationApproved>申请已通过</option>
+            <option value=ProjectEstablishing>项目未确立</option>
+            <option value=ProjectRejected>项目未立项</option>
+        </select>&nbsp;
+
+        <label for="start">开始时间:</label>
+        <input id="startTime" name="startTime" value="" style="width: 150px " />&nbsp;
+        <label for="end">结束时间:</label>
+        <input id="endTime" name="endTime" value="" style="width: 150px" />&nbsp;
+
+        <style scoped>
+            #example .k-datepicker {
+                vertical-align: middle;
+            }
+
+            #example h3 {
+                clear: both;
+            }
+
+            #example .code-sample {
+                width: 60%;
+                float: left;
+                margin-bottom: 20px;
+            }
+
+            #example .output {
+                width: 24%;
+                margin-left: 4%;
+                float: left;
+            }
+        </style>
+    </div>
+
+    <div id="CreateNewApp">
+        <input type="submit" value="查询" onclick="searchrightdataoffundslist()" />
+        <input type="button" id="CreaateButtn" value="新建" />
+    </div>
+</div>
+<br />
+<div id="bigfundsgrid" class="k-content">
+    <div id="fundsGrid"></div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function searchrightdataoffundslist() {
+            var searchitem2 = $("#projectName").val();
+            var searchitem3 = $("#State").val();
+            var searchitem4 = $("#projectNumber").val();
+            var searchitem5 = $("#startTime").val();
+            var searchitem6 = $("#endTime").val();
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        type: "post",
+                        url: "/Approval/ApplicationListStatistics?projectName=" +
+                        encodeURI(searchitem2) + "&State=" + encodeURI(searchitem3) + "&projectNumber=" +
+                        encodeURI(searchitem4) + "&startTime=" + encodeURI(searchitem5) + "&endTime=" +
+                        encodeURI(searchitem6) + "",
+                        dataType: "json",
+                        contentType: "application/json",
+                    },
+
+                    destroy: {
+                        type: "post",
+                        url: "/Approval/DeleteApplicationListByModelId",
+                        dataType: "json",
+                        complete: function (e) {
+                            $("#fundsGrid").data("kendoGrid").dataSource.read();
+                        }
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation == "read") {
+                            var parameter = {
+                                //page: options.page,
+                                pageIndex: options.page,
+                                pageSize: options.pageSize
+                            };
+                            return kendo.stringify(parameter);
+                        }
+                        if (operation == "destroy") {
+                            options.action = operation;
+                            return { modelId: kendo.stringify(options.models[options.models.length - 1].ID) };
+                        }
+                    },
+                },
+
+                batch: true,
+                pageSize: 10,
+                schema: {
+                    model: {
+                        //删除时必须有
+                        id: "ID"
+                    },
+                    data: function (d) {
+                        for (var i = 0; i < d.data.length; i++) {
+                            ////将json时间转换
+                            //var birthdayMilliseconds = eval('new ' + d.data[i].CreatedTime.replace('/', '', 'g').replace('/', '', 'g'));
+                            //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                            //d.data[i].CreatedTime = birthday;
+                            //}
+                            // 文件编号
+                            d.data[i].FileNumber = d.data[i].FormValues.split('#')[0];
+                             //采购方式
+                            d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[19];
+                            // 项目内容
+                            d.data[i].ProjectContent = d.data[i].FormValues.split('#')[2];
+                            // 采购单位
+                            d.data[i].ProcurementName = d.data[i].FormValues.split('#')[7];
+                            // 采购预算
+                            d.data[i].Budget = d.data[i].FormValues.split('#')[16];
+                            // 招标代理公司
+                            d.data[i].Agent = d.data[i].FormValues.split('#')[20];
+                            //d.data[i].IsLock = d.data[i].IsLocked;
+
+                            if (d.data[i].IsLock == false) {
+                                d.data[i].IsLock = "启用";
+                            }
+                            else if (d.data[i].IsLock == true) {
+                                d.data[i].IsLock = "冻结";
+                            }
+                            else {
+                                d.data[i].IsLock = "";
+                            }
+
+                            d.data[i].Applications = d.data[i].ApplicationStatus;
+                            if (d.data[i].Applications == "AplicationWriting") {
+                                d.data[i].Applications = "申请未上报";
+                            }
+                            else if (d.data[i].Applications == "ApplicationRejected") {
+                                d.data[i].Applications = "申请被驳回";
+                            }
+                            else if (d.data[i].Applications == "ApplicationApproving") {
+                                d.data[i].Applications = "申请审批中";
+                            }
+                            else if (d.data[i].Applications == "ApplicationApproved") {
+                                d.data[i].Applications = "申请已通过";
+                            }
+                            else if (d.data[i].Applications == "ProjectEstablishing") {
+                                d.data[i].Applications = "项目未确立";
+                            }
+                            else if (d.data[i].Applications == "ProjectRejected") {
+                                d.data[i].Applications = "项目未立项";
+                            }
+                            else {
+                                d.data[i].Applications = "";
+                            }
+
+                        }
+                        return d.data;
+
+                    },
+                    total: function (d) {
+                        return d.total;
+                    }
+                },
+                serverPaging: true,
+            });
+
+            $("#fundsGrid").kendoGrid({
+                dataSource: dataSource,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5,
+                    messages: {
+                        display: "显示{0}-{1}条，共{2}条",
+                        empty: "没有数据",
+                        page: "页",
+                        of: "/ {0}",
+                        itemsPerPage: "条/页",
+                        first: "第一页",
+                        previous: "前一页",
+                        next: "下一页",
+                        last: "最后一页",
+                        refresh: "刷新"
+                    }
+                },
+                columns: [
+                    {
+                        field: "ID",
+                        title: "序号",
+                        hidden: true,
+                    },
+                    {
+                        field: "BeiYong1",
+                        title: "项目编号",
+                        width: "14%"
+                    },
+                    {
+                        field: "WenHao",
+                        title: "项目名称",
+                        width: "17%"
+                    },
+                    //{
+                    //    field: "UserName",
+                    //    title: "采购文件编号",
+                    //    width: "10%"
+                    //},
+                    {
+                        field: "ProcurementModes",
+                        title: "采购方式",
+                        width: "8%"
+                    },
+                    {
+                        field: "ProjectContent",
+                        title: "项目内容",
+                        width: "15%",
+                    },
+                    {
+                        field: "ProcurementName",
+                        title: "采购单位",
+                        width: "10%",
+                    },
+                    {
+                        field: "Budget",
+                        title: "预算金额(万元)",
+                        width: "10%",
+                    },
+                    //{
+                    //    field: "Applications",
+                    //    title: "当前状态",
+                    //    width: "10%",
+                    //},
+                    {
+                        field: "Agent",
+                        title: "代理公司",
+                        width: "8%"
+                    },
+                    {
+                        command:
+                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除"}]
+                    }
+                ],
+                editable: {
+                    //mode: "inline",
+                    mode: "popup"
+                },
+                selectable: true,
+                //change: onChange,
+
+                detailInit: detailSearch,
+            });
+        };
+        // 查询该项目的标段列表详情
+        function detailSearch(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "jsonp",
+                    transport: {
+                        read: "/UploadFilePage/SectionContractList?applicationId=" + e.data.ID
+                    },
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 5,
+                    //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
+                },
+                scrollable: false,
+                sortable: false,
+                pageable: false,
+                columns: [
+                    {
+                        field: "Number",
+                        title: "序号",
+                        width: "8%"
+                    },
+                    //{
+                    //    field: "FileType",
+                    //    title: "文件种类",
+                    //    width: "20%"
+                    //},
+                    {
+                        field: "FileName",
+                        title: "文件名称",
+                        width: "20%"
+                    },
+                    {
+                        field: "FileSize",
+                        title: "文件大小",
+                        width: "20%"
+                    },
+                    //{
+                    //    field: "CreatedTime",
+                    //    title: "上传时间",
+                    //    width: "20%"
+                    //},
+                    {
+                        field: "OperatorName",
+                        title: "上传人",
+                        width: "20%"
+                    },  
+                    {
+                        field: "ID",
+                        title: "ID",
+                        hidden: true,
+                    },
+                    //{
+                    //    command:
+                    //    //[{ name: "edit", text: "中标登记", width: "5%" }]
+                    //    [{ text: "中标登记", width: "5%", click: createBidWinnerNotice }]
+                    //}
+                ],
+            });
+        }
+
+        //function onChange(arg) {
+        //    var selected = $.map(this.select(), function (item) {
+        //        OpenMaxWindow(item.cells[0].outerText);
+        //    });
+
+        //    //alert(selected);
+        //    //kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+        //}
+        function OpenMaxWindow(e) {
+            e.preventDefault();
+            var tr = $(e.target).closest("tr"); // get the current table row (tr)
+            // get the data bound to the current table row
+            var data = this.dataItem(tr);
+            var id = data.ID;
+            $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+            $("#MaxWindow").kendoWindow({
+                position: {
+                    top: "15%", // or "100px"
+                    left: "13%"
+                },
+                width: "60%",
+                height: "70%",
+                //title:"申请书",
+                visible: false,
+                actions: [
+                    "Pin", "Minimize", "Maximize", "Close"
+                ],
+                modal: true,
+                resizable: false,
+                close: function (e) {
+                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                }
+            });
+
+            $.ajax({
+                url: "/Approval/ReturnStateValue?id=" + id,
+                type: "post",
+                success: function (data) {
+                    if (data != null) {
+                        // $("#MaxWindow").html(data);
+
+                        //判断返回的状态来控制弹出框第一个打开的页面
+                        //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                        if (data == "ProjectRegitering") {
+                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                            $("#MaxWindow").data("kendoWindow").center().open();
+                        }
+                        else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
+                        {
+                            if (data == "ApplicationRejected") {
+                                $.ajax({
+                                    url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                    type: "post",
+                                    success: function (data) {
+                                        if (data != null) {
+                                            if (data == "Equal") {
+                                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
+                                                $("#MaxWindow").data("kendoWindow").center().open();
+                                            }
+                                            else {
+                                                alert("权限不对！");
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
+                                $("#MaxWindow").data("kendoWindow").center().open();
+                            }
+                        }
+                        else if (data == "ProjectRegitered" || data == "ProjectEstablishing")//全部通过审批
+                        {
+                            $.ajax({
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                type: "post",
+                                success: function (data) {
+                                    if (data != null) {
+                                        if (data == "Equal") {
+                                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                                            //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/UploadFilePage/ContractList?applicationId=' + id + '">合同资料</iframe>');
+                                            $("#MaxWindow").data("kendoWindow").center().open();
+                                        }
+                                        else {
+                                            alert("权限不对！");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        else if (data == "TenderNotice")//全部通过审批
+                        {
+                            $.ajax({
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                type: "post",
+                                success: function (data) {
+                                    if (data != null) {
+                                        if (data == "Equal") {
+                                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                                            //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/TenderNotice?id=' + id + '">招标公告</iframe>');
+                                            $("#MaxWindow").data("kendoWindow").center().open();
+                                        }
+                                        else {
+                                            alert("权限不对！");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        alert("发生异常！");
+                    }
+                }
+            });
+        }
+
+        // 初始化加载
+        $(document).ready(function () {
+            var creaateButtn = $("#CreaateButtn"),
+                application = $("#Application");
+            searchrightdataoffundslist();
+
+            var onClose = function () {
+                creaateButtn.fadeIn();// 渐变效果
+                //parent.location.reload();//刷新包含SubmitApplication的页面// TODO:暂时注释掉，每次刷新影响效率
+            }
+
+            $("#CreaateButtn").click(function () {
+                $("#Application")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+                var random1 = Math.floor(Math.random() * 1000 + 1);
+                $("#Application").kendoWindow({
+                    position: {
+                        top: "15%", // or "100px"
+                        left: "13%"
+                    },
+                    width: "60%",
+                    height: "70%",
+                    modal: true,
+                    resizable: false,
+                    title: "项目注册",
+                    visible: false,
+                    actions: [
+                        "Pin", "Minimize", "Maximize", "Close"],
+                    close: onClose
+                    //  resizable: false,
+
+                });
+                $("#Application").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication">项目申请书</iframe>');
+                $("#Application").data("kendoWindow").center().open();
+
+                creaateButtn.fadeOut();
+
+            });
+
+            function startChange() {
+                var startDate = start.value(),
+                    endDate = end.value();
+
+                if (startDate) {
+                    startDate = new Date(startDate);
+                    startDate.setDate(startDate.getDate());
+                    end.min(startDate);
+                } else if (endDate) {
+                    start.max(new Date(endDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            function endChange() {
+                var endDate = end.value(),
+                    startDate = start.value();
+
+                if (endDate) {
+                    endDate = new Date(endDate);
+                    endDate.setDate(endDate.getDate());
+                    start.max(endDate);
+                } else if (startDate) {
+                    end.min(new Date(startDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            var start = $("#startTime").kendoDatePicker({
+                change: startChange
+            }).data("kendoDatePicker");
+
+            var end = $("#endTime").kendoDatePicker({
+                change: endChange
+            }).data("kendoDatePicker");
+            $("#startTime").attr("readonly", true);
+            $("#endTime").attr("readonly", true);
+            start.max(end.value());
+            end.min(start.value());
+        });
+    </script>
+}
