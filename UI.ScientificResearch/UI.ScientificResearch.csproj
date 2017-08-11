@@ -256,6 +256,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="emailtemplate.html" />
     <Content Include="Areas\ApplicationIdentity\Content\bootstrap-theme.css" />
     <Content Include="Areas\ApplicationIdentity\Content\bootstrap-theme.min.css" />
     <Content Include="Areas\ApplicationIdentity\Content\bootstrap.css" />

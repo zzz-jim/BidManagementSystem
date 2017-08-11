@@ -47,7 +47,7 @@ namespace ScientificResearch.Utility.Constants
         /// <summary>
         /// \ string
         /// </summary>
-        public static readonly char  Slash = '\\';
+        public static readonly char Slash = '\\';
 
         /// <summary>
         /// System config pagesize for list view.
@@ -127,6 +127,16 @@ namespace ScientificResearch.Utility.Constants
         /// '|'分隔符
         /// </summary>
         public static readonly char SplitChar = '|';
+
+        /// <summary>
+        /// ' ' 空格符
+        /// </summary>
+        public static readonly char SpaceChar = ' ';
+
+        /// <summary>
+        /// '@' at符
+        /// </summary>
+        public static readonly char AtChar = '@';
 
         /// <summary>
         /// "--"连字符

@@ -19,6 +19,7 @@ using UI.ScientificResearch.Models;
 using ScientificResearch.IDataAccess;
 using ScientificResearch.DataAccessImplement;
 using Microsoft.AspNet.Identity;
+using System.Configuration;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -42,6 +43,7 @@ namespace UI.ScientificResearch.Controllers
         private IFundsThresholdService FundsThresholdService;
         private IProjectRegistrationRepository ProjectRegistrationService;
         private IProjectBidSectionRepository ProjectBidSectionService;
+        private IProjectFileRepository FileService;
 
         private ISession MySession;
 
@@ -76,6 +78,7 @@ namespace UI.ScientificResearch.Controllers
                 new FundsThresholdServiceImplement(),
                 new ProjectRegistrationRepository(),
                 new ProjectBidSectionRepository(),
+                new ProjectFileRepository(),
                 new SessionManager()
             )
         {
@@ -96,6 +99,7 @@ namespace UI.ScientificResearch.Controllers
             IFundsThresholdService eFundsThresholdService,
             IProjectRegistrationRepository projectRegistrationService,
             IProjectBidSectionRepository projectBidSectionService,
+            IProjectFileRepository fileService,
             ISession session
             )
         {
@@ -113,6 +117,7 @@ namespace UI.ScientificResearch.Controllers
             this.FundsThresholdService = eFundsThresholdService;
             this.ProjectRegistrationService = projectRegistrationService;
             this.ProjectBidSectionService = projectBidSectionService;
+            this.FileService = fileService;
             this.MySession = session;
 
 
@@ -763,6 +768,105 @@ namespace UI.ScientificResearch.Controllers
             ViewBag.Title = "中标通知书";
 
             return View();
+        }
+
+        /// <summary>
+        /// 发送招标文件给对应标段的公司
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public ActionResult SendBidDocumentToCompany(int applicationId)
+        {
+            try
+            {
+                bool isSuccessful = false;
+                var application = ApplicationService.GetEntityById(applicationId);
+                var valueArray = application.FormValues.Split(Constant.SharpChar);
+                var agent = application.FormValues.Split(Constant.SharpChar)[19];// 代理公司 鑫森 等等公司
+                if (string.IsNullOrEmpty(agent) || string.IsNullOrWhiteSpace(agent))
+                {
+                    return Json(
+                     new
+                     {
+                         isSuccessful = isSuccessful,
+                     }, JsonRequestBehavior.AllowGet);
+                }
+
+                var emailConfig = ConfigurationManager.AppSettings[agent];
+                var emailConfigArray = emailConfig.Split(Constant.SpaceChar);
+                string fromEmailAddress = string.Empty; // 发件箱 邮箱地址
+                string toEmailAddress = string.Empty;
+                string fromEmailAddressPwd = string.Empty; // 发件箱 邮箱密码
+                string fromEmailServer = string.Empty;// 邮件服务器地址
+
+                if (emailConfigArray.Count() == 2)
+                {
+                    fromEmailAddress = emailConfigArray.First();
+                    fromEmailAddressPwd = emailConfigArray.Last();
+                }
+
+                fromEmailServer = fromEmailAddress.Split(Constant.AtChar).LastOrDefault();
+                if (!MvcApplication.EmailServerConfig.ContainsKey(fromEmailServer))
+                {
+                    throw new Exception($"邮件服务器{fromEmailServer}的服务器地址未配置，请管理员配置");
+                }
+
+                // 查询收件箱列表  获取项目所有标段的报名公司 
+                var companyList = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId).ToList();//.GroupBy(x => x.BidSectionId);
+
+                // 查询邮件附件内容
+                var fileList = FileService.GetEntities(x => x.ApplicationId == applicationId && x.Remark == "终稿文件" && x.FileType == (int)UploadFilePageType.招标文件).ToList();
+                var mailClassList = new List<MailClass>();
+                foreach (var item in companyList)
+                {
+
+                    var fileAddress = string.Empty;
+                    var fileModel = fileList.FirstOrDefault(x => x.SectionId == item.BidSectionId);
+                    if (fileModel == null)
+                    {
+                        throw new Exception($"标段{item.BidSection}(id{item.BidSectionId})的终稿文件还未上传");
+                    }
+                    var mailItem = new MailClass()
+                    {
+                        Attachment = fileModel.FileAddress,
+                        MailCharset = "utf-8",
+                        MailTo = item.Email,
+                        MailFrom = fromEmailAddress,
+                        MailFromDisplayName = agent,
+                        MailUserPassword = fromEmailAddressPwd,
+                        MailUserName = fromEmailAddress,
+                        MailSubject = "招标文件",
+                        // EmailContent 此字段暂时没用
+                        MailServer = MvcApplication.EmailServerConfig[fromEmailServer],
+                    };
+
+                    mailClassList.Add(mailItem);
+                }
+
+                foreach (var item in mailClassList)
+                {
+                    MailTest.SendMailMethod(item);// 发送邮件
+                }
+
+                //return Json(new { ReturnState, applicationId }, JsonRequestBehavior.AllowGet);
+                isSuccessful = true;
+
+                return Json(
+                    new
+                    {
+                        isSuccessful = isSuccessful,
+                    }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(
+                 new
+                 {
+                     isSuccessful = false,
+                     error = ex.Message
+                 }, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         #endregion

@@ -37,13 +37,13 @@ namespace ScientificResearch.ViewModel
                 var mail = new MailMessage();
                 //收件人  
                 mail.From =
-                    new MailAddress(mailclass.MailFrom, "汪汪", Encoding.GetEncoding(mailclass.MailCharset));
+                    new MailAddress(mailclass.MailFrom, mailclass.MailFromDisplayName, Encoding.GetEncoding(mailclass.MailCharset));
                 //发送人  
-                mail.Sender =
-                    new MailAddress(mailclass.MailFrom, "厅厅", Encoding.GetEncoding(mailclass.MailCharset));
-                mail.To.Add("2451854140@qq.com"); //发件人  
+                //mail.Sender =
+                //    new MailAddress(mailclass.MailFrom, "厅厅", Encoding.GetEncoding(mailclass.MailCharset));
+                mail.To.Add(mailclass.MailTo); //收件人  
                 mail.SubjectEncoding = Encoding.GetEncoding(mailclass.MailCharset);
-                mail.Subject = "报表分析";
+                mail.Subject = mailclass.MailSubject;
                 mail.BodyEncoding = Encoding.GetEncoding(mailclass.MailCharset);
                 mail.Priority = MailPriority.Normal;
                 //是否为网页格式  
@@ -61,15 +61,17 @@ namespace ScientificResearch.ViewModel
                 //邮件的内容可以是一个html文本.  
                 // 事务失败。 服务器响应为:DT:SPM 163 smtp8,DMCowAAnvn3WGGNZNMxxFg--.13365S2 1499666648,please see http://mail.163.com/help/help_spam_16.htm?ip=52.80.7.202&hostid=smtp8&time=1499666648
                 // 广告邮件 会报错。。。。
-                var filePath = AppDomain.CurrentDomain.BaseDirectory + "../../淘宝网_百度百科.html";
+                var filePath = AppDomain.CurrentDomain.BaseDirectory + "/emailtemplate.html";
+                //var filePath = AppDomain.CurrentDomain.BaseDirectory + "../../emailtemplate.html";
                 var read =
-                    new StreamReader(filePath, Encoding.GetEncoding("GB2312"));
-                var mailBody = read.ReadToEnd();//  "汪汪测试邮件";// read.ReadToEnd();
+                    new StreamReader(filePath, Encoding.GetEncoding("utf-8"));
+                //var mailBody = read.ReadToEnd();//  "汪汪测试邮件";// read.ReadToEnd();
+                var mailBody = "汪汪测试邮件";// read.ReadToEnd();
                 //邮件内容  
                 mail.Body = mailBody;
 
                 // 附件：在 .net 4.0中，附件名称含有特殊名称时，接收方将收到名字为空的附件
-                mail.Attachments.Add(new Attachment(@"D:\WorkForJim\Account.txt"));
+                //mail.Attachments.Add(new Attachment(mailclass.Attachment));
 
                 smtpMail.Send(mail);
                 //释放附件对象，否则文件无法删除  
