@@ -21,8 +21,8 @@ using ScientificResearch.DataAccessImplement;
 
 namespace UI.ScientificResearch.Controllers
 {
-    //[CheckLogin]
-    //[Authorize(Roles = "普通用户")]
+    [CheckLogin]
+    [Authorize(Roles = "普通用户")]
     public class UploadFilePageController : Controller
     {
         #region Private Service

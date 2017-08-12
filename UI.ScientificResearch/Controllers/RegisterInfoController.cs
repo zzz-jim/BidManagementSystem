@@ -23,8 +23,8 @@ using System.Configuration;
 
 namespace UI.ScientificResearch.Controllers
 {
-    //[CheckLogin]
-    //[Authorize(Roles = "普通用户")]
+    [CheckLogin]
+    [Authorize(Roles = "普通用户")]
     public class RegisterInfoController : Controller
     {
         #region Private Service
@@ -230,6 +230,11 @@ namespace UI.ScientificResearch.Controllers
 
         public ActionResult Create(int applicationId)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
+
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
             var selectItemList = new List<SelectListItem>()
             {
@@ -249,6 +254,11 @@ namespace UI.ScientificResearch.Controllers
         [HttpPost]
         public ActionResult Create(ProjectRegistrationViewModel model)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
+
             model.CreatedTime = DateTime.Now;
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
@@ -270,13 +280,19 @@ namespace UI.ScientificResearch.Controllers
 
         public ActionResult ProjectList(int applicationId)
         {
-            ViewBag.Module = "政府采购";
-            ViewBag.Title = "报名情况";
+            if (User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                ViewBag.Module = "政府采购";
+                ViewBag.Title = "报名情况";
 
-            var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
-            var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
-            ViewBag.Id = applicationId;
-            return View(models);
+                var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+                var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
+                ViewBag.Id = applicationId;
+                return View(models);
+            }
+
+            return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //return View(@"<script type='text/javascript'>alert('无权限！'); </script> ");
         }
 
         public ActionResult Details(string id)
@@ -318,6 +334,10 @@ namespace UI.ScientificResearch.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
             var selectItemList = new List<SelectListItem>()
@@ -342,6 +362,10 @@ namespace UI.ScientificResearch.Controllers
         [HttpPost]
         public ActionResult Edit(ProjectRegistrationViewModel model)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
             var bidSectionInfo = ProjectBidSectionService.GetEntityById(model.BidSectionId);
@@ -359,6 +383,10 @@ namespace UI.ScientificResearch.Controllers
         /// <returns></returns>
         public ActionResult EditBidBondInfo(int id)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
             var selectItemList = new List<SelectListItem>()
@@ -383,6 +411,10 @@ namespace UI.ScientificResearch.Controllers
         [HttpPost]
         public ActionResult EditBidBondInfo(ProjectRegistrationViewModel model)
         {
+            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            }
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
             ProjectRegistrationService.UpdateEntity(model.ConvertTo<ProjectRegistration>());
