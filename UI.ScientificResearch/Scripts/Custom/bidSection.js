@@ -1,4 +1,7 @@
 ﻿function addBidSection(listCount) {
+    if (listCount<=0) {
+        listCount = 1;
+    }
     listCount += 1;
     var count = 1;
     $("#count").val(count);
@@ -27,10 +30,6 @@
         $("#count").val(count);
     });
 
-}
-
-
-$(function () {
     $("input[name='Reported'],input[name='Save'] ").click(function () {
 
         var errorMessage = "";
@@ -200,4 +199,4 @@ $(function () {
             return false;
         }
     });
-});
+}
