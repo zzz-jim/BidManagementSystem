@@ -22,6 +22,8 @@ namespace ScientificResearch.ViewModel
         //    mailclass.MailUserPassword = "qqww74886qqww";
         //    //邮件编码格式  
         //    mailclass.MailCharset = "utf-8";
+        //    mailclass.MailTo = "qqww080808@163.com";
+        //    mailclass.MailSubject = "报表分析结果";
 
         //    SendMailMethod(mailclass);
         //}
@@ -65,13 +67,14 @@ namespace ScientificResearch.ViewModel
                 //var filePath = AppDomain.CurrentDomain.BaseDirectory + "../../emailtemplate.html";
                 var read =
                     new StreamReader(filePath, Encoding.GetEncoding("utf-8"));
-                //var mailBody = read.ReadToEnd();//  "汪汪测试邮件";// read.ReadToEnd();
-                var mailBody = "汪汪测试邮件";// read.ReadToEnd();
+                var mailBody = read.ReadToEnd();//  "汪汪测试邮件";// read.ReadToEnd();
+                //var mailBody = "你好，我是汪汪。这是我的汪汪测试 请知晓";// read.ReadToEnd();
                 //邮件内容  
                 mail.Body = mailBody;
 
                 // 附件：在 .net 4.0中，附件名称含有特殊名称时，接收方将收到名字为空的附件
-                //mail.Attachments.Add(new Attachment(mailclass.Attachment));
+                mail.Attachments.Add(new Attachment(mailclass.Attachment));
+                //mail.Attachments.Add(new Attachment(@"E:\SourceCode\account.txt"));
 
                 smtpMail.Send(mail);
                 //释放附件对象，否则文件无法删除  
@@ -79,9 +82,9 @@ namespace ScientificResearch.ViewModel
                     item.Dispose();
                 smtpMail.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.Write(ex.Message);
+                throw;
             }
         }
     }
