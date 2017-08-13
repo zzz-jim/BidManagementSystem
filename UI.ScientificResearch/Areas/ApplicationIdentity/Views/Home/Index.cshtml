@@ -66,7 +66,7 @@ Purchase: http://wrapbootstrap.com
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
     <script src="~/Scripts/Kendo/2014.2.716/cultures/kendo.culture.zh-CN.min.js"></script>
-    
+
     @*<script src="~/Content/shared/js/console.js"></script>*@
     <script src="~/Scripts/assets/js/skins.min.js"></script>
     <script type="text/javascript">
@@ -418,7 +418,7 @@ Purchase: http://wrapbootstrap.com
                                                     <i class="fa fa-glass bg-success white"></i>
                                                 </div>
                                                 <div class="notification-body">
-                                                    <span class="title">政府采购管理子系统</span>
+                                                    <span class="title">工程项目管理子系统</span>
 
                                                 </div>
                                             </div>
@@ -454,14 +454,14 @@ Purchase: http://wrapbootstrap.com
 
 
                             @*<li id="todoli">
-                                <a class="dropdown-toggle" data-toggle="dropdown" title="待办事宜">
-                                    <i class="icon fa fa-tasks"></i>
-                                    <span class="badge" id="ToDoThingsCount"></span>
-                                </a>
-                                <!--Tasks Dropdown-->
-                                <ul id="todoul" style="width:600px;" class="pull-right dropdown-menu dropdown-tasks dropdown-arrow "></ul>
-                                <!--/Tasks Dropdown-->
-                            </li>*@
+                                    <a class="dropdown-toggle" data-toggle="dropdown" title="待办事宜">
+                                        <i class="icon fa fa-tasks"></i>
+                                        <span class="badge" id="ToDoThingsCount"></span>
+                                    </a>
+                                    <!--Tasks Dropdown-->
+                                    <ul id="todoul" style="width:600px;" class="pull-right dropdown-menu dropdown-tasks dropdown-arrow "></ul>
+                                    <!--/Tasks Dropdown-->
+                                </li>*@
 
                             @Html.Partial("_LoginPartial")
 
@@ -561,46 +561,42 @@ Purchase: http://wrapbootstrap.com
                 <!-- Page Body -->
                 <div class="page-body">
                     <div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width:600px;height:300px;margin:20px; margin-top:250px; ">
-                            <div class="databox radius-bordered databox-shadowed databox-graded" style="width:400px;height:150px;">
-
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width:300px;height:200px;margin:20px; margin-top:250px; ">
+                            <div class="databox radius-bordered databox-shadowed databox-graded" style="width:300px;height:150px;">
                                 <a href="/Approval/Index">
-
-                                    @*<a href="/Approval/WorkContainer">*@
-                                    <div class="databox-left bg-themesecondary" style="width:200px;height:150px;">
+                                    <div class="databox-left bg-themesecondary" style="width:130px;height:150px;">
                                         <div class="databox-piechart">
                                             <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90"></span></div>
                                         </div>
                                     </div>
-                                    <div class="databox-right" style="width:200px;height:200px;">
-                                        <span class="databox-number themesecondary"></span>
-                                        <div style="font-size:30px;font-weight:bold; " class="databox-text darkgray">
-                                            &nbsp;&nbsp; &nbsp;&nbsp;  政&nbsp;&nbsp;&nbsp;&nbsp;府<br />
-                                            &nbsp;&nbsp;    &nbsp;&nbsp; 项&nbsp;&nbsp;&nbsp;&nbsp;目<br />
-                                            &nbsp;&nbsp;  &nbsp;&nbsp; 采&nbsp;&nbsp;&nbsp;&nbsp;购<br />
+                                    <div class="databox-right" style="width:150px;height:150px;">
+                                        <span style="font-size:30px;font-weight:bold; " class="databox-number ">政府项目</span>
+                                        <div style="font-size:22px;font-weight:bold; " class="databox-text blackberry">
+                                            <p><br /></p>
                                         </div>
-
+                                        <div style="font-size:22px;font-weight:bold; align-content:center; " class="databox-text blackberry">
+                                            采购
+                                        </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width:600px;height:300px; margin:20px; margin-top:250px;">
-                            <div class="databox radius-bordered databox-shadowed databox-graded" style="width:400px; height:150px;">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width:300px;height:200px;margin:20px; margin-top:250px; ">
+                            <div class="databox radius-bordered databox-shadowed databox-graded" style="width:300px;height:150px;">
                                 <a href="/Education/Approval/Index">
-                                    <div class="databox-left bg-themethirdcolor" style="width:200px;height:150px;">
+                                    <div class="databox-left bg-themethirdcolor" style="width:130px;height:150px;">
                                         <div class="databox-piechart">
-                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="15" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span class="white font-90"></span></div>
+                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90"></span></div>
                                         </div>
                                     </div>
-                                    <div class="databox-right" style="width:200px; height:200px;">
-                                        <span class="databox-number themethirdcolor"></span>
-                                        <div style="font-size:30px;font-weight:bold; " class="databox-text darkgray">
-                                            &nbsp;&nbsp; &nbsp;&nbsp;  工&nbsp;&nbsp;&nbsp;&nbsp;程<br />
-                                            &nbsp;&nbsp;    &nbsp;&nbsp; 项&nbsp;&nbsp;&nbsp;&nbsp;目<br />
-                                            &nbsp;&nbsp;  &nbsp;&nbsp; 采&nbsp;&nbsp;&nbsp;&nbsp;购<br />
+                                    <div class="databox-right" style="width:150px;height:150px;">
+                                        <span style="font-size:30px;font-weight:bold; " class="databox-number ">工程项目</span>
+                                        <div style="font-size:22px;font-weight:bold; " class="databox-text blackberry">
+                                            <p><br /></p>
                                         </div>
-
-
+                                        <div style="font-size:22px;font-weight:bold; align-content:center; " class="databox-text blackberry">
+                                            采购
+                                        </div>
                                     </div>
                                 </a>
                             </div>

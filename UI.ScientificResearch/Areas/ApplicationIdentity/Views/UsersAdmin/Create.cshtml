@@ -8,11 +8,10 @@
     $(function () {
         $("#CreateNew").click(function () {
             var selectvalue = $("#selectedSections").find('option:selected').text();
-            if (selectvalue == "")
-            {
+            if (selectvalue == "") {
                 alert("请选择用户所在的科室！");
                 return false;
-            } 
+            }
             if ($("input:checkbox[name='selectedGroups']:checked").length == 0) {
                 alert("请至少选择一个权限组！");
                 return false;
@@ -24,7 +23,7 @@
 <h2>@ViewBag.Title</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -65,22 +64,22 @@
             </div>
         </div>
         @*<div class="form-group">
-        @Html.LabelFor(model => model.AccountPicture, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            
-        </div>
-    </div>*@
+                @Html.LabelFor(model => model.AccountPicture, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                </div>
+            </div>*@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.Category)*@
                 @*@Html.DropDownList("Category", new List<SelectListItem>(new ))*@
                 <select name="Category" id="Category">
-                    <option value="医生">医生</option>
-                    <option value="护士">护士</option>
-                    <option value="技师">技师</option>
-                    <option value="药师">药师</option>
-                    <option value="机关后勤">机关后勤</option>
+                    <option value="行政">行政</option>
+                    <option value="财务">财务</option>
+                    <option value="工程">工程</option>
+                    <option value="管理">管理</option>
+                    <option value="后勤">后勤</option>
                     <option value="其它">其它</option>
                 </select>
                 @Html.ValidationMessageFor(model => model.Category)
@@ -142,20 +141,20 @@
             </div>
         </div>
 
-    
+
         <div class="form-group">
             <label class="col-md-2 control-label">
-                选择科室
+                选择部门
             </label>
             <div class="col-md-10">
-           @Html.ListBox("selectedSections", (SelectList)ViewBag.SectionList, new { @class = "control-label" })
+                @Html.ListBox("selectedSections", (SelectList)ViewBag.SectionList, new { @class = "control-label" })
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">
-                选择用户权限组 
+                选择用户权限组
             </label>
-            <div class="col-md-10">            
+            <div class="col-md-10">
                 @foreach (var item in (SelectList)ViewBag.GroupsList)
                 {
                     <div>
@@ -166,7 +165,7 @@
                 }
             </div>
         </div>
-      
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="新建" id="CreateNew" class="btn btn-default" />
