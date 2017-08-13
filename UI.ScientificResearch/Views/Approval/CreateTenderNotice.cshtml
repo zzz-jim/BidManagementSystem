@@ -8,7 +8,7 @@
 }
 
 <!-- Project Step Wizard -->
-@Html.Partial("_ScienceResearchWizardPartial")
+@*@Html.Partial("_ScienceResearchWizardPartial")*@
 
 @using (Html.BeginForm())
 {
@@ -32,47 +32,65 @@
         <td colspan="5"></td>
     </tr>
     <tr>
-        <td colspan="1">
-            <b> 请选择项目标段：</b>
+        <td>
+            标段编号
         </td>
-        <td colspan="2">
-            @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+        <td>
+            <input id="BeiYong1" name="BeiYong1" value="@ViewBag.SectionNumber" type="text" class="customTextBox" readonly="readonly" />
         </td>
+        <td colspan="5"></td>
     </tr>
-    <input type="submit" id="Save" value="提交" />
-    <input type="hidden" id="Freeze" value="@ViewBag.Id" />
-    <br />
-    <br />
-    @Html.TextAreaFor(m => m.FormContent)
-    @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
+    <tr>
+        <td>
+            标段名称
+        </td>
+        <td>
+            <input id="BeiYong1" name="BeiYong1" value="@ViewBag.SectionName" type="text" class="customTextBox" readonly="readonly" />
+        </td>
+        <td colspan="5"></td>
+    </tr>
+        @*<tr>
+                <td colspan="1">
+                    <b> 请选择项目标段：</b>
+                </td>
+                <td colspan="2">
+                    @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+                </td>
+            </tr>*@
+        <input type="submit" id="Save" value="提交" />
+                <input type="hidden" id="Freeze" value="@ViewBag.Id" />
+                <br />
+                <br />
+                @Html.TextAreaFor(m => m.FormContent)
+                @Html.HiddenFor(model => model.FormID, new { @readOnly = "readOnly " })
 
-    @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
+                @Html.HiddenFor(model => model.WorkFlowID, new { @readOnly = "readOnly " })
 
-    @Html.HiddenFor(model => model.TimeStr, new { @readOnly = "readOnly " })
+                @Html.HiddenFor(model => model.TimeStr, new { @readOnly = "readOnly " })
 
-    @Html.HiddenFor(model => model.FuJianList)
+                @Html.HiddenFor(model => model.FuJianList)
 
-    @Html.HiddenFor(model => model.ShenPiYiJian)
+                @Html.HiddenFor(model => model.ShenPiYiJian)
 
-    @Html.HiddenFor(model => model.JieDianID, new { @readOnly = "readOnly " })
+                @Html.HiddenFor(model => model.JieDianID, new { @readOnly = "readOnly " })
 
-    @Html.HiddenFor(model => model.JieDianName, new { @readOnly = "readOnly " })
+                @Html.HiddenFor(model => model.JieDianName, new { @readOnly = "readOnly " })
 
-    @Html.HiddenFor(model => model.ShenPiUserList)
+                @Html.HiddenFor(model => model.ShenPiUserList)
 
-    @Html.HiddenFor(model => model.OKUserList)
+                @Html.HiddenFor(model => model.OKUserList)
 
-    @Html.HiddenFor(model => model.StateNow)
+                @Html.HiddenFor(model => model.StateNow)
 
-    @Html.HiddenFor(model => model.LateTime)
+                @Html.HiddenFor(model => model.LateTime)
 
-    @Html.HiddenFor(model => model.BeiYong2)
+                @Html.HiddenFor(model => model.BeiYong2)
 
-    @Html.HiddenFor(model => model.ApplicationId)
+                <input type="hidden" value="@ViewBag.Id" name="ApplicationId" />
 
-    @Html.HiddenFor(model => model.ApplicationStatus)
+                @Html.HiddenFor(model => model.ApplicationStatus)
 
-    @Html.HiddenFor(model => model.NWorkToDoID)
+                @Html.HiddenFor(model => model.NWorkToDoID)
 }
 
 @section scripts{
@@ -89,7 +107,7 @@
         $(function () {
             $("#Save").click(function () {
                 $('#FormContent').val(editor.getContent());
-                var url1 = "/Approval/TenderNotice?flag=Save";
+                var url1 = "/Approval/CreateTenderNotice?flag=Save";
                 submitForm("form", url1);
             });
         });

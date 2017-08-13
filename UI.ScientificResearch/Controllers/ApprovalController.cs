@@ -17,6 +17,8 @@ using System.Data;
 using ScientificResearch.DomainModel;
 using UI.ScientificResearch.Models;
 using System.Text;
+using ScientificResearch.IDataAccess;
+using ScientificResearch.DataAccessImplement;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -38,7 +40,7 @@ namespace UI.ScientificResearch.Controllers
         private IProjectBonusCreditService ProjectBonusCreditService;
         private IStatisticService StatisticService;
         private IFundsThresholdService FundsThresholdService;
-
+        private IProjectBidSectionRepository ProjectBidSectionService;
 
         private ISession MySession;
 
@@ -70,6 +72,7 @@ namespace UI.ScientificResearch.Controllers
                 new ProjectBonusCreditServiceImplement(),
                 new StatisticServiceImplement(),
                 new FundsThresholdServiceImplement(),
+                new ProjectBidSectionRepository(),
                 new SessionManager()
             )
         {
@@ -88,6 +91,7 @@ namespace UI.ScientificResearch.Controllers
             IProjectBonusCreditService eProjectBonusCreditService,
             IStatisticService statisticService,
             IFundsThresholdService eFundsThresholdService,
+            IProjectBidSectionRepository projectBidSectionService,
             ISession session
             )
         {
@@ -104,6 +108,7 @@ namespace UI.ScientificResearch.Controllers
             this.ProjectBonusCreditService = eProjectBonusCreditService;
             this.StatisticService = statisticService;
             this.FundsThresholdService = eFundsThresholdService;
+            this.ProjectBidSectionService = projectBidSectionService;
             this.MySession = session;
 
         }
@@ -2273,15 +2278,14 @@ namespace UI.ScientificResearch.Controllers
                 countOfTravelItems = 0;
             }
 
-            string[] itemNameArray = { "SectionName", "SectionNumber" };
-            string[,] travelItemValues = new string[countOfTravelItems, 2];
+            string[] itemNameArray = { "SectionName", "SectionNumber", "CreatedTime" };
 
             for (int i = 1; i < countOfTravelItems + 1; i++)
             {
                 var item = new ProjectBidSectionViewModel();
                 item.SectionName = Request["item" + i.ToString() + itemNameArray[0]];
                 item.SectionNumber = Request["item" + i.ToString() + itemNameArray[1]];
-                item.CreatedTime = DateTime.Now;
+                item.CreatedTime = Convert.ToDateTime(Request["item" + i.ToString() + itemNameArray[2]]);
                 model.BidSectionList.Add(item);
             }
 
@@ -6732,6 +6736,19 @@ namespace UI.ScientificResearch.Controllers
             }
 
             ViewBag.Id = applicationid;
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationid);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
+
             var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.TenderNotice && p.ApplicationId == applicationid).FirstOrDefault();
 
             // 判断招标公告是否已经存在
@@ -6792,6 +6809,238 @@ namespace UI.ScientificResearch.Controllers
             else
             {
                 return View(tenderNoticeModel.ToViewModel());
+            }
+        }
+
+        /// <summary>
+        /// 创建招标公告
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CreateTenderNotice(int sectionId, int applicationId)
+        {
+            var application = ApplicationService.GetEntityById(applicationId);
+
+            if (application == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            var section = ProjectBidSectionService.GetEntityById(sectionId);
+            if (section == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            //ViewBag.Id = applicationId;
+            //var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            //var selectItemList = new List<SelectListItem>()
+            //{
+            //    //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            //};
+            //if (bidSections.Any())
+            //{
+            //    var selectList = new SelectList(bidSections, "ID", "SectionName");
+            //    selectItemList.AddRange(selectList);
+            //}
+
+            //ViewBag.bidSectionsList = selectItemList;
+            ViewBag.SectionNumber = section.SectionNumber;
+            ViewBag.SectionName = section.SectionName;
+            ViewBag.Id = section.ID; 
+             var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.TenderNotice && p.ApplicationId == sectionId).FirstOrDefault();
+
+            // 判断招标公告是否已经存在
+            if (tenderNoticeModel == null)
+            {
+                int formId = (int)ScienceResearchTypeOfFormId.TenderNotice;
+                int workflowId = (int)TypeOfWorkFlowId.Application;
+
+                #region 数据准备
+
+                ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
+                ERPNWorkFlowNodeTransferObject currentNode;
+                var keyvaluearry = application.FormValues.Split(Constant.SharpChar);
+                string projectestablishtime = keyvaluearry[2].ToString();//申请时间
+                model.WenHao = application.WenHao;
+                model.BeiYong1 = application.BeiYong1;
+                model.WorkFlowID = workflowId;
+                model.FormID = formId;
+                model.ApplicationId = sectionId;
+
+                //加载表单内容
+                var temerpnformmodel = ERPNFormService.GetEntityById(formId).ToViewModel();
+
+                //获取当前表单对应的工作数据列
+                string[] formItemArray = temerpnformmodel.ItemsList.Split(Constant.SplitChar);
+                string content = temerpnformmodel.ContentStr;
+                //if (content.Contains("Text397670573") && content.Contains("Text1900333495"))//项目名称
+                //{
+                //    string oldvalue1 = "Text397670573";
+                //    string newvalue1 = @"Text397670573"" value=""" + name + @"""";
+                //    content = content.Replace(oldvalue1, newvalue1);
+
+                //    string oldvalue2 = "Text1900333495";
+                //    string newvalue2 = @"Text1900333495"" value=""" + projectname + @"""";
+                //    content = content.Replace(oldvalue2, newvalue2);
+                //}
+                model.FormContent = content;
+
+                //绑定工作名称
+                var temperpnworkflowmodel = ERPNWorkFlowService.GetEntityById(workflowId);
+                model.WorkName = User.Identity.Name + "--" + temperpnworkflowmodel.WorkFlowName;
+
+                ////绑定工作名称
+                var workFlowModel = ERPNWorkFlowService.GetEntityById(workflowId);
+                model.WorkName = User.Identity.Name + Constant.DoubleHyphenString + workFlowModel.WorkFlowName;
+                //绑定下一节点
+                currentNode = ERPNWorkFlowNodeService.GetEntities(p => p.WorkFlowID == workflowId && p.NodeAddr == Constant.MacroStartString).First();
+                model.JieDianID = currentNode.ID;
+                model.JieDianName = currentNode.NodeName;
+
+                //批量设置字段的可写、保密属性
+                //ViewBag.PiLiangSet = CommonHelper.SetTheWriteAndHiddenField(currentNode.CanWriteSet, currentNode.SecretSet, formItemArray);
+
+                #endregion
+
+                return View(model);
+            }
+            else
+            {
+                return View(tenderNoticeModel.ToViewModel());
+            }
+        }
+
+        /// <summary>
+        /// 保存招标公告
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult CreateTenderNotice(string flag, ERPNWorkToDoViewModel model, FormCollection collection)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            model.UserName = User.Identity.Name;
+            model.TimeStr = DateTime.Now;
+
+            var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
+            try
+            {
+                model.StateNow = "正在办理";
+            }
+            catch
+            {
+                model.JieDianName = "结束";
+                model.StateNow = "强制结束";
+            }
+
+            model.OKUserList = "默认";
+
+            int jiedianid = Convert.ToInt32(model.JieDianID);
+            var temperpworkflownodemodel = ERPNWorkFlowNodeService.GetEntityById(jiedianid);
+            model.LateTime = DateTime.Now.AddHours(double.Parse(temperpworkflownodemodel.JieShuHours.ToString()));
+
+            //// 更改当前结点id和name
+            //var currentNode = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value);
+            //string nextNodeSerial = currentNode.NextNode;
+            //var nextNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.NodeSerils == nextNodeSerial && p.WorkFlowID == model.WorkFlowID).ToList();
+            //model.JieDianID = nextNodeModel.First().ID;
+            //model.JieDianName = nextNodeModel.First().NodeName;
+
+            //页面加载后就上报,就添加新上报的数据行
+            if (model.NWorkToDoID == 0)
+            {
+                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
+                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
+                //上报时设置保存为false、驳回为false、删除为false、冻结为false
+                model.IsTemporary = true;
+                model.IsLocked = false;
+                model.IsDeleted = false;
+                model.IsRejected = false;
+
+                int nworktodoid = this.ApplicationService.AddApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
+
+                //写系统日志
+                ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
+                ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
+                //已办
+                MyRiZhi.UserName = User.Identity.Name;
+                MyRiZhi.DoSomething = User.Identity.Name + "上报(政府采购申请书)";
+                MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
+                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FKAction = "已办";
+                MyRiZhi.FKApplicationID = nworktodoid.ToString();
+                MyRiZhi.TimeStr = DateTime.Now;
+                MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+
+                int AddRiZhiSuccess = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
+
+                //待办
+                MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
+
+                MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
+                MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
+                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FKAction = "待办";
+                MyRiZhi1.FKApplicationID = nworktodoid.ToString();
+                MyRiZhi1.TimeStr = DateTime.Now;
+                MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+
+                int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
+                return Json(AddRiZhiSuccess, JsonRequestBehavior.AllowGet);
+            }
+            //先保存在上报的,就更新保存数据行的IsIsTemporary
+            else
+            {
+                model.ApplicationStatus = BiddingProjectStatus.TenderNotice.ToString();
+                model.ProjectStatus = BiddingProjectStatus.TenderNotice.ToString();
+                //上报时设置保存为false、驳回为false、删除为false、冻结为false
+                model.IsTemporary = true;
+                model.IsLocked = false;
+                model.IsDeleted = false;
+                model.IsRejected = false;
+
+                bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
+                //todo:add rizhi
+
+                //更新已办，新增上报，写系统日志
+                ERPRiZhiViewModel MyRiZhi = new ERPRiZhiViewModel();
+                ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
+                //更新已办
+                string nworktodoid = model.NWorkToDoID.ToString();
+                string formname = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
+                MyRiZhi.UserName = User.Identity.Name;
+                MyRiZhi.DoSomething = User.Identity.Name + "上报的(政府采购申请书)";
+                MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
+                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FKAction = "已办";
+                MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
+                MyRiZhi.TimeStr = DateTime.Now;
+                MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+
+                bool updateRiZhiSuccess = ERPRiZhiService.UpdateERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
+
+                //新增待办
+                MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
+                MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的政府采购申请书)";
+                MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
+                // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
+                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FKAction = "待办";
+                MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
+                MyRiZhi1.TimeStr = DateTime.Now;
+                MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
+                int AddRiZhi1Success = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
+
+                return Json(AddRiZhi1Success, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -6927,6 +7176,131 @@ namespace UI.ScientificResearch.Controllers
 
                 return Json(AddRiZhi1Success, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        /// <summary>
+        /// 招标公告列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult TenderNoticeList(int id)
+        {
+            ViewBag.ApplicationId = id;
+            ViewBag.Id = id;
+            return View();
+        }
+        /// <summary>
+        /// 招标公告列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllTenderNoticeList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "招标公告";
+            return View();
+        }
+        
+        // 招标公告列表
+        public ActionResult GetBidSectionListByApplicationId(int applicationId)
+        {
+            var application = ApplicationService.GetEntityById(applicationId);
+
+            if (application == null)
+            {
+                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+            }
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+
+            if (bidSections.Any())
+            {
+                var result = bidSections.Select(x => x.ConvertTo<ProjectBidSectionViewModel>()).ToList();
+
+                if (result.Any())
+                {
+                    //序号
+                    int number = 1;
+                    foreach (var item in result)
+                    {
+                        item.Number = number;
+                        item.ProjectName = application.WenHao;
+                        number++;
+                    }
+                }
+
+                return Json(new { data = result, total = result.Count() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { data = new List<ProjectBidSectionViewModel> { }, total = 0 }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        /// <summary>
+        /// 申请书列表查询
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="projectName">项目名称</param>
+        /// <param name="state">状态</param>
+        /// <param name="freeze">是否冻结</param>
+        /// <returns></returns>
+        public ActionResult TenderNoticeListStatistics(string projectName, string State, string projectNumber, string startTime, string endTime, int pageIndex, int pageSize)
+        {
+            DateTime start, end;
+            int totalPage = 0;
+            if (!string.IsNullOrEmpty(endTime))
+            {
+                end = Convert.ToDateTime(endTime);
+                end = end.AddDays(1);
+            }
+            else
+            {
+                end = Constant.MaxTime;
+            }
+
+            if (!string.IsNullOrEmpty(startTime))
+            {
+                start = Convert.ToDateTime(startTime);
+            }
+            else
+            {
+                start = Constant.MinTime;
+            }
+
+            IEnumerable<ERPNWorkToDoTransferObject> result = SearchProcessingApplicationList(projectName, State, projectNumber, start,
+                end, pageSize, pageIndex, ref totalPage);
+
+            bool hasRolesFlag = HasRolesFlag();
+            IEnumerable<ERPNWorkToDoTransferObject> resultpage;
+            int totalcount = 0;
+            //非普通用户
+            if (hasRolesFlag)
+            {
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+                totalcount = resultpage.Count();
+            }
+            //普通用户
+            else
+            {
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && p.UserName == User.Identity.Name
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+                totalcount = resultpage.Count();
+            }
+            return Json(new { data = result, total = totalcount }, JsonRequestBehavior.AllowGet);
         }
     }
 }

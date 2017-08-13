@@ -64,7 +64,7 @@
                     },
                     edit: {
                         type: "post",
-                        url: "/RegisterInfo/CreateBidWinnerNotice?sectionId=",
+                        url: "/RegisterInfo/createTenderNotice?sectionId=",
                         dataType: "json",
                         complete: function (e) {
                             $("#fundsGrid").data("kendoGrid").dataSource.read();
@@ -119,7 +119,7 @@
                         refresh: "刷新"
                     }
                 },
-                detailInit: detailSearch,
+                //detailInit: detailSearch,
                 columns: [
                     {
                         field: "Number",
@@ -149,7 +149,7 @@
                     {
                         command:
                         //[{ name: "edit", text: "中标登记", width: "5%" }]
-                        [{ text: "中标登记", width: "5%", click: createBidWinnerNotice}]
+                        [{ text: "招标公告", width: "5%", click: createTenderNotice}]
                     }
                 ],
                 editable: {
@@ -188,7 +188,7 @@
         }
 
         // 中标登记 标段id
-        function createBidWinnerNotice(e) {
+        function createTenderNotice(e) {
             e.preventDefault();
 
             var tr = $(e.target).closest("tr"); // get the current table row (tr)
@@ -202,7 +202,7 @@
                 },
                 width: "60%",
                 height: "70%",
-                title: "中标登记",
+                title: "招标公告",
                 visible: false,
                 actions: [
                     "Pin", "Minimize", "Maximize", "Close"
@@ -213,7 +213,7 @@
                     //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
                 }
             });
-            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ApplicationId + '">中标登记</iframe>');
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/CreateTenderNotice?sectionId=' + data.ID + '&applicationId=' + data.ApplicationId+'">招标公告</iframe>');
             $("#MaxWindow").data("kendoWindow").center().open();
         };
     </script>

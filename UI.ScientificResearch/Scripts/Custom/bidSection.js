@@ -1,5 +1,5 @@
 ﻿function addBidSection(listCount) {
-    if (listCount<=0) {
+    if (listCount <= 0) {
         listCount = 1;
     }
     listCount += 1;
@@ -9,9 +9,17 @@
         var flag = true;
         $("#tb1 tr:last-child td").each(function () {
             if ($(this).index() <= 6) {
-                //前两列			   
-                if ($(this).children().val() == "") {
-                    flag = false;
+                //前两列
+                if ($(this).children("span").length > 0) {
+                    if ($(this).children("span").children("span").children().val() == "") {
+                        flag = false;
+                    }
+                }
+                //3~7列
+                else {
+                    if ($(this).children().val() == "") {
+                        flag = false;
+                    }
                 }
             }
         });
@@ -21,7 +29,13 @@
         }
 
         else {
-            $("#tb1").append('<tr><td><input style="width:100px" name = "item' + listCount + 'SectionName" id="item' + listCount + 'SectionName" type="text" /></td><td><input style="width:100px" name = "item' + listCount + 'SectionNumber" id="item' + listCount + 'SectionNumber" type="text" /></td></tr>>');
+            $("#tb1").append('<tr><td><input style="width:100px" name = "item' + listCount + 'SectionName" id="item' + listCount + 'SectionName" type="text" /></td><td><input style="width:100px" name = "item' + listCount + 'SectionNumber" id="item' + listCount + 'SectionNumber" type="text" /></td><td><input style="width:160px" name = "item' + listCount + 'CreatedTime" id="item' + listCount + 'CreatedTime" type="text" /></td></tr>>');
+            $("#item" + listCount + "CreatedTime").kendoDateTimePicker(
+                {
+                    format: "yyyy-MM-dd HH:mm",
+                    timeFormat: "HH:mm" //24小时制格式
+                }
+            );
 
             listCount++;
             count++;
@@ -33,77 +47,77 @@
     $("input[name='Reported'],input[name='Save'] ").click(function () {
 
         var errorMessage = "";
-        if ($("#WenHao").val().trim() == "") {
-            errorMessage = errorMessage + "项目名称不能为空！";
-        }
+        //if ($("#WenHao").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目名称不能为空！";
+        //}
 
-        if ($("#BeiYong1").val().trim() == "") {
-            errorMessage = errorMessage + "_目编号不能为空！";
-        }
+        //if ($("#BeiYong1").val().trim() == "") {
+        //    errorMessage = errorMessage + "_目编号不能为空！";
+        //}
 
-        if ($("#Text111111111").val().trim() == "") {
-            errorMessage = errorMessage + "项目内容不能为空！";
-        }
+        //if ($("#Text111111111").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目内容不能为空！";
+        //}
 
-        if ($("#Date222222222").val().trim() == "") {
-            errorMessage = errorMessage + "委托日期不能为空！";
-        }
+        //if ($("#Date222222222").val().trim() == "") {
+        //    errorMessage = errorMessage + "委托日期不能为空！";
+        //}
 
-        if ($("#Text333333333").val().trim() == "") {
-            errorMessage = errorMessage + "开标场所不能为空！";
-        }
+        //if ($("#Text333333333").val().trim() == "") {
+        //    errorMessage = errorMessage + "开标场所不能为空！";
+        //}
 
-        if ($("#Text444444444").val().trim() == "") {
-            errorMessage = errorMessage + "采购单位不能为空！";
-        }
+        //if ($("#Text444444444").val().trim() == "") {
+        //    errorMessage = errorMessage + "采购单位不能为空！";
+        //}
 
-        if ($("#Text555555555").val().trim() == "") {
-            errorMessage = errorMessage + "采购单位联系人不能为空！";
-        }
+        //if ($("#Text555555555").val().trim() == "") {
+        //    errorMessage = errorMessage + "采购单位联系人不能为空！";
+        //}
 
-        if ($("#Text666666666").val().trim() == "") {
-            errorMessage = errorMessage + "采购单位联系电话不能为空！";
-        }
+        //if ($("#Text666666666").val().trim() == "") {
+        //    errorMessage = errorMessage + "采购单位联系电话不能为空！";
+        //}
 
-        if ($("#Text777777777").val().trim() == "") {
-            errorMessage = errorMessage + "采购单位联系地址不能为空！";
-        }
+        //if ($("#Text777777777").val().trim() == "") {
+        //    errorMessage = errorMessage + "采购单位联系地址不能为空！";
+        //}
 
-        if ($("#Text888888888").val().trim() == "") {
-            errorMessage = errorMessage + "项目审批（核准）单位不能为空！";
-        }
+        //if ($("#Text888888888").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目审批（核准）单位不能为空！";
+        //}
 
-        if ($("#Text999999999").val().trim() == "") {
-            errorMessage = errorMessage + "项目审批（核准）文号不能为空！";
-        }
+        //if ($("#Text999999999").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目审批（核准）文号不能为空！";
+        //}
 
-        if ($("#Text111111112").val().trim() == "") {
-            errorMessage = errorMessage + "项目备案单位不能为空！";
-        }
+        //if ($("#Text111111112").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目备案单位不能为空！";
+        //}
 
-        if ($("#Text111111113").val().trim() == "") {
-            errorMessage = errorMessage + "项目备案文号不能为空！";
-        }
+        //if ($("#Text111111113").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目备案文号不能为空！";
+        //}
 
-        if ($("#Text111111114").val().trim() == "") {
-            errorMessage = errorMessage + "采购预算不能为空！";
-        }
+        //if ($("#Text111111114").val().trim() == "") {
+        //    errorMessage = errorMessage + "采购预算不能为空！";
+        //}
 
-        if ($("#Text111111115").val().trim() == "") {
-            errorMessage = errorMessage + "项目负责人不能为空！";
-        }
+        //if ($("#Text111111115").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目负责人不能为空！";
+        //}
 
-        if ($("#Text111111116").val().trim() == "") {
-            errorMessage = errorMessage + "项目负责人电话不能为空！";
-        }
+        //if ($("#Text111111116").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目负责人电话不能为空！";
+        //}
 
-        if ($("#item1SectionName").val().trim() == "") {
-            errorMessage = errorMessage + "项目至少包含一个标段！";
-        }
+        //if ($("#item1SectionName").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目至少包含一个标段！";
+        //}
 
-        if ($("#item1SectionNumber").val().trim() == "") {
-            errorMessage = errorMessage + "项目至少包含一个标段编号！";
-        }
+        //if ($("#item1SectionNumber").val().trim() == "") {
+        //    errorMessage = errorMessage + "项目至少包含一个标段编号！";
+        //}
 
         if (errorMessage != "") {
             alert(errorMessage);

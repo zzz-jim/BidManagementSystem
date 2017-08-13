@@ -75,7 +75,7 @@
                 transport: {
                     read: {
                         type: "post",
-                        url: "/Approval/ApplicationListStatistics?projectName=" +
+                        url: "/Approval/TenderNoticeListStatistics?projectName=" +
                         encodeURI(searchitem2) + "&State=" + encodeURI(searchitem3) + "&projectNumber=" +
                         encodeURI(searchitem4) + "&startTime=" + encodeURI(searchitem5) + "&endTime=" +
                         encodeURI(searchitem6) + "",
@@ -116,24 +116,25 @@
                     },
                     data: function (d) {
                         for (var i = 0; i < d.data.length; i++) {
-                            ////将json时间转换
-                            //var birthdayMilliseconds = eval('new ' + d.data[i].CreatedTime.replace('/', '', 'g').replace('/', '', 'g'));
-                            //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
-                            //d.data[i].CreatedTime = birthday;
+                            //if (d.data[i].FormValues.split('#')[5].contains('/')) {
+
                             //}
-                            //// 文件编号
-                            //d.data[i].FileNumber = d.data[i].FormValues.split('#')[0];
-                            // 采购方式
-                            d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[19];
-                            // 项目内容
-                            d.data[i].ProjectContent = d.data[i].FormValues.split('#')[2];
-                            // 采购单位
-                            d.data[i].ProcurementName = d.data[i].FormValues.split('#')[7];
-                            // 采购预算
-                            d.data[i].Budget = d.data[i].FormValues.split('#')[16];
+                            //////将json时间转换
+                            //var birthdayMilliseconds = eval('new ' + d.data[i].FormValues.split('#')[5].replace('/', '', 'g').replace('/', '', 'g'));
+                            //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                            //d.data[i].OpentTime = birthday;//开标时间
+                            //}
+                            // 项目金额
+                            d.data[i].Budget = d.data[i].FormValues.split('#')[15];
                             // 招标代理公司
-                            d.data[i].Agent = d.data[i].FormValues.split('#')[20];
+                            d.data[i].Agent = d.data[i].FormValues.split('#')[19];
                             d.data[i].IsLock = d.data[i].IsLocked;
+                            //，开标时间
+                            d.data[i].OpentTime = d.data[i].FormValues.split('#')[5];
+
+                            //，项目金额
+                            //，项目负责人
+                            d.data[i].ResponsiblePerson = d.data[i].FormValues.split('#')[16];
 
                             if (d.data[i].IsLock == false) {
                                 d.data[i].IsLock = "启用";
@@ -170,7 +171,6 @@
 
                         }
                         return d.data;
-
                     },
                     total: function (d) {
                         return d.total;
@@ -214,30 +214,19 @@
                         title: "项目名称",
                         width: "17%"
                     },
-                    //{
-                    //    field: "UserName",
-                    //    title: "采购文件编号",
-                    //    width: "10%"
-                    //},
                     {
-                        field: "ProcurementModes",
-                        title: "采购方式",
+                        field: "ResponsiblePerson",
+                        title: "项目负责人",
                         width: "8%"
                     },
                     {
-                        field: "ProjectContent",
-                        title: "项目内容",
-                        width: "15%",
-                    },
-                    {
-                        field: "ProcurementName",
-                        title: "采购单位",
-                        width: "10%",
-                    },
-                    {
                         field: "Budget",
-                        title: "预算金额(万元)",
-                        width: "10%",
+                        title: "项目金额",
+                        width: "15%",
+                    }, {
+                        field: "OpentTime",
+                        title: "开标时间",
+                        width: "15%",
                     },
                     //{
                     //    field: "Applications",
@@ -249,10 +238,10 @@
                         title: "代理公司",
                         width: "8%"
                     },
-                    {
-                        command:
-                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除"}]
-                    }
+                    //{
+                    //    command:
+                    //    [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除" }]
+                    //}
                 ],
                 editable: {
                     //mode: "inline",
@@ -261,7 +250,7 @@
                 selectable: true,
                 //change: onChange,
 
-                detailInit: detailSearch,
+                //detailInit: detailSearch,
             });
         };
         // 查询该项目的标段列表详情
@@ -270,7 +259,7 @@
                 dataSource: {
                     type: "jsonp",
                     transport: {
-                        read: "/RegisterInfo/SectionProjectRegisterInfoList?applicationId=" + e.data.ID
+                        read: "/Approval/SectionProjectRegisterInfoList?applicationId=" + e.data.ID
                     },
                     serverPaging: true,
                     serverSorting: true,
@@ -301,7 +290,7 @@
                         field: "Email",
                         title: "邮箱地址",
                         width: "20%"
-                    }, 
+                    },
                     {
                         field: "BidSection",
                         title: "标段",
@@ -332,7 +321,7 @@
                     //    field: "RegisterTime",
                     //    title: "报名时间",
                     //    width: "20%"
-                    //}, 
+                    //},
 
 
                     {

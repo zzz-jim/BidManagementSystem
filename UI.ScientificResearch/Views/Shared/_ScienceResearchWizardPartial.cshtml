@@ -9,6 +9,7 @@
             <li id="step1" class="ProjectStepComplete"><span class="step">1</span>项目注册<span class="chevron"></span></li>
             <li id="step2" class="ProjectStepComplete"><span class="step">2</span>合同资料<span class="chevron"></span></li>
             <li id="step3" class="ProjectStepComplete"><span class="step">3</span>招标文件<span class="chevron"></span></li>
+
             @if (User.IsInRole(UserRoles.超级管理员.ToString()))
             {
                 <li id="step4" class="ProjectStepComplete"><span class="step">3</span>招标公告<span class="chevron"></span></li>
@@ -30,12 +31,16 @@
                 @*@Html.ActionLink("项目注册确认", "ProjectEstablish", "Approval", new { id = ViewBag.Id }, new { id = "ProjectEstablish" })*@
                 @Html.ActionLink("合同资料", "ContractList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "Contract" })
                 @Html.ActionLink("招标文件", "BiddingDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "BiddingDocument" })
+
                 @if (User.IsInRole(UserRoles.超级管理员.ToString()))
                 {
-                    @Html.ActionLink("招标公告", "TenderNotice", "Approval", new { id = ViewBag.Id }, new { id = "TenderNotice" })
-                    @Html.ActionLink("报名保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "RegisterInfo" })
+                    @Html.ActionLink("招标公告", "TenderNoticeList", "Approval", new { id = ViewBag.Id }, new { id = "TenderNotice" })
                 }
 
+                @if (User.IsInRole(UserRoles.超级管理员.ToString()))
+                {
+                    @Html.ActionLink("报名保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "RegisterInfo" })
+                }
                 @*@Html.ActionLink("保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidBondInfo" })*@
                 @Html.ActionLink("开评标资料", "OpenBidsDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "OpenBidsDocument" })
                 @Html.ActionLink("中标通知书", "BidWinnerNoticeList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidWinnerNotice" })

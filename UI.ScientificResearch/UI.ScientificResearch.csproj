@@ -2151,6 +2151,10 @@
     <Content Include="Views\RegisterInfo\AllProjectRegisterInfoList.cshtml" />
     <Content Include="Views\RegisterInfo\ALlProjectBidWinnerNoticeList.cshtml" />
     <Content Include="Views\RegisterInfo\AllProjectBidBondInfoList.cshtml" />
+    <Content Include="Views\RegisterInfo\TenderNoticeList.cshtml" />
+    <Content Include="Views\Approval\TenderNoticeList.cshtml" />
+    <Content Include="Views\Approval\CreateTenderNotice.cshtml" />
+    <Content Include="Views\Approval\AllTenderNoticeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

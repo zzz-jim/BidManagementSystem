@@ -213,7 +213,7 @@
                     //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
                 }
             });
-            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ApplicationId + '">中标登记</iframe>');
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ID + '">中标登记</iframe>');
             $("#MaxWindow").data("kendoWindow").center().open();
         };
     </script>
