@@ -55,7 +55,7 @@
 
     <div id="CreateNewApp">
         <input type="submit" value="查询" onclick="searchrightdataoffundslist()" />
-        <input type="button" id="CreaateButtn" value="新建" />
+        @*<input type="button" id="CreaateButtn" value="新建" />*@
     </div>
 </div>
 <br />
@@ -122,17 +122,17 @@
                             //d.data[i].CreatedTime = birthday;
                             //}
                             //// 文件编号
-                            //d.data[i].FileNumber = d.data[i].FormValues.split('#')[0];
-                            // 采购方式
-                            d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[19];
+                            d.data[i].FileNumber = d.data[i].FormValues.split('#')[0];
+                            //采购方式
+                            d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[18];
                             // 项目内容
                             d.data[i].ProjectContent = d.data[i].FormValues.split('#')[2];
                             // 采购单位
                             d.data[i].ProcurementName = d.data[i].FormValues.split('#')[7];
                             // 采购预算
-                            d.data[i].Budget = d.data[i].FormValues.split('#')[16];
+                            d.data[i].Budget = d.data[i].FormValues.split('#')[15];
                             // 招标代理公司
-                            d.data[i].Agent = d.data[i].FormValues.split('#')[20];
+                            d.data[i].Agent = d.data[i].FormValues.split('#')[19];
                             d.data[i].IsLock = d.data[i].IsLocked;
 
                             if (d.data[i].IsLock == false) {
