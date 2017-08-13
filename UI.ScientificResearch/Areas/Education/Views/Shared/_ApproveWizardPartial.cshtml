@@ -1,0 +1,53 @@
+﻿<!--Page Related Scripts-->
+<script src="~/Scripts/assets/js/fuelux/wizard/wizard-custom.js"></script>
+
+<div class="widget-body">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div id="WiredWizard" class="wizard wizard-wired" data-target="#WiredWizardsteps">
+                <ul class="steps" id="CustomStepsWizard"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{int index = 0;}
+@foreach (var item in ViewBag.ApprovalWorkflowNode)
+{
+    index++;
+    if (item.NodeName== "科室主任审批")
+    {
+        item.NodeName = "部门经理审批";
+    }
+    else if (item.NodeName == "科教科审批")
+    {
+        item.NodeName = "管理员审批";
+    }
+    else if (item.NodeName == "院长")
+    {
+        item.NodeName = "超级管理员审批";
+    }
+
+    <script>
+        $("#CustomStepsWizard").append('<li id="ApprovalStep' +@index +'"  data-target="#wiredstep' +@index +'" class="ApprovalStepStepComplete"><span class="step">@index</span><span class="title">@item.NodeName</span><span class="chevron"></span></li>')
+    </script>
+}
+<script>
+    var ApplicationApprovalWorkflowNodeId = "@ViewBag.CurrentNodeSerils";
+    var idApprovalStepPre = "#ApprovalStep";
+
+    for (var i = 1; i < parseInt(ApplicationApprovalWorkflowNodeId) ; i++) {
+        var id = idApprovalStepPre + i;
+        $(id).removeClass("ApprovalStepStepComplete").addClass("complete");
+    }
+    
+    if (ApplicationApprovalWorkflowNodeId != parseInt("@ViewBag.ApprovalWorkflowNode.Count") + 1) {
+        var currentjiedianName = "@ViewBag.ApprovalStep";
+        if (currentjiedianName == "结束") {
+            $(idApprovalStepPre + ApplicationApprovalWorkflowNodeId).addClass("complete");
+        }
+        else { 
+            $(idApprovalStepPre + ApplicationApprovalWorkflowNodeId).removeClass("ApprovalStepStepComplete").addClass("active");
+        }
+    }
+</script>

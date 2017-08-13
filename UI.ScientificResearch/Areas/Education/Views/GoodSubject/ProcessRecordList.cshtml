@@ -1,0 +1,188 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<title>
+    过程记录列表
+</title>
+<link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.common.min.css" />
+<link rel="stylesheet" href="~/Content/kendo/2014.2.716/kendo.default.min.css" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
+
+<!-- Project Step Wizard -->
+@Html.Partial("_GoodSubjectWizardPartial")
+
+<br />
+@*@Html.ActionLink("新建过程记录", "ProcessRecords", new { id = ViewBag.Id })*@
+<input type="button" id="NewProcessRecords" value="新建过程记录" />
+
+<div id="NewProcessRecordsArea">
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        var onClose = function () {
+            location.reload();//刷新包含SubmitApplication的页面
+        }
+        $("#NewProcessRecords").click(function () {
+            var id =@ViewBag.Id
+            $("#NewProcessRecordsArea").kendoWindow({
+                position: {
+                    top: "5%", // or "100px"
+                    left: "5%"
+                },
+                width: "91%",
+                height: "80%",
+                modal: true,
+                draggable: true,
+                resizable: false,
+                title: "新建过程记录",
+                visible: false,
+                actions: [
+                        "Pin",
+                        "Close",
+                ],
+                close: onClose
+                //  resizable: false,
+
+            });
+            $("#NewProcessRecordsArea").append(' <iframe id="NewProcessRecordsframe" width="100%" height="160%" scrolling="no" style="border:0px" src="/GoodSubject/ProcessRecords?id=' + id + '">新建过程记录</iframe>');
+            $("#NewProcessRecordsArea").data("kendoWindow").center().open();
+        });
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        var weatherHidenCreatBtn = "@ViewBag.WeatherHidenCreadBtn";
+        if (weatherHidenCreatBtn == "Yes") {
+            $("#NewProcessRecords").hide();
+        }
+        else {
+
+        }
+    });
+</script>
+<div id="processwindowin">
+
+</div>
+<input type="hidden" id="Freeze" value="@ViewBag.Id" />
+<script type="text/javascript">
+
+    function OpenProcessAgreeWindow(id) {
+
+        $("#processwindowin").append(' <iframe id="reburse" width="100%" height="200%" scrolling="no" style="border:0px" src="/GoodSubject/processAgree?id=' + id + '">合同记录</iframe>');
+        var MaxDialog = $("#processwindowin").data("kendoWindow");
+        MaxDialog.open();
+    };
+
+    $(document).ready(function () {
+        var window = $("#processwindowin");
+        if (!window.data("kendoWindow")) {
+            window.kendoWindow({
+                position: {
+                    top: "5%", // or "100px"
+                    left: "5%"
+                },
+                width: "91%",
+                height: "80%",
+                modal: true,
+                draggable: true,
+                resizable: false,
+                title: "过程记录",
+                visible: false,
+                actions: [
+                    "Pin",
+                    "Close"
+                ],
+                close: function (e) {
+                    location.reload();//刷新页面
+                }
+            });
+        }
+
+    });
+</script>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.WenHao)
+        </th>
+
+        <th>
+            记录类型
+        </th>
+
+        <th>
+            记录时间
+        </th>
+        <th>
+            记录人
+        </th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+
+        <tr onclick="OpenProcessAgreeWindow(@item.NWorkToDoID)">
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.FormValues.Split(ScientificResearch.Utility.Constants.Constant.SharpChar)[0])
+
+            </td>
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.FormValues.Split(ScientificResearch.Utility.Constants.Constant.SharpChar)[1])
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.FormValues.Split(ScientificResearch.Utility.Constants.Constant.SharpChar)[2])
+
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.FormValues.Split(ScientificResearch.Utility.Constants.Constant.SharpChar)[3])
+
+            </td>
+
+            @Html.HiddenFor(modelItem => item.FormID)
+
+            @Html.HiddenFor(modelItem => item.WorkFlowID)
+
+            @Html.HiddenFor(modelItem => item.WorkName)
+
+            @Html.HiddenFor(modelItem => item.TimeStr)
+
+            @Html.HiddenFor(modelItem => item.FuJianList)
+
+            @Html.HiddenFor(modelItem => item.ShenPiYiJian)
+
+            @Html.HiddenFor(modelItem => item.JieDianID)
+
+            @Html.HiddenFor(modelItem => item.JieDianName)
+
+            @Html.HiddenFor(modelItem => item.ShenPiUserList)
+
+            @Html.HiddenFor(modelItem => item.OKUserList)
+
+            @Html.HiddenFor(modelItem => item.StateNow)
+
+            @Html.HiddenFor(modelItem => item.LateTime)
+
+            @Html.HiddenFor(modelItem => item.BeiYong1)
+
+            @Html.HiddenFor(modelItem => item.BeiYong2)
+
+            @Html.HiddenFor(modelItem => item.ApplicationStatus)
+
+            @Html.HiddenFor(modelItem => item.ApplicationId)
+        </tr>
+    }
+
+</table>

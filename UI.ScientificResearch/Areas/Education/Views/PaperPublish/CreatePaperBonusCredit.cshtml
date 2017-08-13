@@ -1,0 +1,36 @@
+﻿@model ScientificResearch.DomainModel.PaperBonusCredit
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <table class="table">
+      @*  <tr><td>期刊名称</td><td>@Html.EditorFor(model => model.BonusCredit)</td><td>@Html.ValidationMessageFor(model => model.BonusCredit, "", new { @class = "text-danger" })</td></tr>*@
+        <tr><td>期刊级别</td><td>@Html.DropDownList("LevelId", (List<SelectListItem>)ViewBag.PaperMagazineLevel)</td><td></td></tr>
+        <tr><td>期刊类型</td><td>@Html.DropDownList("TypeId", (List<SelectListItem>)ViewBag.PaperMagazineType)</td><td></td></tr>
+        <tr><td>第一作者学分</td><td>@Html.EditorFor(model => model.Author1)</td><td>@Html.ValidationMessageFor(model => model.Author1, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>第二作者学分</td><td>@Html.EditorFor(model => model.Author2)</td><td>@Html.ValidationMessageFor(model => model.Author2, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>第三作者学分</td><td>@Html.EditorFor(model => model.Author3)</td><td>@Html.ValidationMessageFor(model => model.Author3, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>第四作者学分</td><td>@Html.EditorFor(model => model.Author4)</td><td>@Html.ValidationMessageFor(model => model.Author4, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>第五作者学分</td><td>@Html.EditorFor(model => model.Author5)</td><td>@Html.ValidationMessageFor(model => model.Author5, "", new { @class = "text-danger" })</td></tr>
+        <tr><td>第六作者学分</td><td>@Html.EditorFor(model => model.Author6)</td><td>@Html.ValidationMessageFor(model => model.Author6, "", new { @class = "text-danger" })</td></tr>
+
+        <tr><td colspan="3"><input type="submit" value="添加" id="submitButton" class="btn btn-blue" /></td></tr>
+    </table>
+}
+<script>
+    $(function () {
+        $("#submitButton").click(function () {
+            if ($("#Name").val().trim() != "") {
+                $("#ValidatingMessageForName").hide();
+            } else {
+                $("#ValidatingMessageForName").show();
+                return false;
+            }
+        });
+    });
+</script>

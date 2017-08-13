@@ -1,0 +1,246 @@
+﻿@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+
+<div id="fundsmanagersearchdata">
+    项目名称：<input type="text" id="porgramename" style="width: 150px; height: 30px">&nbsp;
+    所在科室：<input type="text" id="locationdepartment" style="width: 150px; height: 30px">&nbsp;
+    类型：<select id="type" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
+        <option selected>全部</option>
+        <option>支出</option>
+        <option>收入</option>
+    </select>
+    经费类型：<select id="fundstype" style="width: 150px; height: 23px" class="k-list-container k-popup k-group k-reset">
+        <option selected>全部</option>
+        <option>日常经费</option>
+    </select>
+    开始时间:<input type="text" id="fmstarttime" value="" style="width: 150px">&nbsp;
+    结束时间:<input type="text" id="fmendtime" value="" style="width: 150px">&nbsp;
+    经费操作人:<input type="text" id="fundsoprator" style="width: 150px; height: 30px">&nbsp;
+    <input type="button" id="search" value="查询" onclick="searchrightdataoffundsmanagers()" style="width: 55px; height: 28px" />
+</div>
+<br />
+<div id="bigfundsmanagergrid" class="k-content">
+    <div id="fundsManagerGrid">
+
+    </div>
+
+    <script>
+        $(function () {
+            searchrightdataoffundsmanagers();
+        });
+        function searchrightdataoffundsmanagers() {
+            var searchitem2 = $("#porgramename").val();
+            var searchitem3 = $("#locationdepartment").val();
+            var searchitem4 = $("#type").val();
+            var searchitem5 = $("#fundstype").val();
+            var searchitem6 = $("#fmstarttime").val();
+            var searchitem7 = $("#fmendtime").val();
+            var searchitem8 = $("#fundsoprator").val();
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        type: "post",
+                        url: "/Statistic/FundsManageProgramMasterStatistics?porgramename=" +
+                            encodeURI(searchitem2) + "&locationdepartment=" + encodeURI(searchitem3) + "&type=" +
+                            encodeURI(searchitem4) + "&fundstype='" + encodeURI(searchitem5) + "&starttime=" +
+                            encodeURI(searchitem6) + "&endtime=" + encodeURI(searchitem7) + "&fundsoprator=" +
+                            encodeURI(searchitem8) + "",
+                        dataType: "json",
+                        contentType: "application/json",
+                    },
+
+
+                    parameterMap: function (options, operation) {
+                        if (operation == "read") {
+                            var parameter = {
+                                pageIndex: options.page,
+                                pageSize: options.pageSize
+                            };
+                            return kendo.stringify(parameter);
+                        }
+
+                    },
+                },
+
+                batch: true,
+                pageSize: 5,
+
+                schema: {
+
+                    data: function (d) {
+                        return d.data;
+                    },
+                    total: function (d) {
+                        return d.total;
+                    }
+                },
+                serverPaging: true,
+            });
+
+            $("#fundsManagerGrid").kendoGrid({
+                dataSource: dataSource,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5,
+                    messages: {
+                        display: "显示{0}-{1}条，共{2}条",
+                        empty: "没有数据",
+                        page: "页",
+                        of: "/ {0}",
+                        itemsPerPage: "条/页",
+                        first: "第一页",
+                        previous: "前一页",
+                        next: "下一页",
+                        last: "最后一页",
+                        refresh: "刷新"
+                    }
+                },
+                detailInit: detailSearch,
+                columns: [
+                     {
+                         field: "Number",
+                         title: "序号",
+                         width: "110px"
+                     },
+                     {
+                         field: "ProjectName",
+                         title: "名称",
+                         width: "110px"
+                     },
+                     {
+                         field: "Programtype",
+                         title: "项目类型",
+                         width: "110px"
+                     },
+                     {
+                         field: "ApplyMan",
+                         title: "申请人",
+                         width: "110px"
+                     },
+                     {
+                         field: "LocalDepartment",
+                         title: "所在科室",
+                         width: "110px"
+                     },
+                     {
+                         field: "SuperiorFunds",
+                         title: "上级拨款",
+                         width: "110px"
+                     },
+                     {
+                         field: "HospitalFunds",
+                         title: "院内拨款",
+                         width: "110px"
+                     },
+                     {
+                         field: "ProjectTotalFunds",
+                         title: "项目总金额",
+                         width: "110px"
+                     },
+                     {
+                         field: "Income",
+                         title: "收入",
+                         width: "110px"
+                     },
+                     {
+                         field: "Expend",
+                         title: "支出",
+                         width: "110px"
+                     },
+                     {
+                         field: "Balance",
+                         title: "余额",
+                         width: "110px"
+                     },
+
+
+                ],
+                editable: {
+                    //mode: "inline",
+                    mode: "popup"
+                }
+            });
+        }
+
+
+
+        function detailSearch(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "jsonp",
+                    transport: {
+                        read: "/Statistic/FundsManageProgramStatisticsDetailStatistics?id=" + e.data.Number
+                    },
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 5,
+                    //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Name", width: "110px" },
+                    { field: "Type", width: "110px" },
+                    { field: "TotalPrice", width: "110px" },
+                    { field: "IsIncome", width: "110px" }
+
+                ]
+            });
+        }
+
+        $(document).ready(function () {
+            function startChange() {
+                var startDate = start.value(),
+                endDate = end.value();
+
+                if (startDate) {
+                    startDate = new Date(startDate);
+                    startDate.setDate(startDate.getDate());
+                    end.min(startDate);
+                } else if (endDate) {
+                    start.max(new Date(endDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            function endChange() {
+                var endDate = end.value(),
+                startDate = start.value();
+
+                if (endDate) {
+                    endDate = new Date(endDate);
+                    endDate.setDate(endDate.getDate());
+                    start.max(endDate);
+                } else if (startDate) {
+                    end.min(new Date(startDate));
+                } else {
+                    endDate = new Date();
+                    start.max(endDate);
+                    end.min(endDate);
+                }
+            }
+
+            var start = $("#fmstarttime").kendoDatePicker({
+                change: startChange
+            }).data("kendoDatePicker");
+
+            var end = $("#fmendtime").kendoDatePicker({
+                change: endChange
+            }).data("kendoDatePicker");
+
+            start.max(end.value());
+            end.min(start.value());
+        });
+    </script>
+
+
+</div>

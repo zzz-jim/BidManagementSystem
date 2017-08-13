@@ -1,0 +1,59 @@
+﻿@model ScientificResearch.DomainModel.FundsThreshold
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <table class="table">
+
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <tr>
+            <td>项目类型</td>
+            @*<td>@Html.EditorFor(model => model.ModuleName)</td>*@
+
+            <td>
+                <select id="ModuleName" name="ModuleName" class="k-list-container k-popup k-group k-reset" style="width:144px;height:24px;">
+                    <option value="ScienceResearch">工程项目</option>
+                    <option value="GoodSubject">工程项目</option>
+                    <option value="SubjectLeader">学术带头人</option>
+                    <option value="PaperPublish">论文管理</option>
+                    <option value="ResearchAward">科技成果</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>级别类型</td>
+            <td>@Html.EditorFor(model => model.ProjectType)</td>
+        </tr>
+
+        <tr>
+            <td>经费类型</td>
+            <td>@Html.EditorFor(model => model.FundsType)</td>
+        </tr>
+
+        <tr>
+            <td>经费限额</td>
+            <td>@Html.EditorFor(model => model.Threshold)</td>
+        </tr>
+
+        @Html.HiddenFor(model => model.IsDeleted)
+
+        @Html.HiddenFor(model => model.CreatedBy)
+
+        @Html.HiddenFor(model => model.CreatedTime)
+
+        @Html.HiddenFor(model => model.UpdatedBy)
+
+        @Html.HiddenFor(model => model.UpdatedTime)
+
+        <tr><td ><input type="submit" value="保存" class="btn btn-blue" /></td></tr>
+
+    </table>
+}

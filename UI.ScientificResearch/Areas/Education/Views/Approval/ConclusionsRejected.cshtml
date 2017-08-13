@@ -1,0 +1,179 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<script src="~/Scripts/Custom/form.js"></script>
+<script type="text/javascript">
+    var fuJian = "";
+    $(function () {
+        areadHaveFillIn();
+    });
+    $(function () {
+        $("#btnUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                ajaxFileUploadFillIn();
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        })
+    })
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage = "";
+            if ($("#TextArea911367177").val().trim() == "") {
+                errorMessage = errorMessage + "概述不能为空！";
+            }
+
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+
+</script>
+<style type="text/css">
+    input[type="text"] {
+        width: 150px;
+        height: 24px;
+    }
+
+    textarea {
+        margin: 0px;
+        height: 180px;
+        width: 737px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal widget-body">
+
+        @Html.HiddenFor(model => model.NWorkToDoID)
+        <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+        <table class="table">
+            @Html.ValidationSummary(true)
+
+
+
+            @Html.HiddenFor(model => model.NWorkToDoID)
+
+            @Html.HiddenFor(model => model.WorkName)
+
+            @Html.HiddenFor(model => model.NWorkToDoID)
+
+            @Html.HiddenFor(model => model.ApplicationId)
+
+            @Html.HiddenFor(model => model.FormID)
+
+            @Html.HiddenFor(model => model.WorkFlowID)
+
+            @Html.HiddenFor(model => model.UserName)
+
+            @Html.HiddenFor(model => model.TimeStr)
+
+            @Html.HiddenFor(model => model.FuJianList)
+
+            @Html.HiddenFor(model => model.ShenPiYiJian)
+
+            @Html.HiddenFor(model => model.JieDianID)
+
+            @Html.HiddenFor(model => model.JieDianName)
+
+            @Html.HiddenFor(model => model.ShenPiUserList)
+
+            @Html.HiddenFor(model => model.OKUserList)
+
+            @Html.HiddenFor(model => model.StateNow)
+
+            @Html.HiddenFor(model => model.LateTime)
+
+            @Html.HiddenFor(model => model.WenHao)
+
+            @Html.HiddenFor(model => model.BeiYong1)
+
+            @Html.HiddenFor(model => model.BeiYong2)
+
+            @Html.Raw(Model.FormContent)
+            @Html.HiddenFor(model => model.FormContent)
+            @Html.ValidationMessageFor(model => model.FormContent)
+
+            <tr>
+                <td>
+                    总支出金额：@ViewBag.TotalOutMoney
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    总收入金额：@ViewBag.TotalInMoney
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    余额：@ViewBag.BalanceMoney
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                    <input type="button" value="上传" id="btnUploadFile" />
+                    <div id="areaduploadfile"></div>
+                </td>
+            </tr>
+
+            @if (Model.IsRejected == true && Model.IsTemporary == false)
+            {
+                <tr>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" />
+                    </td>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" class="btn btn-blue" />
+                    </td>
+                </tr>
+            }
+
+            else if (Model.IsTemporary == true && Model.IsRejected == false)
+            {
+                <tr>
+                    <td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" class="btn btn-blue" />
+                    </td>
+                    <td style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>
+                </tr>
+            }
+
+            else if (Model.IsTemporary == false && Model.IsRejected == false)
+            {
+
+                <script>@Html.Raw(ViewBag.PiLiangSet)</script>
+
+                <tr>
+                    <td colspan="2" style="vertical-align:middle; text-align:center;">
+                        已上报
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+
+}

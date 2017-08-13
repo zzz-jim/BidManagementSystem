@@ -1,0 +1,108 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkFlowNodeViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EidtFlwswet</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            
+            
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.NodeSerils, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.NodeSerils)
+                    @{int difference = 2; int nodeserils = Convert.ToInt16(Model.NodeSerils); int realynodeserials = nodeserils - difference;}
+                    @realynodeserials
+                    @Html.ValidationMessageFor(model => model.NodeSerils)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.NodeName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NodeName)
+                    @Html.ValidationMessageFor(model => model.NodeName)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.NodeAddr, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.NodeAddr)
+                    @{string nodeaddr = Model.NodeAddr;}
+                    @nodeaddr
+                    @Html.ValidationMessageFor(model => model.NodeAddr)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.NextNode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.NextNode)
+                    @{int difference1 = 2; int nexttnode = Convert.ToInt16(Model.NextNode); int realynextnode = nexttnode - difference1;}
+                    @realynextnode
+                    @Html.ValidationMessageFor(model => model.NextNode)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.SPDefaultList, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.DropDownListFor(model => model.SPDefaultList)
+                    @Html.ValidationMessageFor(model => model.SPDefaultList)*@
+                    @Html.DropDownListFor(model => model.SPDefaultList, ViewData["spdefalutlist"] as List<SelectListItem>, "---请选择---")
+               @Html.HiddenFor(model => model.SPDefaultList)
+                 </div>
+            </div>
+                    @Html.HiddenFor(model => model.ID)
+
+                    @Html.HiddenFor(model => model.WorkFlowID)
+
+                    @Html.HiddenFor(model => model.IFCanJump)
+                    
+                    @Html.HiddenFor(model => model.IFCanView)
+                  
+                    @Html.HiddenFor(model => model.IFCanEdit)
+                    
+                    @Html.HiddenFor(model => model.IFCanDel)
+                   
+                    @Html.HiddenFor(model => model.JieShuHours)
+                   
+                    @Html.HiddenFor(model => model.PSType)
+                
+                    @Html.HiddenFor(model => model.SPType)
+                  
+                    @Html.HiddenFor(model => model.CanWriteSet)
+                 
+                    @Html.HiddenFor(model => model.SecretSet)
+                  
+                    @Html.HiddenFor(model => model.ConditionSet)
+                   
+                    @Html.HiddenFor(model => model.NodeLeft)
+                   
+                    @Html.HiddenFor(model => model.NodeTop)
+                   
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="更新" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+</body>
+</html>

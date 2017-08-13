@@ -1,0 +1,100 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<html>
+<head>
+    <style type="text/css">
+        input[type="text"] {
+            width: 150px;
+            height: 24px;
+        }
+
+        textarea {
+            margin: 0px;
+            height: 230px;
+            width: 767px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Project Step Wizard -->
+    @Html.Partial("_ScienceConferenceWizardPartial")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal widget-body">
+
+            <input type="hidden" id="Freeze" value="@ViewBag.Id" />
+            <table class="table">
+                @Html.ValidationSummary(true)
+
+
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.WorkName)
+
+                @Html.HiddenFor(model => model.ApplicationId)
+
+                @Html.HiddenFor(model => model.FormID)
+
+                @Html.HiddenFor(model => model.WorkFlowID)
+
+                @Html.HiddenFor(model => model.UserName)
+
+                @Html.HiddenFor(model => model.TimeStr)
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.HiddenFor(model => model.JieDianID)
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+                @Html.HiddenFor(model => model.OKUserList)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.LateTime)
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+
+                @if (Model.ProjectStatus == "MeetingEnd")
+                {
+                    if (Model.ApplicationStatus == "MeetingEnd")
+                    {
+
+                        <tr>会议结束</tr>
+                    }
+                    else
+                    {
+
+                        <tr>
+                            <td style="vertical-align:middle; text-align:center;">
+                                <input type="submit" value="确认会议结束" name="Reported" class="btn btn-blue" />
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td>还有未进行的操作，不能结束会议</td> </tr>
+                }
+
+            </table>
+        </div>
+    }
+</body>
+</html>

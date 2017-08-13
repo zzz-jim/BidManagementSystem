@@ -2172,7 +2172,7 @@ namespace UI.ScientificResearch.Controllers
         public ActionResult ApplicationList()
         {
             ViewBag.Module = "政府采购";
-            ViewBag.Title = "申请书";
+            ViewBag.Title = "项目注册";
             return View();
         }
 

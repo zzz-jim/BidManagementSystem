@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.PaperPublishStatisticsViewModel>
+
+   @{
+   // Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+           Layout = null;
+           
+     }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/Custom/Print.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#PrintBtn").click(function () {
+            var printDivId = "printPaperPublishStatisticsAnalysis";
+            areaPrintFun(printDivId);
+        });
+    });
+</script>
+@using (Html.BeginForm("PaperPublishStatisticsAnalysis", "PaperPublish", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+    <input type="submit" name="OutPaperPublishStatistics" style="width: 55px; height: 28px" value="导出" />
+        <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />
+    </div>
+    <br/>
+    <div id="printPaperPublishStatisticsAnalysis">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th>
+                    年份
+                </th>
+                <th>
+                    特I类期刊
+                </th>
+                <th>
+                    I类期刊
+                </th>
+                <th>
+                    II类期刊
+                </th>
+                <th>
+                    III类期刊
+                </th>
+                <th>
+                    合计
+                </th>
+            </tr>
+            @foreach (var item in Model)
+      {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Superjournal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Onejournal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Twojournal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Threejournal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.TotalCount)
+                </td>
+            </tr>
+      }
+            <tr>
+                <td>
+                    合计
+                </td>
+                <td>
+                    @Model.Sum(x => x.Superjournal)
+                </td>
+                <td>
+                    @Model.Sum(x => x.Onejournal)
+                </td>
+                <td>
+                    @Model.Sum(x => x.Twojournal)
+                </td>
+                <td>
+                    @Model.Sum(x => x.Threejournal)
+                </td>
+                <td>
+                    @Model.Sum(x => x.TotalCount)
+                </td>
+            </tr>
+        </table>
+    </div>
+}

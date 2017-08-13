@@ -1,0 +1,180 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+    <script src="~/Scripts/ajaxfileupload.js"></script>
+    <script src="~/Scripts/Custom/form.js"></script>
+    <script type="text/javascript">
+
+        var fuJian = "";
+        $(function () {
+            $("#btnUploadFile").click(function () {
+                if ($("#uploadFile").val().length > 0) {
+                    ajaxFileUploadFillIn();
+                }
+                else {
+                    alert("请选择要上传的文件！！");
+                }
+            })
+        })
+
+
+    </script>
+    <style type="text/css">
+        input[type="text"] {
+            width: 150px;
+            height: 24px;
+        }
+
+        textarea {
+            margin: 0px;
+            height: 230px;
+            width: 767px;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $("input[name='Reported'],input[name='Save'] ").click(function () {
+                var errorMessage = "";
+                if ($("#TextArea1266765043").val().trim() == "") {
+                    errorMessage = errorMessage + "合同简述不能为空！";
+                }
+                if (errorMessage == "") {
+
+                }
+                else {
+                    alert(errorMessage);
+                    return false;
+                }
+            });
+        });
+
+        $(function () {
+            $("#Reported").click(function () {
+                var url1 = "/ResearchAward/SignContract?flag=Reported";
+                submitForm("form", url1);
+            })
+            $("#Save").click(function () {
+                var url2 = "/ResearchAward/SignContract?flag=Save";
+                submitForm("form", url2);
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    <!-- Project Step Wizard -->
+    @Html.Partial("_ResearchAwardWizardPartial")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal widget-body">
+
+            <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+            <table class="table">
+                @Html.ValidationSummary(true)
+
+                @Html.HiddenFor(model => model.NWorkToDoID)
+
+                @Html.HiddenFor(model => model.WorkName)
+
+                @Html.HiddenFor(model => model.ApplicationId)
+
+                @Html.HiddenFor(model => model.FormID)
+
+                @Html.HiddenFor(model => model.WorkFlowID)
+
+                @Html.HiddenFor(model => model.UserName)
+
+                @Html.HiddenFor(model => model.TimeStr)
+
+                @Html.HiddenFor(model => model.FuJianList)
+
+                @Html.HiddenFor(model => model.ShenPiYiJian)
+
+                @Html.HiddenFor(model => model.JieDianID)
+
+                @Html.HiddenFor(model => model.JieDianName)
+
+                @Html.HiddenFor(model => model.ShenPiUserList)
+
+                @Html.HiddenFor(model => model.OKUserList)
+
+                @Html.HiddenFor(model => model.StateNow)
+
+                @Html.HiddenFor(model => model.LateTime)
+
+                @Html.HiddenFor(model => model.WenHao)
+
+                @Html.HiddenFor(model => model.BeiYong1)
+
+                @Html.HiddenFor(model => model.BeiYong2)
+                <tr>
+                    <td>
+                        @Html.Raw(Model.FormContent)
+                        @Html.HiddenFor(model => model.FormContent)
+                        @Html.ValidationMessageFor(model => model.FormContent)
+                    </td>
+                </tr>
+
+                @*@if (ViewBag.act == "save")
+                {
+                    <tr>
+                        <td style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" />
+                        </td>
+                        <td style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="修改数据" name="Updatedata" class="btn btn-blue" />
+                        </td>
+                    </tr>
+
+                }*@
+               @if (Model.IsTemporary == true)
+                {
+                    <tr>
+                        <td colspan="3" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                        </td>
+                        <td colspan="3" style="vertical-align:middle; text-align:center;">
+                            已保存
+                        </td>
+                    </tr>
+                }
+                else if (Model.IsTemporary == false)
+                {
+
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">
+                            <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                            <input type="button" value="上传" id="btnUploadFile" />
+                            <div id="areadyuploadfile"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="保存并上报" name="Reported" id="Reported" class="btn btn-blue" />
+                        </td>
+                        <td style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</body>
+</html>
+<script>@Html.Raw(ViewBag.PiLiangSet);</script>

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPRiZhiViewModel>
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+                      <div id="AreadyDoWindow">
+
+                      </div>
+<script type="text/javascript">
+    function OpenAreadyDoWindow(id)
+    {
+        $("#AreadyDoWindow").kendoWindow({
+            position: {
+                top: "15%", // or "100px"
+                left: "13%"
+            },
+            width:"80%",
+            height:"80%",
+            draggable: true,
+            title:"待办",
+            visible: false,
+            actions: [
+                    "Pin",
+                    "Close",
+                   // "Minimize",
+                 // "Maximize"
+            ],
+            resizable: false,
+            close: function(e) {
+                parent.location.reload();//刷新页面
+            }
+        });
+
+        $.ajax({
+            url:"/PaperPublish/ReturnTop10StateValue?id=" + id,
+            type:"post",
+            success:function(data){
+                if (data != null) {
+                    // $("#MaxWindow").html(data);
+
+                    var k = data;
+                    //判断返回的状态来控制弹出框第一个打开的页面
+                    //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                    if(data["ReturnState"]=="AplicationWriting")
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                    }
+                    else if (data["ReturnState"]=="ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
+                    {
+                        if(data["ReturnState"]=="ApplicationRejected")
+                        {
+                            $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
+                        }
+                        else
+                        {
+                            $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
+                        }
+                    }
+                    else if (data["ReturnState"] == "ApplicationApproved"||data["ReturnState"]=="ProjectEstablishing")//全部通过审批
+                    {
+                        //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                        $("#AreadyDoWindow").append(' <iframe id="application" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
+                    }
+                    else if (data["ReturnState"] == "ProjectEstablished" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/Conclusions?id=' + id + '">论文登记</iframe>');
+                    }
+                        //else if (data == "ContractSigned" || data == "ProjectProcessing")//申请书已提交和待审批中
+                        //{
+                        //    $("#processwindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/PaperPublish/ProcessRecordList?id=' + id + '">过程记录</iframe>');
+                        //}
+                    else if (data["ReturnState"] == "ConcludeUnWrite" || data["ReturnState"] == "ConcludeUnSubmit" )//申请书已提交和待审批中
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/Conclusions?id=' + id + '">论文登记</iframe>');
+                    }
+                    else if (data["ReturnState"] == "ProjectConcluding" || data["ReturnState"] == "ProjectConcluded" || data["ReturnState"] == "ConcludeRejected")//申请书已提交和待审批中
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="140%" scrolling="no" style="border:0px" src="/PaperPublish/ConclusionsAgree?id=' + id + '">项目结案</iframe>');
+                    }
+
+                    else if(data["ReturnState"] =="ProjectProcessing"&&data["fundsId"] !=null)///判断经费记录
+                    {
+                        $("#AreadyDoWindow").append(' <iframe id="process" width="100%" height="90%" scrolling="no" style="border:0px" src="/PaperPublish/ReimburseWorkList?id=' + data["fundsId"] + '">经费记录</iframe>');
+                    }
+
+                }
+                else {
+                    alert("发生异常！");
+                }
+            }
+        });
+        $("#AreadyDoWindow").data("kendoWindow").center().open();
+    }
+
+</script>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>
+            申请人
+        </th>
+        <th>
+            操作
+        </th>
+        <th>
+            上报时间
+        </th>
+    </tr>
+    @{int NO = 0;}
+    @foreach (var item in Model)
+{
+    { NO++; }
+    <tr onclick="OpenAreadyDoWindow(@item.FKApplicationID)">
+        <td>@NO</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoSomething)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStr)
+        </td>
+    </tr>
+}
+</table>

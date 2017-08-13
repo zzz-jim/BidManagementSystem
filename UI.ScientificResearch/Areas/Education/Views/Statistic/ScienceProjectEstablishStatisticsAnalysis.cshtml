@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ScienceProjectEstablishTimeStatisticsViewModel>
+
+    @{
+        //Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+        Layout = null;
+    }
+@using (Html.BeginForm("ScienceProjectEstablishStatisticsAnalysis", "Statistic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="submit" name="OutScienceProjectEstablishStatistics" style="width: 55px; height: 28px" value="导出" />
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>
+                年份
+            </th>
+            <th>
+                国家级
+            </th>
+            <th>
+                省级
+            </th>
+            <th>
+                市级
+            </th>
+            <th>
+                局级
+            </th>
+            <th>
+                院级
+            </th>
+            <th>
+                合计
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CountryLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.ProvinceLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CityLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CountyLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.HospitalLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.TotalCount)
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                合计
+            </td>
+            <td>
+                @Model.Sum(x => x.CountryLevel)
+            </td>
+            <td>
+                @Model.Sum(x => x.ProvinceLevel)
+            </td>
+            <td>
+                @Model.Sum(x => x.CityLevel)
+            </td>
+            <td>
+                @Model.Sum(x => x.CountyLevel)
+            </td>
+            <td>
+                @Model.Sum(x => x.HospitalLevel)
+            </td>
+            <td>
+                @Model.Sum(x => x.TotalCount)
+            </td>
+        </tr>
+    </table>
+}

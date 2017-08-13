@@ -1,0 +1,131 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNFormViewModel>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ApprovalSetList</title>
+    
+</head>
+<body>
+    <div id="modifiedWindow">
+
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var onClose = function () {
+                parent.location.reload();//刷新包含SubmitApplication的页面
+            }
+            $("#modifedBtn").click(function () {
+                
+                var tempformid = $("input[name='seletedItem']:checked").val();
+                if (tempformid == null) {
+                    alert("请选择你要修改的数据行！");
+                    return false;
+                }
+                else { 
+                    $("#modifiedWindow").kendoWindow({
+                        position: {
+                            top: 150, // or "100px"
+                            left: "13%"
+                        },
+                        modal: true,
+                        draggable: true,
+                        resizable: false,
+                        title: "修改节点",
+                        visible: false,
+                        actions: [
+                                "Pin",
+                                "Close",
+                        ],
+                        close: onClose
+                        //  resizable: false,
+
+                    });
+                    $("#modifiedWindow").append(' <iframe id="modifiedIframe" width="1600" height="800" style="border:0px" src="/FlowSet/ModifiedFlowList?formid=' + tempformid + '">修改节点</iframe>');
+                    $("#modifiedWindow").data("kendoWindow").center().open();
+                }
+                });
+        });
+    </script>
+
+    <p>
+        <input type="button" id="modifedBtn" value="修改" />
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                序号
+            </th>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModifiedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormType)
+            </th>
+        </tr>
+        @{int number = 0;}
+
+        @foreach (var item in Model)
+        {
+           number++;
+            <tr>
+                <td>
+                   @number
+                </td>
+                <td>
+                   <input type="radio" name="seletedItem" value="@item.ID"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastModifiedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedPerson)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormType)
+                  
+                </td>
+            </tr>
+            <tr>
+             
+                @Html.HiddenFor(modelItem => item.ApprovalFlowDescription)
+             
+                @Html.HiddenFor(modelItem => item.TypeID)
+
+                @Html.HiddenFor(modelItem => item.UserListOK)
+
+                @Html.HiddenFor(modelItem => item.DepListOK)
+
+                @Html.HiddenFor(modelItem => item.JiaoSeListOK)
+
+                @Html.HiddenFor(modelItem => item.UserName)
+
+                @Html.HiddenFor(modelItem => item.TimeStr)
+
+                @Html.HiddenFor(modelItem => item.ContentStr)
+
+                @Html.HiddenFor(modelItem => item.ItemsList)
+
+                @Html.HiddenFor(modelItem => item.IFOK)
+
+            </tr>
+
+        }
+    </table>
+</body>
+</html>

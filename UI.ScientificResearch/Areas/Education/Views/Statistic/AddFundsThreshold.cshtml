@@ -1,0 +1,74 @@
+﻿@model ScientificResearch.ViewModel.FundsThresholdViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModuleName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.ModuleName)
+                @Html.ValidationMessageFor(model => model.ModuleName)*@
+
+                <select id="ModuleName" name="ModuleName" class="k-list-container k-popup k-group k-reset" style="width:144px;height:24px;">
+                    <option value="ScienceResearch">工程项目</option>
+                    <option value="GoodSubject">工程项目</option>
+                    <option value="SubjectLeader">学术带头人</option>
+                    <option value="PaperPublish">论文管理</option>
+                    <option value="ResearchAward">科技成果</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectType)
+                @Html.ValidationMessageFor(model => model.ProjectType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FundsType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FundsType)
+                @Html.ValidationMessageFor(model => model.FundsType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Threshold, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Threshold)
+                @Html.ValidationMessageFor(model => model.Threshold)
+            </div>
+        </div>
+        
+                @Html.HiddenFor(model => model.IsDeleted)
+            
+                @Html.HiddenFor(model => model.CreatedBy)
+             
+                @Html.HiddenFor(model => model.CreatedTime)
+           
+                @Html.HiddenFor(model => model.UpdatedBy)
+              
+                @Html.HiddenFor(model => model.UpdatedTime)
+           
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="添加" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

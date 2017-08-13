@@ -1,0 +1,294 @@
+﻿@model ScientificResearch.ViewModel.ProjectRecordViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<script src="~/Scripts/Custom/form.js"></script>
+<script>
+    $(function () {
+        $("#SuperiorFunds").blur(function () {
+            //alert( $("#Total").val());
+            var sum = parseInt($("#SuperiorFunds").val()) + parseInt($("#HospitalFunds").val());
+            $("#Total").val(sum);
+        })
+    })
+    $(function () {
+        $("#HospitalFunds").blur(function () {
+            var sum = parseInt($("#SuperiorFunds").val()) + parseInt($("#HospitalFunds").val());
+            $("#Total").val(sum);
+        })
+    })
+    //$(function () {
+    //    var data = $("#data").find("tr");
+    //    var tr0 = $("#insert-tr");
+    //    data.insertAfter(tr0);
+    //});
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#Drop1364262284").attr("disabled", "disabled");
+        $("#Drop968600384").attr("disabled", "disabled");
+    });
+
+    $(function () {
+        $("#TextArea683159807").attr("readonly", true);
+    });
+</script>
+
+<!-- Project Step Wizard -->
+@Html.Partial("_GoodSubjectWizardPartial")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <script>
+        $(document).ready(function () {
+            $("#FundsTime").kendoDatePicker({
+                format: "yyyy-MM-dd",
+                value: new Date()
+            });
+            $("#EndTime").kendoDatePicker({
+                format: "yyyy-MM-dd",
+                value: new Date()
+            });
+            $("#FundsTime").attr("readonly", true);
+            $("#EndTime").attr("readonly", true);
+        });
+
+        $(function () {
+            $("#Reported").click(function () {
+                var url1 = "/GoodSubject/ProjectEstablish?flag=Reported";
+                submitForm("form", url1);
+            })
+            $("#Save").click(function () {
+                var url2 = "/GoodSubject/ProjectEstablish?flag=Save";
+                submitForm("form", url2);
+            })
+        })
+    </script>
+    <input type="hidden" id="Freeze" value="@Model.Application.NWorkToDoID" />
+    <table class="table ">
+        @Html.ValidationSummary(true)
+       @if (Model.IsTemporary == true)
+       {
+
+            @Html.HiddenFor(model => model.PojectEstablishID)
+
+            @Html.HiddenFor(model => model.Application.NWorkToDoID)
+
+            @Html.HiddenFor(model => model.Application.WorkName)
+
+            @Html.HiddenFor(model => model.Application.FormID)
+
+            @Html.HiddenFor(model => model.Application.WorkFlowID)
+            @Html.HiddenFor(model => model.ApplicationId)
+            @Html.HiddenFor(model => model.WorkflowId)
+            @Html.HiddenFor(model => model.StartTime)
+
+            @Html.HiddenFor(model => model.CreatedBy)
+
+            @Html.HiddenFor(model => model.UpdatedBy)
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Application.BeiYong1)</td>
+                <td>
+                    <input readonly="readonly" id="Application.BeiYong1" name="Application.BeiYong1" value="@Model.Application.BeiYong1" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.Application.WenHao)</td>
+                <td>
+                    <input readonly="readonly" id="Application.WenHao" name="Application.WenHao" value="@Model.Application.WenHao" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                    @Html.Raw(Model.Application.FormContent)
+                    @Html.HiddenFor(model => model.Application.FormContent)
+                    @Html.ValidationMessageFor(model => model.Application.FormContent)
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.SuperiorFunds)</td>
+                <td>
+                    @Html.EditorFor(model => model.SuperiorFunds)
+                    @Html.ValidationMessageFor(model => model.SuperiorFunds)
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HospitalFunds)</td>
+                <td>
+                    @Html.EditorFor(model => model.HospitalFunds)
+                    @Html.ValidationMessageFor(model => model.HospitalFunds)
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目总金额</td>
+                <td>
+                    <input readonly="readonly" id="Total" value="@Model.Total" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>拨款时间</td>
+                <td>
+                    <input type="text" id="FundsTime" name="FundsTime" value="@Model.FundsTime" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目结束时间</td>
+                <td>
+                    <input type="text" id="EndTime" name="EndTime" value="@Model.EndTime" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目确立时间</td>
+                <td>
+                    <input readonly="readonly" id="CreatedTime" value="@Model.CreatedTime" type="text" style="width:160px" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="vertical-align:middle; text-align:center;">
+                    <div>  <input type="submit" value="保存并上报" id="Reported" name="Reported" class="btn btn-blue" /></div>
+                </td>
+                <td colspan="3" style="vertical-align:middle; text-align:center;">
+                    已保存
+                </td>
+            </tr>
+        }
+      
+        else
+        {
+
+            @Html.HiddenFor(model => model.PojectEstablishID)
+
+            @Html.HiddenFor(model => model.Application.NWorkToDoID)
+
+            @Html.HiddenFor(model => model.Application.WorkName)
+
+            @Html.HiddenFor(model => model.Application.FormID)
+
+            @Html.HiddenFor(model => model.Application.WorkFlowID)
+
+            @Html.HiddenFor(model => model.ApplicationId)
+
+            @Html.HiddenFor(model => model.WorkflowId)
+
+            @Html.HiddenFor(model => model.StartTime)
+
+            @Html.HiddenFor(model => model.CreatedBy)
+
+            @Html.HiddenFor(model => model.UpdatedBy)
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Application.BeiYong1)</td>
+                <td>
+                    <input readonly="readonly" id="Application.BeiYong1" name="Application.BeiYong1" value="@Model.Application.BeiYong1" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr id="insert-tr">
+                <td>@Html.LabelFor(model => model.Application.WenHao)</td>
+                <td>
+                    <input readonly="readonly" id="Application.WenHao" name="Application.WenHao" value="@Model.Application.WenHao" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                    @Html.Raw(Model.Application.FormContent)
+                    @Html.HiddenFor(model => model.Application.FormContent)
+                    @Html.ValidationMessageFor(model => model.Application.FormContent)
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.SuperiorFunds)</td>
+
+                <td>
+                    @Html.EditorFor(model => model.SuperiorFunds)
+                    @Html.ValidationMessageFor(model => model.SuperiorFunds)
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HospitalFunds)</td>
+                <td>
+                    @Html.EditorFor(model => model.HospitalFunds)
+                    @Html.ValidationMessageFor(model => model.HospitalFunds)
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目总金额</td>
+                <td>
+                    <input readonly="readonly" id="Total" name="Total" value="@Model.Total" type="text" class="customTextBox" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>拨款时间</td>
+                <td>
+                    <input type="text" data-role='datepicker' id="FundsTime" name="FundsTime" data-type="date" required="required" value="@Model.FundsTime" />
+                    <span data-for='FundsTime' class='k-invalid-msg'></span>
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目结束时间</td>
+                <td>
+                    <input type="text" data-role='datepicker' id="EndTime" name="EndTime" data-type="date" required="required" value="@Model.FundsTime" />
+                    <span data-for='EndTime' class='k-invalid-msg'></span>
+                </td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td>项目确立时间</td>
+                <td>
+                    <input readonly="readonly" id="CreatedTime" name="CreatedTime" type="text" style="width:160px" value="@Model.CreatedTime" />
+                </td>
+                <td colspan="4"></td>
+            </tr>
+
+            <tr>
+                <td colspan="3" style="vertical-align:middle; text-align:center;">
+                    <div>  <input type="submit" value="保存并上报" id="Reported" name="Reported" class="btn btn-blue" /></div>
+                </td>
+                <td colspan="3" style="vertical-align:middle; text-align:center;">
+                    <div><input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" id="Save" class="btn btn-blue" /></div>
+                </td>
+            </tr>
+        }
+    </table>
+    <div id="data" style="display:none">
+        @Html.Raw(Model.Application.FormContent)
+    </div>
+
+    @Html.HiddenFor(model => model.Application.FormContent)
+    @Html.ValidationMessageFor(model => model.Application.FormContent)
+}
+<script>
+    $(function () {
+        $("#SuperiorFunds").kendoNumericTextBox({
+            min: 0,
+            required: true,
+        });
+        $("#HospitalFunds").kendoNumericTextBox({
+            min: 0,
+            required: true,
+        });
+        //kendo.culture("zh-CN");
+        var validator = $("#formId").kendoValidator().data("kendoValidator");
+    });
+    </script>
+    <script>
+        $("#selectForSingleUser").hide();
+    $("#select").hide();
+    $("#TselectSingleAcademicLeader").hide();
+</script>

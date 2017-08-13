@@ -1,0 +1,316 @@
+﻿@model ScientificResearch.ViewModel.FundsRecordViewModel
+
+@{
+    ViewBag.Title = "差旅报销申请";
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<style type="text/css">
+    input[type="text"] {
+        width: 60px;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='Reported'],input[name='Save'] ").click(function () {
+            var errorMessage = "";
+            if ($("#Name").val().trim() == "") {
+                errorMessage = errorMessage + "差旅报销单名称不能为空！";
+            }
+            if ($("#Description").val().trim() == "") {
+                errorMessage = errorMessage + "差旅描述不能为空！";
+            }
+            if (errorMessage == "") {
+
+            }
+            else {
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+</script>
+
+@using (Html.BeginForm("TravelExpensesRejected", "SubjectLeader", FormMethod.Post, new { id = "formId", novalidate = "novalidate" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+    <table class="table">
+        @*rejected*@
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ApplicationId)
+        @Html.HiddenFor(model => model.FundsRecordID)
+        @Html.HiddenFor(model => model.ModuleName)
+        <tr>
+            <td colspan="3"> 差旅报销名称</td>
+            <td colspan="6">
+                <input type="text" id="Name" name="Name" value="@Model.Name" />
+            </td>
+        </tr>
+
+        @Html.HiddenFor(model => model.Type)
+        <tr>
+            <td colspan="3">@Html.LabelFor(model => model.Description)</td>
+            <td colspan="6">
+                <input type="text" id="Description" name="Description" value="@Model.Description" />
+            </td>
+        </tr>
+
+        @Html.HiddenFor(model => model.ProjectName)
+
+        <tr>
+            <td colspan="3"> @Html.LabelFor(model => model.CountOfBill)</td>
+            <td colspan="6">
+                <input type="text" id="CountOfBill" name="CountOfBill" value="@Model.CountOfBill" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3"> @Html.LabelFor(model => model.TotalPrice)</td>
+            <td colspan="6">
+                <input type="text" id="TotalPrice" name="TotalPrice" value="@Model.TotalPrice" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3"> @Html.LabelFor(model => model.UserName)</td>
+            <td colspan="6">
+                <input type="text" readonly="readonly" id="UserName" name="UserName" value="@Model.UserName" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3"> @Html.LabelFor(model => model.TimeStr)</td>
+            <td colspan="6">
+                <input type="text" readonly="readonly" id="TimeStr" name="TimeStr" value="@Model.TimeStr" />
+            </td>
+        </tr>
+
+
+
+        @Html.HiddenFor(model => model.Comment)
+
+        <tr>
+            <td colspan="3">  @Html.LabelFor(model => model.ShenPiYiJian)</td>
+            <td colspan="6">
+                @Html.EditorFor(model => model.ShenPiYiJian)
+                @Html.ValidationMessageFor(model => model.ShenPiYiJian)
+            </td>
+        </tr>
+
+        @Html.HiddenFor(model => model.FuJianList)
+
+        @Html.HiddenFor(model => model.JieDianID)
+
+        @Html.HiddenFor(model => model.OKUserList)
+
+        @Html.HiddenFor(model => model.ShenPiUserList)
+
+        @Html.HiddenFor(model => model.StateNow)
+
+        @Html.HiddenFor(model => model.LateTime)
+
+        @Html.HiddenFor(model => model.CreatedBy)
+
+        @Html.HiddenFor(model => model.CreatedTime)
+
+        @Html.HiddenFor(model => model.UpdatedBy)
+
+        @Html.HiddenFor(model => model.UpdatedTime)
+
+        @Html.HiddenFor(model => model.IsTemporary)
+
+        @Html.HiddenFor(model => model.IsRejected)
+
+        @Html.HiddenFor(model => model.IsDeleted)
+
+        @Html.HiddenFor(model => model.IsLocked)
+
+        @Html.HiddenFor(model => model.IsIncome)
+
+        @Html.HiddenFor(model => model.IsPrint)
+
+        @Html.HiddenFor(model => model.LastPrintTime)
+
+        @Html.HiddenFor(model => model.ApplicationId)
+
+        @Html.HiddenFor(model => model.WorkflowId)
+
+        @Html.HiddenFor(model => model.Unit)
+
+        @Html.HiddenFor(model => model.JieDianName)
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().StartDate)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().EndDate)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().FromAddress)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().ToAddress)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().Transportation)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().TransportationFee)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().HotelFee)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().OtherFee)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.TravelFundsList.FirstOrDefault().OtherFeeComment)
+            </td>
+        </tr>
+
+        @foreach (var item in Model.TravelFundsList)
+        {
+            <tr>
+                <td><input type="text" style="width:100px;" name="item1StartDate" id="item1StartDate" value="@item.StartDate" /></td>
+                <td><input type="text" style="width:100px;" name="item1EndDate" id="item1EndDate" value="@item.EndDate" /></td>
+                <td><input type="text" name="item1FromAddress" id="item1FromAddress" value="@item.FromAddress" /></td>
+                <td><input type="text" name="item1ToAddress" id="item1ToAddress" value="@item.ToAddress" /></td>
+                <td><input type="text" name="item1Transportation" id="item1Transportation" value="@item.Transportation" /></td>
+                <td><input type="text" name="item1TransportationFee" id="item1TransportationFee" value="@item.TransportationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" /></td>
+                <td><input type="text" name="item1HotelFee" id="item1HotelFee" value="@item.HotelFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" /></td>
+                <td><input type="text" name="item1OtherFee" id="item1OtherFee" value="@item.OtherFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" /></td>
+                <td><input type="text" name="item1OtherFeeDescription" id="item1OtherFeeDescription" value="@item.OtherFeeComment" /></td>
+            </tr>
+        }
+        @if (Model.IsRejected == true && Model.IsTemporary == false)
+        {
+            <tr>
+                <td style="vertical-align:middle; text-align:center;">
+                    <input type="submit" value="保存并上报" name="Reported" class="btn btn-blue" />
+                </td>
+                @*<td style="vertical-align:middle; text-align:center;">
+                        <input type="submit" value="保&nbsp&nbsp&nbsp存" name="Save" class="btn btn-blue" />
+                    </td>*@
+            </tr>
+        }
+
+        else if (Model.IsTemporary == true && Model.IsRejected == false)
+        {
+            <tr>
+                @*<td style="vertical-align:middle; text-align:center;">
+                        已保存
+                    </td>*@
+                <td style="vertical-align:middle; text-align:center;">
+                    <input type="submit" value="上&nbsp&nbsp&nbsp报" name="Reported" class="btn btn-blue" />
+                </td>
+            </tr>
+        }
+
+        else if (Model.IsTemporary == false && Model.IsRejected == false)
+        {
+            <tr>
+                <td colspan="2" style="vertical-align:middle; text-align:center;">
+                    已上报
+                </td>
+            </tr>
+        }
+    </table>
+}
+<script>
+    $(document).ready(function () {
+        //$("#CreatedTime").kendoDatePicker();
+
+        function startChange() {
+            var startDate = start.value(),
+            endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            var endDate = end.value(),
+            startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        var start = $("#item1StartDate").kendoDatePicker({
+            change: startChange
+        }).data("kendoDatePicker");
+
+        var end = $("#item1EndDate").kendoDatePicker({
+            change: endChange
+        }).data("kendoDatePicker");
+
+        start.max(end.value());
+        end.min(start.value());
+    });
+
+
+</script>
+<script>
+    $(function () {
+        $("#SuperiorFunds").kendoNumericTextBox({
+            min: 0,
+            required: true,
+        });
+        $("#HospitalFunds").kendoNumericTextBox({
+            min: 0,
+            required: true,
+        });
+        //kendo.culture("zh-CN");
+        var validator = $("#formId").kendoValidator().data("kendoValidator");
+    });
+
+    //$("#formId").kendoValidator({
+    //    rules: {
+    //        customRule1: function (input) {
+    //            // all of the input must have a value
+    //            return $.trim(input.val()) !== "";
+    //        },
+    //        //customRuleTimeRequired: function (input) {
+    //        //    // all of the input must have a value
+    //        //    if (input.is("[name=FundsTime]")) {
+    //        //        return $.trim(input.val()) !== "";
+    //        //    }
+    //        //},
+    //        //customRule3: function (input) {
+    //        //    //only 'Tom' will be valid value for the username input
+    //        //    if (input.is("[name=FundsTime]")) {
+    //        //        return input.val() === "Tom";
+    //        //    }
+    //        //    return true;
+    //        //}
+    //    },
+    //    messages: {
+    //        customRule1: "All fields are required",
+    //        //customRuleTimeRequired: "时间不能为空",
+    //        //customRule3: "时间不对",
+    //    }
+    //});
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

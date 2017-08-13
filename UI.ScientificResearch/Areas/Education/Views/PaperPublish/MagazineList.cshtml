@@ -1,0 +1,160 @@
+﻿@model IEnumerable<ScientificResearch.DomainModel.PaperMagazine>
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+<div id="CreateNewApp">
+    <div id="newapplicationbutton">
+        <input type="button" id="CreateButton" value="新建刊物" />  @*<input type="button" id="EditButton" value="修改刊物" />*@
+    </div>
+    <div id="Application">
+    </div>
+</div>
+    <br/>
+<div id="MaxWindow">
+
+</div>
+<table class="table">
+    <tr>
+        <th>
+            期刊名称
+        </th>
+        <th>
+            期刊类型
+        </th>
+        <th>
+            期刊级别
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr ondblclick="OpenMaxWindow(@item.Id)">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "EditMagazine", new { id = item.Id }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+            <input type="button" value="删除" onclick="publicationDelte('@item.Id')" />
+        </td>
+    </tr>
+}
+
+</table>
+    <script type="text/javascript">
+        function publicationDelte(id) {
+            $.ajax({
+                url: "/PaperPublish/DeleteMagazine?id=" + id,
+                type: "post",
+                success: function (data) {
+                    if (data != null) {
+                        if (data == "Yes")
+                        {
+                            alert("删除成功！");
+                            parent.location.reload();
+                        }
+                        else if (data == "No") {
+                            alert("删除失败！");
+                        }
+                        else {
+
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+<script type="text/javascript">
+        $(function () {
+            var onClose = function () {
+                parent.location.reload();//刷新包含SubmitApplication的页面
+            }
+            $("#CreateButton").click(function () {
+                var random1 = Math.floor(Math.random() * 1000 + 1);
+                $("#Application").kendoWindow({
+                    position: {
+                        top: "30%", // or "100px"
+                        left: "35%"
+                    },
+                    width: "40%",
+                    height: "40%",
+                    draggable: true,
+                    resizable: false,
+                    title: "新建刊物",
+                    visible: false,
+                    actions: [
+                            "Pin",
+                            "Close",
+                    ],
+                    close: onClose,
+                    //  resizable: false,
+                    modal: true,
+                });
+                $("#Application").append(' <iframe id="application" width="100%" height="100%" style="border:0px" src="/PaperPublish/CreateMagazine">新建刊物</iframe>');
+                $("#Application").data("kendoWindow").center().open();
+            });
+            $("#EditButton").click(function () {
+                var random1 = Math.floor(Math.random() * 1000 + 1);
+                $("#Application").kendoWindow({
+                    position: {
+                        top: 180, // or "100px"
+                        left: "13%"
+                    },
+
+                    draggable: true,
+                    resizable: false,
+                    title: "修改刊物",
+                    visible: false,
+                    actions: [
+                            "Pin",
+                            "Close",
+                    ],
+                    close: onClose,
+                    //  resizable: false,
+                    modal: true,
+                });
+                $("#Application").append(' <iframe id="application" width="1500" height="430" style="border:0px" src="/PaperPublish/EditMagazine">修改刊物</iframe>');
+                $("#Application").data("kendoWindow").center().open();
+            });
+        })
+</script>
+
+<script type="text/javascript">
+
+    function OpenMaxWindow(id) {
+        $("#MaxWindow").kendoWindow({
+            position: {
+                top: "30%", // or "100px"
+                left: "35%"
+            },
+            width: "40%",
+            height: "40%",
+            draggable: true,
+            //title:"申请书",
+            visible: false,
+            actions: [
+                    "Pin",
+                    "Close",
+                   // "Minimize",
+                 // "Maximize"
+            ],
+            modal: true,
+            resizable: false,
+            title: "刊物详情",
+            close: function (e) {
+                parent.location.reload();//刷新页面
+            }
+        });
+
+        $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" style="border:0px" src="/PaperPublish/EditMagazine?id=' + id + '"></iframe>');
+        $("#MaxWindow").data("kendoWindow").center().open();
+    }
+</script>

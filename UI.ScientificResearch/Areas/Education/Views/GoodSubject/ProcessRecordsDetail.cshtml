@@ -1,0 +1,81 @@
+﻿@model ScientificResearch.ViewModel.ERPNWorkToDoViewModel
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+
+<style type="text/css">
+    table tbody tr td select {
+        width: 150px;
+        height: 30px;
+    }
+
+    input[type='text'] {
+        width: 150px;
+        height: 24px;
+    }
+
+    table tr {
+        line-height: 30px;
+    }
+
+    table tbody tr td textarea {
+        margin: 0px;
+        height: 235px;
+        width: 795px;
+    }
+
+    .name {
+        width: 120px;
+        text-align: right;
+        border-width: 0px;
+    }
+
+    .name1 {
+        width: 120px;
+        text-align: right;
+    }
+
+    .name2 {
+        text-align: right;
+    }
+
+    .name3 {
+        font-size: 20px;
+        width: 120px;
+        text-align: center;
+    }
+
+    .name4 {
+        margin-left: 20px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal widget-body">
+        <input type="hidden" id="Freeze" value="@Model.ApplicationId" />
+        <table class="table">
+            @Html.ValidationSummary(true)
+
+            <tr>
+                <td>
+                    @Html.Raw(Model.FormContent)
+                    @Html.HiddenFor(model => model.FormContent)
+                    @Html.ValidationMessageFor(model => model.FormContent)
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="vertical-align:middle; text-align:center;">
+                    <a href="/GoodSubject/ProcessRecords/@Model.NWorkToDoID">修改数据</a>
+                    @*<input type="button" value="修改数据" name="Reported" class="btn btn-blue" />*@
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+

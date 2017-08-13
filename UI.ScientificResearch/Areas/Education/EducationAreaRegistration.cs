@@ -17,7 +17,8 @@ namespace UI.ScientificResearch.Areas.Education
             context.MapRoute(
                 "Education_default",
                 "Education/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                new string[] { "UI.ScientificResearch.Areas.Education.Controllers" }
             );
         }
     }

@@ -1,0 +1,226 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+ <script src="~/Scripts/Custom/Print.js"></script>
+ <script type="text/javascript">
+    $(function () {
+        $("#PrintBtn").click(function () {
+            $.ajax({
+                url: "/Statistic/Printsearchrightdataoffundslist",
+                type:"post",
+                success:function(data){
+                    if (data != null) {
+                        printAllData(data);
+                    }
+                    else {
+                        alert("打印失败！");
+                    }
+                }
+            });
+        });
+    });
+ </script>
+
+    <br />
+    @using (Html.BeginForm("ScienceResearchProjectStatistic", "Statistic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div id="fundssearchdata">
+
+        开始时间:
+        <input id="flstartTime" value="" type="text" style="width: 150px " />&nbsp;
+        结束时间:
+        <input id="flendTime" value="" type="text" style="width: 150px " />&nbsp;
+        <input type="button" value="查询" onclick="searchrightdataoffundslist()" style="width: 55px; height: 28px" />
+        <input type="submit" value="导出全部" style="width: 65px; height: 28px" name="OutScienceResearchProjectStatistic" />
+        <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />
+    </div>
+    <br />
+   
+    <div id="bigfundsgrid" class="k-content">
+        <div id="fundsGrid">
+
+        </div>
+        <script>
+            $(function () {
+                searchrightdataoffundslist();
+            });
+
+            function searchrightdataoffundslist() {
+                var searchitem7 = $("#flstartTime").val();
+                var searchitem8 = $("#flendTime").val();
+                var dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            type: "post",
+                            url: "/Statistic/ScirnceResearchProjectlistStatistic?startTime=" + encodeURI(searchitem7) + "&endTime=" +
+                                encodeURI(searchitem8) + "",
+                            dataType: "json",
+                            contentType: "application/json",
+                        },
+
+                        destroy: {
+                            type: "post",
+                            url: "/Statistic/DeleteFundsListByModelId",
+                            dataType: "json",
+                            complete: function (e) {
+                                $("#fundsGrid").data("kendoGrid").dataSource.read();
+                            }
+                        },
+                        parameterMap: function (options, operation) {
+                            if (operation == "read") {
+                                var parameter = {
+                                    page: options.page,
+                                    pageSize: options.pageSize
+                                };
+                                return kendo.stringify(parameter);
+                            }
+                            if (operation == "destroy") {
+                                options.action = operation;
+                                return { modelId: kendo.stringify(options.models[options.models.length - 1].ID) };
+                            }
+                        },
+                    },
+
+                    batch: true,
+                    pageSize: 10,
+                    schema: {
+                        model: {
+                            //删除时必须有
+                            id: "ID"
+                        },
+                        data: function (d) {
+                            for (var i = 0; i < d.data.length; i++) {
+                                //将json时间转换
+                                var birthdayMilliseconds = eval('new ' + d.data[i].ApplicationTime.replace('/', '', 'g').replace('/', '', 'g'));
+                                var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                                d.data[i].ApplicationTime = birthday;
+                            }
+                            return d.data;
+
+                        },
+                        total: function (d) {
+                            return d.total;
+                        }
+                    },
+                    serverPaging: true,
+                });
+
+                $("#fundsGrid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: {
+                        refresh: true,
+                        pageSizes: true,
+                        buttonCount: 5,
+                        messages: {
+                            display: "显示{0}-{1}条，共{2}条",
+                            empty: "没有数据",
+                            page: "页",
+                            of: "/ {0}",
+                            itemsPerPage: "条/页",
+                            first: "第一页",
+                            previous: "前一页",
+                            next: "下一页",
+                            last: "最后一页",
+                            refresh: "刷新"
+                        }
+                    },
+                    columns: [
+                        {
+                            field: "ID",
+                            title: "序号",
+                            width: "110px",
+                            hidden: true,
+                        },
+                        {
+                            field: "ApplicationTime",
+                            title: "申请时间",
+                            width: "110px",
+                        },
+                        {
+                            field: "ProjectName",
+                            title: "项目名称",
+                            width: "110px"
+                        },
+                        {
+                            
+                            field: "ModuleName",
+                            title: "模块",
+                            width: "110px"
+                        },
+                        {
+                            field: "UserName",
+                            title: "申请人",
+                            width: "110px"
+                        },
+                        {
+
+                            field: "SectionName",
+                            title: "科室",
+                            width: "200px",
+
+
+                        },
+                        //{
+                        //    command:
+                        //    [{ name: "destroy", text: "删除" }]
+                        //}
+                    ],
+                    editable: {
+                        //mode: "inline",
+                        mode: "popup"
+                    }
+                });
+            };
+
+            $(document).ready(function () {
+                function startChange() {
+                    var startDate = start.value(),
+                    endDate = end.value();
+
+                    if (startDate) {
+                        startDate = new Date(startDate);
+                        startDate.setDate(startDate.getDate());
+                        end.min(startDate);
+                    } else if (endDate) {
+                        start.max(new Date(endDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+                }
+
+                function endChange() {
+                    var endDate = end.value(),
+                    startDate = start.value();
+
+                    if (endDate) {
+                        endDate = new Date(endDate);
+                        endDate.setDate(endDate.getDate());
+                        start.max(endDate);
+                    } else if (startDate) {
+                        end.min(new Date(startDate));
+                    } else {
+                        endDate = new Date();
+                        start.max(endDate);
+                        end.min(endDate);
+                    }
+                }
+
+                var start = $("#flstartTime").kendoDatePicker({
+                    change: startChange
+                }).data("kendoDatePicker");
+
+                var end = $("#flendTime").kendoDatePicker({
+                    change: endChange
+                }).data("kendoDatePicker");
+                $("#flstartTime").attr("readonly", true);
+                $("#flendTime").attr("readonly", true);
+                start.max(end.value());
+                end.min(start.value());
+            });
+
+
+        </script>
+    </div>
+    }
+
+

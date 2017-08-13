@@ -1,0 +1,82 @@
+﻿@model IEnumerable<IGrouping<String,ScientificResearch.DataTransferModel.ScienceConferenceStatisticsTransferObject>>
+@{
+    Layout = null;
+}
+ <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+ <script src="~/Scripts/Custom/Print.js"></script>
+ <script type="text/javascript">
+     $(function () {
+         $("#PrintBtn").click(function () {
+             var printDivId = "printScienceProjectStatisticsAnalysis";
+             areaPrintFun(printDivId);
+         });
+     });
+ </script>
+@using (Html.BeginForm("ScienceProjectStatisticsAnalysis", "ScienceConference", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+    <input type="submit" name="OutScienceProjectStatistics" style="width: 55px; height: 28px" value="导出" />
+        <input type="button" id="PrintBtn" style="width: 55px; height: 28px" value="打印" />
+    </div>
+    <br/>
+    <div id="printScienceProjectStatisticsAnalysis">
+        <table class="table">
+            <tr>
+                <th>
+                    科室
+                </th>
+                <th>
+                    学员
+                </th>
+                <th>
+                    委员
+                </th>
+                <th>
+                    其他
+                <th>
+                    无
+                </th>
+                <th>
+                    人数
+                </th>
+                <th>
+                    经费
+                </th>
+            </tr>
+            @{int studentscount = 0; int membercount = 0; int otherscount = 0; int nocount = 0; int allcount = 0;}
+            @foreach (var firstGroupedItem in Model)
+{
+    studentscount = firstGroupedItem.Sum(x => x.Students);
+    membercount = @firstGroupedItem.Sum(x => x.Member);
+    otherscount = @firstGroupedItem.First().Others;
+    nocount = @firstGroupedItem.First().No;
+    allcount = studentscount + membercount + otherscount + nocount;
+            <tr>
+                <td>
+                    @firstGroupedItem.First().Department
+                </td>
+                <td>
+                    @firstGroupedItem.Sum(x => x.Students)
+                </td>
+                <td>
+                    @firstGroupedItem.Sum(x => x.Member)
+                </td>
+                <td>
+                    @firstGroupedItem.Sum(x => x.Others)
+                </td>
+                <td>
+                    @firstGroupedItem.Sum(x => x.No)
+                </td>
+                <td>
+                    @allcount
+                </td>
+                <td>
+                    @firstGroupedItem.Sum(x => x.Funds)
+                </td>
+
+            </tr>
+}
+
+        </table>
+    </div>
+}

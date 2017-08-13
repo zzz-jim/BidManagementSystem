@@ -1,0 +1,173 @@
+﻿@model IEnumerable<UI.ScientificResearch.Models.FileUploadViewModels>
+@using ScientificResearch.Utility.Enums;
+@*@{
+        Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
+    }*@
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    int index = 1;
+}
+
+<!-- Project Step Wizard -->
+@Html.Partial("_ScienceResearchWizardPartial")
+
+
+<h4>@((UploadFilePageType)(int)ViewBag.UploadFilePageType)</h4>
+
+<input type="hidden" id="Freeze" value="@ViewBag.Id" />
+<script src="~/Scripts/ajaxfileupload.js"></script>
+<script src="~/Scripts/Custom/AboutApprovalNode.js"></script>
+<script src="~/Scripts/Custom/forms.js"></script>
+<script type="text/javascript">
+
+    var fuJian = "";
+    $(function () {
+        areadHaveFillIn();
+    });
+    $(function () {
+        $("#btnUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                // TODO:  remark
+                var jsonData = { "application_id":@ViewBag.Id,"section_id": $("#BidSectionId").val(),"file_type":@ViewBag.UploadFilePageType,"remark": "测试备注" };
+                ajaxFileUploadFillInWithData(jsonData);
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        });
+    })
+
+</script>
+
+<p>
+    @*@Html.ActionLink("上传文件", "Create", new { type = ViewBag.UploadFilePageType })*@
+
+
+</p>
+<div id="MaxWindow"></div>
+<table class="table">
+
+    <tr>
+        <td colspan="1">
+            <b> 请选择项目标段：</b>
+        </td>
+        <td colspan="2">
+            @Html.DropDownList("BidSectionId", ViewBag.bidSectionsList as IEnumerable<SelectListItem>, new { @class = "text-danger" })
+        </td>
+        <td colspan="4">
+            <input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            <input type="button" value="上传" id="btnUploadFile" />
+        </td>
+        <td colspan="1">
+            <div id="areadyuploadfile"></div>
+        </td>
+        <td colspan="1">
+            <p id="fuJian_Save_P"></p>
+        </td>
+        <td colspan="1">
+            <div id="table_save"></div>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Remark)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OperatorName)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.OperatorId)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileSize)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@index</td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.OperatorName)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.OperatorId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                <a href="/FileService/Download?fileName=@Html.DisplayFor(modelItem => item.FileAddress)">下载</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileSize)
+            </td>
+            <td>
+                <a href="#" onclick="deleteitem(@item.ID)">删除</a>
+                @* @Html.ActionLink("删除", "Delete", new { id = item.ID })*@
+            </td>
+        </tr>
+
+        index++;
+    }
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        function deleteitem(id) {
+            $.ajax(
+                {
+                    url: '/UploadFilePage/Delete/' + id, //用于文件上传的服务器端请求地址
+                    type: 'get',
+                    secureuri: false, //一般设置为false
+                    fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
+                    dataType: 'json', //返回值类型 一般设置为json
+                    success: function (data, status) //服务器成功响应处理函数
+                    {
+                        if (data.isSuccessful) {
+                            alert("删除成功！");
+                            location.reload();//刷新当前页面
+                        } else {
+                            alert(data.name + "删除失败，请重新操作");
+                        }
+
+                        if (typeof (data.error) != 'undefined') {
+                            if (data.error != '') {
+                                alert(data.error);
+                            }
+                        }
+                    },
+                    error: function (data, status, e) //服务器响应失败处理函数
+                    {
+                        alert(e);
+                    }
+                }
+            )
+        };
+    </script>
+}

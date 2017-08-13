@@ -1,0 +1,148 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPRiZhiViewModel>
+
+    @{
+        Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+    }
+
+                      <div id="ToDoWindow">
+
+                      </div>
+                      <script type="text/javascript">
+     function OpeToDoWindow(id) {
+         $("#ToDoWindow").kendoWindow({
+             position: {
+                 top: 150, // or "100px"
+                 left: "13%"
+             },
+             modal: true,
+             draggable: true,
+             title: "待办",
+             visible: false,
+             actions: [
+                     "Pin",
+                     "Close",
+                    // "Minimize",
+                  // "Maximize"
+             ],
+             resizable: false,
+             close: function (e) {
+                 parent.location.reload();//刷新页面
+             }
+         });
+
+         $.ajax({
+             url: "/Approval/RiZhiReturnStateValue?id=" + id,
+             type: "post",
+             success: function (data) {
+                 if (data != null) {
+                     // $("#MaxWindow").html(data);
+                     var k = data;
+                     //判断返回的状态来控制弹出框第一个打开的页面
+                     //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                     if (data["ReturnState"] == "AplicationWriting") {
+                         $("#ToDoWindow").append(' <iframe id="application" width="1600" height="750" style="border:0px" src="/Approval/SubmitApplication?id=' + data["applicationId"] + '">项目申请书</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"]=="ApplicationRejected")
+                         {
+                             $("#ToDoWindow").append(' <iframe id="application" width="1600" height="750" style="border:0px" src="/Approval/ApplicationRejected?id=' + data["applicationId"] + '">项目申请书</iframe>');
+                         }
+                         else
+                         {
+                             $("#ToDoWindow").append(' <iframe id="application" width="1600" height="750" style="border:0px" src="/Approval/ApplicationAgree?id=' + data["applicationId"] + '">项目申请书</iframe>');
+                         }
+                     }
+                     else if (data["ReturnState"] == "ApplicationApproved" || data["ReturnState"] == "ProjectEstablishing")//全部通过审批
+                     {
+                         //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                         $("#ToDoWindow").append(' <iframe id="application" width="1600" height="750" style="border:0px" src="/Approval/ProjectEstablish?id=' + data["applicationId"] + '">项目申请书</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ProjectEstablished" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                     {
+                         $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/SignContract?id=' + data["applicationId"] + '">合同记录</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ContractSigned" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
+                     {
+                         $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/ProcessRecordList?id=' + data["applicationId"]+ '">过程记录</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ConcludeUnWrite" || data["ReturnState"] == "ConcludeUnSubmit")//申请书已提交和待审批中
+                     {
+                         $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/Conclusions?id=' + data["applicationId"] + '">项目结案</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ProjectConcluding" || data["ReturnState"] == "ProjectConcluded" || data["ReturnState"] == "ConcludeRejected")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"] == "ConcludeRejected")
+                         {
+                             $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/ConclusionsRejected?id=' + data["applicationId"] + '">项目结案</iframe>');
+                         }
+                         else
+                         {
+                             $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/ConclusionsAgree?id=' + data["applicationId"] + '">项目结案</iframe>');
+                         }
+                     }
+                     else if (data["ReturnState"] == "ExtensionUnWrite")//
+                     {
+                         //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                         $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" style="border:0px" src="/Approval/ExtensionRequest?id=' + data["applicationId"] + '">项目延期</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ExtensionRequestApproving" || data["ReturnState"] == "ExtensionAgreed" || data["ReturnState"] == "ExtensionRejected")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"] == "ExtensionRejected")
+                         {
+                             $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" src="/Approval/ExtensionRejected?id=' + data["applicationId"] + '">项目延期</iframe>');
+                         }
+                         else
+                         {
+                             $("#ToDoWindow").append(' <iframe id="process" width="1600" height="750" src="/Approval/ExtensionAgree?id=' + data["applicationId"] + '">项目延期</iframe>');
+                         }
+                     }
+
+                 }
+                 else {
+                     alert("发生异常！");
+                 }
+             }
+         });
+         $("#ToDoWindow").data("kendoWindow").center().open();
+     };
+                      </script>
+
+                      <table class="table table-striped table-bordered table-hover">
+                          <tr>
+                              <th>
+                                  申请人
+                              </th>
+                              <th>
+                                  操作
+                              </th>
+                              <th>
+                                  时间
+                              </th>
+                          </tr>
+
+                          @foreach (var item in Model)
+                          {
+                              <tr onclick="OpeToDoWindow(@item.FKApplicationID)">
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.UserName)
+                                  </td>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.DoSomething)
+                                  </td>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.TimeStr)
+                                  </td>
+                              </tr>
+                              <tr>
+                                  @Html.HiddenFor(modelItem => item.NotificationContent)
+
+                                  @Html.HiddenFor(modelItem => item.FkFormName)
+
+                                  @Html.HiddenFor(modelItem => item.FKAction)
+
+                                  @Html.HiddenFor(modelItem => item.FKApplicationID)
+                              </tr>
+                          }
+
+                      </table>

@@ -1,0 +1,133 @@
+﻿@*选择用户的treeview*@
+<div id="treeviewselectuser"></div>
+<input type="button" value="确定" id="Confirm" />
+<script type="text/javascript">
+    //打开treeviewwindow
+    var txtId;
+    $("#treeviewwindow").kendoWindow({
+        visible: false
+    });
+    function TselectUser(Id) {
+        txtId = Id;
+        var dialog = $("#treeviewwindow").data("kendoWindow");
+        dialog.open();
+    };
+
+    $(function () {
+        $("#Confirm").click(function () {
+            var dialog = $("#treeviewwindow").data("kendoWindow");
+            dialog.close();
+        });
+    });
+
+    $("#treeviewwindow").kendoWindow({
+        position: {
+            top: 120, // or "100px"
+            left: "40%"
+        },
+        draggable: true,
+        title: "用户列表",
+        visible: false,
+        actions: [
+                "Pin",
+                "Close",
+                "Minimize",
+                "Maximize",
+        ],
+        modal: true,
+    });
+
+
+
+    $(document).ready(function () {
+        // function that gathers IDs of checked nodes
+        function checkedNodeIds(nodes, checkedNodes, checkedNodesUserId) {
+            var checkNodeUserId = [];
+            var k = 0;
+            for (var i = 0; i < nodes.length; i++) {
+                //获取被选中但没有子节点的节点
+                if (nodes[i].checked && nodes[i].hasChildren == false) {
+                    checkedNodes.push(nodes[i].Name);
+                    checkedNodesUserId.push(nodes[i].Id);
+                    //checkNodeUserId[k] = nodes[i].Id;
+                    //k++;
+                }
+                else {
+
+                }
+                if (nodes[i].hasChildren) {
+                    checkedNodeIds(nodes[i].children.view(), checkedNodes, checkedNodesUserId);
+                }
+                else {
+
+                }
+            }
+        }
+
+
+
+        // show checked node IDs on datasource change
+        function onCheck() {
+            var checkedNodes = [],
+                treeView = $("#treeviewselectuser").data("kendoTreeView"),
+                message,
+                usersid,
+                checkedNodesUserId = [];
+
+            checkedNodeIds(treeView.dataSource.view(), checkedNodes, checkedNodesUserId);
+
+            if (checkedNodes.length > 0) {
+                message = "" + checkedNodes.join(",");
+                //alert("" + checkedNodesUserId.join(","));
+                usersid = "" + checkedNodesUserId.join(",");
+            } else {
+                message = "没有选中任何人";
+            }
+            $("#" + txtId.id).val(message);
+            $("#UserId").val(usersid);
+        }
+
+        function onSelect(e) {
+            kendoConsole.log("Selecting: " + this.text(e.node));
+        }
+
+        function onChange(e) {
+            kendoConsole.log("Selection changed");
+        }
+
+        var inline = new kendo.data.HierarchicalDataSource({
+            type: "jsonp",
+            transport: {
+                read: "/Approval/SelectUserData"
+            },
+            schema: {
+
+                model: {
+                    id: "Id",
+                    departmentId: "DepartmentId",
+                    //children: "TravelFundsList",
+                    hasChildren: "HasChildren",
+                }
+            }
+        });
+
+        $("#treeviewselectuser").kendoTreeView({
+            loadOnDemand: false,
+            checkboxes: {
+                checkChildren: true
+            },
+            dataSource: inline,
+            check: onCheck,
+
+            dataTextField: ["Name", "Name"],
+
+        });
+
+        var treeview = $("#treeviewselectuser").data("kendoTreeView");
+        treeview.expand(".k-item");
+    });
+</script>
+<script>
+   
+</script>
+

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+
+                      <div id="ToDoWindow">
+
+                      </div>
+<script type="text/javascript">
+    function OpeToDoWindow(id) {
+        $("#ToDoWindow").kendoWindow({
+            position: {
+                top: "15%", // or "100px"
+                left: "13%"
+            },
+            width:"80%",
+            height:"80%",
+            modal: true,
+            draggable: true,
+            title: "正在办理",
+            visible: false,
+            actions: [
+                    "Pin",
+                    "Close",
+                   // "Minimize",
+                 // "Maximize"
+            ],
+            resizable: false,
+            close: function (e) {
+                parent.location.reload();//刷新页面
+            }
+        });
+
+        $.ajax({
+            url: "/ScienceConference/ReturnStateValue?id=" + id,
+            type: "post",
+            success: function (data) {
+                if (data != null) {
+                    // $("#MaxWindow").html(data);
+
+                    var k = data;
+                    //判断返回的状态来控制弹出框第一个打开的页面
+                    //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                    //轮转生负责人、护理部审核、科教科员审核、科教科科长、超级管理员审批已经审批申请书
+                    if(data=="AplicationWriting")
+                    {
+                        $("#ToDoWindow").append(' <iframe id="application" width="100%" height="150%" scrolling="no" style="border:0px" src="/ScienceConference/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                    }
+                    else if (data=="ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
+                    {
+                        if (data == "ApplicationRejected") {
+                            $("#ToDoWindow").append(' <iframe id="application" width="100%" height="150%" scrolling="no" style="border:0px" src="/ScienceConference/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
+                        }
+                        else {
+                            $("#ToDoWindow").append(' <iframe id="application" width="100%" height="150%" scrolling="no" style="border:0px" src="/ScienceConference/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
+                        }
+                    }
+                    else if (data == "MeetingEnd")//会议结束
+                    {
+                        $("#ToDoWindow").append(' <iframe id="process" width="100%" height="150%" scrolling="no" style="border:0px" src="/ScienceConference/SignContract?id=' + id + '">合同记录</iframe>');
+                    }
+                    else if (data == "MeetingProcess")//经费记录列表
+                    {
+                        $("#ToDoWindow").append(' <iframe id="process" width="100%" height="150%" scrolling="no" style="border:0px" src="/ScienceConference/ReimburseWorkList?id=' + id + '">项目申请书</iframe>');
+                    }
+
+
+                }
+                else {
+                    alert("发生异常！");
+                }
+            }
+        });
+        $("#ToDoWindow").data("kendoWindow").center().open();
+    }
+
+
+</script>
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>
+            项目简介
+        </th>
+        <th>
+            上报时间
+        </th>
+    </tr>
+    @{int NO = 0;}
+    @foreach (var item in Model)
+{
+    { NO++; }
+    <tr onclick="OpeToDoWindow(@item.NWorkToDoID)">
+        <td>@NO</td>
+        <td>
+            <a href="#">@Html.DisplayFor(modelItem => item.WenHao)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStr)
+        </td>
+    </tr>
+}
+
+</table>
+

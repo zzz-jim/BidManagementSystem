@@ -1,13 +1,14 @@
 ﻿<!DOCTYPE html>
 @using ScientificResearch.Utility.Constants;
-
+@using System.Web.Mvc;
+@using UI.ScientificResearch.Extensions;
 @{
     var urlArray = Request.Url.Segments;
     if (urlArray.Length > 1)
     {
-        if (urlArray[1] == "ContinuingEducation")
+        if (urlArray[1] == "Approval")
         {
-            ViewBag.Module = "继教申请";
+            ViewBag.Module = "工程项目";
         }
 
         if (urlArray.Length > 2)
@@ -22,31 +23,43 @@
             }
             else if (urlArray[2] == "ApplicationList")
             {
-                ViewBag.Title = "项目类学分";
+                ViewBag.Title = "项目注册";
             }
-            else if (urlArray[2] == "NotProjectCreditList")
+            else if (urlArray[2] == "ProcessingProjectList")
             {
-                ViewBag.Title = "非项目类学分";
+                ViewBag.Title = "合同资料";
             }
             else if (urlArray[2] == "ProjectBonusCredit")
             {
-                ViewBag.Title = "奖励设置";
+                ViewBag.Title = "招标文件";
             }
             else if (urlArray[2] == "ScienceFundsManageContainer")
             {
-                ViewBag.Title = "资金统计";
+                ViewBag.Title = "招标公告";
             }
-            else if (urlArray[2] == "CreditsStatistics")
+            else if (urlArray[2] == "ScienceStatisticContainer")
             {
-                ViewBag.Title = "学分统计";
+                ViewBag.Title = "保证金情况";
             }
         }
     }
 }
+@{
+    string allRoles = Session[SessionKeyEnum.UserRoles.ToString()].ToString();
+    string[] rolesArry = allRoles.Split(',');
+    if (rolesArry.Length > 2 || allRoles.Contains("超级管理员"))
+    {
+    }
+    else
+    {
+        ViewBag.HiddenLi = "Hidden";
+    }
+   
+}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
-    <title>科教综合管理软件</title>
+    <title>招投标综合管理软件</title>
 
     <meta charset="utf-8" />
     <meta name="description" content="tabs and accordions" />
@@ -86,13 +99,38 @@
     <script src="../../../../Scripts/jquery-1.10.2.min.js"></script>
     <script src="../../../../Scripts/Kendo/2014.2.716/kendo.web.min.js"></script>
     <script src="../../../../Scripts/Kendo/2014.2.716/cultures/kendo.culture.zh-CN.min.js"></script>
-    <script src="../../../../Scripts/layer/layer.min.js"></script>
+    
     @*<script src="~/Content/shared/js/console.js"></script>*@
+    <script type="text/javascript">
+        $(function () {
+            var IsHiddenLi = "@ViewBag.HiddenLi";
+            if (IsHiddenLi == "Hidden")
+            {
+                $("#Approval_ProjectBonusCredit").remove();
+                $("#Approval_ScienceFundsManageContainer").remove();
+                $("#Approval_ScienceStatisticContainer").remove();
+                $("#GoodSubject_ScienceFundsManageContainer").remove();
+                $("#GoodSubject_ScienceStatisticContainer").remove();
+                $("#SubjectLeader_ProjectBonusCredit").remove();
+                $("#SubjectLeader_ScienceFundsManageContainer").remove();
+                $("#PaperPublish_ProjectBonusCredit").remove();
+                $("#PaperPublish_ScienceFundsManageContainer").remove();
+                $("#PaperPublish_PaperConfigManageContainer").remove();
+                $("#PaperPublish_PaperBonusCreditList").remove();
+                $("#PaperPublish_ScienceStatisticContainer").remove();
+                $("#ScienceConference_ScienceFundsManageContainer").remove();
+                $("#ScienceConference_ScienceStatisticContainer").remove();
+                $("#ResearchAward_ProjectBonusCredit").remove();
+                $("#ResearchAward_ScienceFundsManageContainer").remove();
+                $("#Statistic_Controller").remove();
+            }
+        });
+    </script>
     <script type="text/javascript">
 
         $(function () {
             $.ajax({
-                url: "/Education/ContinuingEducation/UpToDoThings",
+                url: "/Approval/UpToDoThings",
                 type: "get",
                 success: function (data) {
                     if (data != null) {
@@ -107,7 +145,7 @@
             $("#todoli").mouseenter(function () {
                 $("#todoul").empty();
                 $.ajax({
-                    url: "/Education/ContinuingEducation/UpToDoThings",
+                    url: "/Approval/UpToDoThings",
                     type: "get",
                     success: function (data) {
                         if (data != null) {
@@ -128,7 +166,7 @@
                                     html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" onclick="OpeToDoWindow(' + data[i].FKApplicationID + ')"><a href="#"><div class="clearfix"><span class="pull-left">' + data[i].DoSomething + '</span> <span class="timeForNow pull-right">' + ChangedTimeStr + '</span></div></a></li>';
                                 }
                             }
-                            html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" id="ContinuingEducation_WorkContainer"><a href="/Education/ContinuingEducation/AllWorkContainer">更多>></a></li>';
+                            html = html + '<li class="tasksUl" style="border-bottom: 1px solid #F3F3F3;" id="Approval_WorkContainer"><a href="/Approval/AllWorkContainer">更多>></a></li>';
                             $("#todoul").append(html);
                         }
                     }
@@ -148,75 +186,106 @@
 
     </div>
     <script type="text/javascript">
-        function OpeToDoWindow(id) {
-            $("#AllToDoWindow").kendoWindow({
-                position: {
-                    top: "15%", // or "100px"
-                    left: "13%"
-                },
-                width: "80%",
-                height: "80%",
-                modal: true,
-                draggable: true,
-                title: "待办",
-                visible: false,
-                actions: [
-                        "Pin",
-                        "Close",
-                       // "Minimize",
-                     // "Maximize"
-                ],
-                resizable: false,
-                close: function (e) {
-                    parent.location.reload();//刷新页面
-                }
-            });
+     function OpeToDoWindow(id) {
+         $("#AllToDoWindow").kendoWindow({
+             position: {
+                 top: "15%", // or "100px"
+                 left: "13%"
+             },
+             width: "80%",
+             height: "80%",
+             modal: true,
+             draggable: true,
+             title: "待办",
+             visible: false,
+             actions: [
+                     "Pin",
+                     "Close",
+                    // "Minimize",
+                  // "Maximize"
+             ],
+             resizable: false,
+             close: function (e) {
+                 parent.location.reload();//刷新页面
+             }
+         });
 
-            $.ajax({
-                url: "/Education/ContinuingEducation/ReturnStateValue?id=" + id,
-                type: "post",
-                success: function (data) {
-                    if (data != null) {
-                        // $("#MaxWindow").html(data);
-                        var k = data;
-                        //判断返回的状态来控制弹出框第一个打开的页面
-                        if (data["ReturnState"] == "AplicationWriting") {
-                            $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/SubmitApplication?id=' + data["applicationId"] + '">继教申请书</iframe>');
-                        }
-                        else if (data["ReturnState"] == "ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
-                        {
-                            if (data["ReturnState"] == "ApplicationRejected") {
-                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ApplicationRejected?id=' + data["applicationId"] + '">继教申请书</iframe>');
-                            }
-                            else {
-                                $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ApplicationAgree?id=' + data["applicationId"] + '">继教审批</iframe>');
-                            }
-                        }
-                        else if (data["ReturnState"] == "ApplicationApproved" || data["ReturnState"] == "NoticeUnwrite" || data["ReturnState"] == "NoticeNotIssued")//全部通过审批
-                        {
-                            //为申请书iframe的src赋值id是ERPNWorkToDo的ID
-                            $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ContinueNotice?id=' + data["applicationId"] + '">继教通知</iframe>');
-                        }
-                        else if (data["ReturnState"] == "SentNotice")//人员记录
-                        {
-                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/PersonRecord?id=' + data["applicationId"] + '">人员记录</iframe>');
-                        }
-                        else if (data["ReturnState"] == "AddMeetingPerson" || data["ReturnState"] == "ProjectProcessing")//过程记录
-                        {
-                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/ProcessRecordList?id=' + data["applicationId"] + '">过程记录</iframe>');
-                        }
-                        else (data["ReturnState"] == "GiveCrediting" || data["ReturnState"] == "GavenCredited")//授予学分
-                        {
-                            $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Education/ContinuingEducation/GiveCredit??id=' + data["applicationId"] + '">授予学分</iframe>');
-                        }
-                    }
-                    else {
-                        alert("发生异常！");
-                    }
-                }
-            });
-            $("#AllToDoWindow").data("kendoWindow").center().open();
-        };
+         $.ajax({
+             url: "/Approval/RiZhiReturnStateValue?id=" + id,
+             type: "post",
+             success: function (data) {
+                 if (data != null) {
+                     // $("#MaxWindow").html(data);
+                     var k = data;
+                     //判断返回的状态来控制弹出框第一个打开的页面
+                     //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
+                     if (data["ReturnState"] == "AplicationWriting") {
+                         $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + data["applicationId"] + '">项目注册</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ApplicationRejected" || data["ReturnState"] == "ApplicationApproving")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"]=="ApplicationRejected")
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + data["applicationId"] + '">项目注册</iframe>');
+                         }
+                         else
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + data["applicationId"] + '">项目注册</iframe>');
+                         }
+                     }
+                     else if (data["ReturnState"] == "ApplicationApproved" || data["ReturnState"] == "ProjectEstablishing")//全部通过审批
+                     {
+                         //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                         $("#AllToDoWindow").append(' <iframe id="application" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + data["applicationId"] + '">项目注册</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ProjectEstablished" || data["ReturnState"] == "ContractSigning")//申请书已提交和待审批中
+                     {
+                         $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/SignContract?id=' + data["applicationId"] + '">合同记录</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ContractSigned" || data["ReturnState"] == "ProjectProcessing")//申请书已提交和待审批中
+                     {
+                         $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ProcessRecordList?id=' + data["applicationId"] + '">过程记录</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ConcludeUnWrite" || data["ReturnState"] == "ConcludeUnSubmit")//申请书已提交和待审批中
+                     {
+                         $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/Conclusions?id=' + data["applicationId"] + '">项目结题</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ProjectConcluding" || data["ReturnState"] == "ProjectConcluded" || data["ReturnState"] == "ConcludeRejected")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"] == "ConcludeRejected")
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ConclusionsRejected?id=' + data["applicationId"] + '">项目结题</iframe>');
+                         }
+                         else
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ConclusionsAgree?id=' + data["applicationId"] + '">项目结题</iframe>');
+                         }
+                     }
+                     else if (data["ReturnState"] == "ExtensionUnWrite")//
+                     {
+                         //为申请书iframe的src赋值id是ERPNWorkToDo的ID
+                         $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" style="border:0px" src="/Approval/ExtensionRequest?id=' + data["applicationId"] + '">项目延期</iframe>');
+                     }
+                     else if (data["ReturnState"] == "ExtensionRequestApproving" || data["ReturnState"] == "ExtensionAgreed" || data["ReturnState"] == "ExtensionRejected")//申请书已提交和待审批中
+                     {
+                         if(data["ReturnState"] == "ExtensionRejected")
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" src="/Approval/ExtensionRejected?id=' + data["applicationId"] + '">项目延期</iframe>');
+                         }
+                         else
+                         {
+                             $("#AllToDoWindow").append(' <iframe id="process" width="100%" height="170%" scrolling="no" src="/Approval/ExtensionAgree?id=' + data["applicationId"] + '">项目延期</iframe>');
+                         }
+                     }
+
+                 }
+                 else {
+                     alert("发生异常！");
+                 }
+             }
+         });
+         $("#AllToDoWindow").data("kendoWindow").center().open();
+     };
     </script>
     <!-- Loading Container -->
     <div class="loading-container">
@@ -310,7 +379,7 @@
                                                     <i class="fa fa-gift bg-warning white"></i>
                                                 </div>
                                                 <div class="notification-body">
-                                                    <span class="title">政府采购管理子系统</span>
+                                                    <span class="title">工程项目管理子系统</span>
 
                                                 </div>
                                                 <!--<div class="notification-extra">
@@ -328,7 +397,7 @@
                                                     <i class="fa fa-glass bg-success white"></i>
                                                 </div>
                                                 <div class="notification-body">
-                                                    <span class="title">政府采购管理子系统</span>
+                                                    <span class="title">工程项目管理子系统</span>
 
                                                 </div>
                                             </div>
@@ -421,282 +490,49 @@
                 <!-- /Page Sidebar Header -->
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
-                    <!--UI Elements-->
-                    <li id="ContinuingEducation_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-flask"></i>
-                            <span class="label label-info" id="ContinuingEducation"><strong>继续教育</strong> </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            @*<li id="Approval_WorkContainer">
-                    <a href="/Approval/WorkContainer">
-                        <span class="badge badge-azure">待办事项</span>
-                    </a>
-                </li>*@
-                            <li id="ContinuingEducation_ApplicationList">
-                                <a href="/Education/ContinuingEducation/ApplicationList">
-                                    <span class="badge badge-azure">项目类学分</span>
-                                </a>
-                            </li>
-                            <li id="ContinuingEducation_NotProjectCreditList">
-                                <a href="/Education/ContinuingEducation/NotProjectCreditList">
-                                    <span class="badge badge-azure">非项目类学分</span>
-                                </a>
-                            </li>
-                            <li id="ContinuingEducation_ProjectBonusCredit">
-                                <a href="/Education/ContinuingEducation/ProjectBonusCredit">
-                                    <span class="badge badge-azure">奖励设置</span>
-                                </a>
-                            </li>
-                            <li id="ContinuingEducation_ScienceFundsManageContainer">
-                                <a href="/Education/ContinuingEducation/ScienceFundsManageContainer">
-                                    <span class="badge badge-azure">资金管理</span>
-                                </a>
-                            </li>
-                            <li id="ContinuingEducation_CreditsStatistics">
-                                <a href="/Education/ContinuingEducation/CreditsStatistics">
-                                    <span class="badge badge-azure  ">学分统计</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
                     <!--Tables-->
-                    <li id="OutLearning_Controller">
+                    <li id="GoodSubject_Controller">
                         <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-flask"></i>
-                            <span class="label label-info" id="OutLearning"><strong> 外出进修</strong> </span>
+                            <i class="menu-icon fa fa-user"></i>
+                            <span class="label label-info" id="GoodSubject"><strong> 工程项目</strong> </span>
 
                             <i class="menu-expand"></i>
                         </a>
 
                         <ul class="submenu">
                             @*<li id="GoodSubject_WorkContainer">
-                    <a href="/GoodSubject/WorkContainer">
-                        <span class="badge badge-azure">待办事项</span>
-                    </a>
-                </li>*@
-                            <li id="OutLearning_ApplicationList">
-                                <a href="/Education/OutLearning/ApplicationList">
-                                    <span class="badge badge-azure">申请书</span>
+                                    <a href="/GoodSubject/WorkContainer">
+                                        <span class="badge badge-azure">待办事项</span>
+                                    </a>
+                                </li>*@
+                            <li id="GoodSubject_ApplicationList">
+                                <a href="/GoodSubject/ApplicationList">
+                                    <span class="badge badge-azure">项目注册</span>
                                 </a>
                             </li>
-                            <li id="OutLearning_ProcessingProjectList">
-                                <a href="/Education/OutLearning/ProcessingProjectList">
+                            <li id="GoodSubject_ProcessingProjectList">
+                                <a href="/GoodSubject/ProcessingProjectList">
                                     <span class="badge badge-azure">过程记录</span>
                                 </a>
                             </li>
                             @*<li id="GoodSubject_ProjectBonusCredit">
-                    <a href="/GoodSubject/ProjectBonusCredit">
-                        <span class="menu-text">奖励设置</span>
-                    </a>
-                </li>*@
-                            <li id="OutLearning_ScienceFundsManageContainer">
-                                <a href="/Education/OutLearning/ScienceFundsManageContainer">
+                                    <a href="/GoodSubject/ProjectBonusCredit">
+                                        <span class="menu-text">奖励设置</span>
+                                    </a>
+                                </li>*@
+                            <li id="GoodSubject_ScienceFundsManageContainer">
+                                <a href="/GoodSubject/ScienceFundsManageContainer">
                                     <span class="badge badge-azure">资金管理</span>
                                 </a>
                             </li>
-                            @*<li id="OutLearning_ScienceStatisticContainer">
-                    <a href="/OutLearning/StatisticManageContainer">
-                        <span class="badge badge-azure">统计分析</span>
-                    </a>
-                </li>*@
-                        </ul>
-                    </li>
-                    <!--Forms-->
-                    <li id="GraduateStudent_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-user"></i>
-                            <span class="label label-info" id="GraduateStudent"><strong> 研究生</strong> </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            @*<li id="SubjectLeader_WorkContainer">
-                    <a href="/SubjectLeader/WorkContainer">
-                        <span class="badge badge-azure">待办事项</span>
-                    </a>
-                </li>*@
-                            <li id="GraduateStudent_ApplicationList">
-                                <a href="/Education/GraduateStudent/ApplicationList">
-                                    <span class="badge badge-azure">申请书</span>
-                                </a>
-                            </li>
-                            <li id="GraduateStudent_ProcessingProjectList">
-                                <a href="/Education/GraduateStudent/ProcessingProjectList">
-                                    <span class="badge badge-azure">过程记录</span>
-                                </a>
-                            </li>
-                            <li id="GraduateStudent_RiseApplicationList">
-                                <a href="/Education/GraduateStudent/RiseApplicationList">
-                                    <span class="badge badge-azure">专升本</span>
-                                </a>
-                            </li>
-                            <li id="GraduateStudent_ScienceFundsManageContainer">
-                                <a href="/Education/GraduateStudent/ScienceFundsManageContainer">
-                                    <span class="badge badge-azure">资金管理</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--Charts-->
-                    @*<li id="PaperPublish_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-folder-open-o"></i>
-                            <span class="label label-info" id="PaperPublish"> <strong>论文管理</strong> </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                           
-                            <li id="PaperPublish_ApplicationList">
-                                <a href="/PaperPublish/ApplicationList">
-                                    <span class="badge badge-azure">申请书</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_ProcessingProjectList">
-                                <a href="/PaperPublish/ProcessingProjectList">
-                                    <span class="badge badge-azure">过程记录</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_ProjectBonusCredit">
-                                <a href="/PaperPublish/ProjectBonusCredit">
-                                    <span class="badge badge-azure">奖励设置</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_ScienceFundsManageContainer">
-                                <a href="/PaperPublish/ScienceFundsManageContainer">
-                                    <span class="badge badge-azure">资金管理</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_PaperConfigManageContainer">
-                                <a href="/PaperPublish/PaperConfigManageContainer">
-                                    <span class="badge badge-azure"> 论文配置</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_PaperBonusCreditList">
-                                <a href="/PaperPublish/PaperBonusCreditList">
-                                    <span class="badge badge-azure"> 学分配置</span>
-                                </a>
-                            </li>
-                            <li id="PaperPublish_ScienceStatisticContainer">
-                                <a href="/PaperPublish/ScienceStatisticContainer">
+                            <li id="GoodSubject_ScienceStatisticContainer">
+                                <a href="/GoodSubject/StatisticManageContainer">
                                     <span class="badge badge-azure">统计分析</span>
                                 </a>
                             </li>
                         </ul>
-                    </li>*@
-                    <!--Mail-->
-                    @*<li id="ScienceConference_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-book"></i>
-                            <span class="label label-info" id="ScienceConference"> <strong>学术会议</strong> </span>
+                    </li>
 
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                           
-                            <li id="ScienceConference_ApplicationList">
-                                <a href="/ScienceConference/ApplicationList">
-                                    <span class="badge badge-azure">申请书</span>
-                                </a>
-                            </li>
-                            <li id="ScienceConference_ProcessingProjectList">
-                                <a href="/ScienceConference/ProcessingProjectList">
-                                    <span class="badge badge-azure">过程记录</span>
-                                </a>
-                            </li>
-                            <li id="ScienceConference_ScienceFundsManageContainer">
-                                <a href="/ScienceConference/ScienceFundsManageContainer">
-                                    <span class="badge badge-azure">资金管理</span>
-                                </a>
-                            </li>
-                            <li id="ScienceConference_ScienceStatisticContainer">
-                                <a href="/ScienceConference/ScienceStatisticContainer">
-                                    <span class="badge badge-azure">统计分析</span>
-                                </a>
-                            </li>
-                         
-                        </ul>
-                    </li>*@
-                    @*<li id="ResearchAward_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-trophy"></i>
-                            <span class="label label-info" id="ResearchAward"> <strong>科技成果 </strong></span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                           
-                            <li id="ResearchAward_ApplicationList">
-                                <a href="/ResearchAward/ApplicationList">
-                                    <span class="badge badge-azure">申请书</span>
-                                </a>
-                            </li>
-                            <li id="ResearchAward_ProcessingProjectList">
-                                <a href="/ResearchAward/ProcessingProjectList">
-                                    <span class="badge badge-azure">过程记录</span>
-                                </a>
-                            </li>
-                            <li id="ResearchAward_ProjectBonusCredit">
-                                <a href="/ResearchAward/ProjectBonusCredit">
-                                    <span class="badge badge-azure">奖励设置</span>
-                                </a>
-                            </li>
-                            <li id="ResearchAward_ScienceFundsManageContainer">
-                                <a href="/ResearchAward/ScienceFundsManageContainer">
-                                    <span class="badge badge-azure">资金管理</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
-                    <!--More Pages-->
-                    @*<li id="Statistic_Controller">
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-bar-chart-o"></i>
-
-                            <span class="label label-info">
-                                <strong>科研统计</strong>
-                            </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li id="Statistic_ScienceResearchAmountOfSectionStatistic">
-                                <a href="/Statistic/ScienceResearchAmountOfSectionStatistic">
-                                    <span class="badge badge-azure">科室科研数量统计</span>
-                                </a>
-                            </li>
-
-                            <li id="Statistic_ScienceResearchAmountOfApplicationStatistic">
-                                <a href="/Statistic/ScienceResearchAmountOfApplicationStatistic">
-                                    <span class="badge badge-azure"> 科研申请书统计</span>
-                                </a>
-                            </li>
-                            <li id="Statistic_ScienceResearchOfCapitalStatistic">
-                                <a href="/Statistic/ScienceResearchOfCapitalStatistic">
-                                    <span class="badge badge-azure">科研资金统计</span>
-                                </a>
-                            </li>
-                            <li id="StatisticScienceResearchAmountOfFundStatistic">
-                                <a href="/Statistic/ScienceResearchAmountOfFundStatistic">
-                                    <span class="badge badge-azure">科研经费统计</span>
-                                </a>
-                            </li>
-                            <li id="Statistic_ScienceResearchProjectStatistic">
-                                <a href="/Statistic/ScienceResearchProjectStatistic">
-                                    <span class="badge badge-azure"> 项目信息统计</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
                 </ul>
                 <!-- /Sidebar Menu -->
             </div>
@@ -713,19 +549,19 @@
 
                         <li>
                             @{
-                                if (@ViewBag.Module ==Constant.ContinuingEducation )
+                                if (@ViewBag.Module == Constant.ScienceResearch)
                                 {
-                                    <a href="/Education/ContinuingEducation/Index">@ViewBag.Module</a>
+                                    <a href="/Approval/Index">@ViewBag.Module</a>
                                 }
-                                else if (@ViewBag.Module == Constant.OutLearning)
+                                else if (@ViewBag.Module == Constant.GoodSubject)
                                 {
-                                    <a href="/Education/OutLearning/Index">@ViewBag.Module</a>
+                                    <a href="/GoodSubject/Index">@ViewBag.Module</a>
                                 }
-                                else if (@ViewBag.Module == Constant.GraduateStudent)
+                                else if (@ViewBag.Module == Constant.PaperPublish)
                                 {
-                                    <a href="/Education/GraduateStudent/Index">@ViewBag.Module</a>
+                                    <a href="/PaperPublish/Index">@ViewBag.Module</a>
                                 }
-                                @*else if (@ViewBag.Module == Constant.ResearchAward)
+                                else if (@ViewBag.Module == Constant.ResearchAward)
                                 {
                                     <a href="/ResearchAward/Index">@ViewBag.Module</a>
                                 }
@@ -740,12 +576,12 @@
                                 else if (@ViewBag.Module == Constant.ScienceStatistic)
                                 {
                                     <a href="/Statistic/ScienceResearchAmountOfFundStatistic">@ViewBag.Module</a>
-                                }*@
+                                }
                                 else
                                 {
-                                    <a href="/Education/ContinuingEducation/Index">@ViewBag.Module</a>
+                                    <a href="/Approval/Index">@ViewBag.Module</a>
                                 }
-}
+                            }
                         </li>
                         <li class="active">@ViewBag.Title</li>
                     </ul>
@@ -768,7 +604,7 @@
                 @{
                     if (urlArray.Length > 1)
                     {
-                        var controllerName = urlArray[2].Remove(urlArray[2].Length - 1);
+                        var controllerName = urlArray[1].Remove(urlArray[1].Length - 1);
                         var moduleId = @controllerName + "_Controller";
                         <script>
                             $("#@moduleId").addClass("active").addClass("open");
@@ -776,7 +612,7 @@
 
                         if (urlArray.Length > 2)
                         {
-                            var actionName = urlArray[3];
+                            var actionName = urlArray[2];
                             var actionId = controllerName + "_" + actionName;
                             <script>
                                 $("#@actionId").addClass("active");
@@ -799,24 +635,23 @@
     </div>
 
     <!--Basic Scripts-->
-    <script src="../../../../Scripts/assets/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/assets/js/bootstrap.min.js"></script>
 
     <!--Beyond Scripts-->
-
-    <script src="../../../../Scripts/assets/js/beyond.min.js"></script>
+    <script src="~/Scripts/assets/js/beyond.min.js"></script>
 
     <script>
-        var ContinuingEducation = document.getElementById("ContinuingEducation");
-        ContinuingEducation.onclick = function () {
-            window.location.href = "/Education/ContinuingEducation/Index";
+        var Scientific = document.getElementById("Scientific");
+        Scientific.onclick = function () {
+            window.location.href = "/Approval/Index";
         };
-        var OutLearning = document.getElementById("OutLearning");
-        OutLearning.onclick = function () {
-            window.location.href = "/Education/OutLearning/Index";
+        var GoodSubject = document.getElementById("GoodSubject");
+        GoodSubject.onclick = function () {
+            window.location.href = "/GoodSubject/Index";
         };
-        var GraduateStudent = document.getElementById("GraduateStudent");
-        GraduateStudent.onclick = function () {
-            window.location.href = "/Education/GraduateStudent/Index";
+        var SubjectLeader = document.getElementById("SubjectLeader");
+        SubjectLeader.onclick = function () {
+            window.location.href = "/SubjectLeader/Index";
         };
         var PaperPublish = document.getElementById("PaperPublish");
         PaperPublish.onclick = function () {

@@ -1,0 +1,72 @@
+﻿@model ScientificResearch.DomainModel.PaperMagazine
+@{
+    Layout = "~/Views/Shared/_PopUpLayout.cshtml";
+}
+<script type="text/javascript">
+    $(function(){
+        var createSuccess="@ViewBag.createSuccessFlag";
+        if (createSuccess == "Yes")
+        {
+            alert("添加成功！");
+            parent.location.reload();
+        }
+        else if (createSuccess == "No")
+        {
+            alert("添加失败！");
+        }
+        else
+        {
+
+        }
+    });
+</script>
+@*@using (Html.BeginForm("", "", FormMethod.Post, new {id = "formId" }))*@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <table class="table">
+        <tr>
+            <td>
+                期刊名称:
+            </td>
+         <td>
+            @Html.EditorFor(model => model.Name)
+             <span id="ValidatingMessageForName" hidden="hidden">期刊名称 为必填项 </span>
+         </td>
+        </tr>
+        <tr>
+        <td>
+            期刊级别:
+         </td>
+         <td>
+        @Html.DropDownList("LevelId", (List<SelectListItem>)ViewBag.PaperMagazineLevel)
+        </td>
+        </tr>
+        <tr>
+        <td>
+            期刊类型:
+        </td>
+        <td>
+        @Html.DropDownList("TypeId", (List<SelectListItem>)ViewBag.PaperMagazineType)
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2">
+            <input type="submit" value="新建" id="submitButton" class="btn btn-blue" />
+        </td>
+        </tr>
+    </table>
+}
+<script>
+    $(function () {
+        $("#submitButton").click(function () {
+            if ($("#Name").val().trim() != "") {
+                $("#ValidatingMessageForName").hide();
+            } else {
+                $("#ValidatingMessageForName").show();
+                return false;
+            }
+        });
+    });
+</script>

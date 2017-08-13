@@ -1,0 +1,56 @@
+﻿<div class="page-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    流程简述
+
+                </div>
+                <div class="chartFlow">
+                    <img src="~/Images/reKeYan.gif" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    详细说明
+
+                </div>
+                <div class="chartText">
+                    该模块实现电子化申报书，科教科线上审核通过后与OA系统挂接报送给院领导及院办
+                    公室盖章，获批项目后，科教科管理员确立项目，并可填写项目金额、院内配比后项目
+                    确定，并且经费入账。申请人/单位可在系统中详细记录课题跟踪细节、论文发表、课题
+                    解题等内容，同时可以应用经费的申请、审批功能来获得经费使用，通过财务科可自动进
+                    行经费明细的记录，相关领导及部门可实时查看整个过程的相关信息。从而实现工程项目
+                    从项目申请、立项论证、组织实施、经费记录、课题总结、成果记录的全程管理，使科研
+                    项目实行制度化和科学化的管理。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-warning">
+                    待办事项
+                    <span class="getMore"><a href="/SubjectLeader/WorkContainer">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkToDoList", "SubjectLeader")
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header with-footer">
+                <div class="header bg-palegreen">
+                    当前正在进行的事项
+                    <span class="getMore getmoreNew"><a href="/SubjectLeader/ProcessingProjectList">更多</a></span>
+                </div>
+                @Html.Action("Top10WorkDoingList", "SubjectLeader")
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
