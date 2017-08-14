@@ -2,14 +2,14 @@
 namespace ScientificResearch.Utility.Enums
 {
     /// <summary>
-    /// 政府采购 定义新建工作表单的Id
+    /// 工程项目 定义新建工作表单的Id
     /// </summary>
-    public enum ScienceResearchTypeOfFormId
+    public enum EngineeringProjectTypeOfFormId
     {
         /// <summary>
         /// 采购申请书
         /// </summary>
-        Application = 2116,
+        Application = 2117,
 
         /// <summary>
         /// 确立书

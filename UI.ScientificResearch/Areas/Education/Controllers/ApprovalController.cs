@@ -171,7 +171,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult SubmitApplication(string id)
         {
-            int formId = (int)ScienceResearchTypeOfFormId.Application;
+            int formId = (int)EngineeringProjectTypeOfFormId.Application;
             int workflowId = (int)TypeOfWorkFlowId.Application;
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ERPNWorkFlowNodeTransferObject currentNode;
@@ -234,7 +234,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult AddTenderNotice(string id)
         {
-            int formId = (int)ScienceResearchTypeOfFormId.TenderNotice;
+            int formId = (int)EngineeringProjectTypeOfFormId.TenderNotice;
             int workflowId = (int)TypeOfWorkFlowId.Application;
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ERPNWorkFlowNodeTransferObject currentNode;
@@ -299,7 +299,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult AddBidWinnerNotice(string id)
         {
-            int formId = (int)ScienceResearchTypeOfFormId.BidWinnerNotice;
+            int formId = (int)EngineeringProjectTypeOfFormId.BidWinnerNotice;
             int workflowId = (int)TypeOfWorkFlowId.Application;
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ERPNWorkFlowNodeTransferObject currentNode;
@@ -525,7 +525,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //点击上报时的view
             else
             {
-                int formId = (int)ScienceResearchTypeOfFormId.Contract;
+                int formId = (int)EngineeringProjectTypeOfFormId.Contract;
                 int workflowId = (int)TypeOfWorkFlowId.Contract;
                 //加载表单内容
                 var temerpnformmodel = ERPNFormService.GetEntityById(formId).ToViewModel();
@@ -536,7 +536,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ViewBag.Id = id;
                 ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
 
-                var result = ApplicationService.GetEntities(p => p.ApplicationId == applicaionId && p.FormID == (int)ScienceResearchTypeOfFormId.Contract).ToList();
+                var result = ApplicationService.GetEntities(p => p.ApplicationId == applicaionId && p.FormID == (int)EngineeringProjectTypeOfFormId.Contract).ToList();
 
                 if (result.Count > 0)//已经填写了合同记录,显示改条合同记录
                 {
@@ -612,7 +612,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ViewBag.Id = workToDoId;
                 int applicationid = workToDoId;
 
-                int formId = (int)ScienceResearchTypeOfFormId.ProcessRecord;
+                int formId = (int)EngineeringProjectTypeOfFormId.ProcessRecord;
                 int workflowId = (int)TypeOfWorkFlowId.ProcessRecord;
 
                 #region 数据准备
@@ -824,7 +824,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPNWorkFlowNodeTransferObject currentNode;
 
                 int workflowId = (int)TypeOfWorkFlowId.FeeReimbursement;
-                int formId = (int)ScienceResearchTypeOfFormId.FeeReimbursement;
+                int formId = (int)EngineeringProjectTypeOfFormId.FeeReimbursement;
 
                 //加载表单内容
                 var formModel = ERPNFormService.GetEntityById(formId).ToViewModel();
@@ -1140,7 +1140,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             double balancemoney = totalinmoney - totaloutmoney;
             ViewBag.BalanceMoney = balancemoney;
 
-            var model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
+            var model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
             //继续审批
 
             bool isRejected = Convert.ToBoolean(model.IsRejected);
@@ -1195,7 +1195,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             double balancemoney = totalinmoney - totaloutmoney;
             ViewBag.BalanceMoney = balancemoney;
 
-            var model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
+            var model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
             //继续审批
 
             bool isRejected = Convert.ToBoolean(model.IsRejected);
@@ -1226,7 +1226,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             int applicationid = Convert.ToInt32(id);//applicationid
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ///合同记录中的成果形式和数量
-            model = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Contract && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
+            model = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Contract && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
             var resultQuantity = model.FormValues.Split(Constant.SharpChar);
             string ResultCount = resultQuantity[2].ToString();
             ViewBag.Achieve = ResultCount;
@@ -1258,11 +1258,11 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             }
 
             //判断是否已经进入到项目结题审批中
-            var applicaitonodelcount = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)ScienceResearchTypeOfFormId.Conclusion).Count();
+            var applicaitonodelcount = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)EngineeringProjectTypeOfFormId.Conclusion).Count();
 
             if (applicaitonodelcount > 0)
             {
-                model = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
+                model = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.Conclusion)).FirstOrDefault().ToViewModel();
                 if (model.IsTemporary == true)
                 {
                     ViewBag.Id = model.ApplicationId;
@@ -1295,7 +1295,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //点击保存后的view
             if (nextaction == "save")
             {
-                model = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Conclusion && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
+                model = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Conclusion && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
                 ViewBag.Id = model.ApplicationId;
                 ViewBag.act = "save";
                 return View(model);
@@ -1307,7 +1307,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //    ViewBag.Id = id;
             //    ViewBag.act = "updatedata";
             //    ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
-            //    model = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Conclusion && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
+            //    model = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Conclusion && p.ApplicationId == applicationid).FirstOrDefault().ToViewModel();
             //    return View(model);
             //}
             //点击上报时的view
@@ -1319,7 +1319,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 string projectname = appresult[0].WenHao;//项目名称
                 var keyvaluearry = appresult[0].FormValues.Split(Constant.SharpChar);
                 string projectestablishtime = keyvaluearry[2].ToString();//申请时间
-                int formId = (int)ScienceResearchTypeOfFormId.Conclusion;
+                int formId = (int)EngineeringProjectTypeOfFormId.Conclusion;
                 int workflowId = (int)TypeOfWorkFlowId.Conclusion;
                 model.WorkFlowID = workflowId;
                 model.FormID = formId;
@@ -1384,7 +1384,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
 
             //填写项目延期时判断是否已经在课题结案审批
-            int countOfConclusion = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)ScienceResearchTypeOfFormId.Conclusion && p.IsTemporary != true).Count();
+            int countOfConclusion = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)EngineeringProjectTypeOfFormId.Conclusion && p.IsTemporary != true).Count();
 
             if (countOfConclusion > 0)
             {
@@ -1392,11 +1392,11 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             }
 
             //填写项目延期申请时判断是否已经进入项目延期审批
-            int countOfExtensionRequest = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)ScienceResearchTypeOfFormId.ExtensionRequest).Count();
+            int countOfExtensionRequest = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == (int)EngineeringProjectTypeOfFormId.ExtensionRequest).Count();
             if (countOfExtensionRequest > 0)
             {
                 ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
-                model = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
+                model = ApplicationService.GetEntities(p => p.ApplicationId == applicationid && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
                 if (model.IsTemporary == true)
                 {
                     ViewBag.Id = model.ApplicationId;
@@ -1431,7 +1431,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //点击上报时的view
             else
             {
-                int formId = (int)ScienceResearchTypeOfFormId.ExtensionRequest;
+                int formId = (int)EngineeringProjectTypeOfFormId.ExtensionRequest;
                 int workflowId = (int)TypeOfWorkFlowId.ExtensionRequest;
 
                 ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
@@ -1498,7 +1498,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             int id1 = Convert.ToInt32(id);//applicationid
 
-            model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
+            model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
             //继续审批
 
             bool isRejected = Convert.ToBoolean(model.IsRejected);
@@ -1539,7 +1539,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             int id1 = Convert.ToInt32(id);//applicationid
 
-            model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(ScienceResearchTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
+            model = ApplicationService.GetEntities(p => p.ApplicationId == id1 && p.FormID == Convert.ToInt32(EngineeringProjectTypeOfFormId.ExtensionRequest)).FirstOrDefault().ToViewModel();
             //继续审批
 
             bool isRejected = Convert.ToBoolean(model.IsRejected);
@@ -1858,7 +1858,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //为什么会进入两次
             int applicationid = Convert.ToInt32(id);
             ViewBag.Id = applicationid;
-            var result = ApplicationService.GetEntities(p => p.StateNow == "正在办理" && p.FormID == (int)ScienceResearchTypeOfFormId.ProcessRecord && p.ApplicationId == applicationid).OrderByDescending(p => p.TimeStr).ToList();
+            var result = ApplicationService.GetEntities(p => p.StateNow == "正在办理" && p.FormID == (int)EngineeringProjectTypeOfFormId.ProcessRecord && p.ApplicationId == applicationid).OrderByDescending(p => p.TimeStr).ToList();
             IList<ERPNWorkToDoViewModel> resultList = new List<ERPNWorkToDoViewModel>();
             foreach (var item in result)
             {
@@ -2119,14 +2119,14 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             if (User.IsInRole(UserRoles.超级管理员.ToString()))
             {
                 result = ApplicationService.GetPageEntities(p => p.StateNow == "正在办理"
-                    && p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                    && p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.ProjectStatus == ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), Constant.PageSize, 1, out totalPage);
             }
             else
             {
                 result = ApplicationService.GetPageEntities(p => p.StateNow == "正在办理"
                     && p.UserName == User.Identity.Name
-                    && p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                    && p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.ProjectStatus == ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), Constant.PageSize, 1, out totalPage);
             }
 
@@ -2206,7 +2206,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult ScienceProjectStatisticsAnalysis()
         {
-            var result = StatisticService.GetScienceProjectStatistics(x => true, (int)ScienceResearchTypeOfFormId.Application);
+            var result = StatisticService.GetScienceProjectStatistics(x => true, (int)EngineeringProjectTypeOfFormId.Application);
             var groupedResult = result.Select(x => x.ToViewModel());
             return PartialView(groupedResult);
         }
@@ -2257,7 +2257,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Application).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.Application).ToViewModel();
 
             var itemList = temerpnformmodel.ItemsList;
             string formKeys, formvalues;
@@ -2327,7 +2327,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = nworktodoid.ToString();
                 int AddRiZhiSuccess = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
@@ -2366,7 +2366,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.DoSomething = User.Identity.Name + "上报(工程项目申请书)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                     MyRiZhi.FKAction = "已办";
                     MyRiZhi.FKApplicationID = nworktodoid.ToString();
                     MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2379,7 +2379,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                     MyRiZhi1.FKAction = "待办";
                     MyRiZhi1.FKApplicationID = nworktodoid.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2406,13 +2406,13 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
                     //更新已办
                     string nworktodoid = model.NWorkToDoID.ToString();
-                    string formname = ScienceResearchTypeOfFormId.Application.ToString();
+                    string formname = EngineeringProjectTypeOfFormId.Application.ToString();
                     MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.DoSomething = User.Identity.Name + "上报的(工程项目申请书)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                     MyRiZhi.FKAction = "已办";
                     MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2424,7 +2424,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                     MyRiZhi1.FKAction = "待办";
                     MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2516,7 +2516,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             }
 
-            string formname = ScienceResearchTypeOfFormId.Application.ToString();
+            string formname = EngineeringProjectTypeOfFormId.Application.ToString();
             var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.NWorkToDoID.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
 
             IEnumerable<ERPNWorkFlowNodeViewModel> workFlowNodeModelList = new List<ERPNWorkFlowNodeViewModel>();
@@ -2541,7 +2541,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + model.UserName + "上报的工程项目申请书";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -2553,7 +2553,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "需要审批(" + model.UserName + "上报的工程项目申请书)";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
                 ERPNWorkFlowNodeViewModel erpnWorkFlowNodeModel = new ERPNWorkFlowNodeViewModel();
@@ -2574,7 +2574,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + model.UserName + "上报的工程项目申请书";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -2587,7 +2587,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.UserName = model.UserName;
                 MyRiZhi1.DoSomething = model.UserName + "需要添加项目确立";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Establishment.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Establishment.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
                 int returnid = ERPRiZhiService.AddERPRiZhi(MyRiZhi1.ToDataTransferObjectModel());
@@ -2606,7 +2606,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已驳回" + model.UserName + "上报的工程项目申请书";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -2618,7 +2618,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = model.UserName;
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "工程项目申请书被驳回，需修改数据";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -2646,7 +2646,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Application).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.Application).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -2704,7 +2704,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.TimeStr = DateTime.Now;
                 MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2731,12 +2731,12 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
                 //更新已办
                 string nworktodoid = model.NWorkToDoID.ToString();
-                string formname = ScienceResearchTypeOfFormId.Application.ToString();
+                string formname = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FKAction == "待办").FirstOrDefault().ToViewModel();
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = User.Identity.Name + "上报的(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -2748,7 +2748,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName); ;
                 MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Application.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Application.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2802,7 +2802,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(项目确立)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Establishment.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Establishment.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = projectModel.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2849,13 +2849,13 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
 
                 //待办变成已办
-                string formname = ScienceResearchTypeOfFormId.Establishment.ToString();
+                string formname = EngineeringProjectTypeOfFormId.Establishment.ToString();
                 var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == projectModel.ApplicationId.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.ID = rizhiresult.ID;
                 MyRiZhi.DoSomething = "已填写项目确立";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Establishment.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Establishment.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = projectModel.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2866,7 +2866,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = erpnworktodomodel.UserName;
                 MyRiZhi1.DoSomething = erpnworktodomodel.UserName + "需要添加合同记录";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Contract.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Contract.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = projectModel.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -2932,7 +2932,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Contract).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.Contract).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -3009,7 +3009,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(合同记录)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Contract.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Contract.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3073,13 +3073,13 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
 
                 //待办变成已办
-                string formname = ScienceResearchTypeOfFormId.Contract.ToString();
+                string formname = EngineeringProjectTypeOfFormId.Contract.ToString();
                 var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.ApplicationId.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.ID = rizhiresult.ID;
                 MyRiZhi.DoSomething = "已填写合同记录";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Contract.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Contract.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3183,7 +3183,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             #region 数据准备
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.ProcessRecord).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.ProcessRecord).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -3226,7 +3226,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(过程记录)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -3300,7 +3300,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(过程记录)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -3314,7 +3314,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(过程记录)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3456,7 +3456,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 nodeSerils = "驳回";
             }
 
-            string formname = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+            string formname = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
             var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.NWorkToDoID.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
             ERPNWorkToDoViewModel erpnworktodoModel = new ERPNWorkToDoViewModel();
             erpnworktodoModel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -3481,7 +3481,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的过程记录";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 //过程记录的ID
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3495,7 +3495,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "需要审批(" + erpnworktodoModel.UserName + "上报的过程记录)";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
                 MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -3521,7 +3521,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的过程记录";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 //过程记录的ID
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3546,7 +3546,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已驳回" + erpnworktodoModel.UserName + "上报的过程记录";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 //过程记录的ID
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -3560,7 +3560,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = erpnworktodoModel.UserName;
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "过程记录被驳回，需修改数据";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 //过程记录的ID 
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
@@ -3587,7 +3587,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.ProcessRecord).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.ProcessRecord).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -3628,7 +3628,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(过程记录)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi.FKAction = "已办";
                 //过程记录的ID
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
@@ -3664,7 +3664,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(过程记录)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi.FKAction = "已办";
                 //过程记录的ID
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
@@ -3694,7 +3694,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(过程记录)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ProcessRecord.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ProcessRecord.ToString();
                 MyRiZhi1.FKAction = "待办";
                 //过程记录的ID
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
@@ -3797,7 +3797,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.DoSomething = "保存(经费报销单)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi.FKAction = "已办";
                     MyRiZhi.TimeStr = DateTime.Now;
                     MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3863,7 +3863,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.DoSomething = "添加(经费记录)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi.FKAction = "已办";
                     MyRiZhi.TimeStr = DateTime.Now;
                     MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -3872,7 +3872,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkflowId), sectionName);
                     MyRiZhi1.DoSomething = "需要审批(经费记录)";
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi1.FKAction = "待办";
                     MyRiZhi1.TimeStr = DateTime.Now;
                     MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4046,7 +4046,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //经费报销单的日志
             if (model.WorkflowId == Convert.ToInt16(TypeOfWorkFlowId.FeeReimbursement))
             {
-                string formname = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                string formname = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                 var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.FundsRecordID.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
                 ERPNWorkToDoViewModel erpnworktodoModel = new ERPNWorkToDoViewModel();
                 erpnworktodoModel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -4072,7 +4072,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的经费报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now;
@@ -4088,7 +4088,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi1.DoSomething = "需要审批(" + erpnworktodoModel.UserName + "上报的经费报销单)";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now;
                     MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -4113,7 +4113,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的经费报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4137,7 +4137,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已驳回" + erpnworktodoModel.UserName + "上报的经费报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now;
@@ -4151,7 +4151,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.UserName = erpnworktodoModel.UserName;
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi1.DoSomething = "经费报销单被驳回，需修改数据";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now;
                     MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4165,7 +4165,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //差旅报销单的日志
             else
             {
-                string formname = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                string formname = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.FundsRecordID.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
                 ERPNWorkToDoViewModel erpnworktodoModel = new ERPNWorkToDoViewModel();
                 erpnworktodoModel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -4191,7 +4191,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的差旅报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now;
@@ -4207,7 +4207,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi1.DoSomething = "需要审批(" + erpnworktodoModel.UserName + "上报的差旅报销单)";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
                     ERPNWorkFlowNodeViewModel erpnWorkFlowNodeModel = new ERPNWorkFlowNodeViewModel();
@@ -4231,7 +4231,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的差旅报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4255,7 +4255,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi.DoSomething = "已驳回" + erpnworktodoModel.UserName + "上报的差旅报销单";
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now;
@@ -4269,7 +4269,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.UserName = erpnworktodoModel.UserName;
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                     MyRiZhi1.DoSomething = "差旅报销单被驳回，需修改数据";
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                     //FundsRecord的ID
                     MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi1.TimeStr = DateTime.Now;
@@ -4360,7 +4360,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.DoSomething = "保存(经费报销单)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi.FKAction = "已办";
                     //FKApplicationID是过程记录的ID
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
@@ -4398,7 +4398,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi.UserName = User.Identity.Name;
                     MyRiZhi.DoSomething = "添加(经费记录)";
                     MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi.FKAction = "已办";
                     MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                     MyRiZhi.TimeStr = DateTime.Now;
@@ -4409,7 +4409,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkflowId), sectionName);
                     MyRiZhi1.DoSomething = "需要审批(经费记录)";
                     MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                    MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.FeeReimbursement.ToString();
+                    MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.FeeReimbursement.ToString();
                     MyRiZhi1.FKAction = "待办";
                     MyRiZhi1.TimeStr = DateTime.Now;
                     MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
@@ -4517,7 +4517,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(差旅报销单)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi.FKAction = "已办";
                 //FKApplicationID是过程记录的ID
                 MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
@@ -4556,7 +4556,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(差旅报销单)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.FundsRecordID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -4567,7 +4567,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkflowId), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(差旅报销单)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.TimeStr = DateTime.Now;
                 MyRiZhi1.FKApplicationID = model.FundsRecordID.ToString();
@@ -4673,7 +4673,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(差旅报销单)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -4733,7 +4733,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(差旅报销单)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.TimeStr = DateTime.Now;
                 MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4742,7 +4742,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkflowId), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(差旅报销单)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TravelReimbursement.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TravelReimbursement.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.TimeStr = DateTime.Now;
                 MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4819,7 +4819,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Conclusion).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.Conclusion).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -4845,7 +4845,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(课题结案)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4904,7 +4904,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(课题结案)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -4915,7 +4915,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(课题结案)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5074,7 +5074,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             }
 
-            string formname = ScienceResearchTypeOfFormId.Conclusion.ToString();
+            string formname = EngineeringProjectTypeOfFormId.Conclusion.ToString();
             var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.ApplicationId.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
             ERPNWorkToDoViewModel erpnworktodoModel = new ERPNWorkToDoViewModel();
             erpnworktodoModel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -5100,7 +5100,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的课题结案";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5113,7 +5113,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "需要审批" + erpnworktodoModel.UserName + "上报的课题结案)";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
                 ERPNWorkFlowNodeViewModel erpnWorkFlowNodeModel = new ERPNWorkFlowNodeViewModel();
@@ -5137,7 +5137,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的课题结案";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5161,7 +5161,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已驳回" + erpnworktodoModel.UserName + "上报的课题结案";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5173,7 +5173,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = erpnworktodoModel.UserName;
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "课题结案被驳回，需修改数据";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5199,7 +5199,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.Conclusion).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.Conclusion).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -5225,7 +5225,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(课题结案)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -5263,7 +5263,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(课题结案)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -5275,7 +5275,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(Conclusion)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.Conclusion.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.Conclusion.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5320,7 +5320,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.ExtensionRequest).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.ExtensionRequest).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -5347,7 +5347,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(项目延期)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 int returnRiZhiId = ERPRiZhiService.AddERPRiZhi(MyRiZhi.ToDataTransferObjectModel());
@@ -5405,7 +5405,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(项目延期)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5416,7 +5416,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(项目延期)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5570,7 +5570,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             }
 
-            string formname = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+            string formname = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
             var rizhiresult = ERPRiZhiService.GetEntities(p => p.FKApplicationID == model.ApplicationId.ToString() && p.FkFormName == formname && p.FKAction == "待办").FirstOrDefault();
             ERPNWorkToDoViewModel erpnworktodoModel = new ERPNWorkToDoViewModel();
             erpnworktodoModel = ApplicationService.GetEntityById(model.ApplicationId).ToViewModel();
@@ -5596,7 +5596,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的项目延期";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5609,7 +5609,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "需要审批(" + erpnworktodoModel.UserName + "上报的项目延期)";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
                 ERPNWorkFlowNodeViewModel erpnWorkFlowNodeModel = new ERPNWorkFlowNodeViewModel();
@@ -5632,7 +5632,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已审批" + erpnworktodoModel.UserName + "上报的项目延期";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5656,7 +5656,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi.DoSomething = "已驳回" + erpnworktodoModel.UserName + "上报的项目延期";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5668,7 +5668,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = erpnworktodoModel.UserName;
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 MyRiZhi1.DoSomething = "项目延期被驳回，需修改数据";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
 
@@ -5692,7 +5692,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容
-            var temerpnformmodel = ERPNFormService.GetEntityById((int)ScienceResearchTypeOfFormId.ExtensionRequest).ToViewModel();
+            var temerpnformmodel = ERPNFormService.GetEntityById((int)EngineeringProjectTypeOfFormId.ExtensionRequest).ToViewModel();
             model.FormContent = temerpnformmodel.ContentStr;
             model.FormContent = model.FormContent.Replace(Constant.MacroSectionString, sectionName);
             model.FormContent = model.FormContent.Replace(Constant.MacroUserNameString, User.Identity.Name);
@@ -5719,7 +5719,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "保存(项目延期)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5759,7 +5759,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = "添加(项目延期)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi.TimeStr = DateTime.Now; MyRiZhi.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5771,7 +5771,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.UserName = FillInRiZhi(Convert.ToInt16(model.WorkFlowID), sectionName);
                 MyRiZhi1.DoSomething = "需要审批(项目延期)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.ExtensionRequest.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.ExtensionRequest.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.ApplicationId.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now; MyRiZhi1.ModuleName = ModuleNameOfScienceResearch.ScienceResearch.ToString();
@@ -5922,7 +5922,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //非普通用户
             if (hasRolesFlag)
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
@@ -5935,7 +5935,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //普通用户
             else
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
@@ -5960,7 +5960,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         {
             if (collection["OutScienceProjectStatistics"] != null)
             {
-                IEnumerable<ScienceProjectStatisticsTransferObject> result = StatisticService.GetScienceProjectStatistics(x => true, (int)ScienceResearchTypeOfFormId.Application);
+                IEnumerable<ScienceProjectStatisticsTransferObject> result = StatisticService.GetScienceProjectStatistics(x => true, (int)EngineeringProjectTypeOfFormId.Application);
 
                 DataTable dt = new DataTable();
                 string excelName = "工程项目-工程项目统计列表";
@@ -6017,7 +6017,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             else
             {
-                var result = StatisticService.GetScienceProjectStatistics(x => true, (int)ScienceResearchTypeOfFormId.Application);
+                var result = StatisticService.GetScienceProjectStatistics(x => true, (int)EngineeringProjectTypeOfFormId.Application);
 
                 return PartialView(result.Select(x => x.ToViewModel()));
             }
@@ -6227,7 +6227,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //非普通用户
             if (hasRolesFlag)
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
@@ -6240,7 +6240,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //普通用户
             else
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
@@ -6412,7 +6412,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //非普通用户
             if (hasRolesFlag)
             {
-                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
@@ -6424,7 +6424,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //普通用户
             else
             {
-                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
@@ -6454,7 +6454,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //非普通用户
             if (hasRolesFlag)
             {
-                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
@@ -6466,7 +6466,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //普通用户
             else
             {
-                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
@@ -6749,12 +6749,12 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             ViewBag.bidSectionsList = selectItemList;
 
-            var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.TenderNotice && p.ApplicationId == applicationid).FirstOrDefault();
+            var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.TenderNotice && p.ApplicationId == applicationid).FirstOrDefault();
 
             // 判断招标公告是否已经存在
             if (tenderNoticeModel == null)
             {
-                int formId = (int)ScienceResearchTypeOfFormId.TenderNotice;
+                int formId = (int)EngineeringProjectTypeOfFormId.TenderNotice;
                 int workflowId = (int)TypeOfWorkFlowId.Application;
 
                 #region 数据准备
@@ -6847,12 +6847,12 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             ViewBag.SectionNumber = section.SectionNumber;
             ViewBag.SectionName = section.SectionName;
             ViewBag.Id = section.ID; 
-             var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.TenderNotice && p.ApplicationId == sectionId).FirstOrDefault();
+             var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.TenderNotice && p.ApplicationId == sectionId).FirstOrDefault();
 
             // 判断招标公告是否已经存在
             if (tenderNoticeModel == null)
             {
-                int formId = (int)ScienceResearchTypeOfFormId.TenderNotice;
+                int formId = (int)EngineeringProjectTypeOfFormId.TenderNotice;
                 int workflowId = (int)TypeOfWorkFlowId.Application;
 
                 #region 数据准备
@@ -6972,7 +6972,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.DoSomething = User.Identity.Name + "上报(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = nworktodoid.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -6986,7 +6986,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = nworktodoid.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
@@ -7014,13 +7014,13 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
                 //更新已办
                 string nworktodoid = model.NWorkToDoID.ToString();
-                string formname = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                string formname = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = User.Identity.Name + "上报的(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -7033,7 +7033,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
@@ -7106,7 +7106,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi.DoSomething = User.Identity.Name + "上报(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = nworktodoid.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -7120,7 +7120,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = nworktodoid.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
@@ -7148,13 +7148,13 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 ERPRiZhiViewModel MyRiZhi1 = new ERPRiZhiViewModel();
                 //更新已办
                 string nworktodoid = model.NWorkToDoID.ToString();
-                string formname = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                string formname = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi = ERPRiZhiService.GetEntities(p => p.FKApplicationID == nworktodoid && p.FkFormName == formname).FirstOrDefault().ToViewModel();
                 MyRiZhi.UserName = User.Identity.Name;
                 MyRiZhi.DoSomething = User.Identity.Name + "上报的(工程项目申请书)";
                 MyRiZhi.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi.NotificationContent = "添加的" + model.WenHao + "已经提交";
-                MyRiZhi.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi.FKAction = "已办";
                 MyRiZhi.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi.TimeStr = DateTime.Now;
@@ -7167,7 +7167,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 MyRiZhi1.DoSomething = "需要审批(" + User.Identity.Name + "上报的工程项目申请书)";
                 MyRiZhi1.IpStr = System.Web.HttpContext.Current.Request.UserHostAddress.ToString();
                 // MyRiZhi1.NotificationContent = "上报的" + model.WenHao + "需要审批";
-                MyRiZhi1.FkFormName = ScienceResearchTypeOfFormId.TenderNotice.ToString();
+                MyRiZhi1.FkFormName = EngineeringProjectTypeOfFormId.TenderNotice.ToString();
                 MyRiZhi1.FKAction = "待办";
                 MyRiZhi1.FKApplicationID = model.NWorkToDoID.ToString();
                 MyRiZhi1.TimeStr = DateTime.Now;
@@ -7276,7 +7276,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //非普通用户
             if (hasRolesFlag)
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
@@ -7289,7 +7289,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //普通用户
             else
             {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)

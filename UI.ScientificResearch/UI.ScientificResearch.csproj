@@ -504,9 +504,6 @@
     <Content Include="Content\ueditor\lang\zh-cn\images\music.png" />
     <Content Include="Content\ueditor\lang\zh-cn\images\upload.png" />
     <Content Include="Content\ueditor\lang\zh-cn\zh-cn.js" />
-    <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.dll" />
-    <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.pdb" />
-    <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="Content\ueditor\net\net.sln" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.css" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.min.css" />
@@ -1454,6 +1451,7 @@
     <Content Include="Areas\Education\Views\UploadFilePage\Index.cshtml" />
     <Content Include="Areas\Education\Views\UploadFilePage\List.cshtml" />
     <Content Include="Areas\Education\Views\Web.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\AboutApprovalNode.js" />
     <Content Include="Scripts\Custom\bidSection.js" />
@@ -1941,7 +1939,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Approval\error.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2412,7 +2412,6 @@
     <Folder Include="Areas\Training\Models\" />
     <Folder Include="Areas\Training\Views\OnlineTraining\" />
     <Folder Include="Areas\Training\Views\Shared\" />
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadFiles\Establish\" />
     <Folder Include="Views\Conclude\" />
     <Folder Include="Views\Process\" />

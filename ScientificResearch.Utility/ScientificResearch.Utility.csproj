@@ -77,6 +77,7 @@
     <Compile Include="Enums\PaperPublishTypeOfFormId.cs" />
     <Compile Include="Enums\ScienceConferenceApplicationStatus.cs" />
     <Compile Include="Enums\ScienceConferenceWorkflowNode.cs" />
+    <Compile Include="Enums\EngineeringProjectTypeOfFormId.cs" />
     <Compile Include="Enums\SubjectLeaderApplicationStatus.cs" />
     <Compile Include="Enums\GoodSubjectApplicationStatus.cs" />
     <Compile Include="Enums\ApplicationStatus.cs" />
