@@ -7207,7 +7207,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (application == null)
             {
-                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
             }
 
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);

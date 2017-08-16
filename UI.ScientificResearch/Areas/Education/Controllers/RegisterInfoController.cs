@@ -292,7 +292,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             }
 
             return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            //return View(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
         }
 
         public ActionResult Details(string id)
@@ -460,7 +460,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (!registCompanyList.Any())
             {
-                return View(@"<script type='text/javascript'>alert('该标段还没有公司报名！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('该标段还没有公司报名！'); </script> ");
             }
 
             var application = ApplicationService.GetEntityById(registCompanyList.First().ApplicationId);
@@ -536,7 +536,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (!companyList.Any())
             {
-                return View(@"<script type='text/javascript'>alert('该公司报名信息不正确！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('该公司报名信息不正确！'); </script> ");
             }
 
             foreach (var item in companyList)
@@ -633,7 +633,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (application == null)
             {
-                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
             }
 
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
@@ -661,7 +661,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (application == null)
             {
-                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
             }
 
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
@@ -695,7 +695,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             if (application == null)
             {
-                return View(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
+                return Content(@"<script type='text/javascript'>alert('项目不存在！'); </script> ");
             }
 
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
