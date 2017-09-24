@@ -308,7 +308,17 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             ViewBag.bidSectionsList = selectItemList;
 
-            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+            var tempResult = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).OrderBy(x => x.SectionId).ThenBy(x => x.Remark).ThenByDescending(x => x.CreatedTime).ToList();
+
+            foreach (var item in tempResult)
+            {
+                var section = bidSections.FirstOrDefault(x => x.ID == item.SectionId);
+                if (section != null)
+                {
+                    item.SectionName = section.SectionName;
+                }
+            }
+            return View("List", tempResult);
         }
 
         /// <summary>
@@ -373,7 +383,17 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             }
 
             ViewBag.bidSectionsList = selectItemList;
-            return View("List", FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+            var tempResult = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).OrderBy(x => x.SectionId).ThenBy(x => x.Remark).ThenByDescending(x => x.CreatedTime).ToList();
+
+            foreach (var item in tempResult)
+            {
+                var section = bidSections.FirstOrDefault(x => x.ID == item.SectionId);
+                if (section != null)
+                {
+                    item.SectionName = section.SectionName;
+                }
+            }
+            return View("List", tempResult);
         }
 
         /// <summary>
@@ -439,7 +459,17 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
             ViewBag.bidSectionsList = selectItemList;
 
-            return View(FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()));//.Where(x => x.FileType == type));
+            var tempResult = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).OrderBy(x => x.SectionId).ThenBy(x => x.Remark).ThenByDescending(x => x.CreatedTime).ToList();
+
+            foreach (var item in tempResult)
+            {
+                var section = bidSections.FirstOrDefault(x => x.ID == item.SectionId);
+                if (section != null)
+                {
+                    item.SectionName = section.SectionName;
+                }
+            }
+            return View(tempResult);
         }
 
         /// <summary>

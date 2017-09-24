@@ -107,6 +107,9 @@
             @Html.DisplayNameFor(model => model.Number)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.SectionName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Remark)
         </th>
         <th>
@@ -134,9 +137,27 @@
     {
         <tr>
             <td>@index</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
+            <td style="color:red">
+                @Html.DisplayFor(modelItem => item.SectionName)
             </td>
+            @if (item.Remark == BiddingDocumentType.初审文件.ToString())
+            {
+               <td style="color:olive">
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+            }
+            else if (item.Remark == BiddingDocumentType.初稿文件.ToString())
+            {
+                <td style="color:green">
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+            }
+            else
+            {
+                <td style="color:blue">
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.OperatorName)
             </td>

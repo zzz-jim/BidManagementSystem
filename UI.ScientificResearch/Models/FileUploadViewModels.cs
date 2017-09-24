@@ -47,5 +47,14 @@ namespace UI.ScientificResearch.Models
 
         [Display(Name = "文件大小")]
         public string FileSize { get; set; }
+
+        [Display(Name = "标段ID")]
+        public int SectionId { get; set; }
+
+        [Display(Name = "标段")]
+        public string SectionName { get; set; }
+
+        [Display(Name = "标段编号")]
+        public string SectionNumber { get; set; }
     }
 }

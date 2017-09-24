@@ -77,9 +77,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Number)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Remark)
-            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.SectionName)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.OperatorName)
         </th>
@@ -105,9 +105,9 @@
     {
         <tr>
             <td>@index</td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.Remark)
-                </td>*@
+            <td style="color:red">
+                @Html.DisplayFor(modelItem => item.SectionName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OperatorName)
             </td>
