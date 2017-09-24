@@ -613,6 +613,8 @@
     <Content Include="Images\8.jpg" />
     <Content Include="Images\8.png" />
     <Content Include="Images\confFlowChart.gif" />
+    <Content Include="Images\engineering.png" />
+    <Content Include="Images\goverment.png" />
     <Content Include="Images\pmFlowChart.gif" />
     <Content Include="Images\reKeYan.gif" />
     <Content Include="Images\thContEduLCT.gif" />
