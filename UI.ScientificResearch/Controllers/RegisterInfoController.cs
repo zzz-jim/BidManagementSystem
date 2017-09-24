@@ -847,7 +847,7 @@ namespace UI.ScientificResearch.Controllers
                 var companyList = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId).ToList();//.GroupBy(x => x.BidSectionId);
 
                 // 查询邮件附件内容
-                var fileList = FileService.GetEntities(x => x.ApplicationId == applicationId && x.Remark == "终稿文件" && x.FileType == (int)UploadFilePageType.招标文件).ToList();
+                var fileList = FileService.GetEntities(x => x.ApplicationId == applicationId && x.Remark == BiddingDocumentType.终稿文件.ToString() && x.FileType == (int)UploadFilePageType.招标文件).ToList();
                 var mailClassList = new List<MailClass>();
                 foreach (var item in companyList)
                 {

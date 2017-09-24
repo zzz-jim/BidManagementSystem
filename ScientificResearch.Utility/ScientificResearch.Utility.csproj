@@ -88,6 +88,7 @@
     <Compile Include="Enums\SubjectLeaderTypeOfWorkflowId.cs" />
     <Compile Include="Enums\GoodSubjectTypeOfWorkflowId.cs" />
     <Compile Include="Enums\SubjectLeaderTypeOfFormId.cs" />
+    <Compile Include="Enums\BiddingDocumentType.cs" />
     <Compile Include="Enums\UploadFilePageType.cs" />
     <Compile Include="Enums\UserRoles.cs" />
     <Compile Include="Enums\ApproveMode.cs" />
