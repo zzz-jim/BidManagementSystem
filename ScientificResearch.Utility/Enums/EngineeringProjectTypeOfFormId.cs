@@ -55,5 +55,10 @@ namespace ScientificResearch.Utility.Enums
         /// 中标公示
         /// </summary>
         BidWinnerNotice = 2114,
+
+        /// <summary>
+        /// 采购项目存档资料
+        /// </summary>
+        ArchiveDocument = 2119,
     }
 }

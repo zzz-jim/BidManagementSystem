@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<ScientificResearch.ViewModel.ERPNWorkToDoViewModel>
 
 @{
-    Layout = "~/Areas/Education/Views/Shared/_LayoutScienceProject.cshtml";
+    Layout = "~/Views/Shared/_LayoutScienceProject.cshtml";
 }
-
 <br />
 
 <div id="MaxWindow"></div>
@@ -56,7 +55,7 @@
 
     <div id="CreateNewApp">
         <input type="submit" value="查询" onclick="searchrightdataoffundslist()" />
-        <input type="button" id="CreaateButtn" value="新建" />
+        @*<input type="button" id="CreaateButtn" value="新建" />*@
     </div>
 </div>
 <br />
@@ -76,7 +75,7 @@
                 transport: {
                     read: {
                         type: "post",
-                        url: "/Education/Approval/ApplicationListStatistics?projectName=" +
+                        url: "/Approval/ArchiveDocumentListStatistics?projectName=" +
                         encodeURI(searchitem2) + "&State=" + encodeURI(searchitem3) + "&projectNumber=" +
                         encodeURI(searchitem4) + "&startTime=" + encodeURI(searchitem5) + "&endTime=" +
                         encodeURI(searchitem6) + "",
@@ -86,7 +85,7 @@
 
                     destroy: {
                         type: "post",
-                        url: "/Education/Approval/DeleteApplicationListByModelId",
+                        url: "/Approval/DeleteApplicationListByModelId",
                         dataType: "json",
                         complete: function (e) {
                             $("#fundsGrid").data("kendoGrid").dataSource.read();
@@ -117,34 +116,37 @@
                     },
                     data: function (d) {
                         for (var i = 0; i < d.data.length; i++) {
-                            ////将json时间转换
-                            //var birthdayMilliseconds = eval('new ' + d.data[i].CreatedTime.replace('/', '', 'g').replace('/', '', 'g'));
-                            //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
-                            //d.data[i].CreatedTime = birthday;
-                            //}
-                            //// 文件编号
-                            //d.data[i].FileNumber = d.data[i].FormValues.split('#')[0];
-                            // 采购方式
-                            d.data[i].ProcurementModes = d.data[i].FormValues.split('#')[18];
-                            // 项目内容
-                            d.data[i].ProjectContent = d.data[i].FormValues.split('#')[2];
-                            // 采购单位
-                            d.data[i].ProcurementName = d.data[i].FormValues.split('#')[7];
-                            // 采购预算
-                            d.data[i].Budget = d.data[i].FormValues.split('#')[15];
-                            // 招标代理公司
-                            d.data[i].Agent = d.data[i].FormValues.split('#')[19];
-                            d.data[i].IsLock = d.data[i].IsLocked;
+                            //if (d.data[i].FormValues.split('#')[5].contains('/')) {
 
-                            if (d.data[i].IsLock == false) {
-                                d.data[i].IsLock = "启用";
-                            }
-                            else if (d.data[i].IsLock == true) {
-                                d.data[i].IsLock = "冻结";
-                            }
-                            else {
-                                d.data[i].IsLock = "";
-                            }
+                            //}
+                            //////将json时间转换
+                            //var birthdayMilliseconds = eval('new ' + d.data[i].FormValues.split('#')[5].replace('/', '', 'g').replace('/', '', 'g'));
+                            //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                            //d.data[i].OpentTime = birthday;//开标时间
+                            //}
+                            // 是否存档
+                            d.data[i].IsArchived = d.data[i].FormValues.split('#')[2];
+                            // 存档日期
+                            d.data[i].ArchiveDate = d.data[i].FormValues.split('#')[3];
+                            d.data[i].ArchiveAmount = d.data[i].FormValues.split('#')[4];// 存档正本（数量）
+                            d.data[i].ArchiveCopyAmount = d.data[i].FormValues.split('#')[5];// 存档副本（数量）
+                            // 存档接收人
+                            d.data[i].Receiver = d.data[i].FormValues.split('#')[6];
+                            d.data[i].ReceiveDate = d.data[i].FormValues.split('#')[7];
+                            d.data[i].ReceiveArchiveAmount = d.data[i].FormValues.split('#')[8];// 存档接收正本（数量）
+                            d.data[i].ReceiveArchiveCopyAmount = d.data[i].FormValues.split('#')[9];// 存档接收副本（数量）
+                            //，备注
+                            d.data[i].Remark = d.data[i].FormValues.split('#')[10];
+
+                            //if (d.data[i].IsLock == false) {
+                            //    d.data[i].IsLock = "启用";
+                            //}
+                            //else if (d.data[i].IsLock == true) {
+                            //    d.data[i].IsLock = "冻结";
+                            //}
+                            //else {
+                            //    d.data[i].IsLock = "";
+                            //}
 
                             d.data[i].Applications = d.data[i].ApplicationStatus;
                             if (d.data[i].Applications == "AplicationWriting") {
@@ -171,7 +173,6 @@
 
                         }
                         return d.data;
-
                     },
                     total: function (d) {
                         return d.total;
@@ -208,51 +209,56 @@
                     {
                         field: "BeiYong1",
                         title: "项目编号",
-                        width: "14%"
+                        width: "10%"
                     },
                     {
                         field: "WenHao",
                         title: "项目名称",
-                        width: "17%"
-                    },
-                    //{
-                    //    field: "UserName",
-                    //    title: "采购文件编号",
-                    //    width: "10%"
-                    //},
-                    {
-                        field: "ProcurementModes",
-                        title: "采购方式",
-                        width: "8%"
+                        width: "14%"
                     },
                     {
-                        field: "ProjectContent",
-                        title: "项目内容",
-                        width: "15%",
+                        field: "IsArchived",
+                        title: "是否存档",
+                        width: "6%"
                     },
                     {
-                        field: "ProcurementName",
-                        title: "采购单位",
+                        field: "ArchiveDate",
+                        title: "存档日期",
+                        width: "8%",
+                    }, {
+                        field: "ArchiveAmount",
+                        title: " 存档正本（数量）",
+                        width: "12%",
+                    },
+                    {
+                        field: "ArchiveCopyAmount",
+                        title: "存档副本（数量）",
                         width: "10%",
                     },
                     {
-                        field: "Budget",
-                        title: "预算金额(万元)",
-                        width: "10%",
-                    },
-                    //{
-                    //    field: "Applications",
-                    //    title: "当前状态",
-                    //    width: "10%",
-                    //},
-                    {
-                        field: "Agent",
-                        title: "代理公司",
+                        field: "Receiver",
+                        title: "存档接收人",
                         width: "8%"
                     },
                     {
-                        command:
-                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除"}]
+                        field: "ReceiveDate",
+                        title: "接收日期",
+                        width: "8%"
+                    },
+                    {
+                        field: "ReceiveArchiveAmount",
+                        title: "接收正本（数量）",
+                        width: "8%"
+                    },
+                    {
+                        field: "ReceiveArchiveCopyAmount",
+                        title: "接收副本（数量）",
+                        width: "8%"
+                    },
+                    {
+                        field: "Remark",
+                        title: "备注",
+                        width: "8%"
                     }
                 ],
                 editable: {
@@ -262,7 +268,7 @@
                 selectable: true,
                 //change: onChange,
 
-                detailInit: detailSearch,
+                //detailInit: detailSearch,
             });
         };
         // 查询该项目的标段列表详情
@@ -271,7 +277,7 @@
                 dataSource: {
                     type: "jsonp",
                     transport: {
-                        read: "/Education/RegisterInfo/GetBidSectionListByApplicationId2?applicationId=" + e.data.ID
+                        read: "/Approval/SectionProjectRegisterInfoList?applicationId=" + e.data.ID
                     },
                     serverPaging: true,
                     serverSorting: true,
@@ -289,20 +295,69 @@
                         width: "8%"
                     },
                     {
-                        field: "SectionNumber",
-                        title: "标段编号",
+                        field: "CompanyName",
+                        title: "公司名称",
                         width: "20%"
                     },
                     {
-                        field: "SectionName",
-                        title: "标段名称",
+                        field: "Phone",
+                        title: "联系电话",
                         width: "20%"
                     },
                     {
-                        field: "ProjectName",
-                        title: "项目名称",
-                        width: "40%"
+                        field: "Email",
+                        title: "邮箱地址",
+                        width: "20%"
                     },
+                    {
+                        field: "BidSection",
+                        title: "标段",
+                        width: "20%"
+                    },
+                    //{
+                    //    field: "IsSubmitRegistrationFee",
+                    //    title: "是否交报名费",
+                    //    width: "20%"
+                    //},
+                    //{
+                    //    field: "RegistrationFee",
+                    //    title: "报名费金额",
+                    //    width: "20%"
+                    //},
+
+                    //{
+                    //    field: "IsSubmitBidBondFee",
+                    //    title: "是否交保证金",
+                    //    width: "20%"
+                    //},
+                    //{
+                    //    field: "BidBondFee",
+                    //    title: "保证金",
+                    //    width: "20%"
+                    //},
+                    //{
+                    //    field: "RegisterTime",
+                    //    title: "报名时间",
+                    //    width: "20%"
+                    //},
+
+
+                    {
+                        field: "RankDescription",
+                        title: "名次",
+                        width: "20%"
+                    },
+                    {
+                        field: "Score",
+                        title: "综合评标等分",
+                        width: "20%"
+                    },
+                    {
+                        field: "TenderOffer",
+                        title: "投标报价",
+                        width: "20%"
+                    },
+
                     {
                         field: "ID",
                         title: "ID",
@@ -352,7 +407,7 @@
             });
 
             $.ajax({
-                url: "/Education/Approval/ReturnStateValue?id=" + id,
+                url: "/Approval/ReturnStateValue?id=" + id,
                 type: "post",
                 success: function (data) {
                     if (data != null) {
@@ -361,14 +416,14 @@
                         //判断返回的状态来控制弹出框第一个打开的页面
                         //申请书已填写未审核、科室主任已经审批申请书、科教科已经审批申请书、科教科已经审批申请书、超级管理员审批已经审批申请书
                         if (data == "ProjectRegitering") {
-                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Education/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
+                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
                             $("#MaxWindow").data("kendoWindow").center().open();
                         }
                         else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
                         {
                             if (data == "ApplicationRejected") {
                                 $.ajax({
-                                    url: "/Education/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                    url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
                                     type: "post",
                                     success: function (data) {
                                         if (data != null) {
@@ -384,21 +439,21 @@
                                 });
                             }
                             else {
-                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Education/Approval/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
+                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationAgree?id=' + id + '">项目申请书</iframe>');
                                 $("#MaxWindow").data("kendoWindow").center().open();
                             }
                         }
                         else if (data == "ProjectRegitered" || data == "ProjectEstablishing")//全部通过审批
                         {
                             $.ajax({
-                                url: "/Education/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
                                 type: "post",
                                 success: function (data) {
                                     if (data != null) {
                                         if (data == "Equal") {
                                             //为申请书iframe的src赋值id是ERPNWorkToDo的ID
                                             //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
-                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Education/UploadFilePage/ContractList?applicationId=' + id + '">合同资料</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/UploadFilePage/ContractList?applicationId=' + id + '">合同资料</iframe>');
                                             $("#MaxWindow").data("kendoWindow").center().open();
                                         }
                                         else {
@@ -411,14 +466,14 @@
                         else if (data == "TenderNotice")//全部通过审批
                         {
                             $.ajax({
-                                url: "/Education/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
+                                url: "/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,
                                 type: "post",
                                 success: function (data) {
                                     if (data != null) {
                                         if (data == "Equal") {
                                             //为申请书iframe的src赋值id是ERPNWorkToDo的ID
                                             //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
-                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Education/Approval/TenderNotice?id=' + id + '">招标公告</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/TenderNotice?id=' + id + '">招标公告</iframe>');
                                             $("#MaxWindow").data("kendoWindow").center().open();
                                         }
                                         else {
@@ -467,7 +522,7 @@
                     //  resizable: false,
 
                 });
-                $("#Application").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Education/Approval/SubmitApplication">项目申请书</iframe>');
+                $("#Application").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Approval/SubmitApplication">项目申请书</iframe>');
                 $("#Application").data("kendoWindow").center().open();
 
                 creaateButtn.fadeOut();

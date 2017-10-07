@@ -30,6 +30,10 @@
             {
                 ViewBag.Title = "招标公告";
             }
+            else if (urlArray[2] == "AllArchiveDocumentList")
+            {
+                ViewBag.Title = "存档资料";
+            }
             else if (urlArray[2] == "AllBiddingDocumentList")
             {
                 ViewBag.Title = "招标文件";
@@ -498,6 +502,11 @@
                                     <span class="badge badge-azure">合同资料</span>
                                 </a>
                             </li>
+                            <li id="Approval_AllArchiveDocumentList">
+                                <a href="/Approval/AllArchiveDocumentList">
+                                    <span class="badge badge-azure">存档资料</span>
+                                </a>
+                            </li>
                             <li id="UploadFilePage_AllBiddingDocumentList">
                                 <a href="/UploadFilePage/AllBiddingDocumentList">
                                     <span class="badge badge-azure">招标文件</span>
@@ -515,11 +524,11 @@
                                         <span class="badge badge-azure  ">报名情况</span>
                                     </a>
                                 </li>
-                                    <li id="RegisterInfo_AllProjectBidBondInfoList">
-                                        <a href="/RegisterInfo/AllProjectBidBondInfoList">
-                                            <span class="badge badge-azure  ">保证金情况</span>
-                                        </a>
-                                    </li>
+                                <li id="RegisterInfo_AllProjectBidBondInfoList">
+                                    <a href="/RegisterInfo/AllProjectBidBondInfoList">
+                                        <span class="badge badge-azure  ">保证金情况</span>
+                                    </a>
+                                </li>
                             }
                             <li id="UploadFilePage_AllOpenBidsDocumentList">
                                 <a href="/UploadFilePage/AllOpenBidsDocumentList">

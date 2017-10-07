@@ -8,16 +8,17 @@
         <ul class="steps">
             <li id="step1" class="ProjectStepComplete"><span class="step">1</span>项目注册<span class="chevron"></span></li>
             <li id="step2" class="ProjectStepComplete"><span class="step">2</span>合同资料<span class="chevron"></span></li>
-            <li id="step3" class="ProjectStepComplete"><span class="step">3</span>招标文件<span class="chevron"></span></li>
+            <li id="step3" class="ProjectStepComplete"><span class="step">2</span>存档资料<span class="chevron"></span></li>
+            <li id="step4" class="ProjectStepComplete"><span class="step">3</span>招标文件<span class="chevron"></span></li>
 
             @if (User.IsInRole(UserRoles.超级管理员.ToString()))
             {
-                <li id="step4" class="ProjectStepComplete"><span class="step">3</span>招标公告<span class="chevron"></span></li>
-                <li id="step5" class="ProjectStepComplete"><span class="step">4</span>报名保证金情况<span class="chevron"></span></li>
+                <li id="step5" class="ProjectStepComplete"><span class="step">3</span>招标公告<span class="chevron"></span></li>
+                <li id="step6" class="ProjectStepComplete"><span class="step">4</span>报名保证金情况<span class="chevron"></span></li>
             }
 
-            <li id="step6" class="ProjectStepComplete"><span class="step">5</span>开评标资料<span class="chevron"></span></li>
-            <li id="step7" class="ProjectStepComplete"><span class="step">5</span>中标通知书<span class="chevron"></span></li>
+            <li id="step7" class="ProjectStepComplete"><span class="step">5</span>开评标资料<span class="chevron"></span></li>
+            <li id="step8" class="ProjectStepComplete"><span class="step">5</span>中标通知书<span class="chevron"></span></li>
             @*<li id="freezearea">
                     <input type="button" id="btnFreez" class="btn btn-blue" />
                 </li>*@
@@ -30,6 +31,7 @@
                 @Html.ActionLink("项目注册", "ApplicationAgree", "Approval", new { id = ViewBag.Id }, new { id = "ApplicationAgree" })
                 @*@Html.ActionLink("项目注册确认", "ProjectEstablish", "Approval", new { id = ViewBag.Id }, new { id = "ProjectEstablish" })*@
                 @Html.ActionLink("合同资料", "ContractList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "Contract" })
+                @Html.ActionLink("存档资料", "ArchiveDocument", "Approval", new { applicationId = ViewBag.Id }, new { id = "ArchiveDocument" })
                 @Html.ActionLink("招标文件", "BiddingDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "BiddingDocument" })
 
                 @if (User.IsInRole(UserRoles.超级管理员.ToString()))

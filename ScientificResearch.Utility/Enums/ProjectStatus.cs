@@ -59,6 +59,11 @@ namespace ScientificResearch.Utility.Enums
         /// <summary>
         /// 中标通知已公示，结束
         /// </summary>
-        BidWinnerNoticeAnnounced// step 4
+        BidWinnerNoticeAnnounced,// step 4
+
+        /// <summary>
+        /// 文档存档，结束
+        /// </summary>
+        Archived// step 4
     }
 }

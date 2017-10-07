@@ -30,6 +30,10 @@
             {
                 ViewBag.Title = "招标公告";
             }
+            else if (urlArray[2] == "AllArchiveDocumentList")
+            {
+                ViewBag.Title = "存档资料";
+            }
             else if (urlArray[2] == "AllBiddingDocumentList")
             {
                 ViewBag.Title = "招标文件";
@@ -496,6 +500,11 @@
                             <li id="UploadFilePage_AllContractList">
                                 <a href="/Education/UploadFilePage/AllContractList">
                                     <span class="badge badge-azure">合同资料</span>
+                                </a>
+                            </li>
+                            <li id="Approval_AllArchiveDocumentList">
+                                <a href="/Education/Approval/AllArchiveDocumentList">
+                                    <span class="badge badge-azure">存档资料</span>
                                 </a>
                             </li>
                             <li id="UploadFilePage_AllBiddingDocumentList">
