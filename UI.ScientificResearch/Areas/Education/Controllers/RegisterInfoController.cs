@@ -498,6 +498,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                         result.CompanyName1 = item.CompanyName;
                         result.Score1 = item.Score.Value;
                         result.TenderOffer1 = item.TenderOffer.Value;
+                        result.Address1 = item.Address;
                     }
                     else
                     if (item.Rank == 2)
@@ -506,6 +507,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                         result.CompanyName2 = item.CompanyName;
                         result.Score2 = item.Score.Value;
                         result.TenderOffer2 = item.TenderOffer.Value;
+                        result.Address2 = item.Address;
                     }
                     else
                     if (item.Rank == 3)
@@ -514,6 +516,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                         result.CompanyName3 = item.CompanyName;
                         result.Score3 = item.Score.Value;
                         result.TenderOffer3 = item.TenderOffer.Value;
+                        result.Address3 = item.Address;
                     }
                     else { }
                 }

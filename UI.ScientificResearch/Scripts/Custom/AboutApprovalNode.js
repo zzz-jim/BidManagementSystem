@@ -4,7 +4,7 @@ function CheckFileSize() {
     var file = document.getElementById("uploadFile");
     var fileSize = 0;
     var filepath = file.value;
-    var filetypes = [".rar", ".txt", ".zip", ".doc", ".ppt", ".xls", ".pdf", ".docx", ".xlsx"];
+    var filetypes = [".rar", ".txt", ".zip", ".doc", ".ppt", ".xls", ".pdf", ".docx", ".xlsx", ".rar", ".7Z", ".cab", ".iso", ".pdf"];
 
     var filemaxsize = 1024 * 10;//10M
     if (filepath) {

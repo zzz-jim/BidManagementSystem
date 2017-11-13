@@ -182,7 +182,8 @@
                     { field: "RankDescription", title: "名次", width: "25%" },
                     { field: "CompanyName", title: "中标候选人名称", width: "25%" },
                     { field: "TenderOffer", title: "投标报价", width: "25%" },
-                    { field: "Score", title: "综合评标得分", width: "25%" }
+                    { field: "Score", title: "综合评标得分", width: "25%" },
+                    { field: "Address", title: "供应商地址", width: "25%" }
                 ]
             });
         }
@@ -213,7 +214,7 @@
                     //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
                 }
             });
-            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ApplicationId + '">中标登记</iframe>');
+            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/CreateBidWinnerNotice?sectionId=' + data.ID + '">中标登记</iframe>');
             $("#MaxWindow").data("kendoWindow").center().open();
         };
     </script>

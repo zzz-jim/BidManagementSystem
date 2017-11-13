@@ -42,6 +42,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "投标报价")]
         public long TenderOffer1 { get; set; }
 
+        [Display(Name = "供应商地址")]
+        public string Address1 { get; set; }
+
 
         /// <summary>
         ///  第2名
@@ -57,6 +60,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "投标报价")]
         public long TenderOffer2 { get; set; }
 
+        [Display(Name = "供应商地址")]
+        public string Address2 { get; set; }
+
 
         /// <summary>
         ///  第3名
@@ -71,5 +77,8 @@ namespace UI.ScientificResearch.Models
 
         [Display(Name = "投标报价")]
         public long TenderOffer3 { get; set; }
+
+        [Display(Name = "供应商地址")]
+        public string Address3 { get; set; }
     }
 }

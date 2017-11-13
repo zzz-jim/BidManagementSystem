@@ -2152,6 +2152,7 @@
           <Property Name="Score" Type="decimal" Precision="4" Scale="2" />
           <Property Name="TenderOffer" Type="bigint" />
           <Property Name="IsShow" Type="bit" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="TravelFundsDetail">
           <Key>
@@ -4788,6 +4789,7 @@
           <Property Name="Score" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="TenderOffer" Type="Int64" />
           <Property Name="IsShow" Type="Boolean" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
           <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
@@ -7099,6 +7101,7 @@
           <EntitySetMapping Name="ProjectRegistration">
             <EntityTypeMapping TypeName="CSPostOAModel.ProjectRegistration">
               <MappingFragment StoreEntitySet="ProjectRegistration">
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="IsShow" ColumnName="IsShow" />
                 <ScalarProperty Name="TenderOffer" ColumnName="TenderOffer" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
