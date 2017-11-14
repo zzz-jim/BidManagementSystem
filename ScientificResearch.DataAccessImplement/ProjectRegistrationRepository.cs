@@ -1,5 +1,6 @@
 ﻿using ScientificResearch.DomainModel;
 using ScientificResearch.IDataAccess;
+using ScientificResearch.Utility.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -46,7 +47,6 @@ namespace ScientificResearch.DataAccessImplement
             {
                 context.ProjectRegistration.Attach(entity);
                 context.Entry(entity).State = EntityState.Modified;
-
                 if (1 == context.SaveChanges())
                 {
                     result = true;
@@ -54,6 +54,23 @@ namespace ScientificResearch.DataAccessImplement
                 else
                 {
                     result = false;
+                }
+                // 判断如果该项目的所有标段保证都退了，项目处显示 项目已结束，保证金已全退
+                var isExistNotRefundBidBondFee = context.ProjectRegistration.Any(x => x.ApplicationId == entity.ApplicationId && !x.IsRefundBidBondFee);
+                if (!isExistNotRefundBidBondFee)
+                {
+                    var application=context.ERPNWorkToDo.Find(entity.ApplicationId);
+                    application.ProjectStatus = BiddingProjectStatus.Completed.ToString();
+                    context.ERPNWorkToDo.Attach(application);
+                    context.Entry(application).State = EntityState.Modified;
+                    if (1 == context.SaveChanges())
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
                 }
 
                 return result;

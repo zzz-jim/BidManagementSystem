@@ -388,7 +388,7 @@
                                 $("#MaxWindow").data("kendoWindow").center().open();
                             }
                         }
-                        else if (data == "ProjectRegitered" || data == "ProjectEstablishing")//全部通过审批
+                        else if (data == "ProjectRegitered" || data == "ProjectEstablishing" || data == "Completed")//全部通过审批
                         {
                             $.ajax({
                                 url: "/Education/Approval/LoginPersonIsEqualApprovalWritePerson?id=" + id,

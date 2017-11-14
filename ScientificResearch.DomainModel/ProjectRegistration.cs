@@ -36,6 +36,7 @@ namespace ScientificResearch.DomainModel
         public Nullable<long> TenderOffer { get; set; }
         public bool IsShow { get; set; }
         public string Address { get; set; }
+        public bool IsRefundBidBondFee { get; set; }
     
         public virtual ERPNWorkToDo ERPNWorkToDo { get; set; }
     }

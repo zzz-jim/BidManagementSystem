@@ -103,11 +103,17 @@ else
                 <td>   @Html.LabelFor(model => model.BidBondFee) </td>
                 <td>
                     @*@Html.EditorFor(model => model.RegistrationFee, new { htmlAttributes = new { @style = "width:150px" } })*@
-                    <input type="text" id="BidBondFee" name="BidBondFee" style="width:150px" value="@Model.RegistrationFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
+                    <input type="text" id="BidBondFee" name="BidBondFee" style="width:150px" value="@Model.BidBondFee" onkeypress="var k=event.keyCode; return (k&gt;=48&amp;&amp;k&lt;=57)||k==46" ondragenter="return false" onpaste="return !/D/.test(clipboardData.getData('text'))" />
                     @Html.ValidationMessageFor(model => model.BidBondFee, "", new { @class = "text-danger" })
                 </td>
             </tr>
-
+            <tr>
+                <td>   @Html.LabelFor(model => model.IsRefundBidBondFee) </td>
+                <td>
+                    @Html.EditorFor(model => model.IsRefundBidBondFee, new { htmlAttributes = new { @style = "width:150px", @class = "checkbox", @readOnly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.IsRefundBidBondFee, "", new { @class = "text-danger" })
+                </td>
+            </tr>
             <tr>
                 <td>  @Html.LabelFor(model => model.Remark) </td>
                 <td>
@@ -123,7 +129,6 @@ else
                     @Html.ValidationMessageFor(model => model.RegisterTime, "", new { @class = "text-danger" })
                 </td>
             </tr>
-
             <tr>
                 <td colspan="2">
                     <input type="submit" value="保存" name="Save" class="btn btn-default" />

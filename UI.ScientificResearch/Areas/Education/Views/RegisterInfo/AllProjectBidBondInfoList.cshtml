@@ -145,29 +145,13 @@
                                 d.data[i].IsLock = "";
                             }
 
-                            d.data[i].Applications = d.data[i].ApplicationStatus;
-                            if (d.data[i].Applications == "AplicationWriting") {
-                                d.data[i].Applications = "申请未上报";
-                            }
-                            else if (d.data[i].Applications == "ApplicationRejected") {
-                                d.data[i].Applications = "申请被驳回";
-                            }
-                            else if (d.data[i].Applications == "ApplicationApproving") {
-                                d.data[i].Applications = "申请审批中";
-                            }
-                            else if (d.data[i].Applications == "ApplicationApproved") {
-                                d.data[i].Applications = "申请已通过";
-                            }
-                            else if (d.data[i].Applications == "ProjectEstablishing") {
-                                d.data[i].Applications = "项目未确立";
-                            }
-                            else if (d.data[i].Applications == "ProjectRejected") {
-                                d.data[i].Applications = "项目未立项";
+                            d.data[i].Applications = d.data[i].ProjectStatus;
+                            if (d.data[i].Applications == "Compeleted") {
+                                d.data[i].Applications = "保证金已全退";
                             }
                             else {
-                                d.data[i].Applications = "";
+                                d.data[i].Applications = "保证金未退完";
                             }
-
                         }
                         return d.data;
 
@@ -227,17 +211,17 @@
                     {
                         field: "ProjectContent",
                         title: "项目内容",
-                        width: "15%",
+                        width: "8%",
                     },
                     {
                         field: "ProcurementName",
                         title: "采购单位",
-                        width: "10%",
+                        width: "8%",
                     },
                     {
                         field: "Budget",
                         title: "预算金额(万元)",
-                        width: "10%",
+                        width: "8%",
                     },
                     //{
                     //    field: "Applications",
@@ -276,6 +260,35 @@
                     serverSorting: true,
                     serverFiltering: true,
                     pageSize: 5,
+                    schema: {
+                        model: {
+                            //删除时必须有
+                            id: "ID"
+                        },
+                        data: function (d) {
+                            for (var i = 0; i < d.length; i++) {
+                                ////将json时间转换
+                                //var birthdayMilliseconds = eval('new ' + d.data[i].CreatedTime.replace('/', '', 'g').replace('/', '', 'g'));
+                                //var birthday = birthdayMilliseconds.toLocaleDateString() + " " + birthdayMilliseconds.toLocaleTimeString();
+                                //d.data[i].CreatedTime = birthday;
+                                //}
+                                //// 文件编号
+                                if (d[i].IsSubmitBidBondFee == false) {
+                                    d[i].IsSubmitBidBondFee = "否";
+                                }
+                                else if (d[i].IsSubmitBidBondFee == true) {
+                                    d[i].IsSubmitBidBondFee = "是";
+                                }
+                                else {
+                                    d[i].IsSubmitBidBondFee = "";
+                                }
+                            }
+                            return d;
+                        },
+                        total: function (d) {
+                            return d.total;
+                        }
+                    },
                     //filter: { field: "ApplicationId", operator: "eq", value: 6433 }//e.data.ApplicationId
                 },
                 scrollable: false,

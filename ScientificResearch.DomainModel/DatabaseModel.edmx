@@ -2153,6 +2153,7 @@
           <Property Name="TenderOffer" Type="bigint" />
           <Property Name="IsShow" Type="bit" Nullable="false" />
           <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="IsRefundBidBondFee" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TravelFundsDetail">
           <Key>
@@ -4790,6 +4791,7 @@
           <Property Name="TenderOffer" Type="Int64" />
           <Property Name="IsShow" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsRefundBidBondFee" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
           <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
@@ -7101,6 +7103,7 @@
           <EntitySetMapping Name="ProjectRegistration">
             <EntityTypeMapping TypeName="CSPostOAModel.ProjectRegistration">
               <MappingFragment StoreEntitySet="ProjectRegistration">
+                <ScalarProperty Name="IsRefundBidBondFee" ColumnName="IsRefundBidBondFee" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="IsShow" ColumnName="IsShow" />
                 <ScalarProperty Name="TenderOffer" ColumnName="TenderOffer" />

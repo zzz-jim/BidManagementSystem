@@ -64,6 +64,8 @@ namespace ScientificResearch.Utility.Enums
         /// <summary>
         /// 文档存档，结束
         /// </summary>
-        Archived// step 4
+        Archived,// step 4
+
+        Completed // 结束
     }
 }

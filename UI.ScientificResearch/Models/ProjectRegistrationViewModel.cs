@@ -42,6 +42,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "报名时间")]
         public Nullable<DateTime> RegisterTime { get; set; }
 
+        [Display(Name = "是否退保证金")]
+        public bool IsRefundBidBondFee { get; set; }
+
         [Required]
         [Display(Name = "操作人")]
         public string OperatorName { get; set; }
