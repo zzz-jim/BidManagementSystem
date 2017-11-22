@@ -60,5 +60,10 @@ namespace ScientificResearch.Utility.Enums
         /// 采购项目存档资料
         /// </summary>
         ArchiveDocument = 2119,
+
+        /// <summary>
+        /// 项目前期
+        /// </summary>
+        PreApplication = 2120,
     }
 }

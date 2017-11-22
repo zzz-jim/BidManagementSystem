@@ -92,6 +92,7 @@
     <Content Include="Database\FormDesign\OutLearning\Completion.html" />
     <Content Include="Database\FormDesign\OutLearning\paichuzhengming.html" />
     <Content Include="Database\FormDesign\OutLearning\TaskTracking.html" />
+    <Content Include="Database\FormDesign\PreApplication\PreApplication_ScienceResearch.html" />
     <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_GoodSubject.html" />
     <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_PaperPublish.html" />
     <Content Include="Database\FormDesign\ProjectEstablish\ProjectEstablish_ResearchAward.html" />

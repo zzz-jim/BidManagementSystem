@@ -220,6 +220,74 @@ namespace UI.ScientificResearch.Controllers
         }
 
         /// <summary>
+        /// 上传
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult OldUpload()
+        {
+            string exceptionMsg = string.Empty;
+            var formContent = Request.Form;
+            var uploadedFiles = Request.Files;
+            string fileName = string.Empty;
+            bool isSuccessful = false;
+            string userName = Constant.USER_NAME;
+            string Date = DateTime.Now.ToString();
+            string newFileName = string.Empty;
+
+            if (uploadedFiles.Count > 0)
+            {
+                foreach (string file in uploadedFiles)
+                {
+                    try
+                    {
+                        var currentFile = Request.Files[file];
+                        fileName = Path.GetFileName(currentFile.FileName);
+                        string serverPath = Server.MapPath(ConfigurationManager.AppSettings[Constant.AttachmentPathKey]);
+                        string newServerPath = serverPath + "\\" + userName;
+                        if (!Directory.Exists(newServerPath))
+                        {
+                            Directory.CreateDirectory(newServerPath);
+                        }
+                        //获取后缀名(包括“.”例 “.txt”)
+                        string extension = System.IO.Path.GetExtension(fileName);
+                        //获取前缀
+                        string prefix = System.IO.Path.GetFileNameWithoutExtension(fileName);
+                        //文件名加入时间
+                        newFileName = DateTime.Now.ToString() + "-" + prefix + extension;
+                        //去掉文件名中的非法字符
+                        newFileName = ReplaceBadCharOfFileName.ReplaceBadCharOfFileNames(newFileName);
+                        string newFilePath = newServerPath + "\\" + newFileName;
+                        string filePath = Path.Combine(newFilePath);
+                        currentFile.SaveAs(filePath);
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            isSuccessful = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        isSuccessful = false;
+                        exceptionMsg += ex.Message;
+                    }
+                }
+            }
+
+            //注意要写好后面的第二第三个参数
+            return Json(
+                new
+                {
+                    isSuccessful = isSuccessful,
+                    //id = formContent.Get("Id"),
+                    //文件名
+                    name = newFileName,
+                    error = exceptionMsg,
+                    //用户名
+                    Name = userName
+                },
+                "text/html", JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
         /// 下载
         /// </summary>
         /// <param name="fileName">文件名</param>

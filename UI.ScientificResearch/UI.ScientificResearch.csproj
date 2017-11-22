@@ -1455,6 +1455,7 @@
     <Content Include="Areas\Education\Views\Web.config" />
     <Content Include="Areas\Education\Views\Approval\AllArchiveDocumentList.cshtml" />
     <Content Include="Areas\Education\Views\Approval\ArchiveDocument.cshtml" />
+    <Content Include="Areas\Education\Views\Approval\PreSubmitApplication.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\AboutApprovalNode.js" />
@@ -2406,6 +2407,8 @@
     <Content Include="Views\Approval\AllTenderNoticeList.cshtml" />
     <Content Include="Views\Approval\ArchiveDocument.cshtml" />
     <Content Include="Views\Approval\AllArchiveDocumentList.cshtml" />
+    <Content Include="Views\Approval\PreSubmitApplication.cshtml" />
+    <Content Include="Views\Approval\PreApplicationAgree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

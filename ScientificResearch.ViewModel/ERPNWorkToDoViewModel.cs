@@ -31,7 +31,7 @@ namespace ScientificResearch.ViewModel
         public string FormContent { get; set; }
         [Display(Name = "附件")]
         public string FuJianList { get; set; }
-        [Display(Name = "备注信息：")]
+        [Display(Name = "备注信息")]
         public string ShenPiYiJian { get; set; }
         public Nullable<int> JieDianID { get; set; }
         public string JieDianName { get; set; }

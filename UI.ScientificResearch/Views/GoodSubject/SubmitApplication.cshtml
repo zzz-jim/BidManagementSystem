@@ -63,14 +63,13 @@
     });
 
     $(function () {
-
         $("#Save").click(function () {
-            var url1 = "/GoodSubject/SubmitApplication?flag=Save";
+            var url1 = "/Approval/SubmitApplication?flag=Save";
             //alert(url1);
             submitForm("form", url1);
         })
         $("#Reported").click(function () {
-            var url2 = "/GoodSubject/SubmitApplication?flag=Reported";
+            var url2 = "/Approval/SubmitApplication?flag=Reported";
             // alert(url2)
             submitForm("form", url2);
         })
@@ -216,4 +215,4 @@
     </div>
 }
 
-<script>@Html.Raw(ViewBag.PiLiangSet);</script>
+@*<script>@Html.Raw(ViewBag.PiLiangSet);</script>*@

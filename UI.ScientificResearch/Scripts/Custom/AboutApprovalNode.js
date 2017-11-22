@@ -77,7 +77,7 @@ function ajaxFileUploadFillIn() {
     $.ajaxFileUpload
         (
         {
-            url: '/FileService/Upload', //用于文件上传的服务器端请求地址
+            url: '/FileService/OldUpload', //用于文件上传的服务器端请求地址
             type: 'post',
             secureuri: false, //一般设置为false
             fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
