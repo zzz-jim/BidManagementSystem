@@ -2177,6 +2177,17 @@ namespace UI.ScientificResearch.Controllers
         }
 
         /// <summary>
+        /// 正在审批中的申请书列表，还未项目确立的申请书
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PreSubmitApplicationList()
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = "项目前期";
+            return View();
+        }
+
+        /// <summary>
         /// 过程记录列表查询
         /// </summary>
         /// <param name="id"></param>
@@ -5950,6 +5961,76 @@ namespace UI.ScientificResearch.Controllers
 
         }
 
+        [HttpPost]
+        /// <summary>
+        /// 申请书列表查询
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="projectName">项目名称</param>
+        /// <param name="state">状态</param>
+        /// <param name="freeze">是否冻结</param>
+        /// <returns></returns>
+        public ActionResult PreApplicationListStatistics(string projectName, string State, string projectNumber, string startTime, string endTime, int pageIndex, int pageSize)
+        {
+            DateTime start, end;
+            int totalPage = 0;
+            if (!string.IsNullOrEmpty(endTime))
+            {
+                end = Convert.ToDateTime(endTime);
+                end = end.AddDays(1);
+            }
+            else
+            {
+                end = Constant.MaxTime;
+            }
+
+            if (!string.IsNullOrEmpty(startTime))
+            {
+                start = Convert.ToDateTime(startTime);
+            }
+            else
+            {
+                start = Constant.MinTime;
+            }
+
+            IEnumerable<ERPNWorkToDoTransferObject> result = SearchPreProcessingApplicationList(projectName, State, projectNumber, start,
+                end, pageSize, pageIndex, ref totalPage);
+
+            bool hasRolesFlag = HasRolesFlag();
+            IEnumerable<ERPNWorkToDoTransferObject> resultpage;
+            int totalcount = 0;
+            //非普通用户
+            if (hasRolesFlag)
+            {
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.PreApplication
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+                totalcount = resultpage.Count();
+            }
+            //普通用户
+            else
+            {
+                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.PreApplication
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && p.UserName == User.Identity.Name
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+                totalcount = resultpage.Count();
+            }
+            return Json(new { data = result, total = totalcount }, JsonRequestBehavior.AllowGet);
+
+        }
+
         /// <summary>
         /// 政府采购统计
         /// </summary>
@@ -6317,10 +6398,14 @@ namespace UI.ScientificResearch.Controllers
                 }
                 else
                 {
-                    var hospitals = userManager.Hospitals.ToList();
-                    var result = hospitals.Select(x => x.ToDataTransferObjectModel()).ToList();
+                    //var hospitals = userManager.Hospitals.ToList();
+                    //var result = hospitals.Select(x => x.ToDataTransferObjectModel()).ToList();
 
-                    return Json(result.ToList(), JsonRequestBehavior.AllowGet);
+                    //return Json(result.ToList(), JsonRequestBehavior.AllowGet);
+
+                    var sections = userManager.Sections.ToList();
+
+                    return Json(sections.Select(x => x.ToDataTransferObjectModel()).ToList(), JsonRequestBehavior.AllowGet);
                 }
             }
         }
@@ -6436,6 +6521,39 @@ namespace UI.ScientificResearch.Controllers
             }
             return result;
         }
+
+        private IEnumerable<ERPNWorkToDoTransferObject> SearchPreProcessingApplicationList(string projectName, string state, string projectNumber, DateTime start, DateTime end, int pageSize, int pageIndex, ref int totalPage)
+        {
+            bool hasRolesFlag = HasRolesFlag();
+            IEnumerable<ERPNWorkToDoTransferObject> result;
+            //非普通用户
+            if (hasRolesFlag)
+            {
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.PreApplication
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((state == Constant.All) ? true : p.ApplicationStatus == state)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
+            }
+            //普通用户
+            else
+            {
+                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.PreApplication
+                    && p.TimeStr.Value > start
+                    && p.TimeStr.Value < end
+                    && ((state == Constant.All) ? true : p.ApplicationStatus == state)
+                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                    && p.StateNow == "正在办理"
+                    && p.UserName == User.Identity.Name
+                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
+            }
+            return result;
+        }
+
         private IEnumerable<ERPNWorkToDoTransferObject> SearchArchiveDocumentList(string projectName, string state, string projectNumber, DateTime start, DateTime end, int pageSize, int pageIndex, ref int totalPage)
         {
             bool hasRolesFlag = HasRolesFlag();
@@ -7425,7 +7543,7 @@ namespace UI.ScientificResearch.Controllers
             {
                 return View(model);
             }
-          
+
             model.UserName = User.Identity.Name;
             model.TimeStr = DateTime.Now;
 
@@ -7957,15 +8075,25 @@ namespace UI.ScientificResearch.Controllers
                 model.ShenPiYiJian = attachment;
                 model.OKUserList = model.OKUserList + "," + User.Identity.Name;
 
+                // TODO:
                 if (collection["SingleShenPiYiJian"] != "")
                 {
                     //审批意见
-                    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
+                    model.ShenPiYiJian = collection["SingleShenPiYiJian"].ToString();
                 }
                 else
                 {
                     model.ShenPiYiJian = PiShiStr;
                 }
+                //if (collection["SingleShenPiYiJian"] != "")
+                //{
+                //    //审批意见
+                //    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
+                //}
+                //else
+                //{
+                //    model.ShenPiYiJian = PiShiStr;
+                //}
 
                 // 更改当前结点id和name
                 var erpnrowkflownoderesult1 = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value).ToViewModel();

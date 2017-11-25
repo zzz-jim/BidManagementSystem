@@ -46,6 +46,10 @@
             {
                 ViewBag.Title = "保证金情况";
             }
+            else if (urlArray[2] == "AllPreSubmitApplicationList")
+            {
+                ViewBag.Title = "项目前期";
+            }
         }
     }
 }
@@ -492,6 +496,11 @@
                                         <span class="badge badge-azure">待办事项</span>
                                     </a>
                                 </li>*@
+                            <li id="Approval_PreSubmitApplicationList">
+                                <a href="/Approval/PreSubmitApplicationList">
+                                    <span class="badge badge-azure">项目前期</span>
+                                </a>
+                            </li>
                             <li id="Approval_ApplicationList">
                                 <a href="/Approval/ApplicationList">
                                     <span class="badge badge-azure">项目注册</span>
