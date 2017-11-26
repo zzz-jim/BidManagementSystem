@@ -2409,6 +2409,7 @@
     <Content Include="Views\Approval\AllArchiveDocumentList.cshtml" />
     <Content Include="Views\Approval\PreSubmitApplication.cshtml" />
     <Content Include="Views\Approval\PreApplicationAgree.cshtml" />
+    <Content Include="Views\Approval\PreSubmitApplicationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
