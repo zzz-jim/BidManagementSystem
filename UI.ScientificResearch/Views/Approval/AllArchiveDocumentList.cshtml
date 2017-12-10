@@ -128,15 +128,46 @@
                             d.data[i].IsArchived = d.data[i].FormValues.split('#')[2];
                             // 存档日期
                             d.data[i].ArchiveDate = d.data[i].FormValues.split('#')[3];
-                            d.data[i].ArchiveAmount = d.data[i].FormValues.split('#')[4];// 存档正本（数量）
-                            d.data[i].ArchiveCopyAmount = d.data[i].FormValues.split('#')[5];// 存档副本（数量）
+
+                            // 存档编号
+                            d.data[i].ArchiveNo = d.data[i].FormValues.split('#')[5];
+                            
+                            d.data[i].ArchiveAmount = d.data[i].FormValues.split('#')[7];// 存档汇编资料（数量）
                             // 存档接收人
-                            d.data[i].Receiver = d.data[i].FormValues.split('#')[6];
-                            d.data[i].ReceiveDate = d.data[i].FormValues.split('#')[7];
-                            d.data[i].ReceiveArchiveAmount = d.data[i].FormValues.split('#')[8];// 存档接收正本（数量）
-                            d.data[i].ReceiveArchiveCopyAmount = d.data[i].FormValues.split('#')[9];// 存档接收副本（数量）
+                            d.data[i].Receiver = d.data[i].FormValues.split('#')[6];// 存档汇编资料业主       
+                            d.data[i].Archive2Amount = d.data[i].FormValues.split('#')[15];// 招标文件存档（数量）
+                            // 存档接收人
+                            d.data[i].Receiver2 = d.data[i].FormValues.split('#')[14];// 招标文件存档业主
+
+                            //      BeiYong1_项目编号
+                            //    | WenHao_项目名称
+                            //    | Drop111111111_是否存档
+                            //    | Date111111111_存档日期
+                            //    | Drop222222222_项目类别
+                            //    | Text111111111_存档编号
+                            //    | Text111111100_存档汇编资料业主
+                            //    | Text111111101_存档汇编资料业主数量
+                            //    | Date111111100_存档汇编资料业主日期
+                            //    | Drop222222200_存档汇编资料招标代理
+                            //    | Text222222201_存档汇编资料招标代理数量
+                            //    | Date222222200_存档汇编资料招标代理日期
+                            //    | Text333333300_存档汇编资料公司
+                            //    | Text333333301存档汇编资料公司数量
+                            //    | Date333333300_存档汇编资料公司日期
+                            //    | Text444444400_招标文件存档业主
+                            //    | Text444444401_招标文件存档业主数量
+                            //    | Date444444400_招标文件存档业主日期
+                            //    | Drop555555500_招标文件存档招标代理
+                            //    | Text555555501_招标文件存档招标代理数量
+                            //    | Date555555500_招标文件存档招标代理日期
+                            //    | Text666666600_招标文件存档公司
+                            //    | Text666666601_招标文件存档公司数量
+                            //    | Date666666600_招标文件存档公司日期
+                            //d.data[i].ReceiveDate = d.data[i].FormValues.split('#')[7];
+                            //d.data[i].ReceiveArchiveAmount = d.data[i].FormValues.split('#')[8];// 存档接收正本（数量）
+                            //d.data[i].ReceiveArchiveCopyAmount = d.data[i].FormValues.split('#')[9];// 存档接收副本（数量）
                             //，备注
-                            d.data[i].Remark = d.data[i].FormValues.split('#')[10];
+                            //d.data[i].Remark = d.data[i].FormValues.split('#')[10];
 
                             //if (d.data[i].IsLock == false) {
                             //    d.data[i].IsLock = "启用";
@@ -225,41 +256,45 @@
                         field: "ArchiveDate",
                         title: "存档日期",
                         width: "8%",
-                    }, {
+                    },
+                    {
+                        field: "ArchiveNo",
+                        title: "存档编号",
+                        width: "8%",
+                    },
+
+                    
+                    {
                         field: "ArchiveAmount",
-                        title: " 存档正本（数量）",
+                        title: " 存档汇编资料（数量）",
                         width: "12%",
                     },
-                    {
-                        field: "ArchiveCopyAmount",
-                        title: "存档副本（数量）",
-                        width: "10%",
-                    },
+                    //{
+                    //    field: "ArchiveCopyAmount",
+                    //    title: "存档副本（数量）",
+                    //    width: "10%",
+                    //},
                     {
                         field: "Receiver",
-                        title: "存档接收人",
+                        title: "存档汇编资料业主",
                         width: "8%"
                     },
                     {
-                        field: "ReceiveDate",
-                        title: "接收日期",
+                        field: "Archive2Amount",
+                        title: "招标文件存档（数量）",
                         width: "8%"
                     },
                     {
-                        field: "ReceiveArchiveAmount",
-                        title: "接收正本（数量）",
-                        width: "8%"
-                    },
-                    {
-                        field: "ReceiveArchiveCopyAmount",
-                        title: "接收副本（数量）",
-                        width: "8%"
-                    },
-                    {
-                        field: "Remark",
-                        title: "备注",
+                        field: "Receiver2",
+                        title: "招标文件存档业主",
                         width: "8%"
                     }
+                    //,
+                    //{
+                    //    field: "Remark",
+                    //    title: "备注",
+                    //    width: "8%"
+                    //}
                 ],
                 editable: {
                     //mode: "inline",

@@ -160,7 +160,7 @@
                 <td class="tdcss">
                     @Html.LabelFor(model => model.WenHao)
                 </td>
-                <td colspan="5">
+                <td colspan="1">
                     @Html.EditorFor(model => model.WenHao, new { htmlAttributes = new { @class = "customTextBox" } })
                     @Html.ValidationMessageFor(model => model.WenHao)
                 </td>
@@ -172,7 +172,6 @@
                 <td>
                     <input id="BeiYong1" name="BeiYong1" value="@Model.BeiYong1" type="text" class="customTextBox" />
                 </td>
-                <td colspan="5"></td>
             </tr>
 
             @Html.Raw(Model.FormContent)
@@ -276,22 +275,53 @@
 </style>
 @*<script>@Html.Raw(ViewBag.PiLiangSet)</script>*@
 <script>
-            $(document).ready(function () {
-                $("#Date222222222").kendoDatePicker({
-                    format: "yyyy-MM-dd",
-                    //timeFormat: "HH:mm" //24小时制格式
-                });
-                $("#Date222222222").attr("readonly", true);
-                $("#Date111111111").kendoDatePicker({
-                    format: "yyyy-MM-dd",
-                    //timeFormat: "HH:mm" //24小时制格式
-                });
-                $("#Date111111111").attr("readonly", true);
-            });
-            $("#item1CreatedTime").kendoDateTimePicker(
-                {
-                    format: "yyyy-MM-dd HH:mm",
-                    timeFormat: "HH:mm" //24小时制格式
-                }
-            );
+    $(document).ready(function () {
+        $("#Date222222222").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date222222222").attr("readonly", true);
+        $("#Date111111111").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date111111111").attr("readonly", true);
+
+        $("#Date111111100").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date111111100").attr("readonly", true);
+        $("#Date222222200").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date222222200").attr("readonly", true);
+        $("#Date333333300").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date333333300").attr("readonly", true);
+        $("#Date444444400").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date444444400").attr("readonly", true);
+        $("#Date555555500").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date555555500").attr("readonly", true);
+        $("#Date666666600").kendoDatePicker({
+            format: "yyyy-MM-dd",
+            //timeFormat: "HH:mm" //24小时制格式
+        });
+        $("#Date666666600").attr("readonly", true);
+    });
+    $("#item1CreatedTime").kendoDateTimePicker(
+        {
+            format: "yyyy-MM-dd HH:mm",
+            timeFormat: "HH:mm" //24小时制格式
+        }
+    );
 </script>
