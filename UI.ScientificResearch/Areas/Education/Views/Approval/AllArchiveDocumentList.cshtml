@@ -132,12 +132,12 @@
                             // 存档编号
                             d.data[i].ArchiveNo = d.data[i].FormValues.split('#')[5];
 
-                            d.data[i].ArchiveAmount = d.data[i].FormValues.split('#')[7];// 存档汇编资料（数量）
+                            d.data[i].ArchiveAmount = d.data[i].FormValues.split('#')[7];// 存档汇编资料(数量)
                             // 存档接收人
                             d.data[i].Receiver = d.data[i].FormValues.split('#')[6];// 存档汇编资料业主
-                            d.data[i].Archive2Amount = d.data[i].FormValues.split('#')[15];// 招标文件存档（数量）
+                            d.data[i].Archive2Amount = d.data[i].FormValues.split('#')[15];// 投标文件存档(数量)
                             // 存档接收人
-                            d.data[i].Receiver2 = d.data[i].FormValues.split('#')[14];// 招标文件存档业主
+                            d.data[i].Receiver2 = d.data[i].FormValues.split('#')[14];// 投标文件存档业主
 
                             //      BeiYong1_项目编号
                             //    | WenHao_项目名称
@@ -148,24 +148,24 @@
                             //    | Text111111100_存档汇编资料业主
                             //    | Text111111101_存档汇编资料业主数量
                             //    | Date111111100_存档汇编资料业主日期
-                            //    | Drop222222200_存档汇编资料招标代理
-                            //    | Text222222201_存档汇编资料招标代理数量
-                            //    | Date222222200_存档汇编资料招标代理日期
+                            //    | Drop222222200_存档汇编资料投标代理
+                            //    | Text222222201_存档汇编资料投标代理数量
+                            //    | Date222222200_存档汇编资料投标代理日期
                             //    | Text333333300_存档汇编资料公司
                             //    | Text333333301存档汇编资料公司数量
                             //    | Date333333300_存档汇编资料公司日期
-                            //    | Text444444400_招标文件存档业主
-                            //    | Text444444401_招标文件存档业主数量
-                            //    | Date444444400_招标文件存档业主日期
-                            //    | Drop555555500_招标文件存档招标代理
-                            //    | Text555555501_招标文件存档招标代理数量
-                            //    | Date555555500_招标文件存档招标代理日期
-                            //    | Text666666600_招标文件存档公司
-                            //    | Text666666601_招标文件存档公司数量
-                            //    | Date666666600_招标文件存档公司日期
+                            //    | Text444444400_投标文件存档业主
+                            //    | Text444444401_投标文件存档业主数量
+                            //    | Date444444400_投标文件存档业主日期
+                            //    | Drop555555500_投标文件存档投标代理
+                            //    | Text555555501_投标文件存档投标代理数量
+                            //    | Date555555500_投标文件存档投标代理日期
+                            //    | Text666666600_投标文件存档公司
+                            //    | Text666666601_投标文件存档公司数量
+                            //    | Date666666600_投标文件存档公司日期
                             //d.data[i].ReceiveDate = d.data[i].FormValues.split('#')[7];
-                            //d.data[i].ReceiveArchiveAmount = d.data[i].FormValues.split('#')[8];// 存档接收正本（数量）
-                            //d.data[i].ReceiveArchiveCopyAmount = d.data[i].FormValues.split('#')[9];// 存档接收副本（数量）
+                            //d.data[i].ReceiveArchiveAmount = d.data[i].FormValues.split('#')[8];// 存档接收正本(数量)
+                            //d.data[i].ReceiveArchiveCopyAmount = d.data[i].FormValues.split('#')[9];// 存档接收副本(数量)
                             //，备注
                             //d.data[i].Remark = d.data[i].FormValues.split('#')[10];
 
@@ -245,17 +245,17 @@
                     {
                         field: "WenHao",
                         title: "项目名称",
-                        width: "14%"
+                        width: "10%"
                     },
                     {
                         field: "IsArchived",
                         title: "是否存档",
-                        width: "6%"
+                        width: "5%"
                     },
                     {
                         field: "ArchiveDate",
                         title: "存档日期",
-                        width: "8%",
+                        width: "6%",
                     },
                     {
                         field: "ArchiveNo",
@@ -266,28 +266,28 @@
 
                     {
                         field: "ArchiveAmount",
-                        title: " 存档汇编资料（数量）",
-                        width: "12%",
+                        title: "存档汇编资料(数量)",
+                        width: "10%"
                     },
                     //{
                     //    field: "ArchiveCopyAmount",
-                    //    title: "存档副本（数量）",
+                    //    title: "存档副本(数量)",
                     //    width: "10%",
                     //},
                     {
                         field: "Receiver",
                         title: "存档汇编资料业主",
-                        width: "8%"
+                        width: "10%"
                     },
                     {
                         field: "Archive2Amount",
-                        title: "招标文件存档（数量）",
-                        width: "8%"
+                        title: "投标文件存档(数量)",
+                        width: "10%"
                     },
                     {
                         field: "Receiver2",
-                        title: "招标文件存档业主",
-                        width: "8%"
+                        title: "投标文件存档业主",
+                        width: "10%"
                     }
                     //,
                     //{
@@ -508,7 +508,7 @@
                                         if (data == "Equal") {
                                             //为申请书iframe的src赋值id是ERPNWorkToDo的ID
                                             //$("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ProjectEstablish?id=' + id + '">项目申请书</iframe>');
-                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/TenderNotice?id=' + id + '">招标公告</iframe>');
+                                            $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/TenderNotice?id=' + id + '">投标公告</iframe>');
                                             $("#MaxWindow").data("kendoWindow").center().open();
                                         }
                                         else {

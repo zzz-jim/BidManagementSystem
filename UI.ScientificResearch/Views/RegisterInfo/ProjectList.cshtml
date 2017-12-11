@@ -150,6 +150,8 @@
             }
             $("#CreaateButtn").click(function () {
                 var random1 = Math.floor(Math.random() * 1000 + 1);
+                $("#Application")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+
                 $("#Application").kendoWindow({
                     position: {
                         top: "15%", // or "100px"

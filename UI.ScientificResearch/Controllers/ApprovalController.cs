@@ -171,7 +171,7 @@ namespace UI.ScientificResearch.Controllers
         /// <returns></returns>
         public ActionResult SubmitApplication(string id)
         {
-            int formId = (int)ScienceResearchTypeOfFormId.PreApplication;
+            int formId = (int)ScienceResearchTypeOfFormId.Application;
             int workflowId = (int)TypeOfWorkFlowId.Application;
             ERPNWorkToDoViewModel model = new ERPNWorkToDoViewModel();
             ERPNWorkFlowNodeTransferObject currentNode;
@@ -1664,6 +1664,29 @@ namespace UI.ScientificResearch.Controllers
             }
             return Json(ReturnState, JsonRequestBehavior.AllowGet);
         }
+
+
+        /// <summary>
+        /// 登录者是否是申请书填写者
+        /// </summary>
+        /// <param name="id">申请书ID</param>
+        /// <returns></returns>
+        public ActionResult LoginPersonIsEqualAdmin(string id)
+        {
+            int id1 = Convert.ToInt32(id);//ERPNWorkToDo的ID
+
+            //var result = ApplicationService.GetEntityById(id1);
+            string ReturnState = "";
+            if (User.IsInRole(UserRoles.超级管理员.ToString()))
+            {
+                ReturnState = "Equal";
+            }
+            else
+            {
+                ReturnState = "NotEqual";
+            }
+            return Json(ReturnState, JsonRequestBehavior.AllowGet);
+        }
         ///// <summary>
         ///// 判断填写过程记录的人和审批过程记录的人有权限
         ///// </summary>
@@ -2466,19 +2489,19 @@ namespace UI.ScientificResearch.Controllers
                 // TODO: 审批上传附件
                 model.ShenPiYiJian = attachment;
                 model.OKUserList = model.OKUserList + "," + User.Identity.Name;
+                //model.ShenPiYiJian
+               //if (collection["SingleShenPiYiJian"] != "")
+               //{
+               //    //审批意见
+               //    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
+               //}
+               //else
+               //{
+               //    model.ShenPiYiJian = PiShiStr;
+               //}
 
-                if (collection["SingleShenPiYiJian"] != "")
-                {
-                    //审批意见
-                    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
-                }
-                else
-                {
-                    model.ShenPiYiJian = PiShiStr;
-                }
-
-                // 更改当前结点id和name
-                var erpnrowkflownoderesult1 = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value).ToViewModel();
+               // 更改当前结点id和name
+               var erpnrowkflownoderesult1 = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value).ToViewModel();
                 string nextNodeSerial = erpnrowkflownoderesult1.NextNode;
                 var nextNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.NodeSerils == nextNodeSerial && p.WorkFlowID == model.WorkFlowID).ToList();
 
@@ -6021,8 +6044,8 @@ namespace UI.ScientificResearch.Controllers
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
-                    && p.StateNow == "正在办理"
-                    && p.UserName == User.Identity.Name
+                    && p.StateNow == "正在办理" 
+                    && (p.UserName == User.Identity.Name || p.BeiYong1 == User.Identity.Name)
                     && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
                 totalcount = resultpage.Count();
@@ -6547,7 +6570,7 @@ namespace UI.ScientificResearch.Controllers
                     && ((state == Constant.All) ? true : p.ApplicationStatus == state)
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
                     && p.StateNow == "正在办理"
-                    && p.UserName == User.Identity.Name
+                    && (p.UserName == User.Identity.Name || p.BeiYong1 == User.Identity.Name)
                     && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
             }
