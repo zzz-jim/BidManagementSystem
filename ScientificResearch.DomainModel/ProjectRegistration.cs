@@ -37,6 +37,7 @@ namespace ScientificResearch.DomainModel
         public bool IsShow { get; set; }
         public string Address { get; set; }
         public bool IsRefundBidBondFee { get; set; }
+        public bool IsSentEmail { get; set; }
     
         public virtual ERPNWorkToDo ERPNWorkToDo { get; set; }
     }

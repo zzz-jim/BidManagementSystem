@@ -69,6 +69,9 @@ namespace UI.ScientificResearch.Models
 
         [Display(Name = "是否上榜")]
         public bool IsShow { get; set; }
+        
+        [Display(Name = "是否发送")]
+        public bool IsSentEmail { get; set; }
 
         public int Number { get; set; }
     }

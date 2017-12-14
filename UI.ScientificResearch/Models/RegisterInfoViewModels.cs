@@ -64,6 +64,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "操作人")]
         public string OperatorName { get; set; }
 
+        [Display(Name = "是否发送")]
+        public bool IsSentEmail { get; set; }
+
         [Required]
         [Display(Name = "操作人ID")]
         public string OperatorId { get; set; }

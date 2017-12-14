@@ -30,7 +30,7 @@
         $("#btnDraftUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
                 // TODO:  remark
-                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark":@BiddingDocumentType.初稿文件.ToString() };
+                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "初稿文件" };
                 ajaxFileUploadFillInWithData(jsonData);
             }
             else {
@@ -41,7 +41,7 @@
         $("#btnAuditUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
                 // TODO:  remark
-                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark":@BiddingDocumentType.初审文件.ToString() };
+                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "初审文件" };
                 ajaxFileUploadFillInWithData(jsonData);
             }
             else {
@@ -52,7 +52,7 @@
          $("#btnFinalUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
                 // TODO:  remark
-                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark":@BiddingDocumentType.终稿文件.ToString() };
+                var jsonData = { "section_id": $("#BidSectionId").val(),"application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "终稿文件" };
                 ajaxFileUploadFillInWithData(jsonData);
             }
             else {
@@ -142,7 +142,7 @@
             </td>
             @if (item.Remark == BiddingDocumentType.初审文件.ToString())
             {
-               <td style="color:olive">
+                <td style="color:olive">
                     @Html.DisplayFor(modelItem => item.Remark)
                 </td>
             }
