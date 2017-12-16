@@ -16,10 +16,10 @@
                 <td>
                     <input type="button" id="CreaateButtn" value="报名登记" />
                 </td>
-                @*<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                    <input type="button" id="SendBidDocumentToCompany" value="一键发送招标文件" />
-                </td>*@
+                    <input type="button" id="ExportExcel" value="导出报名汇总" />
+                </td>
             </tr>
         </table>
         <div id="newapplicationbutton">
@@ -191,30 +191,8 @@
                 $("#Application").data("kendoWindow").center().open();
             });
 
-            $("#SendBidDocumentToCompany").click(function () {
-
-                $.ajax({
-                    url: "/RegisterInfo/SendBidDocumentToCompany?applicationId=@ViewBag.Id",
-                    type: "get",
-                    success: function (data, status) //服务器成功响应处理函数
-                    {
-                        if (data.isSuccessful) {
-                            alert("一键发送招标文件成功！");
-                        } else {
-                            alert(data.name + "发送失败，请重新操作");
-                        }
-
-                        if (typeof (data.error) != 'undefined') {
-                            if (data.error != '') {
-                                alert(data.error);
-                            }
-                        }
-                    },
-                    error: function (data, status, e) //服务器响应失败处理函数
-                    {
-                        alert(e);
-                    }
-                });
+                  $("#ExportExcel").click(function () {
+                window.location.href = "/RegisterInfo/ExportExcel?applicationId=@ViewBag.Id";
             });
         });
         function sendEmail(id, sectionId) {

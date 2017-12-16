@@ -20,6 +20,8 @@ using ScientificResearch.IDataAccess;
 using ScientificResearch.DataAccessImplement;
 using Microsoft.AspNet.Identity;
 using System.Configuration;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace UI.ScientificResearch.Controllers
 {
@@ -579,7 +581,6 @@ namespace UI.ScientificResearch.Controllers
             return View(model);
         }
 
-
         /// <summary>
         /// 添加和修改中标通知书
         /// </summary>
@@ -690,7 +691,6 @@ namespace UI.ScientificResearch.Controllers
 
             return Json(new { data = new List<ProjectBidSectionViewModel> { }, total = 0 }, JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult GetBidSectionListByApplicationId2(int applicationId)
         {
@@ -1000,6 +1000,110 @@ namespace UI.ScientificResearch.Controllers
 
         }
 
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public void ExportExcel(int applicationId)
+        {
+
+            //var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            var dataTable = ProjectRegistrationService.GetListByApplicationIdAsync(applicationId);
+
+            CreateExcel(dataTable, "application/ms-excel", "Excel" + DateTime.Now.ToString("yyyy-MM-dd HHmmss") + ".xls");//调用函数  
+            //return Json(
+            //         new
+            //         {
+            //             isSuccessful = true,
+            //         }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>  
+        /// DataTable导出到Excel  
+        /// </summary>  
+        /// <param name="dt">DataTable类型的数据源</param>  
+        /// <param name="FileType">文件类型</param>  
+        ///// <param name="FileName">文件名</param>  
+        //public void CreateExcel2(IList<ProjectRegistration> dt, string FileType, string FileName)
+        //{
+        //    Response.Clear();
+        //    Response.Charset = "UTF-8";
+        //    Response.Buffer = true;
+        //    Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+        //    Response.AppendHeader("Content-Disposition", "attachment;filename=\"" + System.Web.HttpUtility.UrlEncode(FileName, System.Text.Encoding.UTF8) + ".xls\"");
+        //    Response.ContentType = FileType;
+        //    string colHeaders = string.Empty;
+        //    string ls_item = string.Empty;
+        //    DataRow[] myRow = dt.Select();
+        //    int i = 0;
+        //    int cl = dt.Columns.Count;
+        //    for (int j = 0; j < dt.Columns.Count; j++)
+        //    {
+        //        ls_item += dt.Columns[j].ColumnName + "\t"; //栏位：自动跳到下一单元格  
+        //    }
+        //    ls_item = ls_item.Substring(0, ls_item.Length - 1) + "\n";
+        //    foreach (var row in dt)
+        //    {
+        //        for (i = 0; i < cl; i++)
+        //        {
+        //            if (i == (cl - 1))
+        //            {
+        //                ls_item += row[i].ToString() + "\n";
+        //            }
+        //            else
+        //            {
+        //                ls_item += row[i].ToString() + "\t";
+        //            }
+        //        }
+        //        Response.Output.Write(ls_item);
+        //        ls_item = string.Empty;
+        //    }
+        //    Response.Output.Flush();
+        //    Response.End();
+        //}
+        /// <summary>  
+        /// DataTable导出到Excel  
+        /// </summary>  
+        /// <param name="dt">DataTable类型的数据源</param>  
+        /// <param name="FileType">文件类型</param>  
+        /// <param name="FileName">文件名</param>  
+        public void CreateExcel(DataTable dt, string FileType, string FileName)
+        {
+            Response.Clear();
+            Response.Charset = "UTF-8";
+            Response.Buffer = true;
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            Response.AppendHeader("Content-Disposition", "attachment;filename=\"" + System.Web.HttpUtility.UrlEncode(FileName, System.Text.Encoding.UTF8) + ".xls\"");
+            Response.ContentType = FileType;
+            string colHeaders = string.Empty;
+            string ls_item = string.Empty;
+            DataRow[] myRow = dt.Select();
+            int i = 0;
+            int cl = dt.Columns.Count;
+            for (int j = 0; j < dt.Columns.Count; j++)
+            {
+                ls_item += dt.Columns[j].ColumnName + "\t"; //栏位：自动跳到下一单元格  
+            }
+            ls_item = ls_item.Substring(0, ls_item.Length - 1) + "\n";
+            foreach (DataRow row in myRow)
+            {
+                for (i = 0; i < cl; i++)
+                {
+                    if (i == (cl - 1))
+                    {
+                        ls_item += row[i].ToString() + "\n";
+                    }
+                    else
+                    {
+                        ls_item += row[i].ToString() + "\t";
+                    }
+                }
+                Response.Output.Write(ls_item);
+                ls_item = string.Empty;
+            }
+            Response.Output.Flush();
+            Response.End();
+        }
         #endregion
     }
 }
