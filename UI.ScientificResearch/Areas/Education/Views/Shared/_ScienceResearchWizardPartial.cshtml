@@ -30,7 +30,7 @@
             <div>
                 @Html.ActionLink("项目注册", "ApplicationAgree", "Approval", new { id = ViewBag.Id }, new { id = "ApplicationAgree" })
                 @*@Html.ActionLink("项目注册确认", "ProjectEstablish", "Approval", new { id = ViewBag.Id }, new { id = "ProjectEstablish" })*@
-                @Html.ActionLink("合同资料", "ContractList", "UploadFilePage", new { applicationId = ViewBag.Id, area = "Education" },new { id = "Contract" })
+                @Html.ActionLink("合同资料", "ContractList", "UploadFilePage", new { applicationId = ViewBag.Id, area = "Education" }, new { id = "Contract" })
                 @Html.ActionLink("存档资料", "ArchiveDocument", "Approval", new { applicationId = ViewBag.Id }, new { id = "ArchiveDocument" })
                 @Html.ActionLink("招标文件", "BiddingDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "BiddingDocument" })
 
@@ -46,6 +46,7 @@
                 @*@Html.ActionLink("保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidBondInfo" })*@
                 @Html.ActionLink("开评标资料", "OpenBidsDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "OpenBidsDocument" })
                 @Html.ActionLink("中标通知书", "BidWinnerNoticeList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidWinnerNotice" })
+                @Html.ActionLink("中标通知书资料", "BidWinnerNoticeDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "BidWinnerNoticeDocument" })
             </div>
         </div>
     </div>

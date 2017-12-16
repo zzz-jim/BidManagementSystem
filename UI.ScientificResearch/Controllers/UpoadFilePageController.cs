@@ -563,6 +563,45 @@ namespace UI.ScientificResearch.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 中标通知书文件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public ActionResult BidWinnerNoticeDocumentList(int applicationId)
+        {
+            ViewBag.Module = "政府采购";
+            ViewBag.Title = UploadFilePageType.中标通知书资料.ToString();
+
+            UploadFilePageType type = UploadFilePageType.中标通知书资料;
+            ViewBag.UploadFilePageType = (int)type;
+            ViewBag.Id = applicationId;
+
+            var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
+            var selectItemList = new List<SelectListItem>()
+            {
+                //new SelectListItem(){Value="0",Text="全部",Selected=true}
+            };
+            if (bidSections.Any())
+            {
+                var selectList = new SelectList(bidSections, "ID", "SectionName");
+                selectItemList.AddRange(selectList);
+            }
+
+            ViewBag.bidSectionsList = selectItemList;
+            var tempResult = FileService.GetEntities(x => x.FileType == (int)type && x.ApplicationId == applicationId).Select(x => x.ConvertTo<FileUploadViewModels>()).OrderBy(x => x.SectionId).ThenBy(x => x.Remark).ThenByDescending(x => x.CreatedTime).ToList();
+
+            foreach (var item in tempResult)
+            {
+                var section = bidSections.FirstOrDefault(x => x.ID == item.SectionId);
+                if (section != null)
+                {
+                    item.SectionName = section.SectionName;
+                }
+            }
+            return View("List", tempResult);
+        }
+
         #endregion
     }
 }

@@ -14,6 +14,7 @@ namespace ScientificResearch.Utility.Enums
         合同资料 = 1,
         项目概况相关资料 = 2,
         招标文件 = 3,
-        开评标相关资料= 4
+        开评标相关资料= 4,
+        中标通知书资料 = 5,
     }
 }
