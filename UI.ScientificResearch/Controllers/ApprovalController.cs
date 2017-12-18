@@ -2286,7 +2286,12 @@ namespace UI.ScientificResearch.Controllers
             }
 
             model.UserName = User.Identity.Name;
-            model.TimeStr = DateTime.Now;
+
+            if (collection["Date222222222"] != null)
+            {
+                model.TimeStr = DateTime.Parse(collection["Date222222222"].ToString());
+            }
+            //model.TimeStr = DateTime.Now;
 
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
@@ -2676,7 +2681,7 @@ namespace UI.ScientificResearch.Controllers
             }
 
             model.UserName = User.Identity.Name;
-            model.TimeStr = DateTime.Now;
+            //model.TimeStr = DateTime.Now;
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
             //加载表单内容

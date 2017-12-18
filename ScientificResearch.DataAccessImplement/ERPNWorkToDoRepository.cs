@@ -192,7 +192,7 @@ namespace ScientificResearch.DataAccessImplement
                     case ApplicationSortField.UserName:
                         break;
                     case ApplicationSortField.TimeStr:
-                        result = result.OrderBy(u => u.TimeStr);
+                        result = result.OrderBy(u => Math.Abs(u.TimeStr.Value.Ticks-DateTime.Now.Ticks));
                         break;
                     case ApplicationSortField.FormContent:
                         break;
@@ -237,7 +237,8 @@ namespace ScientificResearch.DataAccessImplement
                     case ApplicationSortField.UserName_Desc:
                         break;
                     case ApplicationSortField.TimeStr_Desc:
-                        result = result.OrderByDescending(u => u.TimeStr);
+                        result = result.OrderBy(u => Math.Abs(u.TimeStr.Value.Ticks - DateTime.Now.Ticks));
+                        //result = result.OrderByDescending(u => u.TimeStr);
                         break;
                     case ApplicationSortField.FormContent_Desc:
                         break;
