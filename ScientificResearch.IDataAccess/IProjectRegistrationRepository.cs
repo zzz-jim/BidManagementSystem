@@ -7,5 +7,7 @@ namespace ScientificResearch.IDataAccess
     public interface IProjectRegistrationRepository : IRepository<ProjectRegistration>
     {
         DataTable GetListByApplicationIdAsync(int applicationId);
+
+        DataTable GetListByApplicationId2Async(int applicationId);
     }
 }

@@ -20,6 +20,10 @@
                 <td>
                     <input type="button" id="ExportExcel" value="导出报名汇总" />
                 </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <input type="button" id="ExportExcel2" value="导出保证金汇总" />
+                </td>
             </tr>
         </table>
         <div id="newapplicationbutton">
@@ -111,7 +115,7 @@
             <td>
                 @if (item.IsSentEmail)
                 {
-                    <label style="color:red;" >已发送</label>
+                    <label style="color:red;">已发送</label>
                 }
                 else
                 {
@@ -145,7 +149,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
-            <td><a href="#" onclick="sendEmail(@item.ID,@item.BidSectionId)">发送招标文件</a> |
+            <td>
+                <a href="#" onclick="sendEmail(@item.ID,@item.BidSectionId)">发送招标文件</a> |
                 <a href="#" onclick="edititem(@item.ID)">修改</a> |
                 <a href="#" onclick="EditBidBondInfo(@item.ID)">保证金</a> |
                 <a href="#" onclick="deleteitem(@item.ID)">删除</a>
@@ -191,6 +196,9 @@
 
             $("#ExportExcel").click(function () {
                 window.location.href = "/RegisterInfo/ExportExcel?applicationId=@ViewBag.Id";
+            });
+              $("#ExportExcel2").click(function () {
+                window.location.href = "/RegisterInfo/ExportExcel2?applicationId=@ViewBag.Id";
             });
         });
 

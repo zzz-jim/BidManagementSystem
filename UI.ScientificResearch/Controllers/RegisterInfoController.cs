@@ -1018,6 +1018,26 @@ namespace UI.ScientificResearch.Controllers
             //             isSuccessful = true,
             //         }, JsonRequestBehavior.AllowGet);
         }
+
+
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public void ExportExcel2(int applicationId)
+        {
+
+            //var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            var dataTable = ProjectRegistrationService.GetListByApplicationId2Async(applicationId);
+
+            CreateExcel(dataTable, "application/ms-excel", "Excel" + DateTime.Now.ToString("yyyy-MM-dd HHmmss") + ".xls");//调用函数  
+            //return Json(
+            //         new
+            //         {
+            //             isSuccessful = true,
+            //         }, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>  
         /// DataTable导出到Excel  
         /// </summary>  

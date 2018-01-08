@@ -20,6 +20,10 @@
                 <td>
                     <input type="button" id="ExportExcel" value="导出报名汇总" />
                 </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>
+                    <input type="button" id="ExportExcel2" value="导出保证金汇总" />
+                </td>
             </tr>
         </table>
         <div id="newapplicationbutton">
@@ -193,6 +197,9 @@
 
                   $("#ExportExcel").click(function () {
                 window.location.href = "/RegisterInfo/ExportExcel?applicationId=@ViewBag.Id";
+
+                  $("#ExportExcel2").click(function () {
+                window.location.href = "/RegisterInfo/ExportExcel2?applicationId=@ViewBag.Id";
             });
         });
         function sendEmail(id, sectionId) {

@@ -192,5 +192,56 @@ ORDER BY  BidSectionId", con);
                 throw;
             }
         }
+
+        public DataTable GetListByApplicationId2Async(int applicationId)
+        {
+            try
+            {
+                using (var context = new CSPostOAEntities())
+                {
+                    var con = context.Database.Connection as SqlConnection;
+                    //                    var cmd = con.CreateCommand();
+                    //                    cmd.CommandText = @"
+                    //SELECT a.WenHao AS 项目名称 ,
+                    //         [BidSection] AS 标段 ,
+                    //         [CompanyName] AS 公司名称 ,
+                    //         [ContactName] AS 联系人 ,
+                    //         [Phone] AS 电话 ,
+                    //         [Email] AS 邮箱
+                    //FROM [CSPostOA].[dbo].[ProjectRegistration] p
+                    //RIGHT JOIN [dbo].[ERPNWorkToDo] a
+                    //    ON p.ApplicationId = a.ID
+                    //WHERE a.ID = @ApplicationId
+                    //ORDER BY  BidSectionId";
+                    //                    SqlParameter param = new SqlParameter("@ApplicationId", SqlDbType.Int);
+                    //                    param.Value = applicationId;
+                    //                    cmd.Parameters.Add(param);
+                    var cmd2 = new SqlCommand($@"
+SELECT a.WenHao AS 项目名称 ,
+         [BidSection] AS 标段 ,
+         [CompanyName] AS 公司名称 ,
+         [ContactName] AS 联系人 ,
+         [Phone] AS 电话 ,
+         [Email] AS 邮箱 ,
+         [BidBondFee] AS 保证金 
+
+FROM [CSPostOA].[dbo].[ProjectRegistration] p
+RIGHT JOIN [dbo].[ERPNWorkToDo] a
+    ON p.ApplicationId = a.ID
+WHERE a.ID ={applicationId}
+ORDER BY  BidSectionId", con);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd2);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "table1");
+                    DataTable dt = ds.Tables["table1"];
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }
