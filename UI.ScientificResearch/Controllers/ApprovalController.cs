@@ -2544,7 +2544,7 @@ namespace UI.ScientificResearch.Controllers
                 model.IsRejected = true;
                 model.ApplicationStatus = ApplicationStatus.ApplicationRejected.ToString();//申请书审批完成
                 model.ProjectStatus = ApplicationStatus.ApplicationRejected.ToString();
-                var workFlowNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.WorkFlowID == model.WorkFlowID).OrderBy(p => p.NodeSerils).Skip(1).Take(1).FirstOrDefault();
+                var workFlowNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.WorkFlowID == model.WorkFlowID).OrderBy(p => p.NodeSerils).Skip(0).Take(1).FirstOrDefault();
 
                 model.JieDianID = workFlowNodeModel.ID;
                 model.JieDianName = workFlowNodeModel.NodeName.ToString();
