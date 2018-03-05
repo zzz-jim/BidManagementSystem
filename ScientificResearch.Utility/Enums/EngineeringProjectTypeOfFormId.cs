@@ -64,6 +64,6 @@ namespace ScientificResearch.Utility.Enums
         /// <summary>
         /// 项目前期
         /// </summary>
-        PreApplication = 2120,
+        PreApplication = 2122,
     }
 }

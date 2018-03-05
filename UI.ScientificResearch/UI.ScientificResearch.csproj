@@ -1456,6 +1456,7 @@
     <Content Include="Areas\Education\Views\Approval\AllArchiveDocumentList.cshtml" />
     <Content Include="Areas\Education\Views\Approval\ArchiveDocument.cshtml" />
     <Content Include="Areas\Education\Views\Approval\PreSubmitApplication.cshtml" />
+    <Content Include="Areas\Education\Views\Approval\PreSubmitApplicationList.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\AboutApprovalNode.js" />
