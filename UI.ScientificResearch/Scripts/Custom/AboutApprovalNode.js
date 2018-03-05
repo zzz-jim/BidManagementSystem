@@ -6,7 +6,7 @@ function CheckFileSize() {
     var filepath = file.value;
     var filetypes = [".rar", ".txt", ".zip", ".doc", ".ppt", ".xls", ".pdf", ".docx", ".xlsx", ".rar", ".7Z", ".cab", ".iso", ".pdf"];
 
-    var filemaxsize = 1024 * 10;//10M
+    var filemaxsize = 1024 * 100;//100M
     if (filepath) {
         var isnext = false;
         var fileend = filepath.substring(filepath.lastIndexOf("."));
