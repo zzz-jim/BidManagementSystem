@@ -37,52 +37,62 @@
         <th>
             @Html.DisplayNameFor(model => model.Duty)
         </th>
-     
+
         <th>
             @Html.DisplayNameFor(model => model.LastUpdateDate)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Qualification)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Degree)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Special)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TechnicalTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duty)
-        </td>
-  
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdateDate)
-        </td>
-        <td>
-            @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("详情", "Details", new { id = item.Id }) |
-            @Html.ActionLink(" 删除", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qualification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Degree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Special)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TechnicalTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duty)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdateDate)
+            </td>
+
+            @if (item.UserName == "admin" || item.Name == "admin" || item.Name.Contains("admin"))
+            {
+                <td>@Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("详情", "Details", new { id = item.Id })
+                </td> }
+            else
+            {
+                <td>
+                    @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("详情", "Details", new { id = item.Id })|
+                    @Html.ActionLink(" 删除", "Delete", new { id = item.Id })
+                </td> 
+            }
+        </tr>
+    }
 
 </table>

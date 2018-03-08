@@ -4,17 +4,23 @@
 @using System.Web.Mvc;
 @using UI.ScientificResearch.Extensions;
 
-@{
-    string allRoles = Session[SessionKeyEnum.UserRoles.ToString()].ToString();
-    string[] rolesArry = allRoles.Split(',');
 
-    if (rolesArry.Length > 2 || allRoles.Contains("超级管理员"))
+
+@{
+    if (Session != null && Session[SessionKeyEnum.UserRoles.ToString()] != null)
     {
+        string allRoles = Session[SessionKeyEnum.UserRoles.ToString()].ToString();
+        string[] rolesArry = allRoles.Split(',');
+
+        if (rolesArry.Length > 2 || allRoles.Contains("超级管理员"))
+        {
+        }
+        else
+        {
+            ViewBag.HiddenLi = "Hidden";
+        }
     }
-    else
-    {
-        ViewBag.HiddenLi = "Hidden";
-    }
+    else { ViewBag.HiddenLi = "Hidden"; }
 }
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0

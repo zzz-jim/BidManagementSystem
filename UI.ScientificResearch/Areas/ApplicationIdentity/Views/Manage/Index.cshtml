@@ -31,11 +31,11 @@
             }
             ]
         </p>
-        <p>
+        @*<p>
             外部登录: @Model.Logins.Count
             @Html.ActionLink("[管理]", "ManageLogins")
-        </p>
-        @if (Model.TwoFactor)
+        </p>*@
+        @*@if (Model.TwoFactor)
         {
             <form method="post" action="/Manage/DisableTFA">
                 <p>
@@ -70,6 +70,6 @@
                     <input type="submit" value="记住浏览器" class="btn btn-default"/>
                 </p>
             </form>
-        }
+        }*@
     </div>
 </div>
