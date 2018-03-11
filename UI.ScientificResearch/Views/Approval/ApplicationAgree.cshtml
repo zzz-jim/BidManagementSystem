@@ -108,7 +108,7 @@
 
             <table class="table">
                 <input type="hidden" id="Freeze" value="@Model.NWorkToDoID" />
-               
+
                 @Html.ValidationSummary(true)
                 @Html.HiddenFor(model => model.NWorkToDoID)
                 @*审批，未被驳回，继续审批或驳回*@
@@ -188,59 +188,63 @@
 
                     <tr>
                         <td colspan="2"><input readonly="readonly" type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
-                        <td colspan="2"><input readonly="readonly"  type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
+                        <td colspan="2"><input readonly="readonly" type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
                     </tr>
                     number++;
                 }
                 @*<tr>
-                    <td>
-                        @Html.LabelFor(model => model.ShenPiYiJian)
-                    </td>
-                    <td colspan="5">
-                        <input type="text" id="SingleShenPiYiJian" name="SingleShenPiYiJian"/>
-                    </td>
-                </tr>*@
+                        <td>
+                            @Html.LabelFor(model => model.ShenPiYiJian)
+                        </td>
+                        <td colspan="5">
+                            <input type="text" id="SingleShenPiYiJian" name="SingleShenPiYiJian"/>
+                        </td>
+                    </tr>*@
                 @*<tr>
-                    <td>审批意见列表：</td>
-                    <td colspan="5">
-                        <div id="ShenPiYiJianList">
-                        </div>
-                    </td>
-                </tr>*@
+                        <td>审批意见列表：</td>
+                        <td colspan="5">
+                            <div id="ShenPiYiJianList">
+                            </div>
+                        </td>
+                    </tr>*@
 
                 @Html.HiddenFor(model => model.ShenPiUserList)
                 @Html.HiddenFor(model => model.StateNow)
                 @Html.HiddenFor(model => model.JieDianName)
-                
+
                 @if (@Model.JieDianName == "结束")
                 {
-
+                    @*<tr>
+                        <td colspan="3" style="vertical-align:middle; text-align:center;">
+                            <input type="submit" value="驳回" name="Reject" id="Reject" class="btn btn-blue" />
+                        </td>
+                    </tr>*@
                 }
                 else
                 {
                     @*<tr>
-                        <td colspan="6">
-                            <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
-                            <input type="button" id="btnUploadFile" value="上传" />
-                            <div id="uploadingfile">
+                            <td colspan="6">
+                                <p><input type="file" id="uploadFile" name="file" onchange="CheckFileSize()" /></p>
+                                <input type="button" id="btnUploadFile" value="上传" />
+                                <div id="uploadingfile">
 
-                            </div>
-                        </td>
+                                </div>
+                            </td>
 
-                    </tr>*@
+                        </tr>*@
                     <tr>
-                        <td colspan="3" style="vertical-align:middle; text-align:center;">
+                        @*<td colspan="3" style="vertical-align:middle; text-align:center;">
                             <input type="submit" value="通过" name="Approval" id="Approval" class="btn btn-blue" />
-                        </td>
+                        </td>*@
                         <td colspan="3" style="vertical-align:middle; text-align:center;">
-                            <input type="submit" value="驳回" name="Reject" id="Reject" class="btn btn-blue" />
+                            <input type="submit" value="驳回修改" name="Reject" id="Reject" class="btn btn-blue" />
                         </td>
                     </tr>
                 }
             </table>
 
         </div>
-    }
+                    }
     <input type="hidden" value=@Model.FuJianList id="thisPageFuJian">
     <!-- Application Approval Steps Time Line -->
     @*@Html.Partial("_ApproveWizardPartial")*@
@@ -248,7 +252,7 @@
 
 </html>
 <script>
-    $("#selectForSingleUser").hide();
-    $("#select").hide();
+        $("#selectForSingleUser").hide();
+        $("#select").hide();
 </script>
 <script>@Html.Raw(ViewBag.PiLiangSet);</script>
