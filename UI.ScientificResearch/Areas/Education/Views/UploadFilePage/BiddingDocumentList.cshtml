@@ -48,6 +48,17 @@
                 alert("请选择要上传的文件！！");
             }
         });
+        // 评审
+        $("#btnAuditMidUploadFile").click(function () {
+            if ($("#uploadFile").val().length > 0) {
+                // TODO:  remark
+                var jsonData = { "section_id": $("#BidSectionId").val(), "application_id":@ViewBag.Id,"file_type":@ViewBag.UploadFilePageType,"remark": "评审文件" };
+                ajaxFileUploadFillInWithData(jsonData);
+            }
+            else {
+                alert("请选择要上传的文件！！");
+            }
+        }); 
         // 定稿
          $("#btnFinalUploadFile").click(function () {
             if ($("#uploadFile").val().length > 0) {
@@ -88,6 +99,9 @@
         </td>
         <td colspan="1">
             <input type="button" value="上传初审文件" id="btnAuditUploadFile" />
+        </td>
+        <td colspan="1">
+            <input type="button" value="上传评审文件" id="btnAuditMidUploadFile" />
         </td>
         <td colspan="1">
             <input type="button" value="上传终稿文件" id="btnFinalUploadFile" />
@@ -149,6 +163,12 @@
             else if (item.Remark == BiddingDocumentType.初稿文件.ToString())
             {
                 <td style="color:green">
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+            }
+            else if (item.Remark == BiddingDocumentType.评审文件.ToString())
+            {
+                <td style="color:purple">
                     @Html.DisplayFor(modelItem => item.Remark)
                 </td>
             }

@@ -252,7 +252,7 @@
                     },
                     {
                         command:
-                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除"}]
+                        [{ text: "项目流程", click: OpenMaxWindow }, { name: "destroy", text: "删除" }]
                     }
                 ],
                 editable: {
@@ -364,7 +364,7 @@
                             $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/Education/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
                             $("#MaxWindow").data("kendoWindow").center().open();
                         }
-                        else if (data == "ApplicationRejected" || data == "ApplicationApproving")//申请书已提交和待审批中
+                        else if (data == "ApplicationRejected" || data == "ApplicationApproving" || data == "ApplicationApproved")//申请书已提交和待审批中
                         {
                             if (data == "ApplicationRejected") {
                                 $.ajax({
@@ -373,7 +373,7 @@
                                     success: function (data) {
                                         if (data != null) {
                                             if (data == "Equal") {
-                                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/ApplicationRejected?id=' + id + '">项目申请书</iframe>');
+                                                $("#MaxWindow").append(' <iframe id="application" width="100%" height="160%" scrolling="no" style="border:0px" src="/Approval/SubmitApplication?id=' + id + '">项目申请书</iframe>');
                                                 $("#MaxWindow").data("kendoWindow").center().open();
                                             }
                                             else {

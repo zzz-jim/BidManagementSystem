@@ -168,32 +168,60 @@
                 int number = 1;
                 foreach (var item in Model.BidSectionList)
                 {
+                    string itemSectionId = "item" + number + "SectionId";
                     string itemSectionName = "item" + number + "SectionName";
                     string itemSectionNumber = "item" + number + "SectionNumber";
                     string itemCreatedTime = "item" + number + "CreatedTime";
 
                     <tr>
-                        <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" /></td>
+
+                        <td>
+                            <input type="hidden" style="width:100px;" name="@itemSectionId" id="@itemSectionId" value="@item.ID" />
+                            <input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" value="@item.SectionName" />
+                        </td>
                         <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" value="@item.SectionNumber" /></td>
                         <td><input type="text" style="width:100px;" name="@itemCreatedTime" id="@itemCreatedTime" value="@item.CreatedTime" /></td>
                     </tr>
                     number++;
+
+                    <script>
+                        $(@itemCreatedTime).kendoDateTimePicker(
+                            {
+                                format: "yyyy-MM-dd HH:mm",
+                                timeFormat: "HH:mm" //24小时制格式
+                            }
+                        );
+                    </script>
                 }
             }
             else
             {
 
                 int number = 1;
+                string itemSectionId = "item" + number + "SectionId";
                 string itemSectionName = "item" + number + "SectionName";
                 string itemSectionNumber = "item" + number + "SectionNumber";
                 string itemCreatedTime = "item" + number + "CreatedTime";
 
                 <tr>
-                    <td><input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" /></td>
+                    <td>
+                        <input type="hidden" style="width:100px;" name="@itemSectionId" id="@itemSectionId" value="0" />
+                        <input type="text" style="width:100px;" name="@itemSectionName" id="@itemSectionName" />
+                    </td>
                     <td><input type="text" style="width:100px;" name="@itemSectionNumber" id="@itemSectionNumber" /></td>
                     <td><input type="text" style="width:160px;" name="@itemCreatedTime" id="@itemCreatedTime" /></td>
                 </tr>
+
+                <script>
+                       $(@itemCreatedTime).kendoDateTimePicker(
+                            {
+                                format: "yyyy-MM-dd HH:mm",
+                                timeFormat: "HH:mm" //24小时制格式
+                            }
+                        );
+                </script>
             }
+
 
         </table>
 
@@ -311,10 +339,4 @@
                 });
                 $("#Date222222222").attr("readonly", true);
             });
-            $("#item1CreatedTime").kendoDateTimePicker(
-                {
-                    format: "yyyy-MM-dd HH:mm",
-                    timeFormat: "HH:mm" //24小时制格式
-                }
-            );
 </script>
