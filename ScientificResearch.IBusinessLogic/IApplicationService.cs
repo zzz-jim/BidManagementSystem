@@ -11,6 +11,7 @@ namespace ScientificResearch.IBusinessLogic
         int AddApplication(ERPNWorkToDoTransferObject model);
         int AddApplication(ERPNWorkToDoTransferObject model, List<ProjectBidSection> sectionList);
         bool UpdateApplication(ERPNWorkToDoTransferObject model);
+        bool UpdateApplication(ERPNWorkToDoTransferObject model, List<ProjectBidSection> sectionList);
         bool DeleteEntityById(int id);
         ERPNWorkToDoTransferObject GetEntityById(int id);
         IList<ERPNWorkToDoTransferObject> GetAllEntities();

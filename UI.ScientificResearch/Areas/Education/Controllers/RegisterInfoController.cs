@@ -230,10 +230,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
         public ActionResult Create(int applicationId)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
 
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == applicationId);
             var selectItemList = new List<SelectListItem>()
@@ -254,10 +254,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         [HttpPost]
         public ActionResult Create(ProjectRegistrationViewModel model)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
 
             model.CreatedTime = DateTime.Now;
             model.OperatorName = User.Identity.Name;
@@ -280,8 +280,8 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
 
         public ActionResult ProjectList(int applicationId)
         {
-            if (User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
+            //if (User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
                 ViewBag.Module = "工程项目";
                 ViewBag.Title = "报名情况";
 
@@ -289,9 +289,9 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 var models = tempModels.Select(x => x.ConvertTo<ProjectRegistrationViewModel>());
                 ViewBag.Id = applicationId;
                 return View(models);
-            }
+            //}
 
-            return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
             //return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
         }
 
@@ -334,10 +334,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
             var selectItemList = new List<SelectListItem>()
@@ -362,10 +362,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         [HttpPost]
         public ActionResult Edit(ProjectRegistrationViewModel model)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
             var bidSectionInfo = ProjectBidSectionService.GetEntityById(model.BidSectionId);
@@ -383,10 +383,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         /// <returns></returns>
         public ActionResult EditBidBondInfo(int id)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
             var model = ProjectRegistrationService.GetEntityById(id);
             var bidSections = ProjectBidSectionService.GetEntities(x => x.ApplicationId == model.ApplicationId);
             var selectItemList = new List<SelectListItem>()
@@ -411,10 +411,10 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
         [HttpPost]
         public ActionResult EditBidBondInfo(ProjectRegistrationViewModel model)
         {
-            if (!User.IsInRole(UserRoles.超级管理员.ToString()))
-            {
-                return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
-            }
+            //if (!User.IsInRole(UserRoles.超级管理员.ToString()))
+            //{
+            //    return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //}
             model.OperatorName = User.Identity.Name;
             model.OperatorId = User.Identity.GetUserId();
             ProjectRegistrationService.UpdateEntity(model.ConvertTo<ProjectRegistration>());
@@ -998,6 +998,137 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                  }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public void ExportExcel(int applicationId)
+        {
+            if (User.IsInRole(UserRoles.超级管理员.ToString()) || User.IsInRole(UserRoles.管理员.ToString()))
+            {
+                var dataTable = ProjectRegistrationService.GetListByApplicationIdAsync(applicationId);
+
+                CreateExcel(dataTable, "application/ms-excel", "Excel" + DateTime.Now.ToString("yyyy-MM-dd HHmmss") + ".xls");//调用函数  
+            }
+
+            //return Content(@"<script type='text/javascript'>alert('无权限！'); </script> ");
+            //var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            //return Json(
+            //         new
+            //         {
+            //             isSuccessful = true,
+            //         }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <returns></returns>
+        public void ExportExcel2(int applicationId)
+        {
+            if (User.IsInRole(UserRoles.超级管理员.ToString()) || User.IsInRole(UserRoles.管理员.ToString()))
+            {
+                var dataTable = ProjectRegistrationService.GetListByApplicationId2Async(applicationId);
+
+                CreateExcel(dataTable, "application/ms-excel", "Excel" + DateTime.Now.ToString("yyyy-MM-dd HHmmss") + ".xls");//调用函数  
+            }
+            //var tempModels = ProjectRegistrationService.GetEntities(x => x.ApplicationId == applicationId);
+            //return Json(
+            //         new
+            //         {
+            //             isSuccessful = true,
+            //         }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>  
+        /// DataTable导出到Excel  
+        /// </summary>  
+        /// <param name="dt">DataTable类型的数据源</param>  
+        /// <param name="FileType">文件类型</param>  
+        ///// <param name="FileName">文件名</param>  
+        //public void CreateExcel2(IList<ProjectRegistration> dt, string FileType, string FileName)
+        //{
+        //    Response.Clear();
+        //    Response.Charset = "UTF-8";
+        //    Response.Buffer = true;
+        //    Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+        //    Response.AppendHeader("Content-Disposition", "attachment;filename=\"" + System.Web.HttpUtility.UrlEncode(FileName, System.Text.Encoding.UTF8) + ".xls\"");
+        //    Response.ContentType = FileType;
+        //    string colHeaders = string.Empty;
+        //    string ls_item = string.Empty;
+        //    DataRow[] myRow = dt.Select();
+        //    int i = 0;
+        //    int cl = dt.Columns.Count;
+        //    for (int j = 0; j < dt.Columns.Count; j++)
+        //    {
+        //        ls_item += dt.Columns[j].ColumnName + "\t"; //栏位：自动跳到下一单元格  
+        //    }
+        //    ls_item = ls_item.Substring(0, ls_item.Length - 1) + "\n";
+        //    foreach (var row in dt)
+        //    {
+        //        for (i = 0; i < cl; i++)
+        //        {
+        //            if (i == (cl - 1))
+        //            {
+        //                ls_item += row[i].ToString() + "\n";
+        //            }
+        //            else
+        //            {
+        //                ls_item += row[i].ToString() + "\t";
+        //            }
+        //        }
+        //        Response.Output.Write(ls_item);
+        //        ls_item = string.Empty;
+        //    }
+        //    Response.Output.Flush();
+        //    Response.End();
+        //}
+        /// <summary>  
+        /// DataTable导出到Excel  
+        /// </summary>  
+        /// <param name="dt">DataTable类型的数据源</param>  
+        /// <param name="FileType">文件类型</param>  
+        /// <param name="FileName">文件名</param>  
+        public void CreateExcel(DataTable dt, string FileType, string FileName)
+        {
+            Response.Clear();
+            Response.Charset = "UTF-8";
+            Response.Buffer = true;
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            Response.AppendHeader("Content-Disposition", "attachment;filename=\"" + System.Web.HttpUtility.UrlEncode(FileName, System.Text.Encoding.UTF8) + ".xls\"");
+            Response.ContentType = FileType;
+            string colHeaders = string.Empty;
+            string ls_item = string.Empty;
+            DataRow[] myRow = dt.Select();
+            int i = 0;
+            int cl = dt.Columns.Count;
+            for (int j = 0; j < dt.Columns.Count; j++)
+            {
+                ls_item += dt.Columns[j].ColumnName + "\t"; //栏位：自动跳到下一单元格  
+            }
+            ls_item = ls_item.Substring(0, ls_item.Length - 1) + "\n";
+            foreach (DataRow row in myRow)
+            {
+                for (i = 0; i < cl; i++)
+                {
+                    if (i == (cl - 1))
+                    {
+                        ls_item += row[i].ToString() + "\n";
+                    }
+                    else
+                    {
+                        ls_item += row[i].ToString() + "\t";
+                    }
+                }
+                Response.Output.Write(ls_item);
+                ls_item = string.Empty;
+            }
+            Response.Output.Flush();
+            Response.End();
         }
 
         #endregion

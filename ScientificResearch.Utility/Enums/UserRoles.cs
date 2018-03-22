@@ -12,6 +12,11 @@ namespace ScientificResearch.Utility.Enums
         超级管理员 = 0,
 
         /// <summary>
+        /// 超级管理员
+        /// </summary>
+        管理员 = 1,
+
+        /// <summary>
         /// 普通用户
         /// </summary>
         普通用户,

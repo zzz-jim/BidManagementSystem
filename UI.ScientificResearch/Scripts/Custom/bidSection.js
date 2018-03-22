@@ -29,7 +29,7 @@
         }
 
         else {
-            $("#tb1").append('<tr><td><input style="width:100px" name = "item' + listCount + 'SectionName" id="item' + listCount + 'SectionName" type="text" /></td><td><input style="width:100px" name = "item' + listCount + 'SectionNumber" id="item' + listCount + 'SectionNumber" type="text" /></td><td><input style="width:160px" name = "item' + listCount + 'CreatedTime" id="item' + listCount + 'CreatedTime" type="text" /></td></tr>>');
+            $("#tb1").append('<tr><td><input style="width:100px" name = "item' + listCount + 'SectionId" id="item' + listCount + 'SectionId" type="hidden" /><input style="width:100px" name = "item' + listCount + 'SectionName" id="item' + listCount + 'SectionName" type="text" /></td><td><input style="width:100px" name = "item' + listCount + 'SectionNumber" id="item' + listCount + 'SectionNumber" type="text" /></td><td><input style="width:160px" name = "item' + listCount + 'CreatedTime" id="item' + listCount + 'CreatedTime" type="text" /></td></tr>>');
             $("#item" + listCount + "CreatedTime").kendoDateTimePicker(
                 {
                     format: "yyyy-MM-dd HH:mm",

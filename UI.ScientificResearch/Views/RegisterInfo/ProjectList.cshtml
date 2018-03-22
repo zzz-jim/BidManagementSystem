@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<UI.ScientificResearch.Models.ProjectRegistrationViewModel>
+@using ScientificResearch.Utility.Enums;
+
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
@@ -16,14 +18,17 @@
                 <td>
                     <input type="button" id="CreaateButtn" value="报名登记" />
                 </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input type="button" id="ExportExcel" value="导出报名汇总" />
-                </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input type="button" id="ExportExcel2" value="导出保证金汇总" />
-                </td>
+                @if (User.IsInRole(UserRoles.超级管理员.ToString()) || User.IsInRole(UserRoles.管理员.ToString()))
+                {
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <input type="button" id="ExportExcel" value="导出报名汇总" />
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <input type="button" id="ExportExcel2" value="导出保证金汇总" />
+                    </td>
+                }
             </tr>
         </table>
         <div id="newapplicationbutton">
@@ -66,6 +71,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BidBondFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RefundTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsRefundBidBondFee)
@@ -130,6 +138,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BidBondFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RefundTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsRefundBidBondFee)
@@ -202,8 +213,11 @@
             });
         });
 
-        function sendEmail(id,sectionId) {
-            $.ajax({
+        function sendEmail(id, sectionId) {
+            var msg = "您真的确定要发送招标文件吗？\n\n请确认！";
+            if (confirm(msg) == true) {
+
+                $.ajax({
                     url: "/RegisterInfo/SendBidDocumentToCompanyById?companyId=" + id,
                     type: "get",
                     success: function (data, status) //服务器成功响应处理函数
@@ -226,6 +240,10 @@
                         alert(e);
                     }
                 });
+            } else {
+                return false;
+            }
+
         };
         function deleteitem(id) {
             $.ajax(

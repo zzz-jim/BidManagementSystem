@@ -46,10 +46,31 @@ namespace ScientificResearch.DataAccessImplement
 
             using (var context = new CSPostOAEntities())
             {
+                if (entity.ProjectBidSection.Any())
+                {
+                    var toUpdateSections = entity.ProjectBidSection.Where(x => x.ID > 0).ToList();
+
+                    var toAddSections = entity.ProjectBidSection.Where(x => x.ID == 0).ToList();
+
+                    foreach (var item in toAddSections)
+                    {
+                        item.CreatedTime = DateTime.Now;
+                        item.ApplicationId = entity.ID;
+                    }
+                    context.ProjectBidSection.AddRange(toAddSections);
+
+                    foreach (var item in toUpdateSections)
+                    {
+                        item.ApplicationId = entity.ID;
+                        context.ProjectBidSection.Attach(item);
+                        context.Entry(item).State = EntityState.Modified;
+                    }
+                }
+
                 context.ERPNWorkToDo.Attach(entity);
                 context.Entry(entity).State = EntityState.Modified;
 
-                if (1 == context.SaveChanges())
+                if (context.SaveChanges() > 0)
                 {
                     result = true;
                 }
@@ -192,7 +213,7 @@ namespace ScientificResearch.DataAccessImplement
                     case ApplicationSortField.UserName:
                         break;
                     case ApplicationSortField.TimeStr:
-                        result = result.OrderBy(u => Math.Abs(u.TimeStr.Value.Ticks-DateTime.Now.Ticks));
+                        result = result.OrderBy(u => Math.Abs(u.TimeStr.Value.Ticks - DateTime.Now.Ticks));
                         break;
                     case ApplicationSortField.FormContent:
                         break;

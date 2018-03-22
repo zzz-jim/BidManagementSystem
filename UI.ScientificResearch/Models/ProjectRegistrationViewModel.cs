@@ -55,6 +55,9 @@ namespace UI.ScientificResearch.Models
         [Display(Name = "创建时间")]
         public Nullable<DateTime> CreatedTime { get; set; }
 
+        [Display(Name = "退保证金时间")]
+        public Nullable<DateTime> RefundTime { get; set; }
+
         [Display(Name = "名次")]
         public Nullable<int> Rank { get; set; }
 

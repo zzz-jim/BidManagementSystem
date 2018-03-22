@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<UI.ScientificResearch.Models.ProjectRegistrationViewModel>
+@using ScientificResearch.Utility.Enums;
+
 @{
     Layout = "~/Views/Shared/_PopUpLayout.cshtml";
 }
@@ -16,14 +18,17 @@
                 <td>
                     <input type="button" id="CreaateButtn" value="报名登记" />
                 </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input type="button" id="ExportExcel" value="导出报名汇总" />
-                </td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>
-                    <input type="button" id="ExportExcel2" value="导出保证金汇总" />
-                </td>
+                @if (User.IsInRole(UserRoles.超级管理员.ToString()) || User.IsInRole(UserRoles.管理员.ToString()))
+                {
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <input type="button" id="ExportExcel" value="导出报名汇总" />
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <input type="button" id="ExportExcel2" value="导出保证金汇总" />
+                    </td>
+                }
             </tr>
         </table>
         <div id="newapplicationbutton">
@@ -195,118 +200,122 @@
                 $("#Application").data("kendoWindow").center().open();
             });
 
-                  $("#ExportExcel").click(function () {
+            $("#ExportExcel").click(function () {
                 window.location.href = "/RegisterInfo/ExportExcel?applicationId=@ViewBag.Id";
-
-                  $("#ExportExcel2").click(function () {
+            });
+            $("#ExportExcel2").click(function () {
                 window.location.href = "/RegisterInfo/ExportExcel2?applicationId=@ViewBag.Id";
             });
         });
-        function sendEmail(id, sectionId) {
-            $.ajax({
-                url: "/RegisterInfo/SendBidDocumentToCompanyById?companyId=" + id,
-                type: "get",
-                success: function (data, status) //服务器成功响应处理函数
-                {
-                    if (data.isSuccessful) {
-                        alert("发送招标文件成功！");
-                        location.reload();//刷新当前页面
-                    } else {
-                        alert(data.name + "发送失败，请重新操作");
-                    }
-
-                    if (typeof (data.error) != 'undefined') {
-                        if (data.error != '') {
-                            alert(data.error);
-                        }
-                    }
-                },
-                error: function (data, status, e) //服务器响应失败处理函数
-                {
-                    alert(e);
-                }
-            });
-        };
-        function deleteitem(id) {
-            $.ajax(
-                {
-                    url: '/RegisterInfo/Delete/' + id,
-                    type: 'get',
-                    secureuri: false, //一般设置为false
-                    fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
-                    dataType: 'json', //返回值类型 一般设置为json
-                    success: function (data, status) //服务器成功响应处理函数
-                    {
-                        if (data.isSuccessful) {
-                            alert("删除成功！");
-                            location.reload();//刷新当前页面
-                        } else {
-                            alert(data.name + "删除失败，请重新操作");
-                        }
-
-                        if (typeof (data.error) != 'undefined') {
-                            if (data.error != '') {
-                                alert(data.error);
+            function sendEmail(id, sectionId) {
+                var msg = "您真的确定要发送招标文件吗？\n\n请确认！";
+                if (confirm(msg) == true) {
+                    $.ajax({
+                        url: "/RegisterInfo/SendBidDocumentToCompanyById?companyId=" + id,
+                        type: "get",
+                        success: function (data, status) //服务器成功响应处理函数
+                        {
+                            if (data.isSuccessful) {
+                                alert("发送招标文件成功！");
+                                location.reload();//刷新当前页面
+                            } else {
+                                alert(data.name + "发送失败，请重新操作");
                             }
+
+                            if (typeof (data.error) != 'undefined') {
+                                if (data.error != '') {
+                                    alert(data.error);
+                                }
+                            }
+                        },
+                        error: function (data, status, e) //服务器响应失败处理函数
+                        {
+                            alert(e);
                         }
-                    },
-                    error: function (data, status, e) //服务器响应失败处理函数
+                    });
+                } else {
+                    return false;
+                }
+            };
+            function deleteitem(id) {
+                $.ajax(
                     {
-                        alert(e);
+                        url: '/RegisterInfo/Delete/' + id,
+                        type: 'get',
+                        secureuri: false, //一般设置为false
+                        fileElementId: 'uploadFile', //文件上传空间的id属性  <input type="file" id="uploadFile" name="uploadFile" />
+                        dataType: 'json', //返回值类型 一般设置为json
+                        success: function (data, status) //服务器成功响应处理函数
+                        {
+                            if (data.isSuccessful) {
+                                alert("删除成功！");
+                                location.reload();//刷新当前页面
+                            } else {
+                                alert(data.name + "删除失败，请重新操作");
+                            }
+
+                            if (typeof (data.error) != 'undefined') {
+                                if (data.error != '') {
+                                    alert(data.error);
+                                }
+                            }
+                        },
+                        error: function (data, status, e) //服务器响应失败处理函数
+                        {
+                            alert(e);
+                        }
                     }
-                }
-            )
-        };
+                )
+            };
 
-        // 修改
-        function edititem(id) {
-        $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
-            $("#MaxWindow").kendoWindow({
-                position: {
-                    top: "15%", // or "100px"
-                    left: "13%"
-                },
-                width: "60%",
-                height: "70%",
-                title: "项目报名情况",
-                visible: false,
-                actions: [
-                    "Pin", "Minimize", "Maximize", "Close"
-                ],
-                modal: true,
-                resizable: false,
-                close: function (e) {
-                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
-                }
-            });
-            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/Edit?id=' + id + '">项目报名情况</iframe>');
-            $("#MaxWindow").data("kendoWindow").center().open();
-        };
+            // 修改
+            function edititem(id) {
+                $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+                $("#MaxWindow").kendoWindow({
+                    position: {
+                        top: "15%", // or "100px"
+                        left: "13%"
+                    },
+                    width: "60%",
+                    height: "70%",
+                    title: "项目报名情况",
+                    visible: false,
+                    actions: [
+                        "Pin", "Minimize", "Maximize", "Close"
+                    ],
+                    modal: true,
+                    resizable: false,
+                    close: function (e) {
+                        //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                    }
+                });
+                $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/Edit?id=' + id + '">项目报名情况</iframe>');
+                $("#MaxWindow").data("kendoWindow").center().open();
+            };
 
-        // 修改项目保证金情况
-        function EditBidBondInfo(id) {
-        $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
-            $("#MaxWindow").kendoWindow({
-                position: {
-                    top: "15%", // or "100px"
-                    left: "13%"
-                },
-                width: "60%",
-                height: "70%",
-                title: "项目保证金情况",
-                visible: false,
-                actions: [
-                    "Pin", "Minimize", "Maximize", "Close"
-                ],
-                modal: true,
-                resizable: false,
-                close: function (e) {
-                    //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
-                }
-            });
-            $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/EditBidBondInfo?id=' + id + '">项目保证金情况</iframe>');
-            $("#MaxWindow").data("kendoWindow").center().open();
-        };
-
+            // 修改项目保证金情况
+            function EditBidBondInfo(id) {
+                $("#MaxWindow")["0"].innerHTML = "";// 第二次加载时，将弹出框内容先清空，保证重新加载弹出框内容
+                $("#MaxWindow").kendoWindow({
+                    position: {
+                        top: "15%", // or "100px"
+                        left: "13%"
+                    },
+                    width: "60%",
+                    height: "70%",
+                    title: "项目保证金情况",
+                    visible: false,
+                    actions: [
+                        "Pin", "Minimize", "Maximize", "Close"
+                    ],
+                    modal: true,
+                    resizable: false,
+                    close: function (e) {
+                        //parent.location.reload();//刷新页面// TODO:暂时注释掉，每次刷新影响效率
+                    }
+                });
+                $("#MaxWindow").append(' <iframe id="application" width="100%" height="100%" scrolling="yes" style="border:0px" src="/RegisterInfo/EditBidBondInfo?id=' + id + '">项目保证金情况</iframe>');
+                $("#MaxWindow").data("kendoWindow").center().open();
+            };
     </script>
 }

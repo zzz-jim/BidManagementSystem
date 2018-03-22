@@ -114,6 +114,14 @@ else
                     @Html.ValidationMessageFor(model => model.IsRefundBidBondFee, "", new { @class = "text-danger" })
                 </td>
             </tr>
+
+            <tr>
+                <td>  @Html.LabelFor(model => model.RefundTime) </td>
+                <td>
+                    @Html.EditorFor(model => model.RefundTime, new { htmlAttributes = new { @style = "width:150px"} })
+                    @Html.ValidationMessageFor(model => model.RefundTime, "", new { @class = "text-danger" })
+                </td>
+            </tr>
             <tr>
                 <td>  @Html.LabelFor(model => model.Remark) </td>
                 <td>
@@ -142,6 +150,12 @@ else
                 format: "yyyy-MM-dd"
             });
             $("#RegisterTime").attr("readonly", true);
+        });
+        $(document).ready(function () {
+            $("#RefundTime").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+            $("#RefundTime").attr("readonly", true);
         });
     </script>
     <script type="text/javascript">

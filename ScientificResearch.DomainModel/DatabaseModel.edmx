@@ -2155,6 +2155,7 @@
           <Property Name="Address" Type="varchar" MaxLength="255" />
           <Property Name="IsRefundBidBondFee" Type="bit" Nullable="false" />
           <Property Name="IsSentEmail" Type="bit" Nullable="false" />
+          <Property Name="RefundTime" Type="datetime" />
         </EntityType>
         <EntityType Name="TravelFundsDetail">
           <Key>
@@ -4762,6 +4763,7 @@
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IsRefundBidBondFee" Type="Boolean" Nullable="false" />
           <Property Name="IsSentEmail" Type="Boolean" Nullable="false" />
+          <Property Name="RefundTime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_ProjectFileRecord_ERPNWorkToDo">
           <End Type="CSPostOAModel.ERPNWorkToDo" Role="ERPNWorkToDo" Multiplicity="1" />
@@ -7073,6 +7075,7 @@
           <EntitySetMapping Name="ProjectRegistration">
             <EntityTypeMapping TypeName="CSPostOAModel.ProjectRegistration">
               <MappingFragment StoreEntitySet="ProjectRegistration">
+                <ScalarProperty Name="RefundTime" ColumnName="RefundTime" />
                 <ScalarProperty Name="IsSentEmail" ColumnName="IsSentEmail" />
                 <ScalarProperty Name="IsRefundBidBondFee" ColumnName="IsRefundBidBondFee" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

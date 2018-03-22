@@ -2287,11 +2287,14 @@ namespace UI.ScientificResearch.Controllers
 
             model.UserName = User.Identity.Name;
 
-            if (collection["Date222222222"] != null)
+            if (collection["Date222222222"] != null && !string.IsNullOrEmpty(collection["Date222222222"]))
             {
                 model.TimeStr = DateTime.Parse(collection["Date222222222"].ToString());
             }
-            //model.TimeStr = DateTime.Now;
+            else
+            {
+                model.TimeStr = DateTime.Now;
+            } //model.TimeStr = DateTime.Now;
 
             var sectionName = MySession[SessionKeyEnum.SectionName].ToString();
 
@@ -2317,14 +2320,15 @@ namespace UI.ScientificResearch.Controllers
                 countOfTravelItems = 0;
             }
 
-            string[] itemNameArray = { "SectionName", "SectionNumber", "CreatedTime" };
+            string[] itemNameArray = { "SectionId", "SectionName", "SectionNumber", "CreatedTime" };
 
             for (int i = 1; i < countOfTravelItems + 1; i++)
             {
                 var item = new ProjectBidSectionViewModel();
-                item.SectionName = Request["item" + i.ToString() + itemNameArray[0]];
-                item.SectionNumber = Request["item" + i.ToString() + itemNameArray[1]];
-                item.CreatedTime = Convert.ToDateTime(Request["item" + i.ToString() + itemNameArray[2]]);
+                item.ID = string.IsNullOrEmpty(Request["item" + i.ToString() + itemNameArray[0]]) ? 0 : int.Parse(Request["item" + i.ToString() + itemNameArray[0]]);
+                item.SectionName = Request["item" + i.ToString() + itemNameArray[1]];
+                item.SectionNumber = Request["item" + i.ToString() + itemNameArray[2]];
+                item.CreatedTime = Convert.ToDateTime(Request["item" + i.ToString() + itemNameArray[3]]);
                 model.BidSectionList.Add(item);
             }
 
@@ -2437,7 +2441,7 @@ namespace UI.ScientificResearch.Controllers
                     model.IsDeleted = false;
                     model.IsRejected = false;
 
-                    bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
+                    bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
                     //todo:add rizhi
 
                     //更新已办，新增上报，写系统日志
@@ -2495,18 +2499,18 @@ namespace UI.ScientificResearch.Controllers
                 model.ShenPiYiJian = attachment;
                 model.OKUserList = model.OKUserList + "," + User.Identity.Name;
                 //model.ShenPiYiJian
-               //if (collection["SingleShenPiYiJian"] != "")
-               //{
-               //    //审批意见
-               //    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
-               //}
-               //else
-               //{
-               //    model.ShenPiYiJian = PiShiStr;
-               //}
+                //if (collection["SingleShenPiYiJian"] != "")
+                //{
+                //    //审批意见
+                //    model.ShenPiYiJian = PiShiStr + model.JieDianName + ":" + collection["SingleShenPiYiJian"].ToString() + Constant.SplitChar;
+                //}
+                //else
+                //{
+                //    model.ShenPiYiJian = PiShiStr;
+                //}
 
-               // 更改当前结点id和name
-               var erpnrowkflownoderesult1 = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value).ToViewModel();
+                // 更改当前结点id和name
+                var erpnrowkflownoderesult1 = ERPNWorkFlowNodeService.GetEntityById(model.JieDianID.Value).ToViewModel();
                 string nextNodeSerial = erpnrowkflownoderesult1.NextNode;
                 var nextNodeModel = ERPNWorkFlowNodeService.GetEntities(p => p.NodeSerils == nextNodeSerial && p.WorkFlowID == model.WorkFlowID).ToList();
 
@@ -6049,7 +6053,7 @@ namespace UI.ScientificResearch.Controllers
                     && p.TimeStr.Value < end
                     && ((State == Constant.All) ? true : p.ApplicationStatus == State)
                     && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
-                    && p.StateNow == "正在办理" 
+                    && p.StateNow == "正在办理"
                     && (p.UserName == User.Identity.Name || p.BeiYong1 == User.Identity.Name)
                     && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());

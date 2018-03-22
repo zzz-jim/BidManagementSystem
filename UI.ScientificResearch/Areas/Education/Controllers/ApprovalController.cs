@@ -2252,9 +2252,14 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             }
 
             model.UserName = User.Identity.Name;
-            if (collection["Date222222222"] != null)
+
+            if (collection["Date222222222"] != null && !string.IsNullOrEmpty(collection["Date222222222"]))
             {
                 model.TimeStr = DateTime.Parse(collection["Date222222222"].ToString());
+            }
+            else
+            {
+                model.TimeStr = DateTime.Now;
             }
             //model.TimeStr = DateTime.Now;
 
@@ -2282,14 +2287,15 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                 countOfTravelItems = 0;
             }
 
-            string[] itemNameArray = { "SectionName", "SectionNumber", "CreatedTime" };
+            string[] itemNameArray = { "SectionId", "SectionName", "SectionNumber", "CreatedTime" };
 
             for (int i = 1; i < countOfTravelItems + 1; i++)
             {
                 var item = new ProjectBidSectionViewModel();
-                item.SectionName = Request["item" + i.ToString() + itemNameArray[0]];
-                item.SectionNumber = Request["item" + i.ToString() + itemNameArray[1]];
-                item.CreatedTime = Convert.ToDateTime(Request["item" + i.ToString() + itemNameArray[2]]);
+                item.ID = string.IsNullOrEmpty(Request["item" + i.ToString() + itemNameArray[0]]) ? 0 : int.Parse(Request["item" + i.ToString() + itemNameArray[0]]);
+                item.SectionName = Request["item" + i.ToString() + itemNameArray[1]];
+                item.SectionNumber = Request["item" + i.ToString() + itemNameArray[2]];
+                item.CreatedTime = Convert.ToDateTime(Request["item" + i.ToString() + itemNameArray[3]]);
                 model.BidSectionList.Add(item);
             }
 
@@ -2402,7 +2408,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
                     model.IsDeleted = false;
                     model.IsRejected = false;
 
-                    bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel());
+                    bool UpdateIstemporySuccess = this.ApplicationService.UpdateApplication(model.ToDataTransferObjectModel(), model.BidSectionList.Select(x => x.ConvertTo<ProjectBidSection>()).ToList());
                     //todo:add rizhi
 
                     //更新已办，新增上报，写系统日志
@@ -6881,8 +6887,8 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             //ViewBag.bidSectionsList = selectItemList;
             ViewBag.SectionNumber = section.SectionNumber;
             ViewBag.SectionName = section.SectionName;
-            ViewBag.Id = section.ID; 
-             var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.TenderNotice && p.ApplicationId == sectionId).FirstOrDefault();
+            ViewBag.Id = section.ID;
+            var tenderNoticeModel = ApplicationService.GetEntities(p => p.FormID == (int)EngineeringProjectTypeOfFormId.TenderNotice && p.ApplicationId == sectionId).FirstOrDefault();
 
             // 判断招标公告是否已经存在
             if (tenderNoticeModel == null)
@@ -7234,7 +7240,7 @@ namespace UI.ScientificResearch.Areas.Education.Controllers
             ViewBag.Title = "招标公告";
             return View();
         }
-        
+
         // 招标公告列表
         public ActionResult GetBidSectionListByApplicationId(int applicationId)
         {

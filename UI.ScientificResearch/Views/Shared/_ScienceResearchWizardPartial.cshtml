@@ -39,10 +39,10 @@
                     @Html.ActionLink("招标公告", "TenderNoticeList", "Approval", new { id = ViewBag.Id }, new { id = "TenderNotice" })
                 }
 
-                @if (User.IsInRole(UserRoles.超级管理员.ToString()))
-                {
+                @*@if (User.IsInRole(UserRoles.超级管理员.ToString()))
+                {*@
                     @Html.ActionLink("报名保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "RegisterInfo" })
-                }
+                @*}*@
                 @*@Html.ActionLink("保证金情况", "ProjectList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidBondInfo" })*@
                 @Html.ActionLink("开评标资料", "OpenBidsDocumentList", "UploadFilePage", new { applicationId = ViewBag.Id }, new { id = "OpenBidsDocument" })
                 @Html.ActionLink("中标通知书", "BidWinnerNoticeList", "RegisterInfo", new { applicationId = ViewBag.Id }, new { id = "BidWinnerNotice" })
