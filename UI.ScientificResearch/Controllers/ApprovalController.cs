@@ -1654,7 +1654,7 @@ namespace UI.ScientificResearch.Controllers
 
             var result = ApplicationService.GetEntityById(id1);
             string ReturnState = "";
-            if (result.UserName == User.Identity.Name || User.IsInRole(UserRoles.超级管理员.ToString()))
+            if (result.UserName == User.Identity.Name || User.IsInRole(UserRoles.超级管理员.ToString()) || User.IsInRole(UserRoles.管理员.ToString()))
             {
                 ReturnState = "Equal";
             }
@@ -5963,32 +5963,32 @@ namespace UI.ScientificResearch.Controllers
             IEnumerable<ERPNWorkToDoTransferObject> resultpage;
             int totalcount = 0;
             //非普通用户
-            if (hasRolesFlag)
-            {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
-                    && p.TimeStr.Value > start
-                    && p.TimeStr.Value < end
-                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
-                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
-                    && p.StateNow == "正在办理"
-                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
-                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
-                totalcount = resultpage.Count();
-            }
-            //普通用户
-            else
-            {
-                resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
-                    && p.TimeStr.Value > start
-                    && p.TimeStr.Value < end
-                    && ((State == Constant.All) ? true : p.ApplicationStatus == State)
-                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
-                    && p.StateNow == "正在办理"
-                    && p.UserName == User.Identity.Name
-                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
-                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
-                totalcount = resultpage.Count();
-            }
+            //if (hasRolesFlag)
+            //{
+            resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+                && p.TimeStr.Value > start
+                && p.TimeStr.Value < end
+                && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+                && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+                && p.StateNow == "正在办理"
+                && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+                && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+            totalcount = resultpage.Count();
+            //}
+            ////普通用户
+            //else
+            //{
+            //    resultpage = ApplicationService.GetEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+            //        && p.TimeStr.Value > start
+            //        && p.TimeStr.Value < end
+            //        && ((State == Constant.All) ? true : p.ApplicationStatus == State)
+            //        && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+            //        && p.StateNow == "正在办理"
+            //        && p.UserName == User.Identity.Name
+            //        && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+            //        && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString());
+            //    totalcount = resultpage.Count();
+            //}
             return Json(new { data = result, total = totalcount }, JsonRequestBehavior.AllowGet);
 
         }
@@ -6527,8 +6527,8 @@ namespace UI.ScientificResearch.Controllers
             bool hasRolesFlag = HasRolesFlag();
             IEnumerable<ERPNWorkToDoTransferObject> result;
             //非普通用户
-            if (hasRolesFlag)
-            {
+            //if (hasRolesFlag)
+            //{
                 result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
                     && p.TimeStr.Value > start
                     && p.TimeStr.Value < end
@@ -6537,20 +6537,20 @@ namespace UI.ScientificResearch.Controllers
                     && p.StateNow == "正在办理"
                     && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
                     && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
-            }
-            //普通用户
-            else
-            {
-                result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
-                    && p.TimeStr.Value > start
-                    && p.TimeStr.Value < end
-                    && ((state == Constant.All) ? true : p.ApplicationStatus == state)
-                    && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
-                    && p.StateNow == "正在办理"
-                    && p.UserName == User.Identity.Name
-                    && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
-                    && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
-            }
+            //}
+            ////普通用户
+            //else
+            //{
+            //    result = ApplicationService.GetPageEntities(p => p.FormID == (int)ScienceResearchTypeOfFormId.Application
+            //        && p.TimeStr.Value > start
+            //        && p.TimeStr.Value < end
+            //        && ((state == Constant.All) ? true : p.ApplicationStatus == state)
+            //        && (string.IsNullOrEmpty(projectName) ? true : (p.WenHao.Contains(projectName)))
+            //        && p.StateNow == "正在办理"
+            //        && p.UserName == User.Identity.Name
+            //        && (string.IsNullOrEmpty(projectNumber) ? true : (p.BeiYong1.Contains(projectNumber)))
+            //        && p.ProjectStatus != ApplicationStatus.BigProjectProcessing.ToString(), ApplicationSortField.TimeStr_Desc.ToString(), pageSize, pageIndex, out totalPage);
+            //}
             return result;
         }
 
@@ -6687,7 +6687,8 @@ namespace UI.ScientificResearch.Controllers
                 }
                 else
                 {
-                    isRightRoles = User.IsInRole(applicantdepartMentName + "主任");
+                    //isRightRoles = User.IsInRole(applicantdepartMentName + "主任");
+                    isRightRoles = User.IsInRole(UserRoles.管理员.ToString()) || User.IsInRole(UserRoles.超级管理员.ToString());
                 }
             }
             else
